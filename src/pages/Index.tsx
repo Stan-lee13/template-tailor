@@ -94,10 +94,13 @@ const Index = () => {
 
   return (
     <div className="relative">
+      <ScrollProgress />
       <CustomCursor />
       <Navigation />
       <main>
         <Hero />
+        
+        <SocialProofTicker />
         
         {/* Hero → Problem: angled divider */}
         <SectionDivider variant="angle" fromColor="#0A0A0A" toColor="#0A0A0A" />
