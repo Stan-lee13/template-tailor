@@ -16,6 +16,8 @@ import FAQ from '../sections/FAQ';
 import FinalCTA from '../sections/FinalCTA';
 import Footer from '../sections/Footer';
 import SectionDivider from '../components/SectionDivider';
+import SocialProofTicker from '../components/SocialProofTicker';
+import ScrollProgress from '../components/ScrollProgress';
 
 gsap.registerPlugin(ScrollTrigger);
 
