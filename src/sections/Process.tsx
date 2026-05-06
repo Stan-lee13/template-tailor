@@ -11,8 +11,6 @@ const steps = [
     description: 'We dig into your data to find exactly where revenue is slipping through the cracks.',
     deliverables: ['Revenue leak analysis', 'Customer journey mapping', 'Competitor retention benchmarking', '30-day action plan'],
     accent: '#F97316',
-    maxWidth: '85%',
-    indent: '0',
   },
   {
     number: '02',
@@ -20,8 +18,6 @@ const steps = [
     description: 'We architect and deploy your complete retention engine — flows, segments, and automations.',
     deliverables: ['Email & SMS flow buildout', 'Segmentation architecture', 'Tech stack integration', 'QA & launch'],
     accent: '#4169E1',
-    maxWidth: '92%',
-    indent: '40px',
   },
   {
     number: '03',
@@ -29,8 +25,6 @@ const steps = [
     description: 'We test, iterate, and scale what works — turning retention into your most profitable channel.',
     deliverables: ['A/B testing cadence', 'Performance reporting', 'Strategy refinement', 'Revenue scaling'],
     accent: '#10B981',
-    maxWidth: '80%',
-    indent: '20px',
   },
 ];
 
@@ -52,37 +46,36 @@ export default function Process() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="process" className="relative overflow-hidden" style={{ background: '#0A0A0A', padding: '14vh clamp(24px, 5vw, 80px)' }}>
+    <section ref={sectionRef} id="process" className="relative overflow-hidden" style={{ background: '#0A0A0A', padding: '12vh clamp(20px, 5vw, 80px) 14vh' }}>
       <div className="relative max-w-[900px] mx-auto">
-        <div className="process-head mb-16 md:mb-20" style={{ opacity: 0 }}>
+        <div className="process-head mb-12 sm:mb-16 md:mb-20" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>
             Our Process
           </span>
-          <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(30px, 5vw, 56px)', lineHeight: 0.95, color: '#EBE8E0', letterSpacing: '-0.02em' }}>
+          <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 0.95, color: '#EBE8E0', letterSpacing: '-0.02em' }}>
             How We Work
           </h2>
         </div>
 
         <div className="relative">
-          {/* Timeline line */}
+          {/* Timeline line — hidden on mobile */}
           <div className="hidden md:block absolute left-0 top-0 bottom-0 w-px" style={{ background: 'linear-gradient(to bottom, rgba(249,115,22,0.3), rgba(65,105,225,0.3), rgba(16,185,129,0.3))' }} />
 
-          <div className="flex flex-col gap-12 md:gap-16">
+          <div className="flex flex-col gap-8 sm:gap-12 md:gap-16">
             {steps.map((step) => (
               <div
                 key={step.number}
                 className="process-step relative md:pl-12"
-                style={{ opacity: 0, marginLeft: `clamp(0px, 3vw, ${step.indent})` }}
+                style={{ opacity: 0 }}
               >
                 {/* Accent bar on timeline */}
                 <div className="hidden md:block absolute left-0 top-0 w-[3px] rounded-full" style={{ height: '48px', background: step.accent, marginLeft: '-1px' }} />
 
                 <div
-                  className="p-7 md:p-9 rounded-xl transition-colors duration-300"
+                  className="p-5 sm:p-7 md:p-9 rounded-xl transition-colors duration-300"
                   style={{
-                    maxWidth: step.maxWidth,
                     background: 'rgba(255,255,255,0.025)',
-                    borderLeft: `1px solid ${step.accent}20`,
+                    borderLeft: `2px solid ${step.accent}30`,
                     borderTop: '1px solid rgba(255,255,255,0.04)',
                     borderRight: '1px solid rgba(255,255,255,0.04)',
                     borderBottom: '1px solid rgba(255,255,255,0.04)',
@@ -93,21 +86,21 @@ export default function Process() {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.025)';
-                    e.currentTarget.style.borderLeftColor = step.accent + '20';
+                    e.currentTarget.style.borderLeftColor = step.accent + '30';
                   }}
                 >
-                  <div className="flex items-baseline gap-4 mb-3">
+                  <div className="flex items-baseline gap-3 sm:gap-4 mb-2 sm:mb-3">
                     <span className="font-inter font-medium" style={{ fontSize: '13px', color: step.accent, opacity: 0.7 }}>
                       {step.number}
                     </span>
-                    <h3 className="font-outfit font-medium" style={{ fontSize: '24px', color: '#EBE8E0', letterSpacing: '-0.01em' }}>
+                    <h3 className="font-outfit font-medium" style={{ fontSize: 'clamp(20px, 3vw, 24px)', color: '#EBE8E0', letterSpacing: '-0.01em' }}>
                       {step.title}
                     </h3>
                   </div>
-                  <p className="font-inter mb-5" style={{ fontSize: '15px', lineHeight: 1.65, color: 'rgba(235,232,224,0.6)' }}>
+                  <p className="font-inter mb-4 sm:mb-5" style={{ fontSize: 'clamp(14px, 2vw, 15px)', lineHeight: 1.65, color: 'rgba(235,232,224,0.6)' }}>
                     {step.description}
                   </p>
-                  <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
                     {step.deliverables.map((d) => (
                       <div key={d} className="flex items-center gap-2">
                         <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: step.accent, opacity: 0.6 }} />
