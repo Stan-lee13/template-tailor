@@ -1,87 +1,47 @@
 
-# RetentionFirm Website Build
+## What's changing
 
-Port the uploaded template into this project and apply all four refinement passes you described.
+### 1. Process section ("How We Work") — break the grid symmetry
 
----
+The current 3-column equal grid with centered text and numbered badges is the most common AI-generated layout. Changes:
 
-## 1. Port the Template
+- Switch from a 3-column card grid to a **vertical timeline layout** with a connecting line on the left and steps stacked vertically (left-aligned, staggered widths)
+- Each step gets a **small accent bar** on the left instead of the centered numbered badge
+- Step numbers become subtle, left-aligned, inline with the title instead of inside a badge
+- Descriptions become more detailed — add a short bullet list of deliverables per step (e.g., "Growth Audit" includes "Revenue leak analysis", "Customer journey mapping", "30-day action plan")
+- Vary the visual weight of each card — the middle step is wider, the third is slightly indented
+- Remove the generic "connecting line" gradient
 
-- Install required dependencies: `gsap`, `lenis`, `@react-three/fiber`, `@react-three/drei`, `three`, `lucide-react`
-- Copy all sections (Navigation, Hero, TrustedBy, Services, Process, Results, CaseStudies, Pricing, FAQ, FinalCTA, Footer) and the BreathingMatrix component into the project
-- Copy case study images to `/public/images/`
-- Update `index.css` with the template's design system (stone-white, near-black, accent colors, font utilities, custom scrollbar, Lenis styles)
-- Update `tailwind.config.ts` to match the template's extended config
-- Wire everything together in `Index.tsx` with Lenis smooth scroll, GSAP ScrollTrigger, and the custom cursor
-- Load Outfit + Inter fonts via `index.html`
+### 2. Pricing section — reduce the template feel
 
-## 2. Replace All Copy with Your Provided Content
+- Switch from the standard 3-column equal card layout to an **asymmetric layout**: the featured "Growth" plan takes up ~50% width on the left as a large card, the other two plans stack vertically on the right as smaller cards
+- Remove the "Most Popular" floating pill badge — instead, use a subtle full-width accent border on the featured card
+- Change pricing card hover animations from the generic lift-and-shadow to a subtle **border-color shift** only
+- Remove the rounded-full pill buttons — use **squared-off (rounded-lg)** CTA buttons with a more editorial feel
+- Add a short **"Not sure which plan?"** line with a link to the CTA section below the cards
 
-Every section will use the exact website copy you provided:
+### 3. Footer — remove dead links, simplify
 
-- **Hero**: "Turn Your Existing Customers Into Your Most Profitable Growth Engine" headline, subheadline about repeat purchases/LTV, "Book a Growth Audit" + "See How It Works" CTAs
-- **Problem Section** (new): "You're Not Losing Money on Ads... You're Losing It After the First Purchase" with the pain-point bullet list
-- **Solution Section** (new): "We Build Your Retention Revenue Engine" with the system benefits
-- **Services**: "Everything You Need to Turn Customers Into Revenue" with all 5 service categories (Retention Infrastructure, Lifecycle Marketing, Revenue Optimization, Personalization & Segmentation, Loyalty & Retention Strategy)
-- **Results**: "What This Means For Your Brand" with outcome bullets
-- **Differentiation Section** (new): "We're Not Another Email Marketing Agency" with the revenue-focused positioning
-- **Process**: "How We Work" with 3 steps (Growth Audit, System Build, Optimization)
-- **Pricing**: Three tiers -- Foundation ($3K-$4K), Growth ($5K-$7K), Scale ($8K-$10K+) with all included features
-- **FinalCTA**: "You Already Paid for Your Customers... Now It's Time to Profit From Them"
-- **Footer**: "RetentionFirm -- Turn One-Time Buyers Into Lifelong Revenue"
+- Remove the "Company" column entirely (About Us, Case Studies, Careers, Contact — none exist)
+- Remove the "Resources" column (Blog, Retention Calculator, Guides, Newsletter — none exist)
+- Keep only: logo + tagline, Services list (as anchor links to #services), social icons, and the bottom copyright/legal row
+- This makes the footer honest and clean rather than faking pages that don't exist
 
-## 3. Enhanced Color System
+### 4. Strategic micro-improvements (non-breaking)
 
-Add blue, yellow, and green as micro-accent colors throughout -- never overpowering:
+- **Social proof ticker**: Add a subtle horizontal marquee below the hero with trust signals like "Trusted by 50+ DTC brands", "avg. 3.2x LTV increase", "$12M+ in retained revenue" — creates movement and credibility without being flashy
+- **Scroll progress indicator**: A thin orange progress bar fixed at the very top of the viewport that fills as you scroll — adds a premium interactive feel
+- **FAQ section**: Open the first question by default so the section doesn't look empty on first view
 
-- **Blue (#1E40AF / #4169E1)**: Service card icon accents on hover, process step number highlights, subtle glow on the differentiation section
-- **Yellow (#F59E0B / #D4A853)**: Pricing tier badges, stat counter underlines, "Most Popular" badge alternative, decorative star elements
-- **Green (#10B981)**: Result/outcome checkmarks, success metric indicators, hover states on positive-sentiment elements, subtle gradient touches on the results section
-- **Implementation**: Gradient borders that shift orange-to-blue, multi-color icon system on services, colored underlines on section eyebrows, subtle colored glows behind key stats
+### Technical details
 
-## 4. Custom Section Transitions
+Files modified:
+- `src/sections/Process.tsx` — full rewrite to vertical timeline layout
+- `src/sections/Pricing.tsx` — restructure to asymmetric featured layout
+- `src/sections/Footer.tsx` — strip dead link columns
+- `src/sections/FAQ.tsx` — default first item open
+- `src/pages/Index.tsx` — add scroll progress bar and social proof marquee component
+- New: `src/components/SocialProofTicker.tsx` — marquee component
+- New: `src/components/ScrollProgress.tsx` — thin top bar
 
-Replace flat horizontal cuts with fluid, editorial transitions:
-
-- **Hero to Problem**: Angled SVG divider with a subtle curve, dark-to-light gradient bleed
-- **Problem to Solution**: Overlapping card that bridges both sections, creating visual continuity
-- **Solution to Services**: Soft wave SVG separator with layered opacity
-- **Services to Results**: Diagonal clip-path transition with a blurred gradient overlay
-- **Results to Differentiation**: Asymmetrical curved divider with a masked shape
-- **Between dark/light sections**: Layered gradient fades instead of hard color switches
-- **Decorative elements**: Rotated geometric shapes positioned at section boundaries, subtle parallax on divider elements
-
-## 5. Reduce AI-Generated Feel
-
-Introduce intentional imperfection and editorial variation:
-
-- **Asymmetrical layouts**: Service cards with staggered sizing (alternating wider/narrower), process steps with offset vertical alignment
-- **Staggered spacing**: Vary section padding (some sections tighter, some more generous), non-uniform card gaps
-- **Layered backgrounds**: Subtle noise texture overlay on light sections, gradient mesh patterns on dark sections
-- **Depth variation**: Some cards with deeper shadows and slight rotation (1-2deg), overlapping elements between sections
-- **Typography variation**: Mix headline sizes within sections, occasional italic or lighter-weight accent text
-- **Decorative elements**: Small rotated squares/circles as floating accents, thin diagonal lines as visual rhythm breakers
-- **Non-uniform card sizing**: Pricing cards with the featured tier visually larger and offset, service cards with varying heights
-
-## What Stays the Same
-
-- Orange/black/white foundation palette
-- Bold contrast and premium aesthetic
-- Clean Outfit + Inter typography system
-- Strong visual hierarchy
-- GSAP scroll-triggered animations
-- Three.js particle background on hero
-- Lenis smooth scrolling
-- Custom cursor on desktop
-- Mobile-responsive design
-
----
-
-## Technical Notes
-
-- New dependencies: `gsap`, `lenis`, `three`, `@react-three/fiber`, `@react-three/drei`
-- New sections to create: ProblemSection, SolutionSection, DifferentiationSection
-- New component: SectionDivider (reusable SVG/CSS transition shapes)
-- All sections will be created under `src/sections/`
-- BreathingMatrix goes under `src/components/`
-- Fonts loaded via Google Fonts CDN in `index.html`
+No new dependencies required. All changes use existing GSAP + Tailwind stack.
