@@ -30,15 +30,15 @@ export default function Hero() {
       <BreathingMatrix />
 
       {/* Decorative floating elements */}
-      <div className="absolute top-[20%] left-[8%] w-3 h-3 rounded-full opacity-20 animate-pulse" style={{ background: '#4169E1', filter: 'blur(4px)' }} />
-      <div className="absolute top-[35%] right-[12%] w-2 h-2 opacity-15" style={{ background: '#10B981', transform: 'rotate(45deg)', filter: 'blur(2px)' }} />
-      <div className="absolute bottom-[30%] left-[15%] w-4 h-[1px] opacity-20" style={{ background: 'linear-gradient(90deg, #F59E0B, transparent)' }} />
+      <div className="absolute top-[20%] left-[8%] w-3 h-3 rounded-full opacity-20 animate-pulse hidden sm:block" style={{ background: '#4169E1', filter: 'blur(4px)' }} />
+      <div className="absolute top-[35%] right-[12%] w-2 h-2 opacity-15 hidden sm:block" style={{ background: '#10B981', transform: 'rotate(45deg)', filter: 'blur(2px)' }} />
+      <div className="absolute bottom-[30%] left-[15%] w-4 h-[1px] opacity-20 hidden sm:block" style={{ background: 'linear-gradient(90deg, #F59E0B, transparent)' }} />
 
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-6" style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-5 sm:px-6" style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
         <span
           ref={eyebrowRef}
-          className="block uppercase tracking-widest mb-6"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 500, color: '#A0A0A0', letterSpacing: '0.08em', opacity: 0 }}
+          className="block uppercase tracking-widest mb-4 sm:mb-6"
+          style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 500, color: '#A0A0A0', letterSpacing: '0.08em', opacity: 0 }}
         >
           <span style={{ color: '#F97316' }}>●</span>&nbsp;&nbsp;Retention Marketing Agency
         </span>
@@ -46,35 +46,33 @@ export default function Hero() {
         <h1
           ref={headlineRef}
           className="font-outfit font-medium"
-          style={{ fontSize: 'clamp(34px, 6.5vw, 88px)', lineHeight: 0.94, color: '#EBE8E0', letterSpacing: '-0.02em' }}
+          style={{ fontSize: 'clamp(32px, 6.5vw, 88px)', lineHeight: 1, color: '#EBE8E0', letterSpacing: '-0.02em' }}
         >
           <span className="word inline-block opacity-0">Turn&nbsp;</span>
           <span className="word inline-block opacity-0">Your&nbsp;</span>
           <span className="word inline-block opacity-0">Existing&nbsp;</span>
           <span className="word inline-block opacity-0">Customers&nbsp;</span>
-          <br />
           <span className="word inline-block opacity-0">Into&nbsp;</span>
           <span className="word inline-block opacity-0">Your&nbsp;</span>
           <span className="word inline-block opacity-0" style={{ color: '#F97316' }}>Most&nbsp;</span>
           <span className="word inline-block opacity-0" style={{ color: '#F97316' }}>Profitable&nbsp;</span>
-          <br />
           <span className="word inline-block opacity-0">Growth&nbsp;</span>
           <span className="word inline-block opacity-0">Engine</span>
         </h1>
 
         <p
           ref={subRef}
-          className="mt-7 mx-auto"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: '18px', lineHeight: 1.6, color: 'rgba(235,232,224,0.8)', maxWidth: '580px', letterSpacing: '-0.01em', opacity: 0 }}
+          className="mt-5 sm:mt-7 mx-auto"
+          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(235,232,224,0.8)', maxWidth: '580px', letterSpacing: '-0.01em', opacity: 0 }}
         >
           We help ecommerce brands increase repeat purchases, boost customer lifetime value, and unlock hidden revenue—without increasing ad spend.
         </p>
 
-        <div ref={ctaRef} className="flex flex-wrap items-center justify-center gap-4 mt-10" style={{ opacity: 0 }}>
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10 w-full sm:w-auto" style={{ opacity: 0 }}>
           <button
             onClick={() => scrollTo('#cta')}
-            className="font-inter font-medium text-white transition-all duration-200"
-            style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px', fontSize: '16px' }}
+            className="font-inter font-medium text-white transition-all duration-200 w-full sm:w-auto"
+            style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; e.currentTarget.style.transform = 'scale(1.02)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = '#F97316'; e.currentTarget.style.transform = 'scale(1)'; }}
           >
@@ -82,8 +80,8 @@ export default function Hero() {
           </button>
           <button
             onClick={() => scrollTo('#process')}
-            className="font-inter font-medium transition-all duration-200"
-            style={{ background: 'transparent', padding: '14px 32px', borderRadius: '9999px', fontSize: '16px', color: '#EBE8E0', border: '1px solid rgba(235,232,224,0.3)' }}
+            className="font-inter font-medium transition-all duration-200 w-full sm:w-auto"
+            style={{ background: 'transparent', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px', color: '#EBE8E0', border: '1px solid rgba(235,232,224,0.3)' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(235,232,224,0.08)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.4)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(235,232,224,0.3)'; }}
           >

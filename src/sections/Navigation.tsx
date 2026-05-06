@@ -38,12 +38,12 @@ export default function Navigation() {
           borderBottom: scrolled ? '1px solid #D6D3CC' : '1px solid transparent',
         }}
       >
-        <div className="flex items-center justify-between h-16" style={{ padding: '0 clamp(24px, 5vw, 80px)' }}>
+        <div className="flex items-center justify-between h-14 sm:h-16" style={{ padding: '0 clamp(16px, 5vw, 80px)' }}>
           <a href="#" className="font-outfit text-lg tracking-tight" style={{ color: scrolled ? '#0A0A0A' : '#EBE8E0', fontWeight: 600 }}>
             RetentionFirm
           </a>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -59,7 +59,7 @@ export default function Navigation() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-6">
             <a
               href="#cta"
               onClick={(e) => handleNavClick(e, '#cta')}
@@ -77,7 +77,7 @@ export default function Navigation() {
           </div>
 
           <button
-            className="md:hidden flex flex-col gap-1.5 p-2"
+            className="lg:hidden flex flex-col gap-1.5 p-2"
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
@@ -90,16 +90,16 @@ export default function Navigation() {
 
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-8"
+          className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-6 sm:gap-8"
           style={{ background: 'rgba(10,10,10,0.98)', backdropFilter: 'blur(20px)' }}
         >
-          <button className="absolute top-6 right-6 p-2" onClick={() => setMobileOpen(false)} aria-label="Close menu">
+          <button className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2" onClick={() => setMobileOpen(false)} aria-label="Close menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EBE8E0" strokeWidth="2">
               <line x1="4" y1="4" x2="20" y2="20" /><line x1="20" y1="4" x2="4" y2="20" />
             </svg>
           </button>
           {navLinks.map((link) => (
-            <a key={link.label} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-outfit text-3xl font-medium" style={{ color: '#EBE8E0' }}>
+            <a key={link.label} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-outfit text-2xl sm:text-3xl font-medium" style={{ color: '#EBE8E0' }}>
               {link.label}
             </a>
           ))}
