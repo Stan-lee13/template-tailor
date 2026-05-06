@@ -1,15 +1,25 @@
-const serviceLinks = ['Email Marketing', 'SMS Marketing', 'Loyalty Programs', 'Churn Reduction', 'Analytics'];
-const companyLinks = ['About Us', 'Case Studies', 'Pricing', 'Careers', 'Contact'];
-const resourceLinks = ['Blog', 'Retention Calculator', 'Guides & Templates', 'Newsletter'];
+const serviceLinks = [
+  { label: 'Email Marketing', href: '#services' },
+  { label: 'SMS Marketing', href: '#services' },
+  { label: 'Loyalty Programs', href: '#services' },
+  { label: 'Churn Reduction', href: '#services' },
+  { label: 'Analytics', href: '#services' },
+];
+
+const scrollTo = (e: React.MouseEvent, href: string) => {
+  e.preventDefault();
+  const el = document.querySelector(href);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+};
 
 export default function Footer() {
   return (
     <footer style={{ background: '#0A0A0A', padding: '64px clamp(24px, 5vw, 80px) 32px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-          <div className="lg:col-span-1">
+        <div className="flex flex-col md:flex-row gap-12 md:gap-16 justify-between">
+          <div className="md:max-w-[320px]">
             <h3 className="font-outfit font-medium mb-4" style={{ fontSize: '20px', color: '#EBE8E0' }}>RetentionFirm</h3>
-            <p className="font-inter mb-4" style={{ fontSize: '14px', lineHeight: 1.6, color: '#8A8A8A', maxWidth: '280px' }}>
+            <p className="font-inter mb-5" style={{ fontSize: '14px', lineHeight: 1.6, color: '#8A8A8A' }}>
               Turn One-Time Buyers Into Lifelong Revenue
             </p>
             <div className="h-[2px] w-10 rounded-full mb-6" style={{ background: 'linear-gradient(90deg, #F97316, #4169E1)' }} />
@@ -27,30 +37,8 @@ export default function Footer() {
             <h4 className="font-inter font-medium uppercase mb-5" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>Services</h4>
             <div className="flex flex-col gap-3">
               {serviceLinks.map((link) => (
-                <a key={link} href="#" className="font-inter text-sm transition-colors duration-300" style={{ color: 'rgba(235,232,224,0.6)' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#EBE8E0')} onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(235,232,224,0.6)')}>
-                  {link}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-inter font-medium uppercase mb-5" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>Company</h4>
-            <div className="flex flex-col gap-3">
-              {companyLinks.map((link) => (
-                <a key={link} href="#" className="font-inter text-sm transition-colors duration-300" style={{ color: 'rgba(235,232,224,0.6)' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#EBE8E0')} onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(235,232,224,0.6)')}>
-                  {link}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-inter font-medium uppercase mb-5" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>Resources</h4>
-            <div className="flex flex-col gap-3">
-              {resourceLinks.map((link) => (
-                <a key={link} href="#" className="font-inter text-sm transition-colors duration-300" style={{ color: 'rgba(235,232,224,0.6)' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#EBE8E0')} onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(235,232,224,0.6)')}>
-                  {link}
+                <a key={link.label} href={link.href} onClick={(e) => scrollTo(e, link.href)} className="font-inter text-sm transition-colors duration-300" style={{ color: 'rgba(235,232,224,0.6)' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#EBE8E0')} onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(235,232,224,0.6)')}>
+                  {link.label}
                 </a>
               ))}
             </div>

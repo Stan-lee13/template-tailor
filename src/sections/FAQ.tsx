@@ -33,7 +33,7 @@ function AccordionItem({ question, answer, isOpen, onClick }: { question: string
 
 export default function FAQ() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {

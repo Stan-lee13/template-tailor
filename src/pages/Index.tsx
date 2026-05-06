@@ -16,6 +16,8 @@ import FAQ from '../sections/FAQ';
 import FinalCTA from '../sections/FinalCTA';
 import Footer from '../sections/Footer';
 import SectionDivider from '../components/SectionDivider';
+import SocialProofTicker from '../components/SocialProofTicker';
+import ScrollProgress from '../components/ScrollProgress';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -92,10 +94,13 @@ const Index = () => {
 
   return (
     <div className="relative">
+      <ScrollProgress />
       <CustomCursor />
       <Navigation />
       <main>
         <Hero />
+        
+        <SocialProofTicker />
         
         {/* Hero → Problem: angled divider */}
         <SectionDivider variant="angle" fromColor="#0A0A0A" toColor="#0A0A0A" />
