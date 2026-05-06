@@ -9,14 +9,14 @@ const plans = [
     name: 'Foundation',
     price: '$3K–$4K',
     period: '/month',
-    bestFor: 'Brands doing $20K–$80K/month',
+    bestFor: 'Brands doing $20K–$80K/mo',
     description: 'Fix leaks + build foundation',
     featured: false,
     accent: '#F97316',
     features: [
       'Email/SMS setup',
-      'Core flows (welcome, abandoned cart, post-purchase)',
-      'Monthly campaigns (4–6 emails)',
+      'Core flows (welcome, cart, post-purchase)',
+      'Monthly campaigns (4–6)',
       'Basic segmentation',
     ],
   },
@@ -24,7 +24,7 @@ const plans = [
     name: 'Growth',
     price: '$5K–$7K',
     period: '/month',
-    bestFor: 'Brands doing $80K–$250K/month',
+    bestFor: 'Brands doing $80K–$250K/mo',
     description: 'Increase LTV + repeat purchases',
     featured: true,
     accent: '#4169E1',
@@ -41,8 +41,8 @@ const plans = [
     name: 'Scale',
     price: '$8K–$10K+',
     period: '/month',
-    bestFor: 'Brands doing $250K+/month',
-    description: 'Turn retention into primary growth channel',
+    bestFor: 'Brands doing $250K+/mo',
+    description: 'Retention becomes primary growth channel',
     featured: false,
     accent: '#10B981',
     features: [
@@ -56,6 +56,90 @@ const plans = [
     ],
   },
 ];
+
+const scrollTo = (href: string) => {
+  const el = document.querySelector(href);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+};
+
+function PricingCard({ plan, large = false }: { plan: typeof plans[0]; large?: boolean }) {
+  const isDark = plan.featured;
+  return (
+    <div
+      className={`relative rounded-xl transition-colors duration-300 h-full ${large ? '' : ''}`}
+      style={{
+        background: isDark ? '#0A0A0A' : '#FFFFFF',
+        border: isDark ? `2px solid ${plan.accent}25` : '1px solid #D6D3CC',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = plan.accent + '50';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = isDark ? plan.accent + '25' : '#D6D3CC';
+      }}
+    >
+      <div className={`${large ? 'p-9 md:p-11' : 'p-7 md:p-8'} h-full flex flex-col`}>
+        <span className="font-inter text-xs font-medium px-2.5 py-1 rounded-md inline-block self-start mb-4" style={{ background: plan.accent + '10', color: plan.accent, fontSize: '11px' }}>
+          {plan.bestFor}
+        </span>
+        <h3 className="font-outfit font-medium mb-2" style={{ fontSize: large ? '28px' : '22px', color: isDark ? '#EBE8E0' : '#0A0A0A' }}>
+          {plan.name}
+        </h3>
+        <div className="flex items-baseline gap-1 mb-2">
+          <span className="font-outfit font-bold" style={{ fontSize: large ? '40px' : '32px', color: plan.accent }}>{plan.price}</span>
+          <span className="font-inter" style={{ fontSize: '14px', color: isDark ? '#8A8A8A' : '#555555' }}>{plan.period}</span>
+        </div>
+        <p className="font-inter text-sm mb-6" style={{ color: isDark ? 'rgba(235,232,224,0.55)' : '#555555' }}>
+          {plan.description}
+        </p>
+
+        <div className="h-px mb-6" style={{ background: isDark ? 'rgba(255,255,255,0.06)' : '#E8E5DE' }} />
+
+        <div className="flex flex-col gap-2.5 mb-8 flex-1">
+          {plan.features.map((feature) => (
+            <div key={feature} className="flex items-start gap-2.5">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5">
+                <path d="M3 8l4 4 6-6" stroke={plan.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="font-inter text-sm" style={{ color: isDark ? 'rgba(235,232,224,0.75)' : '#2D2D2D', lineHeight: 1.5 }}>
+                {feature}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <button
+          className="w-full font-inter font-medium text-sm py-3 rounded-lg transition-all duration-200"
+          style={{
+            background: isDark ? plan.accent : 'transparent',
+            color: isDark ? '#FFFFFF' : '#0A0A0A',
+            border: isDark ? 'none' : '1px solid #D6D3CC',
+          }}
+          onMouseEnter={(e) => {
+            if (isDark) {
+              e.currentTarget.style.opacity = '0.88';
+            } else {
+              e.currentTarget.style.background = '#0A0A0A';
+              e.currentTarget.style.color = '#EBE8E0';
+              e.currentTarget.style.borderColor = '#0A0A0A';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (isDark) {
+              e.currentTarget.style.opacity = '1';
+            } else {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = '#0A0A0A';
+              e.currentTarget.style.borderColor = '#D6D3CC';
+            }
+          }}
+        >
+          Get Started
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -74,126 +158,50 @@ export default function Pricing() {
     return () => ctx.revert();
   }, []);
 
+  const featured = plans.find((p) => p.featured)!;
+  const others = plans.filter((p) => !p.featured);
+
   return (
     <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#EBE8E0', padding: '12vh clamp(24px, 5vw, 80px)' }}>
-      {/* Subtle decorative elements */}
-      <div className="absolute top-16 left-[12%] w-[100px] h-[2px] opacity-10" style={{ background: 'linear-gradient(90deg, #F59E0B, transparent)', transform: 'rotate(-5deg)' }} />
-
       <div className="relative max-w-[1100px] mx-auto">
-        <div className="pricing-head text-center mb-16" style={{ opacity: 0 }}>
+        <div className="pricing-head mb-14" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>
             Pricing
           </span>
-          <h2 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(30px, 5vw, 60px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>
+          <h2 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(30px, 5vw, 56px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>
             Simple, Transparent Pricing
           </h2>
-          <p className="font-inter mx-auto" style={{ fontSize: '17px', lineHeight: 1.6, color: '#2D2D2D', maxWidth: '500px' }}>
+          <p className="font-inter" style={{ fontSize: '17px', lineHeight: 1.6, color: '#2D2D2D', maxWidth: '480px' }}>
             Choose a plan that fits your retention goals. All plans include a 30-day satisfaction guarantee.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-          {plans.map((plan, i) => (
-            <div
-              key={plan.name}
-              className="pricing-card relative rounded-2xl transition-all duration-300"
-              style={{
-                opacity: 0,
-                transform: plan.featured ? 'scale(1.03) translateY(-8px)' : undefined,
-              }}
-            >
-              {plan.featured && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 font-inter font-medium uppercase" style={{ fontSize: '11px', color: '#FFFFFF', background: plan.accent, padding: '5px 16px', borderRadius: '20px', letterSpacing: '0.04em' }}>
-                  Most Popular
-                </div>
-              )}
+        {/* Asymmetric layout: featured large left, others stacked right */}
+        <div className="flex flex-col lg:flex-row gap-5 items-stretch">
+          {/* Featured plan — large */}
+          <div className="pricing-card lg:w-[52%]" style={{ opacity: 0 }}>
+            <PricingCard plan={featured} large />
+          </div>
 
-              <div
-                className="p-8 md:p-9 h-full rounded-2xl"
-                style={{
-                  background: plan.featured ? '#0A0A0A' : '#FFFFFF',
-                  border: `1px solid ${plan.featured ? plan.accent + '30' : '#D6D3CC'}`,
-                }}
-                onMouseEnter={(e) => {
-                  if (!plan.featured) {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = `0 12px 40px ${plan.accent}12`;
-                    e.currentTarget.style.borderColor = plan.accent + '30';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!plan.featured) {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
-                    e.currentTarget.style.borderColor = '#D6D3CC';
-                  }
-                }}
-              >
-                <div className="mb-1">
-                  <span className="font-inter text-xs font-medium px-2 py-1 rounded-full" style={{ background: plan.accent + '12', color: plan.accent }}>
-                    {plan.bestFor}
-                  </span>
-                </div>
-                <h3 className="font-outfit font-medium mt-4 mb-2" style={{ fontSize: '24px', color: plan.featured ? '#EBE8E0' : '#0A0A0A' }}>
-                  {plan.name}
-                </h3>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="font-outfit font-bold" style={{ fontSize: '36px', color: plan.accent }}>{plan.price}</span>
-                  <span className="font-inter" style={{ fontSize: '14px', color: plan.featured ? '#8A8A8A' : '#555555' }}>{plan.period}</span>
-                </div>
-                <p className="font-inter text-sm mb-6" style={{ color: plan.featured ? 'rgba(235,232,224,0.6)' : '#555555' }}>
-                  Goal: {plan.description}
-                </p>
-
-                <div className="h-px mb-6" style={{ background: plan.featured ? 'rgba(255,255,255,0.08)' : '#D6D3CC' }} />
-
-                <div className="flex flex-col gap-3 mb-8">
-                  {plan.features.map((feature) => (
-                    <div key={feature} className="flex items-start gap-3">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5">
-                        <path d="M3 8l4 4 6-6" stroke={plan.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      <span className="font-inter text-sm" style={{ color: plan.featured ? 'rgba(235,232,224,0.8)' : '#2D2D2D', lineHeight: 1.5 }}>
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <button
-                  className="w-full font-inter font-medium text-sm py-3 rounded-full transition-all duration-200"
-                  style={{
-                    background: plan.featured ? plan.accent : 'transparent',
-                    color: plan.featured ? '#FFFFFF' : '#0A0A0A',
-                    border: plan.featured ? 'none' : '1px solid #D6D3CC',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (plan.featured) {
-                      e.currentTarget.style.opacity = '0.9';
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                    } else {
-                      e.currentTarget.style.background = '#0A0A0A';
-                      e.currentTarget.style.color = '#EBE8E0';
-                      e.currentTarget.style.borderColor = '#0A0A0A';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (plan.featured) {
-                      e.currentTarget.style.opacity = '1';
-                      e.currentTarget.style.transform = 'scale(1)';
-                    } else {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = '#0A0A0A';
-                      e.currentTarget.style.borderColor = '#D6D3CC';
-                    }
-                  }}
-                >
-                  Get Started
-                </button>
+          {/* Other plans stacked */}
+          <div className="lg:w-[48%] flex flex-col gap-5">
+            {others.map((plan) => (
+              <div key={plan.name} className="pricing-card flex-1" style={{ opacity: 0 }}>
+                <PricingCard plan={plan} />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
+        <p className="font-inter text-center mt-10" style={{ fontSize: '15px', color: '#555555' }}>
+          Not sure which plan?{' '}
+          <button onClick={() => scrollTo('#cta')} className="font-medium underline underline-offset-2 transition-colors duration-200" style={{ color: '#F97316' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#EA580C')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#F97316')}
+          >
+            Book a free audit and we'll recommend one.
+          </button>
+        </p>
       </div>
     </section>
   );
