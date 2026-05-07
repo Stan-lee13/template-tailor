@@ -108,22 +108,22 @@ const Index = () => {
         <ProblemSection />
         
         {/* Problem → Solution: curved wave */}
-        <SectionDivider variant="wave" fromColor="#0A0A0A" toColor="#EBE8E0" />
+        <SectionDivider variant="wave" fromColor="#0A0A0A" toColor="#f1ece4" />
         
         <SolutionSection />
         
         {/* Solution → Services: asymmetric */}
-        <SectionDivider variant="asymmetric" fromColor="#EBE8E0" toColor="#EBE8E0" />
+        <SectionDivider variant="asymmetric" fromColor="#f1ece4" toColor="#f1ece4" />
         
         <Services />
         
         {/* Services → Results: diagonal */}
-        <SectionDivider variant="diagonal" fromColor="#EBE8E0" toColor="#EBE8E0" />
+        <SectionDivider variant="diagonal" fromColor="#f1ece4" toColor="#f1ece4" />
         
         <Results />
         
         {/* Results → Differentiation: curve */}
-        <SectionDivider variant="curve" fromColor="#EBE8E0" toColor="#0A0A0A" />
+        <SectionDivider variant="curve" fromColor="#f1ece4" toColor="#0A0A0A" />
         
         <DifferentiationSection />
         
@@ -133,17 +133,17 @@ const Index = () => {
         <Process />
         
         {/* Process → Pricing: angle flip */}
-        <SectionDivider variant="angle" fromColor="#0A0A0A" toColor="#EBE8E0" flip />
+        <SectionDivider variant="angle" fromColor="#0A0A0A" toColor="#f1ece4" flip />
         
         <Pricing />
         
         {/* Pricing → FAQ: asymmetric */}
-        <SectionDivider variant="asymmetric" fromColor="#EBE8E0" toColor="#EBE8E0" />
+        <SectionDivider variant="asymmetric" fromColor="#f1ece4" toColor="#f1ece4" />
         
         <FAQ />
         
         {/* FAQ → CTA: curve */}
-        <SectionDivider variant="curve" fromColor="#EBE8E0" toColor="#0A0A0A" />
+        <SectionDivider variant="curve" fromColor="#f1ece4" toColor="#0A0A0A" />
         
         <FinalCTA />
       </main>

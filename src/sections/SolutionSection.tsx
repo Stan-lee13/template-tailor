@@ -29,7 +29,7 @@ export default function SolutionSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ background: '#EBE8E0', padding: '12vh clamp(20px, 5vw, 80px) 10vh' }}>
+    <section ref={sectionRef} className="relative" style={{ background: '#f1ece4', padding: '12vh clamp(20px, 5vw, 80px) 10vh' }}>
       <div className="absolute top-20 right-[8%] w-6 h-6 rounded-full opacity-10 hidden sm:block" style={{ background: '#4169E1', filter: 'blur(12px)' }} />
       <div className="absolute bottom-32 left-[5%] w-3 h-3 opacity-10 hidden sm:block" style={{ background: '#10B981', transform: 'rotate(45deg)', filter: 'blur(6px)' }} />
 

@@ -46,7 +46,7 @@ export default function Hero() {
         <h1
           ref={headlineRef}
           className="font-outfit font-medium"
-          style={{ fontSize: 'clamp(32px, 6.5vw, 88px)', lineHeight: 1, color: '#EBE8E0', letterSpacing: '-0.02em' }}
+          style={{ fontSize: 'clamp(32px, 6.5vw, 88px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em' }}
         >
           <span className="word inline-block opacity-0">Turn&nbsp;</span>
           <span className="word inline-block opacity-0">Your&nbsp;</span>
@@ -63,7 +63,7 @@ export default function Hero() {
         <p
           ref={subRef}
           className="mt-5 sm:mt-7 mx-auto"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(235,232,224,0.8)', maxWidth: '580px', letterSpacing: '-0.01em', opacity: 0 }}
+          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(241,236,228,0.8)', maxWidth: '580px', letterSpacing: '-0.01em', opacity: 0 }}
         >
           We help ecommerce brands increase repeat purchases, boost customer lifetime value, and unlock hidden revenue—without increasing ad spend.
         </p>
@@ -81,9 +81,9 @@ export default function Hero() {
           <button
             onClick={() => scrollTo('#process')}
             className="font-inter font-medium transition-all duration-200 w-full sm:w-auto"
-            style={{ background: 'transparent', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px', color: '#EBE8E0', border: '1px solid rgba(235,232,224,0.3)' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(235,232,224,0.08)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.4)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(235,232,224,0.3)'; }}
+            style={{ background: 'transparent', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px', color: '#f1ece4', border: '1px solid rgba(241,236,228,0.3)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(241,236,228,0.08)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.4)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(241,236,228,0.3)'; }}
           >
             See How It Works
           </button>
@@ -94,7 +94,7 @@ export default function Hero() {
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: '200px', background: 'linear-gradient(to bottom, transparent 0%, #0A0A0A 100%)', zIndex: 5 }} />
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none" style={{ zIndex: 10 }}>
-        <div className="w-px mx-auto" style={{ height: '40px', background: 'rgba(235,232,224,0.4)', animation: 'scrollPulse 2s ease-in-out infinite' }} />
+        <div className="w-px mx-auto" style={{ height: '40px', background: 'rgba(241,236,228,0.4)', animation: 'scrollPulse 2s ease-in-out infinite' }} />
       </div>
 
       <style>{`@keyframes scrollPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }`}</style>

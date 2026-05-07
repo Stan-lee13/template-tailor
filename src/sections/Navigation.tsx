@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import BrandLogo from '../components/BrandLogo';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -32,15 +33,15 @@ export default function Navigation() {
         ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? 'rgba(235,232,224,0.92)' : 'transparent',
+          background: scrolled ? 'rgba(241,236,228,0.92)' : 'transparent',
           backdropFilter: scrolled ? 'blur(12px)' : 'none',
           WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
           borderBottom: scrolled ? '1px solid #D6D3CC' : '1px solid transparent',
         }}
       >
         <div className="flex items-center justify-between h-14 sm:h-16" style={{ padding: '0 clamp(16px, 5vw, 80px)' }}>
-          <a href="#" className="font-outfit text-lg tracking-tight" style={{ color: scrolled ? '#0A0A0A' : '#EBE8E0', fontWeight: 600 }}>
-            RetentionFirm
+          <a href="#" className="inline-flex items-center">
+            <BrandLogo variant={scrolled ? 'light' : 'dark'} size="sm" />
           </a>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -50,9 +51,9 @@ export default function Navigation() {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className="text-sm font-medium transition-colors duration-300"
-                style={{ color: scrolled ? '#555555' : 'rgba(235,232,224,0.7)', letterSpacing: '-0.01em' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = scrolled ? '#0A0A0A' : '#EBE8E0')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = scrolled ? '#555555' : 'rgba(235,232,224,0.7)')}
+                style={{ color: scrolled ? '#555555' : 'rgba(241,236,228,0.7)', letterSpacing: '-0.01em' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = scrolled ? '#0A0A0A' : '#f1ece4')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = scrolled ? '#555555' : 'rgba(241,236,228,0.7)')}
               >
                 {link.label}
               </a>
@@ -81,9 +82,9 @@ export default function Navigation() {
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
-            <span className="block w-5 h-0.5" style={{ background: scrolled ? '#0A0A0A' : '#EBE8E0' }} />
-            <span className="block w-5 h-0.5" style={{ background: scrolled ? '#0A0A0A' : '#EBE8E0' }} />
-            <span className="block w-5 h-0.5" style={{ background: scrolled ? '#0A0A0A' : '#EBE8E0' }} />
+            <span className="block w-5 h-0.5" style={{ background: scrolled ? '#0A0A0A' : '#f1ece4' }} />
+            <span className="block w-5 h-0.5" style={{ background: scrolled ? '#0A0A0A' : '#f1ece4' }} />
+            <span className="block w-5 h-0.5" style={{ background: scrolled ? '#0A0A0A' : '#f1ece4' }} />
           </button>
         </div>
       </nav>
@@ -94,12 +95,12 @@ export default function Navigation() {
           style={{ background: 'rgba(10,10,10,0.98)', backdropFilter: 'blur(20px)' }}
         >
           <button className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2" onClick={() => setMobileOpen(false)} aria-label="Close menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EBE8E0" strokeWidth="2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f1ece4" strokeWidth="2">
               <line x1="4" y1="4" x2="20" y2="20" /><line x1="20" y1="4" x2="4" y2="20" />
             </svg>
           </button>
           {navLinks.map((link) => (
-            <a key={link.label} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-outfit text-2xl sm:text-3xl font-medium" style={{ color: '#EBE8E0' }}>
+            <a key={link.label} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-outfit text-2xl sm:text-3xl font-medium" style={{ color: '#f1ece4' }}>
               {link.label}
             </a>
           ))}
