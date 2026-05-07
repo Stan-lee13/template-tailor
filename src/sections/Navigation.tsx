@@ -40,8 +40,8 @@ export default function Navigation() {
         }}
       >
         <div className="flex items-center justify-between h-14 sm:h-16" style={{ padding: '0 clamp(16px, 5vw, 80px)' }}>
-          <a href="#" className="font-outfit text-lg tracking-tight" style={{ color: scrolled ? '#0A0A0A' : '#EBE8E0', fontWeight: 600 }}>
-            RetentionFirm
+          <a href="#" className="inline-flex items-center">
+            <BrandLogo variant={scrolled ? 'light' : 'dark'} size="sm" />
           </a>
 
           <div className="hidden lg:flex items-center gap-8">
