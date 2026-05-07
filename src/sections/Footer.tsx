@@ -1,3 +1,5 @@
+import BrandLogo from '../components/BrandLogo';
+
 const serviceLinks = [
   { label: 'Email Marketing', href: '#services' },
   { label: 'SMS Marketing', href: '#services' },
