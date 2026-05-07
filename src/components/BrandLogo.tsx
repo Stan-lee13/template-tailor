@@ -7,26 +7,29 @@ interface BrandLogoProps {
 /**
  * RetentionFirm. branded wordmark.
  *
- * "Retention" — primary color (black on light, cream on dark)
- *   • dot on the "i" is inverted (white on light, black on dark)
- * "Firm" — white on light backgrounds (with subtle shadow), black on dark
- *   • dot on the "i" is inverted (black on light, cream on dark)
- * Trailing full-stop "." in primary color.
+ * On LIGHT backgrounds (variant='light'):
+ *   "Retention" black, dot on "i" white
+ *   "Firm" white (with subtle shadow), dot on "i" black
+ *   Trailing "." black
+ *
+ * On DARK backgrounds (variant='dark'):
+ *   "Retention" cream, dot on "i" dark/near-black
+ *   "Firm" orange-ish accent for contrast, dot on "i" cream
+ *   Trailing "." cream
  */
 export default function BrandLogo({ variant = 'dark', size = 'md', className = '' }: BrandLogoProps) {
-  const isDark = variant === 'dark'; // dark = sits on dark bg
+  const isDark = variant === 'dark';
 
-  // Primary text color (main letters)
-  const primary = isDark ? '#f1ece4' : '#0A0A0A';
-  // Secondary text color (contrasting parts)
-  const secondary = isDark ? '#0A0A0A' : '#FFFFFF';
-  // Dot accents (inverted)
-  const retentionDot = secondary; // dot on "i" in Retention
-  const firmDot = primary; // dot on "i" in Firm
-
-  const fontSize = size === 'sm' ? '18px' : size === 'md' ? '20px' : '26px';
+  const retentionColor = isDark ? '#f1ece4' : '#0A0A0A';
+  const retentionDot = isDark ? '#0A0A0A' : '#FFFFFF';
+  const firmColor = isDark ? '#FFFFFF' : '#FFFFFF';
+  const firmDot = isDark ? '#f1ece4' : '#0A0A0A';
+  const periodColor = isDark ? '#f1ece4' : '#0A0A0A';
 
   const firmShadow = !isDark ? '0 0 1px rgba(0,0,0,0.08)' : 'none';
+
+  const fontSize = size === 'sm' ? '18px' : size === 'md' ? '20px' : '26px';
+  const dotSize = size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '3.5px';
 
   return (
     <span
@@ -34,46 +37,38 @@ export default function BrandLogo({ variant = 'dark', size = 'md', className = '
       style={{ fontSize, fontWeight: 600, letterSpacing: '-0.02em' }}
       aria-label="RetentionFirm"
     >
-      {/* R-e-t-e-n-t */}
-      <span style={{ color: primary }}>Retent</span>
+      <span style={{ color: retentionColor }}>Retent</span>
       {/* i with custom dot */}
-      <span className="relative inline-block" style={{ color: primary }}>
-        {/* The "i" without its natural dot — we use a dotless approach via clipping */}
-        <span style={{ color: primary }}>i</span>
-        {/* Overlay dot */}
-        <span
-          className="absolute left-1/2 -translate-x-1/2"
-          style={{
-            top: size === 'sm' ? '-0.04em' : '-0.04em',
-            width: size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '3.5px',
-            height: size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '3.5px',
-            borderRadius: '50%',
-            background: retentionDot,
-          }}
-        />
-      </span>
-      <span style={{ color: primary }}>on</span>
-
-      {/* F */}
-      <span style={{ color: secondary, textShadow: firmShadow }}>F</span>
-      {/* i with custom dot */}
-      <span className="relative inline-block" style={{ color: secondary, textShadow: firmShadow }}>
+      <span className="relative inline-block" style={{ color: retentionColor }}>
         <span>i</span>
         <span
           className="absolute left-1/2 -translate-x-1/2"
           style={{
             top: '-0.04em',
-            width: size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '3.5px',
-            height: size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '3.5px',
+            width: dotSize,
+            height: dotSize,
+            borderRadius: '50%',
+            background: retentionDot,
+          }}
+        />
+      </span>
+      <span style={{ color: retentionColor }}>on</span>
+      <span style={{ color: firmColor, textShadow: firmShadow }}>F</span>
+      <span className="relative inline-block" style={{ color: firmColor, textShadow: firmShadow }}>
+        <span>i</span>
+        <span
+          className="absolute left-1/2 -translate-x-1/2"
+          style={{
+            top: '-0.04em',
+            width: dotSize,
+            height: dotSize,
             borderRadius: '50%',
             background: firmDot,
           }}
         />
       </span>
-      <span style={{ color: secondary, textShadow: firmShadow }}>rm</span>
-
-      {/* Trailing period */}
-      <span style={{ color: primary }}>.</span>
+      <span style={{ color: firmColor, textShadow: firmShadow }}>rm</span>
+      <span style={{ color: periodColor }}>.</span>
     </span>
   );
 }
