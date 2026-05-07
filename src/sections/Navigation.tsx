@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import BrandLogo from '../components/BrandLogo';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
