@@ -14,7 +14,7 @@ export default function SocialProofTicker() {
     <div className="relative overflow-hidden" style={{ background: '#0A0A0A', borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)', padding: '14px 0' }}>
       <div className="ticker-track flex items-center gap-12 whitespace-nowrap">
         {doubled.map((item, i) => (
-          <span key={i} className="font-inter flex items-center gap-3" style={{ fontSize: '13px', color: 'rgba(235,232,224,0.35)', letterSpacing: '0.01em' }}>
+          <span key={i} className="font-inter flex items-center gap-3" style={{ fontSize: '13px', color: 'rgba(241,236,228,0.35)', letterSpacing: '0.01em' }}>
             <span style={{ color: '#F97316', fontSize: '6px' }}>●</span>
             {item}
           </span>

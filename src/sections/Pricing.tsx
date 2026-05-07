@@ -82,14 +82,14 @@ function PricingCard({ plan, large = false }: { plan: typeof plans[0]; large?: b
         <span className="font-inter text-xs font-medium px-2.5 py-1 rounded-md inline-block self-start mb-3 sm:mb-4" style={{ background: plan.accent + '10', color: plan.accent, fontSize: '11px' }}>
           {plan.bestFor}
         </span>
-        <h3 className="font-outfit font-medium mb-2" style={{ fontSize: large ? 'clamp(22px, 3.5vw, 28px)' : 'clamp(20px, 3vw, 22px)', color: isDark ? '#EBE8E0' : '#0A0A0A' }}>
+        <h3 className="font-outfit font-medium mb-2" style={{ fontSize: large ? 'clamp(22px, 3.5vw, 28px)' : 'clamp(20px, 3vw, 22px)', color: isDark ? '#f1ece4' : '#0A0A0A' }}>
           {plan.name}
         </h3>
         <div className="flex items-baseline gap-1 mb-2">
           <span className="font-outfit font-bold" style={{ fontSize: large ? 'clamp(30px, 5vw, 40px)' : 'clamp(26px, 4vw, 32px)', color: plan.accent }}>{plan.price}</span>
           <span className="font-inter" style={{ fontSize: '14px', color: isDark ? '#8A8A8A' : '#555555' }}>{plan.period}</span>
         </div>
-        <p className="font-inter text-sm mb-5 sm:mb-6" style={{ color: isDark ? 'rgba(235,232,224,0.55)' : '#555555' }}>
+        <p className="font-inter text-sm mb-5 sm:mb-6" style={{ color: isDark ? 'rgba(241,236,228,0.55)' : '#555555' }}>
           {plan.description}
         </p>
 
@@ -101,7 +101,7 @@ function PricingCard({ plan, large = false }: { plan: typeof plans[0]; large?: b
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5">
                 <path d="M3 8l4 4 6-6" stroke={plan.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="font-inter text-sm" style={{ color: isDark ? 'rgba(235,232,224,0.75)' : '#2D2D2D', lineHeight: 1.5 }}>
+              <span className="font-inter text-sm" style={{ color: isDark ? 'rgba(241,236,228,0.75)' : '#2D2D2D', lineHeight: 1.5 }}>
                 {feature}
               </span>
             </div>
@@ -120,7 +120,7 @@ function PricingCard({ plan, large = false }: { plan: typeof plans[0]; large?: b
               e.currentTarget.style.opacity = '0.88';
             } else {
               e.currentTarget.style.background = '#0A0A0A';
-              e.currentTarget.style.color = '#EBE8E0';
+              e.currentTarget.style.color = '#f1ece4';
               e.currentTarget.style.borderColor = '#0A0A0A';
             }
           }}
@@ -162,7 +162,7 @@ export default function Pricing() {
   const others = plans.filter((p) => !p.featured);
 
   return (
-    <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#EBE8E0', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
+    <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#f1ece4', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
       <div className="relative max-w-[1100px] mx-auto">
         <div className="pricing-head mb-10 sm:mb-14" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>

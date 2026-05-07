@@ -30,7 +30,7 @@ export default function Results() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="results" className="relative" style={{ background: '#EBE8E0', padding: '12vh clamp(24px, 5vw, 80px)' }}>
+    <section ref={sectionRef} id="results" className="relative" style={{ background: '#f1ece4', padding: '12vh clamp(24px, 5vw, 80px)' }}>
       <div className="max-w-[1000px] mx-auto">
         <div className="results-head text-center mb-10 sm:mb-16" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>

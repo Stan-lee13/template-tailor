@@ -55,7 +55,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="services" className="relative" style={{ background: '#EBE8E0', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
+    <section ref={sectionRef} id="services" className="relative" style={{ background: '#f1ece4', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
       <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
 
       <div className="relative flex flex-col lg:flex-row gap-10 lg:gap-16 max-w-[1280px] mx-auto">

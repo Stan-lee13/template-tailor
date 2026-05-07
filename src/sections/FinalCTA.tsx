@@ -23,13 +23,13 @@ export default function FinalCTA() {
       <div className="absolute bottom-[10%] right-[15%] w-[150px] sm:w-[200px] h-[150px] sm:h-[200px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(65,105,225,0.05) 0%, transparent 70%)' }} />
 
       <div className="relative max-w-[640px] mx-auto text-center px-1">
-        <h2 className="cta-animate font-outfit font-medium mb-2" style={{ fontSize: 'clamp(24px, 5vw, 52px)', lineHeight: 1, color: '#EBE8E0', letterSpacing: '-0.02em', opacity: 0 }}>
+        <h2 className="cta-animate font-outfit font-medium mb-2" style={{ fontSize: 'clamp(24px, 5vw, 52px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em', opacity: 0 }}>
           You Already Paid for Your Customers…
         </h2>
         <h2 className="cta-animate font-outfit font-medium mb-5 sm:mb-6" style={{ fontSize: 'clamp(24px, 5vw, 52px)', lineHeight: 1, letterSpacing: '-0.02em', opacity: 0 }}>
           <span style={{ color: '#F97316' }}>Now It's Time to Profit From Them</span>
         </h2>
-        <p className="cta-animate font-inter mx-auto mb-4" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(235,232,224,0.7)', maxWidth: '560px', opacity: 0 }}>
+        <p className="cta-animate font-inter mx-auto mb-4" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(241,236,228,0.7)', maxWidth: '560px', opacity: 0 }}>
           Every day you don't fix your retention… you're losing revenue you've already earned.
         </p>
         <p className="cta-animate font-inter font-medium mb-8 sm:mb-10" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#F97316', opacity: 0 }}>

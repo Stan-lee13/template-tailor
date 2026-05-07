@@ -46,7 +46,7 @@ export default function FAQ() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="faq" style={{ background: '#EBE8E0', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
+    <section ref={sectionRef} id="faq" style={{ background: '#f1ece4', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
       <div className="max-w-[720px] mx-auto">
         <span className="block text-center font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>FAQ</span>
         <h2 className="text-center font-outfit font-medium mb-10 sm:mb-16" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>

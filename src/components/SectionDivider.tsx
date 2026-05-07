@@ -6,7 +6,7 @@ interface DividerProps {
   className?: string;
 }
 
-export default function SectionDivider({ variant, fromColor = '#EBE8E0', toColor = '#0A0A0A', flip = false, className = '' }: DividerProps) {
+export default function SectionDivider({ variant, fromColor = '#f1ece4', toColor = '#0A0A0A', flip = false, className = '' }: DividerProps) {
   const transform = flip ? 'scaleY(-1)' : undefined;
 
   switch (variant) {
