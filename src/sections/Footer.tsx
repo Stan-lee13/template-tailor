@@ -20,7 +20,7 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto">
         <div className="flex flex-col md:flex-row gap-12 md:gap-16 justify-between">
           <div className="md:max-w-[320px]">
-            <BrandLogo variant="dark" size="md" />
+            <div className="mb-4"><BrandLogo variant="dark" size="md" /></div>
             <p className="font-inter mb-5" style={{ fontSize: '14px', lineHeight: 1.6, color: '#8A8A8A' }}>
               Turn One-Time Buyers Into Lifelong Revenue
             </p>
