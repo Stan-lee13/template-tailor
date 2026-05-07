@@ -26,7 +26,9 @@ export default function BrandLogo({ variant = 'dark', size = 'md', className = '
   const firmDot = isDark ? '#f1ece4' : '#0A0A0A';
   const periodColor = isDark ? '#f1ece4' : '#0A0A0A';
 
-  const firmShadow = !isDark ? '0 0 1px rgba(0,0,0,0.08)' : 'none';
+  const firmShadow = !isDark
+    ? '0 0 2px rgba(0,0,0,0.12), 0 0 4px rgba(0,0,0,0.06)'
+    : 'none';
 
   const fontSize = size === 'sm' ? '18px' : size === 'md' ? '20px' : '26px';
   const dotSize = size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '3.5px';
