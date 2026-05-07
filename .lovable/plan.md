@@ -1,47 +1,69 @@
+# RetentionFirm Branding Overhaul & Mobile Fix
 
-## What's changing
+## 1. Custom Logo Component
 
-### 1. Process section ("How We Work") — break the grid symmetry
+Create `src/components/BrandLogo.tsx` — a reusable SVG/text component used in Navigation and Footer:
 
-The current 3-column equal grid with centered text and numbered badges is the most common AI-generated layout. Changes:
+- "Retention" in solid black (or cream on dark backgrounds)
+- The dot on the "i" in "Retention" rendered in white (or black on light backgrounds)
+- "Firm" in white (or black on light backgrounds)
+- The dot on the "i" in "Firm" rendered in black (or cream on dark backgrounds)
+- Trailing full stop "." in black (or cream on dark backgrounds)
+- White "Firm" text gets `text-shadow: 0 0 1px rgba(0,0,0,0.08)` for subtle separation on light backgrounds
 
-- Switch from a 3-column card grid to a **vertical timeline layout** with a connecting line on the left and steps stacked vertically (left-aligned, staggered widths)
-- Each step gets a **small accent bar** on the left instead of the centered numbered badge
-- Step numbers become subtle, left-aligned, inline with the title instead of inside a badge
-- Descriptions become more detailed — add a short bullet list of deliverables per step (e.g., "Growth Audit" includes "Revenue leak analysis", "Customer journey mapping", "30-day action plan")
-- Vary the visual weight of each card — the middle step is wider, the third is slightly indented
-- Remove the generic "connecting line" gradient
+Replace the plain text "RetentionFirm" in `Navigation.tsx` and `Footer.tsx` with this component.
 
-### 2. Pricing section — reduce the template feel
+## 2. Background Color Update
 
-- Switch from the standard 3-column equal card layout to an **asymmetric layout**: the featured "Growth" plan takes up ~50% width on the left as a large card, the other two plans stack vertically on the right as smaller cards
-- Remove the "Most Popular" floating pill badge — instead, use a subtle full-width accent border on the featured card
-- Change pricing card hover animations from the generic lift-and-shadow to a subtle **border-color shift** only
-- Remove the rounded-full pill buttons — use **squared-off (rounded-lg)** CTA buttons with a more editorial feel
-- Add a short **"Not sure which plan?"** line with a link to the CTA section below the cards
+Replace **all** instances of `#EBE8E0` with a little darker version of `#EBE8E0` across the codebase:
 
-### 3. Footer — remove dead links, simplify
+- `src/index.css` — `--stone-white` variable and scrollbar track
+- `src/pages/Index.tsx` — all SectionDivider `fromColor`/`toColor` props
+- `src/sections/Pricing.tsx`, `FAQ.tsx`, `SolutionSection.tsx`, `Services.tsx`, `Results.tsx` — section backgrounds
+- `src/sections/Navigation.tsx` — scrolled background rgba
+- All `rgba(235,232,224,...)` references updated to match the new tone (`rgb(241,236,228)`)
 
-- Remove the "Company" column entirely (About Us, Case Studies, Careers, Contact — none exist)
-- Remove the "Resources" column (Blog, Retention Calculator, Guides, Newsletter — none exist)
-- Keep only: logo + tagline, Services list (as anchor links to #services), social icons, and the bottom copyright/legal row
-- This makes the footer honest and clean rather than faking pages that don't exist
+## 3. Favicon System
 
-### 4. Strategic micro-improvements (non-breaking)
+Generate SVG-based favicons programmatically using a build-time script:
 
-- **Social proof ticker**: Add a subtle horizontal marquee below the hero with trust signals like "Trusted by 50+ DTC brands", "avg. 3.2x LTV increase", "$12M+ in retained revenue" — creates movement and credibility without being flashy
-- **Scroll progress indicator**: A thin orange progress bar fixed at the very top of the viewport that fills as you scroll — adds a premium interactive feel
-- **FAQ section**: Open the first question by default so the section doesn't look empty on first view
+- Design: Bold geometric "RF" monogram — black text on warm cream (#f1ece4) background
+- Generate: `favicon.ico`, `favicon-32x32.png`, `favicon-64x64.png`, `apple-touch-icon.png` (180x180), and an OpenGraph image (1200x630)
+- Place all in `public/`
+- Wire into `index.html` with proper `<link>` tags
 
-### Technical details
+## 4. Remove Placeholder / Lovable Assets
 
-Files modified:
-- `src/sections/Process.tsx` — full rewrite to vertical timeline layout
-- `src/sections/Pricing.tsx` — restructure to asymmetric featured layout
-- `src/sections/Footer.tsx` — strip dead link columns
-- `src/sections/FAQ.tsx` — default first item open
-- `src/pages/Index.tsx` — add scroll progress bar and social proof marquee component
-- New: `src/components/SocialProofTicker.tsx` — marquee component
-- New: `src/components/ScrollProgress.tsx` — thin top bar
+- Delete `public/placeholder.svg`
+- Delete existing `public/favicon.ico` (will be replaced)
+- Remove `lovable-tagger` from `package.json` if not needed
+- Audit and clean any remaining default references
 
-No new dependencies required. All changes use existing GSAP + Tailwind stack.
+## 5. SEO / Metadata Cleanup
+
+Update `index.html`:
+
+- Title: "RetentionFirm — Turn One-Time Buyers Into Lifelong Revenue"
+- Description, OG, Twitter tags — all referencing RetentionFirm properly
+- Wire new favicon files (`favicon.ico`, `apple-touch-icon`, `favicon-32x32`, etc.)
+- Add OG image reference
+
+## 6. Mobile Responsiveness Fix
+
+The hero text is not visible on mobile (384px viewport). Investigate and fix:
+
+- Hero headline GSAP animation may not be triggering — ensure words become visible
+- Check all sections at 384px width for overflow, clipping, or misalignment
+- Ensure the social proof ticker, pricing cards, process timeline, and footer all fit correctly within narrow viewports
+- Test navigation mobile menu at small sizes
+
+## Files Affected
+
+- **New**: `src/components/BrandLogo.tsx`
+- **New**: Favicon assets in `public/` (generated via script)
+- **Edit**: `index.html`, `src/index.css`, `src/pages/Index.tsx`
+- **Edit**: `Navigation.tsx`, `Footer.tsx`, `Hero.tsx`, `Pricing.tsx`, `FAQ.tsx`, `SolutionSection.tsx`, `Services.tsx`, `Results.tsx`, `ProblemSection.tsx`, `DifferentiationSection.tsx`, `FinalCTA.tsx`
+- **Edit**: `SectionDivider.tsx` (default color prop)
+- **Delete**: `public/placeholder.svg`
+
+Make sure that the deodorant is so good that ehen i search for Retention on Google search its part of the top 5 sites to come .
