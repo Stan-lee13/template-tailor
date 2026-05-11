@@ -40,6 +40,7 @@ export default function FinalCTA() {
         </p>
         <div className="cta-animate" style={{ opacity: 0 }}>
           <button
+            onClick={() => { track('cta_click', { location: 'final_cta', label: 'Book Your Free Growth Audit' }); open('final_cta'); }}
             className="font-inter font-medium text-white transition-all duration-200 w-full sm:w-auto"
             style={{ background: '#F97316', padding: '16px 40px', borderRadius: '9999px', fontSize: '16px' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; e.currentTarget.style.transform = 'scale(1.03)'; }}
