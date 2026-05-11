@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useBooking } from '../hooks/useBooking';
+import { track } from '../lib/analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function FinalCTA() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { open } = useBooking();
 
   useEffect(() => {
     const ctx = gsap.context(() => {

@@ -141,6 +141,7 @@ function PricingCard({ plan, large = false, onSelect }: { plan: typeof plans[0];
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { open } = useBooking();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -159,6 +160,8 @@ export default function Pricing() {
   const featured = plans.find((p) => p.featured)!;
   const others = plans.filter((p) => !p.featured);
 
+  const select = (planName: string) => { track('cta_click', { location: 'pricing', label: planName }); open(`pricing_${planName}`); };
+
   return (
     <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#f1ece4', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
       <div className="relative max-w-[1100px] mx-auto">
@@ -174,16 +177,15 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* On mobile: stack all cards vertically with featured first. On desktop: asymmetric layout */}
         <div className="flex flex-col lg:flex-row gap-4 sm:gap-5 items-stretch">
           <div className="pricing-card lg:w-[52%]" style={{ opacity: 0 }}>
-            <PricingCard plan={featured} large />
+            <PricingCard plan={featured} large onSelect={() => select(featured.name)} />
           </div>
 
           <div className="lg:w-[48%] flex flex-col gap-4 sm:gap-5">
             {others.map((plan) => (
               <div key={plan.name} className="pricing-card flex-1" style={{ opacity: 0 }}>
-                <PricingCard plan={plan} />
+                <PricingCard plan={plan} onSelect={() => select(plan.name)} />
               </div>
             ))}
           </div>
@@ -191,7 +193,7 @@ export default function Pricing() {
 
         <p className="font-inter text-center mt-8 sm:mt-10" style={{ fontSize: 'clamp(14px, 2vw, 15px)', color: '#555555' }}>
           Not sure which plan?{' '}
-          <button onClick={() => scrollTo('#cta')} className="font-medium underline underline-offset-2 transition-colors duration-200" style={{ color: '#F97316' }}
+          <button onClick={() => select('not_sure')} className="font-medium underline underline-offset-2 transition-colors duration-200" style={{ color: '#F97316' }}
             onMouseEnter={(e) => (e.currentTarget.style.color = '#EA580C')}
             onMouseLeave={(e) => (e.currentTarget.style.color = '#F97316')}
           >
