@@ -18,6 +18,10 @@ import Footer from '../sections/Footer';
 import SectionDivider from '../components/SectionDivider';
 import SocialProofTicker from '../components/SocialProofTicker';
 import ScrollProgress from '../components/ScrollProgress';
+import StickyCTA from '../components/StickyCTA';
+import SEO from '../components/SEO';
+import { SITE } from '../config/site';
+import { track } from '../lib/analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,10 +81,14 @@ function CustomCursor() {
 
 const Index = () => {
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.1, duration: 1.2 });
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-    gsap.ticker.lagSmoothing(0);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lenis: Lenis | null = null;
+    if (!reduced) {
+      lenis = new Lenis({ lerp: 0.1, duration: 1.2 });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis!.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
 
     if (!window.matchMedia('(pointer: coarse)').matches) {
       document.documentElement.style.cursor = 'none';
@@ -89,13 +97,51 @@ const Index = () => {
       document.head.appendChild(style);
     }
 
-    return () => { lenis.destroy(); };
+    // Scroll depth tracking
+    const fired = new Set<number>();
+    const onScroll = () => {
+      const pct = ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100;
+      [25, 50, 75, 100].forEach((m) => {
+        if (pct >= m && !fired.has(m)) { fired.add(m); track('scroll_depth', { percent: m }); }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => { lenis?.destroy(); window.removeEventListener('scroll', onScroll); };
   }, []);
+
+  const homeJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: SITE.name,
+      alternateName: SITE.nameSpaced,
+      url: SITE.url,
+      logo: `${SITE.url}/favicon-512.png`,
+      sameAs: [SITE.social.linkedin, SITE.social.twitter],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE.name,
+      url: SITE.url,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: SITE.name,
+      description: SITE.description,
+      url: SITE.url,
+      serviceType: 'Retention Marketing',
+    },
+  ];
 
   return (
     <div className="relative">
+      <SEO path="/" jsonLd={homeJsonLd} />
       <ScrollProgress />
       <CustomCursor />
+      <StickyCTA />
       <Navigation />
       <main>
         <Hero />
