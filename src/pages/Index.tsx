@@ -138,8 +138,10 @@ const Index = () => {
 
   return (
     <div className="relative">
+      <SEO path="/" jsonLd={homeJsonLd} />
       <ScrollProgress />
       <CustomCursor />
+      <StickyCTA />
       <Navigation />
       <main>
         <Hero />
