@@ -1,8 +1,13 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import BreathingMatrix from '../components/BreathingMatrix';
+import { useBooking } from '../hooks/useBooking';
+import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
+import { track } from '../lib/analytics';
 
 export default function Hero() {
+  const { open } = useBooking();
+  const { lowPower, reducedMotion } = useDeviceCapabilities();
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -27,7 +32,11 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: '600px', background: '#0A0A0A' }}>
-      <BreathingMatrix />
+      {(lowPower || reducedMotion) ? (
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(249,115,22,0.18), transparent 55%), radial-gradient(ellipse at 80% 70%, rgba(65,105,225,0.10), transparent 60%), #0A0A0A' }} aria-hidden />
+      ) : (
+        <BreathingMatrix />
+      )}
 
       {/* Decorative floating elements */}
       <div className="absolute top-[20%] left-[8%] w-3 h-3 rounded-full opacity-20 animate-pulse hidden sm:block" style={{ background: '#4169E1', filter: 'blur(4px)' }} />
@@ -70,7 +79,7 @@ export default function Hero() {
 
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10 w-full sm:w-auto" style={{ opacity: 0 }}>
           <button
-            onClick={() => scrollTo('#cta')}
+            onClick={() => { track('cta_click', { location: 'hero', label: 'Book a Growth Audit' }); open('hero'); }}
             className="font-inter font-medium text-white transition-all duration-200 w-full sm:w-auto"
             style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; e.currentTarget.style.transform = 'scale(1.02)'; }}

@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useBooking } from '../hooks/useBooking';
+import { track } from '../lib/analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,12 +59,7 @@ const plans = [
   },
 ];
 
-const scrollTo = (href: string) => {
-  const el = document.querySelector(href);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
-};
-
-function PricingCard({ plan, large = false }: { plan: typeof plans[0]; large?: boolean }) {
+function PricingCard({ plan, large = false, onSelect }: { plan: typeof plans[0]; large?: boolean; onSelect: () => void }) {
   const isDark = plan.featured;
   return (
     <div
@@ -109,6 +106,7 @@ function PricingCard({ plan, large = false }: { plan: typeof plans[0]; large?: b
         </div>
 
         <button
+          onClick={onSelect}
           className="w-full font-inter font-medium text-sm py-3 rounded-lg transition-all duration-200"
           style={{
             background: isDark ? plan.accent : 'transparent',
