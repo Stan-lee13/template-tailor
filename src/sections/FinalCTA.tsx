@@ -3,12 +3,16 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
+import { SparklesCore } from '../components/ui/sparkles';
+import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function FinalCTA() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { open } = useBooking();
+  const { lowPower, reducedMotion } = useDeviceCapabilities();
+  const showSparkles = !lowPower && !reducedMotion;
 
   useEffect(() => {
     const ctx = gsap.context(() => {

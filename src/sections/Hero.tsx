@@ -4,6 +4,8 @@ import BreathingMatrix from '../components/BreathingMatrix';
 import { useBooking } from '../hooks/useBooking';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 import { track } from '../lib/analytics';
+import WordRotate from '../components/ui/word-rotate';
+import { LiquidButton } from '../components/ui/liquid-glass-button';
 
 export default function Hero() {
   const { open } = useBooking();
@@ -72,9 +74,15 @@ export default function Hero() {
         <p
           ref={subRef}
           className="mt-5 sm:mt-7 mx-auto"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(241,236,228,0.8)', maxWidth: '580px', letterSpacing: '-0.01em', opacity: 0 }}
+          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(241,236,228,0.8)', maxWidth: '600px', letterSpacing: '-0.01em', opacity: 0 }}
         >
-          We help ecommerce brands increase repeat purchases, boost customer lifetime value, and unlock hidden revenue—without increasing ad spend.
+          We help ecommerce brands grow{' '}
+          <WordRotate
+            words={['retention', 'LTV', 'repeat revenue', 'lifecycle']}
+            className="font-medium"
+            motionProps={{ style: { color: '#F97316' } }}
+          />
+          {' '}— without increasing ad spend.
         </p>
 
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10 w-full sm:w-auto" style={{ opacity: 0 }}>
@@ -87,15 +95,13 @@ export default function Hero() {
           >
             Book a Growth Audit
           </button>
-          <button
+          <LiquidButton
             onClick={() => scrollTo('#process')}
-            className="font-inter font-medium transition-all duration-200 w-full sm:w-auto"
-            style={{ background: 'transparent', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px', color: '#f1ece4', border: '1px solid rgba(241,236,228,0.3)' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(241,236,228,0.08)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.4)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(241,236,228,0.3)'; }}
+            className="font-inter font-medium w-full sm:w-auto"
+            style={{ fontSize: '15px' }}
           >
             See How It Works
-          </button>
+          </LiquidButton>
         </div>
       </div>
 
