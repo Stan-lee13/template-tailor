@@ -1,4 +1,4 @@
-import MarketingLayout from '../../components/MarketingLayout';
+import MarketingLayout from '../components/MarketingLayout';
 
 export default function CaseStudies() {
   return (

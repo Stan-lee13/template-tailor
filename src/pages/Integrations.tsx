@@ -1,4 +1,4 @@
-import MarketingLayout from '../../components/MarketingLayout';
+import MarketingLayout from '../components/MarketingLayout';
 
 const partners = [
   { name: 'Klaviyo', desc: 'Email + SMS marketing platform — our primary deployment environment for ecommerce brands.' },
