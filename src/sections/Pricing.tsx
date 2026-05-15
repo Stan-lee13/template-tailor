@@ -105,35 +105,27 @@ function PricingCard({ plan, large = false, onSelect }: { plan: typeof plans[0];
           ))}
         </div>
 
-        <button
-          onClick={onSelect}
-          className="w-full font-inter font-medium text-sm py-3 rounded-lg transition-all duration-200"
-          style={{
-            background: isDark ? plan.accent : 'transparent',
-            color: isDark ? '#FFFFFF' : '#0A0A0A',
-            border: isDark ? 'none' : '1px solid #D6D3CC',
-          }}
-          onMouseEnter={(e) => {
-            if (isDark) {
-              e.currentTarget.style.opacity = '0.88';
-            } else {
-              e.currentTarget.style.background = '#0A0A0A';
-              e.currentTarget.style.color = '#f1ece4';
-              e.currentTarget.style.borderColor = '#0A0A0A';
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (isDark) {
-              e.currentTarget.style.opacity = '1';
-            } else {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.color = '#0A0A0A';
-              e.currentTarget.style.borderColor = '#D6D3CC';
-            }
-          }}
-        >
-          Get Started
-        </button>
+        {isDark ? (
+          <button
+            onClick={onSelect}
+            className="w-full font-inter font-medium text-sm py-3 rounded-full text-white transition-all duration-200"
+            style={{ background: plan.accent }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.88')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+          >
+            Get Started
+          </button>
+        ) : (
+          <button
+            onClick={onSelect}
+            className="w-full font-inter font-medium text-sm py-3 rounded-lg transition-all duration-200"
+            style={{ background: 'transparent', color: '#0A0A0A', border: '1px solid #D6D3CC' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = '#0A0A0A'; e.currentTarget.style.color = '#f1ece4'; e.currentTarget.style.borderColor = '#0A0A0A'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#0A0A0A'; e.currentTarget.style.borderColor = '#D6D3CC'; }}
+          >
+            Get Started
+          </button>
+        )}
       </div>
     </div>
   );
