@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://retentionfirm.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://retentionfirm.com/insights</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://retentionfirm.com/insights/why-most-ecommerce-brands-leak-revenue-after-first-purchase</loc><lastmod>2025-12-04</lastmod><priority>0.7</priority></url>
-  <url><loc>https://retentionfirm.com/insights/retention-vs-acquisition-the-real-profit-equation</loc><lastmod>2025-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://retentionfirm.com/insights/how-email-and-sms-retention-systems-increase-ltv</loc><lastmod>2025-10-28</lastmod><priority>0.7</priority></url>
-  <url><loc>https://retentionfirm.com/insights/the-hidden-cost-of-customer-churn</loc><lastmod>2025-09-30</lastmod><priority>0.7</priority></url>
-  <url><loc>https://retentionfirm.com/insights/why-repeat-purchases-matter-more-than-roas</loc><lastmod>2025-09-08</lastmod><priority>0.7</priority></url>
-  <url><loc>https://retentionfirm.com/privacy</loc><priority>0.3</priority></url>
-  <url><loc>https://retentionfirm.com/terms</loc><priority>0.3</priority></url>
-  <url><loc>https://retentionfirm.com/cookies</loc><priority>0.3</priority></url>
+  <url><loc>/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>/insights</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>/case-studies</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>/integrations</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>/careers</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>/partners</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>/compliance</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>/solutions/ecommerce-brands</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>/solutions/retail</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>/solutions/publishers</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>/cookies</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>/legal/ccpa-opt-out</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>/legal/privacy-choices</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>/legal/database-opt-out</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

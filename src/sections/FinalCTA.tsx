@@ -3,12 +3,16 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
+import { SparklesCore } from '../components/ui/sparkles';
+import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function FinalCTA() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { open } = useBooking();
+  const { lowPower, reducedMotion } = useDeviceCapabilities();
+  const showSparkles = !lowPower && !reducedMotion;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -25,6 +29,11 @@ export default function FinalCTA() {
       <div className="absolute top-[20%] left-[10%] w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%)' }} />
       <div className="absolute bottom-[10%] right-[15%] w-[150px] sm:w-[200px] h-[150px] sm:h-[200px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(65,105,225,0.05) 0%, transparent 70%)' }} />
 
+      {showSparkles && (
+        <div className="absolute inset-0 pointer-events-none" style={{ maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)' }}>
+          <SparklesCore background="transparent" minSize={0.4} maxSize={1.2} particleDensity={70} particleColor="#F97316" speed={1.2} className="w-full h-full" />
+        </div>
+      )}
       <div className="relative max-w-[640px] mx-auto text-center px-1">
         <h2 className="cta-animate font-outfit font-medium mb-2" style={{ fontSize: 'clamp(24px, 5vw, 52px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em', opacity: 0 }}>
           You Already Paid for Your Customers…
