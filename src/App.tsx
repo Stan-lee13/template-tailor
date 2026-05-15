@@ -15,6 +15,20 @@ import Cookies from "./pages/Cookies.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
+import EcommerceBrands from "./pages/solutions/EcommerceBrands.tsx";
+import Retail from "./pages/solutions/Retail.tsx";
+import Publishers from "./pages/solutions/Publishers.tsx";
+import CaseStudies from "./pages/CaseStudies.tsx";
+import Integrations from "./pages/Integrations.tsx";
+import About from "./pages/About.tsx";
+import Careers from "./pages/Careers.tsx";
+import Contact from "./pages/Contact.tsx";
+import Partners from "./pages/Partners.tsx";
+import Compliance from "./pages/Compliance.tsx";
+import CcpaOptOut from "./pages/legal/CcpaOptOut.tsx";
+import PrivacyChoices from "./pages/legal/PrivacyChoices.tsx";
+import DatabaseOptOut from "./pages/legal/DatabaseOptOut.tsx";
+
 import { BookingProvider } from "./hooks/useBooking";
 import BookingModal from "./components/BookingModal";
 import CookieConsent from "./components/CookieConsent";
@@ -30,9 +44,25 @@ function AppShell() {
         <Route path="/" element={<Index />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/insights/:slug" element={<Article />} />
+
+        <Route path="/solutions/ecommerce-brands" element={<EcommerceBrands />} />
+        <Route path="/solutions/retail" element={<Retail />} />
+        <Route path="/solutions/publishers" element={<Publishers />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/integrations" element={<Integrations />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/partners" element={<Partners />} />
+        <Route path="/compliance" element={<Compliance />} />
+
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/cookies" element={<Cookies />} />
+        <Route path="/legal/ccpa-opt-out" element={<CcpaOptOut />} />
+        <Route path="/legal/privacy-choices" element={<PrivacyChoices />} />
+        <Route path="/legal/database-opt-out" element={<DatabaseOptOut />} />
+
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
