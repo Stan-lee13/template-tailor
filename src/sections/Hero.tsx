@@ -1,29 +1,36 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import BreathingMatrix from '../components/BreathingMatrix';
+import HeroBackground from '../components/HeroBackground';
 import { useBooking } from '../hooks/useBooking';
-import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 import { track } from '../lib/analytics';
 import WordRotate from '../components/ui/word-rotate';
 import { LiquidButton } from '../components/ui/liquid-glass-button';
 
 export default function Hero() {
   const { open } = useBooking();
-  const { lowPower, reducedMotion } = useDeviceCapabilities();
-  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const [rotateStarted, setRotateStarted] = useState(false);
+  const eyebrowRef = useRef<HTMLSpanElement>(null);
+  const leftRef = useRef<HTMLSpanElement>(null);
+  const rightRef = useRef<HTMLSpanElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const eyebrowRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.3 });
-    tl.fromTo(eyebrowRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-    if (headlineRef.current) {
-      const words = headlineRef.current.querySelectorAll('.word');
-      tl.fromTo(words, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12 }, '-=0.3');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced) {
+      gsap.set([eyebrowRef.current, leftRef.current, rightRef.current, subRef.current, ctaRef.current], { opacity: 1, x: 0, y: 0 });
+      setRotateStarted(true);
+      return;
     }
-    tl.fromTo(subRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.3');
-    tl.fromTo(ctaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.2');
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.25 });
+    tl.fromTo(eyebrowRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 })
+      .fromTo(leftRef.current, { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 1.0 }, '-=0.2')
+      .fromTo(rightRef.current, { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 1.0 }, '<')
+      .fromTo(subRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, onComplete: () => setRotateStarted(true) }, '-=0.35')
+      .fromTo(ctaRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.3');
+
     return () => { tl.kill(); };
   }, []);
 
@@ -33,65 +40,86 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: '600px', background: '#0A0A0A' }}>
-      {(lowPower || reducedMotion) ? (
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(249,115,22,0.18), transparent 55%), radial-gradient(ellipse at 80% 70%, rgba(65,105,225,0.10), transparent 60%), #0A0A0A' }} aria-hidden />
-      ) : (
-        <BreathingMatrix />
-      )}
+    <section
+      id="hero"
+      className="relative w-full overflow-hidden"
+      style={{ minHeight: '100svh', height: '100svh', background: '#0A0A0A' }}
+    >
+      <HeroBackground />
 
-      {/* Decorative floating elements */}
-      <div className="absolute top-[20%] left-[8%] w-3 h-3 rounded-full opacity-20 animate-pulse hidden sm:block" style={{ background: '#4169E1', filter: 'blur(4px)' }} />
-      <div className="absolute top-[35%] right-[12%] w-2 h-2 opacity-15 hidden sm:block" style={{ background: '#10B981', transform: 'rotate(45deg)', filter: 'blur(2px)' }} />
-      <div className="absolute bottom-[30%] left-[15%] w-4 h-[1px] opacity-20 hidden sm:block" style={{ background: 'linear-gradient(90deg, #F59E0B, transparent)' }} />
-
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-5 sm:px-6" style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+      <div
+        className="relative z-10 flex flex-col items-center justify-center h-full px-5 sm:px-6 text-center"
+        style={{ maxWidth: '960px', margin: '0 auto' }}
+      >
         <span
           ref={eyebrowRef}
           className="block uppercase tracking-widest mb-4 sm:mb-6"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 500, color: '#A0A0A0', letterSpacing: '0.08em', opacity: 0 }}
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '11px',
+            fontWeight: 500,
+            color: 'rgba(239,239,244,0.75)',
+            letterSpacing: '0.12em',
+            opacity: 0,
+          }}
         >
-          <span style={{ color: '#F97316' }}>●</span>&nbsp;&nbsp;Retention Marketing Agency
+          <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;Retention Marketing Agency
         </span>
 
         <h1
-          ref={headlineRef}
           className="font-outfit font-medium"
-          style={{ fontSize: 'clamp(32px, 6.5vw, 88px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em' }}
+          style={{
+            fontSize: 'clamp(32px, 6.6vw, 84px)',
+            lineHeight: 1.02,
+            color: '#f1ece4',
+            letterSpacing: '-0.025em',
+            textShadow: '0 2px 28px rgba(0,0,0,0.45)',
+          }}
         >
-          <span className="word inline-block opacity-0">Turn&nbsp;</span>
-          <span className="word inline-block opacity-0">Your&nbsp;</span>
-          <span className="word inline-block opacity-0">Existing&nbsp;</span>
-          <span className="word inline-block opacity-0">Customers&nbsp;</span>
-          <span className="word inline-block opacity-0">Into&nbsp;</span>
-          <span className="word inline-block opacity-0">Your&nbsp;</span>
-          <span className="word inline-block opacity-0" style={{ color: '#F97316' }}>Most&nbsp;</span>
-          <span className="word inline-block opacity-0" style={{ color: '#F97316' }}>Profitable&nbsp;</span>
-          <span className="word inline-block opacity-0">Growth&nbsp;</span>
-          <span className="word inline-block opacity-0">Engine</span>
+          <span ref={leftRef} className="inline-block opacity-0">Turn Your Existing Customers Into Your&nbsp;</span>
+          <span ref={rightRef} className="inline-block opacity-0">
+            <span style={{ color: '#F97316' }}>Most Profitable</span> Growth Engine
+          </span>
         </h1>
 
         <p
           ref={subRef}
-          className="mt-5 sm:mt-7 mx-auto"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(241,236,228,0.8)', maxWidth: '600px', letterSpacing: '-0.01em', opacity: 0 }}
+          className="mt-6 sm:mt-7 mx-auto"
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontSize: 'clamp(15px, 2.4vw, 18px)',
+            lineHeight: 1.6,
+            color: 'rgba(241,236,228,0.92)',
+            maxWidth: '620px',
+            letterSpacing: '-0.01em',
+            opacity: 0,
+            textShadow: '0 1px 16px rgba(0,0,0,0.4)',
+          }}
         >
           We help ecommerce brands grow{' '}
-          <WordRotate
-            words={['retention', 'LTV', 'repeat revenue', 'lifecycle']}
-            className="font-medium"
-            motionProps={{ style: { color: '#F97316' } }}
-          />
+          {rotateStarted ? (
+            <WordRotate
+              words={['retention', 'LTV', 'repeat revenue', 'lifecycle']}
+              className="font-medium"
+              motionProps={{ style: { color: '#F97316' } }}
+            />
+          ) : (
+            <span className="font-medium" style={{ color: '#F97316' }}>retention</span>
+          )}
           {' '}— without increasing ad spend.
         </p>
 
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10 w-full sm:w-auto" style={{ opacity: 0 }}>
+        <div
+          ref={ctaRef}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10 w-full sm:w-auto"
+          style={{ opacity: 0 }}
+        >
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: 'Book a Growth Audit' }); open('hero'); }}
-            className="font-inter font-medium text-white transition-all duration-200 w-full sm:w-auto"
+            className="font-inter font-medium text-white transition-colors duration-200 w-full sm:w-auto"
             style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; e.currentTarget.style.transform = 'scale(1.02)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#F97316'; e.currentTarget.style.transform = 'scale(1)'; }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = '#F97316'; }}
           >
             Book a Growth Audit
           </button>
@@ -105,14 +133,19 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom gradient — curved feel */}
-      <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: '200px', background: 'linear-gradient(to bottom, transparent 0%, #0A0A0A 100%)', zIndex: 5 }} />
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none" style={{ zIndex: 10 }}>
-        <div className="w-px mx-auto" style={{ height: '40px', background: 'rgba(241,236,228,0.4)', animation: 'scrollPulse 2s ease-in-out infinite' }} />
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 pointer-events-none z-10">
+        <div
+          className="w-px mx-auto"
+          style={{
+            height: '40px',
+            background: 'rgba(239,239,244,0.4)',
+            animation: 'scrollPulse 2.4s ease-in-out infinite',
+          }}
+        />
       </div>
 
-      <style>{`@keyframes scrollPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }`}</style>
+      <style>{`@keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.7); transform-origin: top; } 50% { opacity: 0.85; transform: scaleY(1); } }`}</style>
     </section>
   );
 }
