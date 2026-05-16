@@ -29,13 +29,13 @@ export default function ProblemSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ background: '#0A0A0A', padding: '12vh clamp(20px, 5vw, 80px) 10vh' }}>
-      <div className="absolute top-12 right-[10%] w-[200px] h-[1px] opacity-10 hidden sm:block" style={{ background: 'linear-gradient(90deg, transparent, #4169E1, transparent)', transform: 'rotate(-8deg)' }} />
+    <section ref={sectionRef} className="relative" style={{ background: 'linear-gradient(180deg, #0A0A0A 0%, #0C1622 60%, #0A0A0A 100%)', padding: '12vh clamp(20px, 5vw, 80px) 10vh' }}>
+      <div className="absolute top-12 right-[10%] w-[200px] h-[1px] opacity-20 hidden sm:block" style={{ background: 'linear-gradient(90deg, transparent, #2C91E1, transparent)', transform: 'rotate(-8deg)' }} />
       
       <div className="max-w-[800px] mx-auto">
         <div className="problem-headline" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-4 sm:mb-5" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>
-            <span style={{ color: '#EF4444' }}>●</span>&nbsp;&nbsp;The Problem
+            <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;The Problem
           </span>
           <h2 className="font-outfit font-medium mb-3 sm:mb-4" style={{ fontSize: 'clamp(26px, 5vw, 56px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em' }}>
             You're Not Losing Money on Ads…

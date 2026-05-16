@@ -25,13 +25,13 @@ export default function FinalCTA() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="cta" className="relative overflow-hidden" style={{ background: '#0A0A0A', padding: '12vh clamp(20px, 5vw, 80px) 14vh' }}>
-      <div className="absolute top-[20%] left-[10%] w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%)' }} />
-      <div className="absolute bottom-[10%] right-[15%] w-[150px] sm:w-[200px] h-[150px] sm:h-[200px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(65,105,225,0.05) 0%, transparent 70%)' }} />
+    <section ref={sectionRef} id="cta" className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0A0A0A 0%, #0C1622 50%, #0A0A0A 100%)', padding: '12vh clamp(20px, 5vw, 80px) 14vh' }}>
+      <div className="absolute top-[20%] left-[10%] w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full hidden md:block" style={{ background: 'radial-gradient(circle, rgba(44,145,225,0.07) 0%, transparent 70%)' }} />
+      <div className="absolute bottom-[10%] right-[15%] w-[150px] sm:w-[200px] h-[150px] sm:h-[200px] rounded-full hidden md:block" style={{ background: 'radial-gradient(circle, rgba(197,201,209,0.04) 0%, transparent 70%)' }} />
 
       {showSparkles && (
-        <div className="absolute inset-0 pointer-events-none" style={{ maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)' }}>
-          <SparklesCore background="transparent" minSize={0.4} maxSize={1.2} particleDensity={70} particleColor="#F97316" speed={1.2} className="w-full h-full" />
+        <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)' }}>
+          <SparklesCore background="transparent" minSize={0.3} maxSize={0.8} particleDensity={35} particleColor="#C5C9D1" speed={0.6} className="w-full h-full" />
         </div>
       )}
       <div className="relative max-w-[640px] mx-auto text-center px-1">

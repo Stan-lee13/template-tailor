@@ -24,7 +24,7 @@ export default function StickyCTA() {
   if (!show) return null;
 
   return (
-    <div className="fixed z-[140] right-3 bottom-3 sm:right-6 sm:bottom-6" style={{ animation: 'rfSlideUp 420ms cubic-bezier(.2,.7,.2,1)' }}>
+    <div className="fixed z-[140] right-6 bottom-6 hidden sm:block" style={{ animation: 'rfSlideUp 420ms cubic-bezier(.2,.7,.2,1)' }}>
       <div className="flex items-center gap-1 sm:gap-2 rounded-full" style={{ background: '#0A0A0A', padding: '5px 5px 5px 14px', boxShadow: '0 12px 30px -8px rgba(249,115,22,0.35)' }}>
         <span className="font-inter text-[12px] hidden md:inline" style={{ color: 'rgba(241,236,228,0.85)' }}>Ready to plug your retention leaks?</span>
         <ShimmerButton
