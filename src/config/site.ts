@@ -15,7 +15,7 @@ export const SITE = {
 };
 
 // Empty string disables Calendly embed and falls back to mailto.
-export const CALENDLY_URL = 'https://calendly.com/retentionfirm/growth-audit';
+export const CALENDLY_URL = 'https://calendly.com/gerby-retentionfirm';
 
 // GA4 measurement ID. Empty string disables analytics entirely.
 export const GA_ID = '';
