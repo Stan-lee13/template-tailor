@@ -21,7 +21,6 @@ const Services = lazy(() => import('../sections/Services'));
 const Results = lazy(() => import('../sections/Results'));
 const DifferentiationSection = lazy(() => import('../sections/DifferentiationSection'));
 const Process = lazy(() => import('../sections/Process'));
-const Pricing = lazy(() => import('../sections/Pricing'));
 const FAQ = lazy(() => import('../sections/FAQ'));
 const FinalCTA = lazy(() => import('../sections/FinalCTA'));
 
@@ -31,15 +30,15 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 const Index = () => {
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     let lenis: Lenis | null = null;
 
-    if (!reduced) {
+    // Lenis only on desktop/pointer devices — mobile uses native scrolling
+    if (!reduced && !isTouch) {
       lenis = new Lenis({
         duration: 1.4,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        syncTouch: false, // CRITICAL: native scrolling on mobile, no JS interception
-        touchMultiplier: 1.5,
         wheelMultiplier: 0.9,
       } as ConstructorParameters<typeof Lenis>[0]);
       lenis.on('scroll', ScrollTrigger.update);
@@ -97,8 +96,6 @@ const Index = () => {
           <SectionDivider variant="wave" fromColor="#0A0A0A" toColor="#0A0A0A" />
           <Process />
           <SectionDivider variant="angle" fromColor="#0A0A0A" toColor="#f1ece4" flip />
-          <Pricing />
-          <SectionDivider variant="asymmetric" fromColor="#f1ece4" toColor="#f1ece4" />
           <FAQ />
           <SectionDivider variant="curve" fromColor="#f1ece4" toColor="#0A0A0A" />
           <FinalCTA />
