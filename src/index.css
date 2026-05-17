@@ -88,8 +88,11 @@
   html, body {
     overflow-x: hidden;
     max-width: 100vw;
-    overscroll-behavior-y: none;
     -webkit-tap-highlight-color: transparent;
+    touch-action: pan-y;
+  }
+  #root {
+    touch-action: pan-y;
   }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
