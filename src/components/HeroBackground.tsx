@@ -8,7 +8,7 @@ import mobileBg from '../assets/hero-bg-mobile.webp';
  */
 export default function HeroBackground() {
   return (
-    <div className="absolute inset-0 overflow-hidden" aria-hidden>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
       <picture>
         <source media="(max-width: 767px)" srcSet={mobileBg} />
         <img

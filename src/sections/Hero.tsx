@@ -43,13 +43,13 @@ export default function Hero() {
     <section
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ minHeight: '100svh', height: '100svh', background: '#0A0A0A' }}
+      style={{ minHeight: '100svh', background: '#0A0A0A', touchAction: 'pan-y' }}
     >
       <HeroBackground />
 
       <div
-        className="relative z-10 flex flex-col items-center justify-center h-full px-5 sm:px-6 text-center"
-        style={{ maxWidth: '960px', margin: '0 auto' }}
+        className="relative z-10 flex flex-col items-center justify-center px-5 sm:px-6 text-center"
+        style={{ maxWidth: '960px', margin: '0 auto', minHeight: '100svh' }}
       >
         <span
           ref={eyebrowRef}
