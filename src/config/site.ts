@@ -7,7 +7,7 @@ export const SITE = {
   tagline: 'Turn One-Time Buyers Into Lifelong Revenue',
   description:
     'RetentionFirm is a retention marketing agency helping ecommerce and consumer brands increase customer lifetime value, repeat purchases, and predictable revenue — without raising ad spend.',
-  email: 'hello@retentionfirm.com',
+  email: 'Gerby@retentionfirm.com',
   social: {
     linkedin: 'https://www.linkedin.com/company/retentionfirm',
     twitter: 'https://twitter.com/retentionfirm',
