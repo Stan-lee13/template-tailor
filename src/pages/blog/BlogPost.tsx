@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Navigation from '../sections/Navigation';
-import Footer from '../sections/Footer';
-import SEO from '../components/SEO';
-import SignedImage from '../components/SignedImage';
-import NotFound from './NotFound';
+import Navigation from '../../sections/Navigation';
+import Footer from '../../sections/Footer';
+import SEO from '../../components/SEO';
+import SignedImage from '../../components/SignedImage';
+import NotFound from '../NotFound';
 import { supabase } from '@/integrations/supabase/client';
-import { SITE } from '../config/site';
+import { SITE } from '../../config/site';
 
 type Post = {
   id: string; slug: string; title: string; excerpt: string | null; content_html: string;
@@ -21,7 +21,7 @@ function fmt(d: string) {
   return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-export default function Article() {
+export default function BlogPost() {
   const { slug = '' } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -50,12 +50,12 @@ export default function Article() {
   if (!post) return <NotFound />;
 
   const ld = post.schema_jsonld || {
-    '@context': 'https://schema.org', '@type': 'BlogPosting',
+    '@context': 'https://schema.org', '@type': 'Article',
     headline: post.title, description: post.meta_description || post.excerpt || '',
     datePublished: post.published_at,
     author: { '@type': 'Organization', name: SITE.name },
     publisher: { '@type': 'Organization', name: SITE.name },
-    mainEntityOfPage: `${SITE.url}/insights/${post.slug}`,
+    mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
   };
 
   return (
@@ -63,7 +63,7 @@ export default function Article() {
       <SEO
         title={post.meta_title || post.title}
         description={post.meta_description || post.excerpt || ''}
-        path={post.canonical_url || `/insights/${post.slug}`}
+        path={post.canonical_url || `/blog/${post.slug}`}
         type="article"
         image={ogUrl || '/og-image.jpg'}
         publishedAt={post.published_at}
