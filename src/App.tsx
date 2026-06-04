@@ -29,9 +29,20 @@ import CcpaOptOut from "./pages/legal/CcpaOptOut.tsx";
 import PrivacyChoices from "./pages/legal/PrivacyChoices.tsx";
 import DatabaseOptOut from "./pages/legal/DatabaseOptOut.tsx";
 
+import BlogIndex from "./pages/blog/BlogIndex.tsx";
+import BlogPost from "./pages/blog/BlogPost.tsx";
+
+import StudioLogin from "./pages/studio/Login.tsx";
+import StudioPending from "./pages/studio/Pending.tsx";
+import StudioDashboard from "./pages/studio/Dashboard.tsx";
+import PostsList from "./pages/studio/PostsList.tsx";
+import PostEditor from "./pages/studio/PostEditor.tsx";
+import Approvals from "./pages/studio/Approvals.tsx";
+
 import { BookingProvider } from "./hooks/useBooking";
 import BookingModal from "./components/BookingModal";
 import CookieConsent from "./components/CookieConsent";
+import { AuthProvider, RequireStaff, RequireAdmin } from "./hooks/useAuth";
 import { initAnalytics } from "./lib/analytics";
 
 const queryClient = new QueryClient();
@@ -44,6 +55,9 @@ function AppShell() {
         <Route path="/" element={<Index />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/insights/:slug" element={<Article />} />
+
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
 
         <Route path="/solutions/ecommerce-brands" element={<EcommerceBrands />} />
         <Route path="/solutions/retail" element={<Retail />} />
@@ -64,6 +78,16 @@ function AppShell() {
         <Route path="/legal/database-opt-out" element={<DatabaseOptOut />} />
 
         <Route path="/thank-you" element={<ThankYou />} />
+
+        {/* Hidden Team Portal */}
+        <Route path="/studio/login" element={<StudioLogin />} />
+        <Route path="/studio/pending" element={<StudioPending />} />
+        <Route path="/studio" element={<RequireStaff><StudioDashboard /></RequireStaff>} />
+        <Route path="/studio/posts" element={<RequireStaff><PostsList /></RequireStaff>} />
+        <Route path="/studio/posts/new" element={<RequireStaff><PostEditor /></RequireStaff>} />
+        <Route path="/studio/posts/:id" element={<RequireStaff><PostEditor /></RequireStaff>} />
+        <Route path="/studio/approvals" element={<RequireStaff><RequireAdmin><Approvals /></RequireAdmin></RequireStaff>} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <BookingModal />
@@ -79,9 +103,11 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <BookingProvider>
-            <AppShell />
-          </BookingProvider>
+          <AuthProvider>
+            <BookingProvider>
+              <AppShell />
+            </BookingProvider>
+          </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
