@@ -1,156 +1,108 @@
+## Goal
 
-# Cinematic Rework: From "Animated MVP" to "Premium Production-Grade Site"
+Ship a production-ready, hidden CMS for RetentionFirm: team members log in, draft/publish posts with full SEO controls, and the published content powers both `/insights` (replacing static MDX) and a new `/blog` route.
 
-Goal: stop animating everything, rebuild scroll feel, swap the heavy WebGL particle background for a cinematic photographic hero, introduce a cooler navy/silver/graphite palette layer alongside the existing cream/orange brand, and make mobile feel premium — not laggy.
+## Access model
 
-Brand identity (orange `#F97316`, cream `#f1ece4`, near-black `#0A0A0A`, Outfit/Inter, "Retention" black / "Firm" white wordmark) stays locked. Orange remains the primary CTA color — only the *atmospheric* color story shifts toward navy + silver.
+- Hidden route: `/studio` (no nav links, no sitemap entry, `noindex` meta).
+- Anyone can register, but registration alone grants nothing — users land on a "pending approval" screen.
+- Roles stored in a separate `user_roles` table (enum: `admin`, `editor`) with a `has_role()` security-definer function. **Roles never live on profiles.**
+- First-ever signup is auto-promoted to `admin` via DB trigger (so the owner is always allowed without manual SQL).
+- Admins see an "Approvals" panel inside `/studio` to grant `editor` role to new signups.
+- All portal routes wrapped in a `RequireRole` guard that checks the active session + role.
 
----
+## Backend (Lovable Cloud)
 
-## 1. Hero rebuild — photographic + cinematic intro
+Enable Lovable Cloud, then create:
 
-**Background**
-- Save the uploaded skyline-office image as `src/assets/hero-bg.jpg` and re-export at 2 sizes via a small build step: `hero-bg-desktop.webp` (1920×1080, focal point right, landscape composition kept) and `hero-bg-mobile.webp` (1080×1920, cropped to keep the laptop + skyline visible vertically). Different art-direction crops, same scene — exactly as requested.
-- Use a `<picture>` element so the browser picks the right asset (no JS, no layout shift). `object-fit: cover; object-position: right center` desktop / `center` mobile.
-- Layer a cinematic darken gradient on top: `linear-gradient(180deg, rgba(4,33,63,0.55) 0%, rgba(0,0,0,0.65) 60%, #0A0A0A 100%)` so text contrast is locked and the bottom blends into the next dark section.
-- Delete the `BreathingMatrix` WebGL canvas from the hero (keep the file in repo — unused — in case you want it elsewhere later). This alone removes the biggest mobile perf hit.
+**Tables (public schema, with GRANTs + RLS):**
+- `profiles` — id (=auth.users.id), display_name, avatar_url. Self-read/update.
+- `user_roles` — id, user_id, role (enum). Read: own rows + admins. Write: admins only.
+- `posts` — id, slug (unique), title, excerpt, content_json (Tiptap doc), content_html (rendered), featured_image_url, status (`draft|scheduled|published`), published_at, scheduled_for, author_id, view_count, created_at, updated_at, **SEO**: meta_title, meta_description, focus_keyword, og_image_url, canonical_url, schema_jsonld (jsonb).
+- `post_revisions` — snapshots on every save (lightweight versioning).
 
-**Headline entrance (the requested "left/right meet then word-rotate" sequence)**
-- Split the headline into two halves. Left half ("Turn Your Existing Customers Into Your") slides in from `x: -60, opacity: 0` → `0`. Right half ("Most Profitable Growth Engine") slides in from `x: +60, opacity: 0` → `0`. Both ease `power3.out`, 0.9s, with a 0.2s overlap so they "meet" at center.
-- Eyebrow fades up first (0.2s). Headline halves animate next. Subheadline fades up. **Only then** does `WordRotate` start cycling — gate it on a `started` state flipped after the entrance timeline completes.
-- CTAs fade up last.
-- Respect `prefers-reduced-motion`: skip slide, just fade.
+**Policies:**
+- `posts` SELECT: anon/authenticated can read where `status='published' AND published_at <= now()`. Editors/admins read all.
+- `posts` INSERT/UPDATE/DELETE: editors+admins only. `author_id` must equal `auth.uid()` on insert.
+- `post_revisions`: editors+admins only.
 
-**Typography & contrast**
-- Headline: `clamp(34px, 7vw, 88px)`, white `#f1ece4` with subtle text-shadow `0 2px 24px rgba(0,0,0,0.4)` for readability over photo.
-- Orange highlight word stays orange but slightly desaturated for cinematic feel.
-- Subheadline contrast tightened to `rgba(241,236,228,0.92)`.
+**Storage bucket:** `post-media` (public) for featured images + inline editor uploads. RLS: authenticated editors/admins write; public read.
 
----
+**Edge functions:**
+- `publish-scheduled` — cron-style function (invoked by a `pg_cron` job every minute) that flips `scheduled→published` when `scheduled_for <= now()`.
+- `increment-view` — called from public post pages; rate-limited by IP+slug per session via a `post_views` table (or simple bump if user wants minimum complexity).
 
-## 2. Atmosphere palette shift (silver / navy / graphite)
+## Portal UI (`/studio/*`)
 
-Add new design tokens to `src/index.css` — do **not** remove existing ones:
-```
---navy-deep: #04213F;
---navy-steel: #11538C;
---sky-blue: #2C91E1;
---off-white: #EFEFF4;
---silver: #C5C9D1;
---graphite: #1A1D24;
-```
+Layout: collapsible sidebar (Dashboard, Posts, New Post, Media, Approvals [admin], Sign out). Matches RetentionFirm aesthetic — cream `#f1ece4` canvas, Outfit headings, orange CTAs, generous whitespace, subtle motion. Fully mobile-responsive (sidebar becomes a sheet).
 
-Apply them as atmosphere only:
-- Dark sections (`ProblemSection`, `DifferentiationSection`, `Process`, `FinalCTA`): swap pure `#0A0A0A` for a subtle navy-tinted black `linear-gradient(180deg, #0A0A0A 0%, #0C1622 50%, #0A0A0A 100%)`. Sky-blue/silver hairlines instead of red/blue dots for decorative accents.
-- Cream sections stay cream — but replace the warm yellow/orange decorative glows with cool silver/sky radial gradients at very low opacity (8–12%).
-- Replace the orange ● eyebrow dot on dark sections with sky-blue `#2C91E1`. Cream sections keep orange.
-- Orange `#F97316` stays **exclusively for CTAs and one accent word per section** — it now reads as the "action color," not the atmosphere.
+**Routes:**
+- `/studio/login` — email+password (Lovable Cloud Auth, email confirm OFF for speed; HIBP on).
+- `/studio/pending` — shown when signed in but no role.
+- `/studio` — dashboard: total posts, published, drafts, scheduled, top 5 most-viewed (sorted by `view_count`), recent activity.
+- `/studio/posts` — searchable/filterable table (status, author, date), bulk actions.
+- `/studio/posts/new` and `/studio/posts/:id` — editor.
+- `/studio/approvals` — admin-only, list pending users, "Grant editor" / "Revoke" actions.
 
----
+**Editor (`PostEditor.tsx`):**
+- **Tiptap** rich text: H1/H2/H3, bold/italic/underline, bullet+ordered lists, blockquote, code, internal links (autocomplete from existing slugs), external links, image embed (upload→storage→insert), horizontal rule, undo/redo. Slash command menu.
+- Right rail tabs: **Content** | **SEO** | **Settings**.
+  - SEO tab: meta title (60-char counter), meta description (160-char counter), focus keyword, OG image upload, canonical URL, schema JSON-LD editor (Monaco-lite textarea with validation, defaults to Article schema generated from post fields).
+  - Settings tab: slug (auto-from-title, editable, uniqueness check), featured image, author, publish date / schedule picker.
+- Sticky header: Save draft, Preview (opens `/blog/:slug?preview=token`), **Publish** button opens the SEO checklist modal.
+- Autosave every 20s → writes `post_revisions` row.
 
-## 3. Motion overhaul — less, but intentional
+**Pre-publish SEO checklist modal:**
+Blocks publish until all pass (or admin force-overrides):
+- ✅ Meta description present (50–160 chars)
+- ✅ Focus keyword appears in title, slug, and first paragraph
+- ✅ Exactly one H1; H2s present; no skipped levels
+- ✅ Featured image set with non-empty alt
+- ✅ Slug is kebab-case, ≤60 chars, no stopwords-only
 
-**Remove**
-- The `CustomCursor` component (mix-blend cursor on every link). It's noisy, hurts perf on lower-end machines, and looks AI-template. Restore native cursor.
-- The decorative floating dots/lines in `Hero` (`top-[20%] left-[8%]` etc.) — visual noise.
-- Per-word stagger fade on the headline (replaced by the new left/right entrance above).
-- `ScrollTrigger` fade-up on every single paragraph. Audit: keep at most **one** entrance animation per section (typically the headline). Body copy and cards appear without motion or with a single shared fade.
-- Sparkles in `FinalCTA` (skip on mobile entirely, keep extremely subtle on desktop only).
+Each row shows pass/fail with a "Fix" link that scrolls to the relevant field.
 
-**Refine**
-- Standardize all GSAP entrances to: `duration: 0.8, ease: 'power3.out', y: 24`. One tween per section. No staggered card-by-card reveals except where it tells a story (e.g., Process steps — kept).
-- Set `ScrollTrigger.config({ ignoreMobileResize: true })` and use `markers: false`.
-- Wrap every entrance in `gsap.matchMedia()` with `(prefers-reduced-motion: no-preference)` so reduced-motion users get instant content.
+## Public rendering
 
-**Scroll system rebuild**
-- Reconfigure `Lenis` with cinematic feel:
-  ```ts
-  new Lenis({
-    duration: 1.4,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    syncTouch: false,         // CRITICAL: native scrolling on mobile, no JS interception
-    touchMultiplier: 1.5,
-    wheelMultiplier: 0.9,
-  })
-  ```
-- `syncTouch: false` is the single most important mobile fix. JS-driven scroll on touch is what causes the "cracking/jittery" feel.
-- Add `will-change: transform` only on actively animating elements, remove after animation completes (prevents permanent compositor layers).
-- Add a low-priority `requestIdleCallback` for analytics scroll-depth tracking instead of running it on every scroll event.
+- `/insights` and `/insights/:slug` — rewire existing pages to fetch from `posts` (published only). Keep current `ArticleLayout` look. Remove the hardcoded `src/content/insights.tsx` data source.
+- `/blog` and `/blog/:slug` — new routes, same data, alternate layout/list style so both surfaces coexist as the user requested.
+- Both call `increment-view` on mount (debounced, once per session via sessionStorage key).
+- Per-post `<SEO>` component pulls meta_title/description/og_image/canonical/schema_jsonld from the record. Falls back to sensible defaults.
+- Add posts to `sitemap.xml` via a generated route or build-time script (runtime: serve `/sitemap.xml` from an edge function that queries published posts).
 
-**Sticky CTA & cookie consent**
-- Hide `StickyCTA` below 640px (mobile already has full-width hero CTA — sticky pill is redundant noise).
-- Cookie consent: already collapsed to pill on mobile, verify it stays out of the way.
+## Security
 
----
+- `noindex, nofollow` on all `/studio/*` routes.
+- All mutations server-validated via RLS; client uses Zod schemas (title/slug/meta lengths, URL format, image MIME).
+- Image uploads: type + size limits (≤5MB, jpg/png/webp).
+- Rate-limit `increment-view` per IP via the function.
 
-## 4. Mobile performance pass
+## Files
 
-- Global `html, body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }` to kill native bounce conflict with Lenis.
-- Audit every section: remove `backdrop-filter: blur(...)` on mobile (use solid color fallback via media query). Backdrop blur is the #1 mobile-perf killer.
-- Replace stacked box-shadows on cards with a single soft shadow.
-- Drop `SectionDivider` SVG complexity on mobile — render simple 1px gradient line instead (still cinematic, far cheaper).
-- Lazy-load all below-the-fold sections via `React.lazy` + `<Suspense>` boundary at `Results` onward. The hero + problem render instantly; the rest streams in.
-- Image: serve the mobile hero crop at exactly device-pixel-ratio width (max 1080) — don't ship the desktop 1920 to phones.
+**New:**
+- `src/pages/studio/Login.tsx`, `Pending.tsx`, `Dashboard.tsx`, `PostsList.tsx`, `PostEditor.tsx`, `Approvals.tsx`, `Layout.tsx`
+- `src/pages/blog/BlogIndex.tsx`, `BlogPost.tsx`
+- `src/components/studio/RequireRole.tsx`, `SeoChecklist.tsx`, `MediaUploader.tsx`, `SlugInput.tsx`, `SchemaJsonLdEditor.tsx`, `TiptapEditor.tsx` (+ extensions)
+- `src/hooks/useAuth.tsx`, `useRole.tsx`, `usePostAutosave.tsx`
+- `src/lib/seo-checklist.ts`, `src/lib/slug.ts`, `src/lib/schema-defaults.ts`
+- `supabase/functions/publish-scheduled/index.ts`, `supabase/functions/increment-view/index.ts`, `supabase/functions/sitemap/index.ts`
+- Migrations for tables, enum, trigger, cron, storage bucket, RLS, grants.
 
----
+**Edited:**
+- `src/App.tsx` — add `/studio/*`, `/blog`, `/blog/:slug` routes; wrap with `AuthProvider`.
+- `src/pages/Insights.tsx`, `src/pages/Article.tsx` — switch data source to Supabase.
+- `public/sitemap.xml` — delete (replaced by edge function) or leave static + add posts dynamically.
+- `public/robots.txt` — disallow `/studio/`.
 
-## 5. Section-by-section visual cleanup (light touch only)
+**Deleted:**
+- `src/content/insights.tsx` (after migration).
 
-- `SocialProofTicker`: slow the marquee from current speed to 60s per loop, fade edges harder.
-- `Services`: remove hover scale on cards, keep border-color hover only.
-- `Results`: counter-up animations stay (they're earned), but trigger once with `ScrollTrigger.once: true`.
-- `Pricing`: keep `LiquidButton` on featured tier, remove any pulsing/glow effects.
-- `FinalCTA`: solid cinematic navy-black gradient, no sparkles on mobile, single-line headline entrance.
-- `Footer`: already restructured — verify mobile collapses to single column cleanly.
+## Dependencies to add
 
----
+`@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-link`, `@tiptap/extension-image`, `@tiptap/extension-placeholder`, `@tanstack/react-table`, `date-fns` (already present), `zod` (already present).
 
-## 6. What stays exactly the same
+## Out of scope
 
-- All copy, all routes, all SEO metadata, all new pages built in the previous pass.
-- Pricing structure, FAQ content, brand voice.
-- Booking modal, Calendly integration, analytics hooks, cookie consent logic.
-- `LiquidButton`, `ShimmerButton`, `WordRotate` components (kept, used more sparingly).
-- Outfit/Inter typography, brand wordmark, favicon.
-
----
-
-## Technical section
-
-**Files created**
-- `src/assets/hero-bg-desktop.webp`, `hero-bg-mobile.webp` (from uploaded image)
-- `src/components/HeroBackground.tsx` (responsive `<picture>` + gradient overlay)
-
-**Files edited**
-- `src/sections/Hero.tsx` — remove `BreathingMatrix`, add `HeroBackground`, rewrite entrance timeline (left/right slide → meet → WordRotate starts), remove floating decorative dots
-- `src/pages/Index.tsx` — remove `CustomCursor` component & its global cursor CSS injection, rewrite Lenis init with `syncTouch: false` + cinematic easing, replace scroll-depth listener with throttled / idle version, lazy-load below-the-fold sections
-- `src/index.css` — add navy/silver tokens, `overscroll-behavior`, tap-highlight reset, mobile media query that disables `backdrop-filter`
-- `src/sections/ProblemSection.tsx`, `SolutionSection.tsx`, `Services.tsx`, `Results.tsx`, `DifferentiationSection.tsx`, `Process.tsx`, `Pricing.tsx`, `FAQ.tsx`, `FinalCTA.tsx` — audit animations down to one entrance per section, swap pure-black dark backgrounds for subtle navy-tinted gradient, replace decorative red/blue dots with sky-blue/silver
-- `src/components/SectionDivider.tsx` — simplified mobile variant
-- `src/components/StickyCTA.tsx` — hide below 640px
-- `src/components/SocialProofTicker.tsx` — slower marquee, harder edge fades
-- `src/sections/Navigation.tsx` — keep, minor: remove hover scale on CTA pill (replaced by subtle bg darken only)
-
-**Files deleted / unused**
-- `src/components/BreathingMatrix.tsx` — kept in repo but unused (zero bundle impact thanks to tree-shaking once unimported)
-
-**Dependencies**
-- None added. Removing WebGL background means `three` / `@react-three/fiber` become dead weight — leave installed for now (no-op), or remove in a follow-up.
-
-**Out of scope (kept stable)**
-- No backend changes, no new pages, no copy rewrites, no font swaps, no logo changes.
-- Not touching any of the recently built Footer columns, new routes, legal/marketing pages.
-
----
-
-## Build order
-
-1. Hero rebuild (image background + new entrance timeline) — single biggest visual + perf win
-2. Lenis reconfigure + remove `CustomCursor` — fixes the "laggy scroll" complaint
-3. Mobile perf pass (backdrop-filter audit, lazy load, divider simplification)
-4. Atmosphere palette shift across dark sections
-5. Animation reduction pass section-by-section
-6. Final pass: screenshot at 384px and 1440px, verify no regressions
-
-Expected outcome: ~60% less JS executing during scroll, native-feeling touch on mobile, a single cinematic hero photograph instead of a 32×32 WebGL particle grid, and motion that reads as *directed* rather than *applied to everything*.
+- Multi-language posts, comments, tag/category system (can be added later).
+- Email notifications on approval (can be added if requested).
+- Full WYSIWYG preview of OG card.
