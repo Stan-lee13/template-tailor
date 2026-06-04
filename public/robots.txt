@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /studio
+Disallow: /studio/
 
 Sitemap: https://retentionfirm.com/sitemap.xml
