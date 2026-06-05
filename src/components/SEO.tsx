@@ -22,6 +22,7 @@ export default function SEO({
   jsonLd,
   publishedAt,
   author,
+  noindex,
 }: SEOProps) {
   const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
   const url = `${SITE.url}${path}`;
@@ -33,6 +34,7 @@ export default function SEO({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content={type} />
