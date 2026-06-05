@@ -10,6 +10,7 @@ interface SEOProps {
   jsonLd?: object | object[];
   publishedAt?: string;
   author?: string;
+  noindex?: boolean;
 }
 
 export default function SEO({
