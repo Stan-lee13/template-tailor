@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../hooks/useBooking';
 import { CALENDLY_URL, SITE } from '../config/site';
 import { track } from '../lib/analytics';
@@ -27,6 +28,7 @@ function loadCalendlyScript(): Promise<void> {
 export default function BookingModal() {
   const { isOpen, close } = useBooking();
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -50,7 +52,7 @@ export default function BookingModal() {
         track('booking_scheduled', {});
         setTimeout(() => {
           close();
-          window.location.href = '/thank-you';
+          navigate('/thank-you', { replace: true });
         }, 600);
       }
     };
@@ -63,7 +65,7 @@ export default function BookingModal() {
       window.removeEventListener('message', onMessage);
       window.removeEventListener('keydown', onKey);
     };
-  }, [isOpen, close]);
+  }, [isOpen, close, navigate]);
 
   if (!isOpen) return null;
 
