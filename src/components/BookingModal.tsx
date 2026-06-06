@@ -52,7 +52,11 @@ export default function BookingModal() {
         track('booking_scheduled', {});
         setTimeout(() => {
           close();
-          navigate('/thank-you', { replace: true });
+          try {
+            navigate('/thank-you', { replace: true });
+          } catch {
+            window.location.assign('/thank-you');
+          }
         }, 600);
       }
     };
