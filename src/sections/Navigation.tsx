@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BrandLogo from '../components/BrandLogo';
 import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
@@ -18,6 +18,7 @@ export default function Navigation() {
   const navRef = useRef<HTMLElement>(null);
   const { open } = useBooking();
   const location = useLocation();
+  const navigate = useNavigate();
   const isHome = location.pathname === '/';
   // On non-home pages, force "scrolled" appearance (cream/black) since hero isn't there
   const compact = scrolled || !isHome;
@@ -32,7 +33,11 @@ export default function Navigation() {
     e.preventDefault();
     setMobileOpen(false);
     if (!isHome) {
-      window.location.href = '/' + href;
+      navigate('/', { state: { scrollTo: href } });
+      setTimeout(() => {
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
       return;
     }
     const el = document.querySelector(href);
