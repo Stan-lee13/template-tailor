@@ -1,12 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function StudioPending() {
-  const { user, signOut, isStaff } = useAuth();
+  const { user, signOut, isStaff, loading } = useAuth();
   const navigate = useNavigate();
-  if (!user) { navigate('/studio/login'); return null; }
-  if (isStaff) { navigate('/studio'); return null; }
+  useEffect(() => {
+    if (loading) return;
+    if (!user) navigate('/studio/login', { replace: true });
+    else if (isStaff) navigate('/studio', { replace: true });
+  }, [loading, user, isStaff, navigate]);
+  if (loading || !user || isStaff) return null;
   return (
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#f1ece4' }}>
       <Helmet><meta name="robots" content="noindex" /><title>Pending approval</title></Helmet>

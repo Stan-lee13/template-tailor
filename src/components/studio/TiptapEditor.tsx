@@ -4,7 +4,7 @@ import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import { useEffect, useRef } from 'react';
-import { Bold, Italic, List, ListOrdered, Quote, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon, Undo, Redo, Minus } from 'lucide-react';
+import { Bold, Italic, List, ListOrdered, Quote, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon, Undo, Redo, Minus, Trash2 } from 'lucide-react';
 import { uploadPostMedia, getMediaUrl } from '@/lib/storage';
 import { toast } from 'sonner';
 
@@ -37,10 +37,19 @@ export default function TiptapEditor({ initialJson, onChange }: Props) {
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] } }),
       Link.configure({ openOnClick: false, HTMLAttributes: { rel: 'noopener', class: 'underline' } }),
-      Image.configure({ HTMLAttributes: { class: 'rounded-lg my-4 max-w-full' } }),
+      Image.configure({ HTMLAttributes: { class: 'rounded-lg my-4 max-w-full cursor-pointer' } }),
       Placeholder.configure({ placeholder: 'Start writing…' }),
     ],
     content: initialJson && Object.keys(initialJson).length ? initialJson : '<p></p>',
+    editorProps: {
+      handleClickOn(_view, _pos, node, nodePos, _event, direct) {
+        if (direct && node.type.name === 'image' && editor) {
+          editor.chain().focus().setNodeSelection(nodePos).run();
+          return true;
+        }
+        return false;
+      },
+    },
     onUpdate({ editor }) {
       onChange(editor.getJSON(), editor.getHTML());
     },
@@ -93,6 +102,7 @@ export default function TiptapEditor({ initialJson, onChange }: Props) {
         <span className="w-px h-5 mx-1" style={{ background: '#E2DDD3' }} />
         <Btn title="Link" active={editor.isActive('link')} onClick={addLink}><LinkIcon size={16} /></Btn>
         <Btn title="Image" onClick={() => fileRef.current?.click()}><ImageIcon size={16} /></Btn>
+        <Btn title="Delete selected image" disabled={!editor.isActive('image')} onClick={() => editor.chain().focus().deleteSelection().run()}><Trash2 size={16} /></Btn>
         <span className="w-px h-5 mx-1" style={{ background: '#E2DDD3' }} />
         <Btn title="Undo" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()}><Undo size={16} /></Btn>
         <Btn title="Redo" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()}><Redo size={16} /></Btn>
