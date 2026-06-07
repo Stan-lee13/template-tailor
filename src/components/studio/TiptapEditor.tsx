@@ -4,7 +4,7 @@ import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import { useEffect, useRef } from 'react';
-import { Bold, Italic, List, ListOrdered, Quote, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon, Undo, Redo, Minus } from 'lucide-react';
+import { Bold, Italic, List, ListOrdered, Quote, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon, Undo, Redo, Minus, Trash2 } from 'lucide-react';
 import { uploadPostMedia, getMediaUrl } from '@/lib/storage';
 import { toast } from 'sonner';
 
@@ -37,10 +37,19 @@ export default function TiptapEditor({ initialJson, onChange }: Props) {
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] } }),
       Link.configure({ openOnClick: false, HTMLAttributes: { rel: 'noopener', class: 'underline' } }),
-      Image.configure({ HTMLAttributes: { class: 'rounded-lg my-4 max-w-full' } }),
+      Image.configure({ HTMLAttributes: { class: 'rounded-lg my-4 max-w-full cursor-pointer' } }),
       Placeholder.configure({ placeholder: 'Start writing…' }),
     ],
     content: initialJson && Object.keys(initialJson).length ? initialJson : '<p></p>',
+    editorProps: {
+      handleClickOn(_view, _pos, node, nodePos, _event, direct) {
+        if (direct && node.type.name === 'image' && editor) {
+          editor.chain().focus().setNodeSelection(nodePos).run();
+          return true;
+        }
+        return false;
+      },
+    },
     onUpdate({ editor }) {
       onChange(editor.getJSON(), editor.getHTML());
     },
