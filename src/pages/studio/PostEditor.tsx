@@ -309,7 +309,7 @@ export default function PostEditor() {
                 <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#E2DDD3' }}>
                   <Upload size={12} /> {p.featured_image_url ? 'Replace' : 'Upload'}
                 </button>
-                {p.featured_image_url && <button onClick={() => setP({ ...p, featured_image_url: null })} className="font-inter text-xs" style={{ color: '#dc2626' }}>Remove</button>}
+                {p.featured_image_url && <button onClick={async () => { setP((s) => ({ ...s, featured_image_url: null })); if (p.id) await save({ featured_image_url: null }, true); }} className="font-inter text-xs" style={{ color: '#dc2626' }}>Remove</button>}
                 <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadFeatured(f); e.target.value = ''; }} />
               </div>
             </div>
