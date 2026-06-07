@@ -102,6 +102,7 @@ export default function TiptapEditor({ initialJson, onChange }: Props) {
         <span className="w-px h-5 mx-1" style={{ background: '#E2DDD3' }} />
         <Btn title="Link" active={editor.isActive('link')} onClick={addLink}><LinkIcon size={16} /></Btn>
         <Btn title="Image" onClick={() => fileRef.current?.click()}><ImageIcon size={16} /></Btn>
+        <Btn title="Delete selected image" disabled={!editor.isActive('image')} onClick={() => editor.chain().focus().deleteSelection().run()}><Trash2 size={16} /></Btn>
         <span className="w-px h-5 mx-1" style={{ background: '#E2DDD3' }} />
         <Btn title="Undo" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()}><Undo size={16} /></Btn>
         <Btn title="Redo" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()}><Redo size={16} /></Btn>
