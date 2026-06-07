@@ -27,6 +27,7 @@ export default function Approvals() {
   useEffect(() => { load(); }, []);
 
   const grant = async (uid: string, role: 'admin' | 'editor') => {
+    if (role === 'admin' && !confirm('Grant full admin access? Admins can manage all content and other users.')) return;
     const { error } = await supabase.from('user_roles').insert({ user_id: uid, role });
     if (error) return toast.error(error.message);
     toast.success(`Granted ${role}`);
@@ -51,6 +52,9 @@ export default function Approvals() {
         {loading ? (
           <div className="p-8 text-center font-inter text-sm" style={{ color: '#888' }}>Loading…</div>
         ) : (
+          profiles.length === 0 ? (
+            <div className="p-8 text-center font-inter text-sm" style={{ color: '#888' }}>No users yet.</div>
+          ) : (
           <ul className="divide-y" style={{ borderColor: '#E2DDD3' }}>
             {profiles.map((u) => {
               const userRoles = roles[u.id] || [];
@@ -63,8 +67,18 @@ export default function Approvals() {
                     <p className="font-inter text-xs truncate" style={{ color: '#888' }}>{u.email}</p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    {isAdmin && <span className="font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#F9731620', color: '#F97316' }}>Admin</span>}
-                    {isEditor && <span className="font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#10B98120', color: '#10B981' }}>Editor</span>}
+                    {isAdmin && (
+                      <span className="inline-flex items-center gap-1 font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#F9731620', color: '#F97316' }}>
+                        Admin
+                        <button onClick={() => revoke(u.id, 'admin')} title="Revoke admin" className="hover:opacity-70"><X size={10} /></button>
+                      </span>
+                    )}
+                    {isEditor && (
+                      <span className="inline-flex items-center gap-1 font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#10B98120', color: '#10B981' }}>
+                        Editor
+                        <button onClick={() => revoke(u.id, 'editor')} title="Revoke editor" className="hover:opacity-70"><X size={10} /></button>
+                      </span>
+                    )}
                     {!userRoles.length && <span className="font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#f1ece4', color: '#888' }}>Pending</span>}
                     {!isEditor && !isAdmin && (
                       <button onClick={() => grant(u.id, 'editor')} className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded font-inter text-xs" style={{ background: '#10B981', color: '#fff' }}>
@@ -76,12 +90,12 @@ export default function Approvals() {
                         <Check size={12} /> Admin
                       </button>
                     )}
-                    {isEditor && <button onClick={() => revoke(u.id, 'editor')} className="p-1.5 rounded" title="Revoke editor"><X size={12} color="#dc2626" /></button>}
                   </div>
                 </li>
               );
             })}
           </ul>
+          )
         )}
       </div>
     </StudioLayout>

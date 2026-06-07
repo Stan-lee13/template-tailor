@@ -54,6 +54,7 @@ export default function PostEditor() {
   const [loading, setLoading] = useState(!!id);
   const [saving, setSaving] = useState(false);
   const [featuredPreview, setFeaturedPreview] = useState<string | null>(null);
+  const [ogPreview, setOgPreview] = useState<string | null>(null);
   const [slugTouched, setSlugTouched] = useState(false);
   const [showChecklist, setShowChecklist] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -92,6 +93,9 @@ export default function PostEditor() {
   useEffect(() => {
     (async () => setFeaturedPreview(await getMediaUrl(p.featured_image_url)))();
   }, [p.featured_image_url]);
+  useEffect(() => {
+    (async () => setOgPreview(await getMediaUrl(p.og_image_url)))();
+  }, [p.og_image_url]);
 
   // Auto-slug
   useEffect(() => {
@@ -175,6 +179,7 @@ export default function PostEditor() {
       const path = await uploadPostMedia(f);
       setP((s) => ({ ...s, featured_image_url: path }));
       toast.success('Image uploaded');
+      if (p.id) await save({ featured_image_url: path }, true);
     } catch (e: any) { toast.error(e.message); }
   };
   const uploadOg = async (f: File) => {
@@ -182,6 +187,7 @@ export default function PostEditor() {
       const path = await uploadPostMedia(f);
       setP((s) => ({ ...s, og_image_url: path }));
       toast.success('OG image uploaded');
+      if (p.id) await save({ og_image_url: path }, true);
     } catch (e: any) { toast.error(e.message); }
   };
 
@@ -261,12 +267,20 @@ export default function PostEditor() {
             <input value={p.focus_keyword} onChange={(e) => setP({ ...p, focus_keyword: e.target.value })} className={inputCls} placeholder="e.g. customer retention" />
           </Field>
           <Field label="Open Graph image">
-            <div className="flex items-center gap-3">
-              {p.og_image_url && <span className="font-inter text-xs truncate flex-1" style={{ color: '#666' }}>{p.og_image_url.split('/').pop()}</span>}
-              <button onClick={() => ogRef.current?.click()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#E2DDD3' }}>
-                <Upload size={12} /> Upload
-              </button>
-              <input ref={ogRef} type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadOg(f); e.target.value = ''; }} />
+            <div className="space-y-3">
+              {ogPreview && <img src={ogPreview} alt="OG preview" className="rounded-lg max-h-40 object-cover" />}
+              <div className="flex flex-wrap items-center gap-3">
+                <button onClick={() => ogRef.current?.click()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#E2DDD3' }}>
+                  <Upload size={12} /> {p.og_image_url ? 'Replace' : 'Upload'}
+                </button>
+                {p.og_image_url && (
+                  <button onClick={async () => { setP((s) => ({ ...s, og_image_url: null })); if (p.id) await save({ og_image_url: null }, true); }} className="font-inter text-xs" style={{ color: '#dc2626' }}>
+                    Remove
+                  </button>
+                )}
+                <input ref={ogRef} type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadOg(f); e.target.value = ''; }} />
+              </div>
+              <p className="font-inter text-xs" style={{ color: '#888' }}>Recommended 1200×630. Shown when this post is shared on social.</p>
             </div>
           </Field>
           <Field label="Canonical URL">
