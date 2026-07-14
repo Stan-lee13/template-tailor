@@ -127,4 +127,7 @@ const TiptapEditor = forwardRef<TiptapEditorHandle, Props>(function TiptapEditor
       </div>
     </div>
   );
-}
+});
+
+export default TiptapEditor;
+
