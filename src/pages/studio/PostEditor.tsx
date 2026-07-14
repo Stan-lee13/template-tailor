@@ -52,6 +52,7 @@ export default function PostEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const ai = useStudioAI();
   const [p, setP] = useState<PostState>(empty);
   const [tab, setTab] = useState<'content' | 'seo' | 'settings'>('content');
   const [loading, setLoading] = useState(!!id);
@@ -62,6 +63,42 @@ export default function PostEditor() {
   const [showChecklist, setShowChecklist] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const ogRef = useRef<HTMLInputElement>(null);
+  const editorRef = useRef<TiptapEditorHandle>(null);
+
+  // Publish post context to AI assistant
+  useEffect(() => {
+    const wordCount = p.content_html.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+    ai.setContext({
+      title: p.title,
+      focusKeyword: p.focus_keyword,
+      excerpt: p.excerpt,
+      metaTitle: p.meta_title,
+      metaDescription: p.meta_description,
+      wordCount,
+    });
+    return () => ai.setContext(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p.title, p.focus_keyword, p.excerpt, p.meta_title, p.meta_description, p.content_html]);
+
+  // Register editor insert + field setter for the AI assistant
+  useEffect(() => {
+    ai.registerInsertHandler((md: string) => {
+      const html = markdownToHtml(md);
+      return editorRef.current?.insertHtml(html) ?? false;
+    });
+    ai.registerFieldSetter((field, value) => {
+      const clean = value.replace(/^["“]|["”]$/g, '').trim();
+      if (field === 'metaTitle') setP((s) => ({ ...s, meta_title: clean }));
+      else if (field === 'metaDescription') setP((s) => ({ ...s, meta_description: clean }));
+      else if (field === 'excerpt') setP((s) => ({ ...s, excerpt: clean }));
+      else if (field === 'title') setP((s) => ({ ...s, title: clean }));
+      else return false;
+      return true;
+    });
+    return () => { ai.registerInsertHandler(null); ai.registerFieldSetter(null); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   // Load
   useEffect(() => {
