@@ -1,66 +1,85 @@
-# Studio production-readiness fixes
+# Plan: Studio polish, AI assistant, blog fix, deploy audit
 
-## Root causes
+## 1. Fix "published post not showing on site"
 
-1. **Admin can't see pending approvals / grant editor access**
-   The `profiles` table RLS only has `profiles self read` (`auth.uid() = id`). When the admin opens `/studio/approvals`, the query `select * from profiles` returns only their own row — every other signup is invisible. Granting roles via `user_roles insert` is technically allowed by RLS, but the UI can't show the users to grant to. That's why you had to do it from the backend.
+Root cause: two parallel blog surfaces exist.
 
-2. **Open Graph image upload "not working"**
-   The upload itself succeeds (storage policies are correct), but the SEO tab only shows a filename string with no preview and no remove button, so it looks broken. There's also no visible "saved" indicator until you hit Save draft — the OG path is held in local state only.
+- Nav + Footer link `/insights` → `Insights.tsx` (queries `posts` table) → article at `/insights/:slug` via `Article.tsx`.
+- Studio "View live" button + `BlogIndex.tsx` link `/blog/:slug` via `BlogPost.tsx`.
 
-3. **Can't delete an image inside the post content editor**
-   Tiptap inserts images as nodes, but on touch/mobile there's no way to select+delete. The toolbar has no "remove selected image" control, and there's no floating bubble menu on image click. Desktop users with a keyboard can press backspace; mobile users are stuck.
+Both pull from the same `posts` table, so the post exists — but the two URL trees confuse everyone.
 
-4. **Minor production polish gaps** noticed while auditing:
-   - Approvals page revoke only handles `editor`, not `admin`.
-   - SEO tab OG image has no preview/remove.
-   - Featured image preview re-fetches signed URL on every state change unnecessarily (already cached, but harmless).
-   - Pending page calls `navigate()` during render (React anti-pattern) — should be in effect.
+**Fix:** Pick `/blog` as the canonical public surface (it's the industry-standard slug and matches the studio's own links).
 
-## Fix plan
+- Update `Navigation.tsx` and `Footer.tsx` "Insights" links → `/blog`.
+- Update `App.tsx`: `/insights` and `/insights/:slug` become permanent redirects (`<Navigate replace>`) to `/blog` and `/blog/:slug`. Keeps old URLs working for SEO.
+- Delete `src/pages/Insights.tsx` and `src/pages/Article.tsx` (superseded by `BlogIndex` / `BlogPost`).
+- Update `sitemap.xml` and any internal links to `/blog`.
+- Update the article JSON-LD in `BlogPost.tsx` to use `/blog/:slug` URLs.
 
-### 1. Database migration — let admins read all profiles
-Add a SELECT policy on `public.profiles` allowing `has_role(auth.uid(), 'admin')`. Keep existing self-read policy untouched. No GRANT changes needed (already granted to authenticated).
+Live site note: after these changes, redeploy on Vercel — the current live 404/missing-post symptoms are partly because the last deploy is stale.
+
+## 2. Admin AI assistant in `/studio`
+
+New floating assistant available only inside the studio, powered by Lovable AI Gateway (Google Gemini 2.5 Flash — good balance of latency/quality for writing help).
+
+- Edge function `supabase/functions/studio-assistant/index.ts` — streams chat via AI SDK + `@ai-sdk/openai-compatible` against `https://ai.gateway.lovable.dev/v1` with `LOVABLE_API_KEY`. Verifies the caller is staff via `is_staff(auth.uid())` before responding; rejects otherwise. Handles 429/402 with clean JSON errors.
+- Client component `src/components/studio/AIAssistant.tsx` — floating button + slide-in panel, `useChat` transport, markdown rendering (`react-markdown`), full history sent every call. System prompt tuned for retention-marketing editorial help: outline drafts, sharpen headlines, meta description suggestions from a focus keyword, tone rewrites, SEO gap checks. Includes quick-action chips ("Draft outline", "Suggest meta title", "Rewrite for punch").
+- context injection: when opened from the PostEditor, sends current title/excerpt/focus keyword as context so replies are post-aware.
+- Mounted in `StudioLayout.tsx` so it's available on every studio page.
+
+## 3. Studio production-ready polish
+
+Small correctness/UX fixes surfaced by walking the studio code:
+
+- **DB grants**: add a migration granting `SELECT` on `posts` to `anon`, and standard `authenticated`/`service_role` grants on `posts`, `post_revisions`, `profiles`, `user_roles`. RLS policies already exist; grants are missing per Supabase's non-default policy. This future-proofs anon reads.
+- **Scheduled publishing**: currently only fires when someone loads `/blog` or `/insights`. Add a pg_cron job that calls `publish_due_posts()` every minute so posts publish on time even without traffic.
+- **Approvals**: show current role next to each user; disable "Grant admin" for self; add a confirm dialog on "Revoke".
+- **PostEditor**: add a "Duplicate post" action, warn on unsaved changes when navigating away, and show a small "Last saved &nbsp;s ago" indicator.
+- **BlogIndex**: add reading-time estimate + tag filter placeholder removed; fix the "featured image" fallback for posts with none.
+
+## 4. Dependency & config audit
+
+- Run `bun outdated` and upgrade only patch/minor for: `ai`, `@ai-sdk/*`, `@tiptap/*`, `@supabase/supabase-js`, `react-router-dom`. Skip majors this pass.
+- Verify `vercel.json` rewrite still targets the correct SPA fallback (`/(.*)` → `/index.html` with asset bypass). Report status; no change unless broken.
+- Confirm `supabase/config.toml` exposes the new `studio-assistant` function (`verify_jwt = true`).
+- README section documenting the studio (login → approvals → create post → AI assistant → publish).
+
+## Technical details
+
+Files created:
+
+- `supabase/functions/studio-assistant/index.ts`
+- `supabase/functions/_shared/ai-gateway.ts` (if not already present)
+- `src/components/studio/AIAssistant.tsx`
+- `supabase/migrations/<ts>_grants_and_cron.sql`
+
+Files edited:
+
+- `src/App.tsx` (redirects, remove Insights/Article routes)
+- `src/sections/Navigation.tsx`, `src/sections/Footer.tsx` (Insights → Blog)
+- `src/components/studio/StudioLayout.tsx` (mount assistant)
+- `src/pages/studio/PostEditor.tsx` (unsaved-changes guard, duplicate, last-saved indicator, pass context to assistant)
+- `src/pages/studio/Approvals.tsx` (role badge, self-guard, confirm)
+- `src/pages/blog/BlogIndex.tsx`, `src/pages/blog/BlogPost.tsx` (JSON-LD, reading time)
+- `public/sitemap.xml`, `README.md`
+
+Files removed:
+
+- `src/pages/Insights.tsx`, `src/pages/Article.tsx`
+
+Migration outline:
 
 ```sql
-CREATE POLICY "profiles admin read all" ON public.profiles
-  FOR SELECT TO authenticated
-  USING (public.has_role(auth.uid(), 'admin'));
+GRANT SELECT ON public.posts TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.posts TO authenticated;
+GRANT ALL ON public.posts TO service_role;
+-- same pattern for post_revisions (no anon), profiles (no anon), user_roles (no anon)
+
+SELECT cron.schedule('publish-due-posts', '* * * * *',
+  $$ SELECT public.publish_due_posts(); $$);
 ```
 
-### 2. Approvals page (`src/pages/studio/Approvals.tsx`)
-- Add empty-state copy when no users.
-- Add admin revoke button alongside editor revoke.
-- Show role-change loading state.
-- Confirmation before granting admin (sensitive action).
+## Open question
 
-### 3. Post editor OG image UX (`src/pages/studio/PostEditor.tsx`)
-- Show a small image preview (signed URL) for `og_image_url`, matching featured-image pattern.
-- Add a "Remove" button.
-- Auto-save after upload so the user doesn't lose it on navigation.
-- Same auto-save for featured image.
-
-### 4. Tiptap image deletion (`src/components/studio/TiptapEditor.tsx`)
-- Add a BubbleMenu that appears when an image node is selected, with a single "Delete image" button (works on mobile tap).
-- Add a toolbar button "Delete selected image" that's enabled only when the selection is an image node.
-- Document the keyboard shortcut for desktop users (alt text on the button).
-
-### 5. Pending page tidy (`src/pages/studio/Pending.tsx`)
-- Move `navigate()` calls into `useEffect` to avoid React render-phase navigation warnings.
-
-### 6. No changes to:
-- Auth flow, storage policies, post RLS, bucket config — all verified working.
-- Vercel config, routing — unrelated to this request.
-
-## Files changed
-- `supabase/migrations/<new>.sql` — admin profile read policy
-- `src/pages/studio/Approvals.tsx`
-- `src/pages/studio/PostEditor.tsx`
-- `src/components/studio/TiptapEditor.tsx`
-- `src/pages/studio/Pending.tsx`
-
-## Verification
-- Sign in as admin → `/studio/approvals` lists every signed-up user, can grant editor/admin and revoke.
-- Upload OG image → preview appears immediately, Remove works, persists after Save.
-- Insert image into post content → tap/click it → bubble menu "Delete" removes it on both desktop and mobile.
-- Non-admin staff still cannot reach `/studio/approvals` (RequireAdmin gate unchanged).
+Do you want the AI assistant to also be able to **insert generated content directly into the current post's editor** (e.g. "insert this outline"), or keep it read-only chat where you copy/paste? Insert-to-editor is ~30 min extra work and worth it if you'll use it daily. Yes I want it to be able to insert generated content directly if given the permission and also help the user if they have any issues while making the content like in meta title and the rest so that everything can match and be ticked before posting or publishing live.
