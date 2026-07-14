@@ -3,6 +3,9 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { StudioAIProvider } from '@/hooks/useStudioAI';
+import AIAssistant from './AIAssistant';
+
 
 const nav = [
   { to: '/studio', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -18,7 +21,9 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
   const items = isAdmin ? [...nav, { to: '/studio/approvals', label: 'Approvals', icon: UserCheck, end: false }] : nav;
 
   return (
+    <StudioAIProvider>
     <div className="min-h-screen flex" style={{ background: '#f1ece4' }}>
+
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
         <title>Studio — RetentionFirm</title>
@@ -76,6 +81,8 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
           {children}
         </div>
       </main>
+      <AIAssistant />
     </div>
+    </StudioAIProvider>
   );
 }
