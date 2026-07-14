@@ -279,7 +279,7 @@ export default function PostEditor() {
             rows={2}
             className="w-full px-0 font-inter text-base bg-transparent focus:outline-none resize-none"
             style={{ color: '#444' }} />
-          <TiptapEditor initialJson={p.content_json} onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))} />
+          <TiptapEditor ref={editorRef} initialJson={p.content_json} onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))} />
         </div>
       )}
 
