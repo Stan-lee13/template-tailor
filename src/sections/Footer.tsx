@@ -4,7 +4,7 @@ import { SITE } from '../config/site';
 import { useBooking } from '../hooks/useBooking';
 
 const resources = [
-  { label: 'Insights', to: '/insights' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Case Studies', to: '/case-studies' },
   { label: 'Integrations', to: '/integrations' },
   { label: 'Pricing', to: '/#pricing' },

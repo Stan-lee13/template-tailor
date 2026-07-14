@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useParams } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -7,9 +7,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useEffect } from "react";
 
 import Index from "./pages/Index.tsx";
-import Insights from "./pages/Insights.tsx";
-import Article from "./pages/Article.tsx";
 import Privacy from "./pages/Privacy.tsx";
+
 import Terms from "./pages/Terms.tsx";
 import Cookies from "./pages/Cookies.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
@@ -43,7 +42,9 @@ import { BookingProvider } from "./hooks/useBooking";
 import BookingModal from "./components/BookingModal";
 import CookieConsent from "./components/CookieConsent";
 import { AuthProvider, RequireStaff, RequireAdmin } from "./hooks/useAuth";
+import { StudioAIProvider } from "./hooks/useStudioAI";
 import { initAnalytics } from "./lib/analytics";
+
 
 const queryClient = new QueryClient();
 
@@ -53,10 +54,12 @@ function AppShell() {
     <>
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/insights" element={<Insights />} />
-        <Route path="/insights/:slug" element={<Article />} />
+        {/* Insights → Blog (permanent redirect, preserves old inbound links) */}
+        <Route path="/insights" element={<Navigate to="/blog" replace />} />
+        <Route path="/insights/:slug" element={<InsightsSlugRedirect />} />
 
         <Route path="/blog" element={<BlogIndex />} />
+
         <Route path="/blog/:slug" element={<BlogPost />} />
 
         <Route path="/solutions/ecommerce-brands" element={<EcommerceBrands />} />
@@ -82,11 +85,12 @@ function AppShell() {
         {/* Hidden Team Portal */}
         <Route path="/studio/login" element={<StudioLogin />} />
         <Route path="/studio/pending" element={<StudioPending />} />
-        <Route path="/studio" element={<RequireStaff><StudioDashboard /></RequireStaff>} />
-        <Route path="/studio/posts" element={<RequireStaff><PostsList /></RequireStaff>} />
-        <Route path="/studio/posts/new" element={<RequireStaff><PostEditor /></RequireStaff>} />
-        <Route path="/studio/posts/:id" element={<RequireStaff><PostEditor /></RequireStaff>} />
-        <Route path="/studio/approvals" element={<RequireStaff><RequireAdmin><Approvals /></RequireAdmin></RequireStaff>} />
+        <Route path="/studio" element={<RequireStaff><StudioAIProvider><StudioDashboard /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/posts" element={<RequireStaff><StudioAIProvider><PostsList /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/posts/new" element={<RequireStaff><StudioAIProvider><PostEditor /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/posts/:id" element={<RequireStaff><StudioAIProvider><PostEditor /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/approvals" element={<RequireStaff><RequireAdmin><StudioAIProvider><Approvals /></StudioAIProvider></RequireAdmin></RequireStaff>} />
+
 
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -95,6 +99,12 @@ function AppShell() {
     </>
   );
 }
+
+function InsightsSlugRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/blog/${slug ?? ''}`} replace />;
+}
+
 
 const App = () => (
   <HelmetProvider>

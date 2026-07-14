@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import StudioLayout from '@/components/studio/StudioLayout';
-import TiptapEditor from '@/components/studio/TiptapEditor';
+import TiptapEditor, { TiptapEditorHandle } from '@/components/studio/TiptapEditor';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useStudioAI } from '@/hooks/useStudioAI';
+import { markdownToHtml } from '@/lib/markdown';
 import { slugify } from '@/lib/slug';
 import { runSeoChecklist } from '@/lib/seo-checklist';
 import { uploadPostMedia, getMediaUrl } from '@/lib/storage';
 import { toast } from 'sonner';
-import { ArrowLeft, Check, X, Upload, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Check, X, Upload, ExternalLink, Sparkles } from 'lucide-react';
+
 
 type Status = 'draft' | 'scheduled' | 'published';
 
@@ -49,6 +52,7 @@ export default function PostEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const ai = useStudioAI();
   const [p, setP] = useState<PostState>(empty);
   const [tab, setTab] = useState<'content' | 'seo' | 'settings'>('content');
   const [loading, setLoading] = useState(!!id);
@@ -59,6 +63,42 @@ export default function PostEditor() {
   const [showChecklist, setShowChecklist] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const ogRef = useRef<HTMLInputElement>(null);
+  const editorRef = useRef<TiptapEditorHandle>(null);
+
+  // Publish post context to AI assistant
+  useEffect(() => {
+    const wordCount = p.content_html.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+    ai.setContext({
+      title: p.title,
+      focusKeyword: p.focus_keyword,
+      excerpt: p.excerpt,
+      metaTitle: p.meta_title,
+      metaDescription: p.meta_description,
+      wordCount,
+    });
+    return () => ai.setContext(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p.title, p.focus_keyword, p.excerpt, p.meta_title, p.meta_description, p.content_html]);
+
+  // Register editor insert + field setter for the AI assistant
+  useEffect(() => {
+    ai.registerInsertHandler((md: string) => {
+      const html = markdownToHtml(md);
+      return editorRef.current?.insertHtml(html) ?? false;
+    });
+    ai.registerFieldSetter((field, value) => {
+      const clean = value.replace(/^["“]|["”]$/g, '').trim();
+      if (field === 'metaTitle') setP((s) => ({ ...s, meta_title: clean }));
+      else if (field === 'metaDescription') setP((s) => ({ ...s, meta_description: clean }));
+      else if (field === 'excerpt') setP((s) => ({ ...s, excerpt: clean }));
+      else if (field === 'title') setP((s) => ({ ...s, title: clean }));
+      else return false;
+      return true;
+    });
+    return () => { ai.registerInsertHandler(null); ai.registerFieldSetter(null); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   // Load
   useEffect(() => {
@@ -201,6 +241,10 @@ export default function PostEditor() {
           <ArrowLeft size={14} /> Posts
         </Link>
         <div className="flex flex-wrap items-center gap-2">
+          <button onClick={() => ai.openPanel()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#0A0A0A', color: '#0A0A0A' }}>
+            <Sparkles size={12} color="#F97316" /> Ask AI
+          </button>
+
           {p.status === 'published' && p.slug && (
             <a href={`/blog/${p.slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs" style={{ color: '#666' }}>
               View live <ExternalLink size={12} />
@@ -239,7 +283,7 @@ export default function PostEditor() {
             rows={2}
             className="w-full px-0 font-inter text-base bg-transparent focus:outline-none resize-none"
             style={{ color: '#444' }} />
-          <TiptapEditor initialJson={p.content_json} onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))} />
+          <TiptapEditor ref={editorRef} initialJson={p.content_json} onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))} />
         </div>
       )}
 

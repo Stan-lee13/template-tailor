@@ -1,17 +1,22 @@
-import { useEditor, EditorContent, Editor } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { Bold, Italic, List, ListOrdered, Quote, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon, Undo, Redo, Minus, Trash2 } from 'lucide-react';
 import { uploadPostMedia, getMediaUrl } from '@/lib/storage';
 import { toast } from 'sonner';
+
+export interface TiptapEditorHandle {
+  insertHtml: (html: string) => boolean;
+}
 
 interface Props {
   initialJson?: any;
   onChange: (json: any, html: string) => void;
 }
+
 
 function Btn({ active, onClick, title, children, disabled }: { active?: boolean; onClick: () => void; title: string; children: React.ReactNode; disabled?: boolean }) {
   return (
@@ -31,7 +36,7 @@ function Btn({ active, onClick, title, children, disabled }: { active?: boolean;
   );
 }
 
-export default function TiptapEditor({ initialJson, onChange }: Props) {
+const TiptapEditor = forwardRef<TiptapEditorHandle, Props>(function TiptapEditor({ initialJson, onChange }, ref) {
   const fileRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
@@ -66,7 +71,16 @@ export default function TiptapEditor({ initialJson, onChange }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor]);
 
+  useImperativeHandle(ref, () => ({
+    insertHtml: (html: string) => {
+      if (!editor) return false;
+      editor.chain().focus().insertContent(html).run();
+      return true;
+    },
+  }), [editor]);
+
   if (!editor) return null;
+
 
   const addLink = () => {
     const previous = editor.getAttributes('link').href;
@@ -113,4 +127,7 @@ export default function TiptapEditor({ initialJson, onChange }: Props) {
       </div>
     </div>
   );
-}
+});
+
+export default TiptapEditor;
+
