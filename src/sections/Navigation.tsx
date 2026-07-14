@@ -82,14 +82,15 @@ export default function Navigation() {
               </a>
             ))}
             <Link
-              to="/insights"
+              to="/blog"
               className="text-sm font-medium transition-colors duration-300"
               style={{ color: compact ? '#555555' : 'rgba(241,236,228,0.7)', letterSpacing: '-0.01em' }}
               onMouseEnter={(e) => (e.currentTarget.style.color = compact ? '#0A0A0A' : '#f1ece4')}
               onMouseLeave={(e) => (e.currentTarget.style.color = compact ? '#555555' : 'rgba(241,236,228,0.7)')}
             >
-              Insights
+              Blog
             </Link>
+
           </div>
 
           <div className="hidden lg:flex items-center gap-6">
@@ -127,9 +128,10 @@ export default function Navigation() {
               {link.label}
             </a>
           ))}
-          <Link to="/insights" onClick={() => setMobileOpen(false)} className="font-outfit text-2xl sm:text-3xl font-medium" style={{ color: '#f1ece4' }}>
-            Insights
+          <Link to="/blog" onClick={() => setMobileOpen(false)} className="font-outfit text-2xl sm:text-3xl font-medium" style={{ color: '#f1ece4' }}>
+            Blog
           </Link>
+
           <button onClick={() => onBook('mobile_nav')} className="mt-4 text-base font-medium text-white" style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px' }}>
             Book a Growth Audit
           </button>
