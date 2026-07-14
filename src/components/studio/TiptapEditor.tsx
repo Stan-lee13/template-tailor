@@ -71,7 +71,16 @@ const TiptapEditor = forwardRef<TiptapEditorHandle, Props>(function TiptapEditor
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor]);
 
+  useImperativeHandle(ref, () => ({
+    insertHtml: (html: string) => {
+      if (!editor) return false;
+      editor.chain().focus().insertContent(html).run();
+      return true;
+    },
+  }), [editor]);
+
   if (!editor) return null;
+
 
   const addLink = () => {
     const previous = editor.getAttributes('link').href;
