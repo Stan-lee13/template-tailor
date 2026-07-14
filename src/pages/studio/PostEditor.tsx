@@ -241,6 +241,10 @@ export default function PostEditor() {
           <ArrowLeft size={14} /> Posts
         </Link>
         <div className="flex flex-wrap items-center gap-2">
+          <button onClick={() => ai.openPanel()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#0A0A0A', color: '#0A0A0A' }}>
+            <Sparkles size={12} color="#F97316" /> Ask AI
+          </button>
+
           {p.status === 'published' && p.slug && (
             <a href={`/blog/${p.slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs" style={{ color: '#666' }}>
               View live <ExternalLink size={12} />
