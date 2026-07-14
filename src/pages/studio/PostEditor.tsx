@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import StudioLayout from '@/components/studio/StudioLayout';
-import TiptapEditor from '@/components/studio/TiptapEditor';
+import TiptapEditor, { TiptapEditorHandle } from '@/components/studio/TiptapEditor';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useStudioAI } from '@/hooks/useStudioAI';
+import { markdownToHtml } from '@/lib/markdown';
 import { slugify } from '@/lib/slug';
 import { runSeoChecklist } from '@/lib/seo-checklist';
 import { uploadPostMedia, getMediaUrl } from '@/lib/storage';
 import { toast } from 'sonner';
-import { ArrowLeft, Check, X, Upload, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Check, X, Upload, ExternalLink, Sparkles } from 'lucide-react';
+
 
 type Status = 'draft' | 'scheduled' | 'published';
 
