@@ -48,8 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value: AuthCtx = {
     user, session, roles, loading,
-    isStaff: roles.includes('admin') || roles.includes('editor'),
-    isAdmin: roles.includes('admin'),
+    isStaff: roles.some((r) => ['admin', 'editor', 'owner', 'content_manager'].includes(r)),
+    isAdmin: roles.includes('admin') || roles.includes('owner'),
+    isOwner: roles.includes('owner'),
+    canEdit: roles.some((r) => ['admin', 'editor', 'owner', 'content_manager'].includes(r)),
     signOut: async () => { await supabase.auth.signOut(); },
     refreshRoles: () => fetchRoles(user?.id),
   };
