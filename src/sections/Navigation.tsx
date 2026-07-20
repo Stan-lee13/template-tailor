@@ -34,8 +34,9 @@ export default function Navigation() {
   }, []);
 
   const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
     setMobileOpen(false);
+    if (href.startsWith('/')) { return; } // let native <a> route (or use Link)
+    e.preventDefault();
     if (!isHome) {
       navigate('/', { state: { scrollTo: href } });
       setTimeout(() => {
