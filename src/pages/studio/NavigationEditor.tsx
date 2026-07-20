@@ -22,7 +22,7 @@ function Row({ item, onChange, onDelete }: { item: NavItem; onChange: (patch: Pa
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   return (
-    <div ref={setNodeRef} style={style} className="flex items-center gap-2 px-3 py-2 rounded-md" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
+    <div ref={setNodeRef} style={{ ...style, background: '#fff', border: '1px solid #E2DDD3' }} className="flex items-center gap-2 px-3 py-2 rounded-md">
       <button {...attributes} {...listeners} className="p-1 cursor-grab" title="Drag"><GripVertical size={14} color="#888" /></button>
       <input value={item.label} onChange={(e) => onChange({ label: e.target.value })} placeholder="Label" className="flex-1 min-w-[80px] px-2 py-1.5 rounded border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} />
       <input value={item.href} onChange={(e) => onChange({ href: e.target.value })} placeholder="/path or https://" className="flex-1 min-w-[120px] px-2 py-1.5 rounded border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} />

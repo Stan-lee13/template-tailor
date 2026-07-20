@@ -28,14 +28,15 @@ export default function SiteSettingsPage() {
     (async () => {
       const { data } = await supabase.from('site_settings').select('*').maybeSingle();
       if (data) {
+        const asObj = (v: unknown) => (v && typeof v === 'object' ? v as object : {});
         setSettings({
           id: data.id,
-          brand: { ...defaultSettings.brand, ...(data.brand as object || {}) },
-          theme: { ...defaultSettings.theme, ...(data.theme as object || {}) },
-          seo: { ...defaultSettings.seo, ...(data.seo as object || {}) },
-          social: { ...defaultSettings.social, ...(data.social as object || {}) },
-          contact: { ...defaultSettings.contact, ...(data.contact as object || {}) },
-          announcement: { ...defaultSettings.announcement, ...(data.announcement as object || {}) },
+          brand: { ...defaultSettings.brand, ...asObj(data.brand) },
+          theme: { ...defaultSettings.theme, ...asObj(data.theme) },
+          seo: { ...defaultSettings.seo, ...asObj(data.seo) },
+          social: { ...defaultSettings.social, ...asObj(data.social) },
+          contact: { ...defaultSettings.contact, ...asObj(data.contact) },
+          announcement: { ...defaultSettings.announcement, ...asObj(data.announcement) },
         });
       }
       setLoading(false);

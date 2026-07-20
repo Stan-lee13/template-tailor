@@ -6,7 +6,7 @@ import { Upload, Trash2, Copy, Check } from 'lucide-react';
 import { getMediaUrl } from '@/lib/storage';
 import { logActivity } from '@/lib/activity';
 
-type Asset = { id: string; filename: string; path: string; mime_type: string | null; size_bytes: number | null; created_at: string };
+type Asset = { id: string; filename: string; storage_path: string; mime: string | null; size_bytes: number | null; created_at: string };
 
 export default function MediaLibrary() {
   const [assets, setAssets] = useState<Asset[]>([]);
@@ -18,11 +18,11 @@ export default function MediaLibrary() {
 
   const load = async () => {
     setLoading(true);
-    const { data } = await supabase.from('media_assets').select('*').order('created_at', { ascending: false });
-    const list = (data as Asset[]) || [];
+    const { data } = await supabase.from('media_assets').select('id, filename, storage_path, mime, size_bytes, created_at').order('created_at', { ascending: false });
+    const list = (data || []) as Asset[];
     setAssets(list);
     const map: Record<string, string> = {};
-    await Promise.all(list.map(async (a) => { const u = await getMediaUrl(a.path); if (u) map[a.id] = u; }));
+    await Promise.all(list.map(async (a) => { const u = await getMediaUrl(a.storage_path); if (u) map[a.id] = u; }));
     setUrls(map);
     setLoading(false);
   };
@@ -40,7 +40,7 @@ export default function MediaLibrary() {
         const { error: upErr } = await supabase.storage.from('post-media').upload(path, file, { contentType: file.type });
         if (upErr) throw upErr;
         const { error: dbErr } = await supabase.from('media_assets').insert({
-          filename: file.name, path, mime_type: file.type, size_bytes: file.size, uploader_id: user.id,
+          filename: file.name, storage_path: path, storage_bucket: 'post-media', mime: file.type, size_bytes: file.size, uploaded_by: user.id,
         });
         if (dbErr) throw dbErr;
       }
@@ -52,7 +52,7 @@ export default function MediaLibrary() {
 
   const remove = async (a: Asset) => {
     if (!confirm(`Delete ${a.filename}? References across the site will break.`)) return;
-    await supabase.storage.from('post-media').remove([a.path]);
+    await supabase.storage.from('post-media').remove([a.storage_path]);
     await supabase.from('media_assets').delete().eq('id', a.id);
     await logActivity('media.delete', 'media', a.id, { filename: a.filename });
     toast.success('Deleted');
@@ -89,12 +89,12 @@ export default function MediaLibrary() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {assets.map((a) => {
               const url = urls[a.id];
-              const isImg = a.mime_type?.startsWith('image/');
+              const isImg = a.mime?.startsWith('image/');
               return (
                 <div key={a.id} className="rounded-xl overflow-hidden group" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
                   <div className="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
                     {isImg && url ? <img src={url} alt={a.filename} className="w-full h-full object-cover" /> :
-                      <span className="font-inter text-xs" style={{ color: '#888' }}>{a.mime_type || 'file'}</span>}
+                      <span className="font-inter text-xs" style={{ color: '#888' }}>{a.mime || 'file'}</span>}
                   </div>
                   <div className="p-2.5">
                     <p className="font-inter text-xs truncate" style={{ color: '#0A0A0A' }} title={a.filename}>{a.filename}</p>

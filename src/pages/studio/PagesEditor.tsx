@@ -7,13 +7,12 @@ import { logActivity } from '@/lib/activity';
 
 type Page = {
   id: string;
-  slug: string;
   path: string;
-  title: string | null;
+  title: string;
   meta_title: string | null;
   meta_description: string | null;
   og_image_url: string | null;
-  status: string;
+  status: 'published' | 'draft' | 'archived';
   updated_at: string;
 };
 
@@ -34,8 +33,7 @@ export default function PagesEditor() {
   const createPage = async () => {
     const path = prompt('New page path (e.g. /promo)');
     if (!path) return;
-    const slug = path.replace(/^\//, '').replace(/\//g, '-') || 'home';
-    const { data, error } = await supabase.from('site_pages').insert({ path, slug, title: path, status: 'draft' }).select().single();
+    const { data, error } = await supabase.from('site_pages').insert({ path, title: path, status: 'draft' }).select().single();
     if (error) return toast.error(error.message);
     await logActivity('page.create', 'page', data.id, { path });
     toast.success('Page created');
@@ -112,8 +110,8 @@ export default function PagesEditor() {
               </div>
               <div>
                 <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Status</label>
-                <select className="w-full px-3 py-2 rounded-md border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} value={selected.status} onChange={(e) => setSelected({ ...selected, status: e.target.value })}>
-                  <option value="published">Published</option><option value="draft">Draft</option>
+                <select className="w-full px-3 py-2 rounded-md border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} value={selected.status} onChange={(e) => setSelected({ ...selected, status: e.target.value as Page['status'] })}>
+                  <option value="published">Published</option><option value="draft">Draft</option><option value="archived">Archived</option>
                 </select>
               </div>
               <div className="sm:col-span-2">
