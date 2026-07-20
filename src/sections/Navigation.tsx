@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BrandLogo from '../components/BrandLogo';
 import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
+import { useNavItems } from '../hooks/useSiteData';
 
-const sectionLinks = [
+const defaultLinks = [
   { label: 'Services', href: '#services' },
   { label: 'Process', href: '#process' },
   { label: 'Results', href: '#results' },
