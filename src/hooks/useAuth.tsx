@@ -3,7 +3,7 @@ import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { Navigate, useLocation } from 'react-router-dom';
 
-type Role = 'admin' | 'editor';
+type Role = 'admin' | 'editor' | 'owner' | 'content_manager' | 'viewer';
 
 interface AuthCtx {
   user: User | null;
@@ -12,6 +12,8 @@ interface AuthCtx {
   loading: boolean;
   isStaff: boolean;
   isAdmin: boolean;
+  isOwner: boolean;
+  canEdit: boolean;
   signOut: () => Promise<void>;
   refreshRoles: () => Promise<void>;
 }
