@@ -21,8 +21,11 @@ export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
-  // On non-home pages, force "scrolled" appearance (cream/black) since hero isn't there
   const compact = scrolled || !isHome;
+  const { data: dbNav } = useNavItems('header');
+  const sectionLinks = (dbNav && dbNav.length > 0)
+    ? dbNav.map((n) => ({ label: n.label, href: n.href }))
+    : defaultLinks;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
