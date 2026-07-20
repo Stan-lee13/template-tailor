@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X, Settings, Menu as MenuIcon, FileCode, Image as ImageIcon, Activity } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import AIAssistant from './AIAssistant';
 
@@ -11,6 +11,15 @@ const nav = [
   { to: '/studio', label: 'Dashboard', icon: LayoutDashboard, end: true },
   { to: '/studio/posts', label: 'Posts', icon: FileText },
   { to: '/studio/posts/new', label: 'New post', icon: PlusCircle },
+  { to: '/studio/pages', label: 'Pages', icon: FileCode },
+  { to: '/studio/media', label: 'Media', icon: ImageIcon },
+];
+
+const adminNav = [
+  { to: '/studio/navigation', label: 'Navigation', icon: MenuIcon },
+  { to: '/studio/settings', label: 'Site settings', icon: Settings },
+  { to: '/studio/approvals', label: 'Team', icon: UserCheck },
+  { to: '/studio/activity', label: 'Activity', icon: Activity },
 ];
 
 export default function StudioLayout({ children }: { children: ReactNode }) {
@@ -18,7 +27,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  const items = isAdmin ? [...nav, { to: '/studio/approvals', label: 'Approvals', icon: UserCheck, end: false }] : nav;
+  const items = isAdmin ? [...nav, ...adminNav] : nav;
 
   return (
     <div className="min-h-screen flex" style={{ background: '#f1ece4' }}>
