@@ -73,8 +73,8 @@ export default function SiteSettingsPage() {
     }
   };
 
-  const set = <K extends keyof SiteSettings>(k: K, v: Partial<SiteSettings[K]>) =>
-    setSettings((s) => ({ ...s, [k]: { ...s[k], ...v } as SiteSettings[K] }));
+  const set = <K extends Exclude<keyof SiteSettings, 'id'>>(k: K, v: Partial<SiteSettings[K]>) =>
+    setSettings((s) => ({ ...s, [k]: { ...(s[k] as object), ...v } as SiteSettings[K] }));
 
   if (loading) return <StudioLayout><p className="font-inter text-sm">Loading…</p></StudioLayout>;
 
