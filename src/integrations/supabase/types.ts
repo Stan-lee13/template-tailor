@@ -14,6 +14,165 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          meta: Json | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          meta?: Json | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          meta?: Json | null
+        }
+        Relationships: []
+      }
+      media_assets: {
+        Row: {
+          alt: string | null
+          created_at: string
+          filename: string
+          folder_id: string | null
+          height: number | null
+          id: string
+          mime: string | null
+          size_bytes: number | null
+          storage_bucket: string
+          storage_path: string
+          uploaded_by: string | null
+          width: number | null
+        }
+        Insert: {
+          alt?: string | null
+          created_at?: string
+          filename: string
+          folder_id?: string | null
+          height?: number | null
+          id?: string
+          mime?: string | null
+          size_bytes?: number | null
+          storage_bucket?: string
+          storage_path: string
+          uploaded_by?: string | null
+          width?: number | null
+        }
+        Update: {
+          alt?: string | null
+          created_at?: string
+          filename?: string
+          folder_id?: string | null
+          height?: number | null
+          id?: string
+          mime?: string | null
+          size_bytes?: number | null
+          storage_bucket?: string
+          storage_path?: string
+          uploaded_by?: string | null
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_assets_folder_id_fkey"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "media_folders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      media_folders: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          parent_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          parent_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          parent_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_folders_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "media_folders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nav_items: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          external: boolean
+          href: string
+          id: string
+          label: string
+          location: string
+          parent_id: string | null
+          position: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          external?: boolean
+          href: string
+          id?: string
+          label: string
+          location: string
+          parent_id?: string | null
+          position?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          external?: boolean
+          href?: string
+          id?: string
+          label?: string
+          location?: string
+          parent_id?: string | null
+          position?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nav_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "nav_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       post_revisions: {
         Row: {
           author_id: string | null
@@ -148,6 +307,206 @@ export type Database = {
         }
         Relationships: []
       }
+      section_templates: {
+        Row: {
+          content: Json
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string
+          thumbnail_url: string | null
+          type: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name: string
+          thumbnail_url?: string | null
+          type: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+          thumbnail_url?: string | null
+          type?: string
+        }
+        Relationships: []
+      }
+      site_pages: {
+        Row: {
+          canonical_url: string | null
+          created_at: string
+          id: string
+          is_system: boolean
+          meta_description: string | null
+          meta_title: string | null
+          noindex: boolean
+          og_image_url: string | null
+          path: string
+          published_at: string | null
+          scheduled_for: string | null
+          status: Database["public"]["Enums"]["page_status"]
+          title: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          canonical_url?: string | null
+          created_at?: string
+          id?: string
+          is_system?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
+          noindex?: boolean
+          og_image_url?: string | null
+          path: string
+          published_at?: string | null
+          scheduled_for?: string | null
+          status?: Database["public"]["Enums"]["page_status"]
+          title: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          canonical_url?: string | null
+          created_at?: string
+          id?: string
+          is_system?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
+          noindex?: boolean
+          og_image_url?: string | null
+          path?: string
+          published_at?: string | null
+          scheduled_for?: string | null
+          status?: Database["public"]["Enums"]["page_status"]
+          title?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      site_revisions: {
+        Row: {
+          author_id: string | null
+          created_at: string
+          entity_id: string | null
+          entity_type: string
+          id: string
+          label: string | null
+          snapshot: Json
+        }
+        Insert: {
+          author_id?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          label?: string | null
+          snapshot: Json
+        }
+        Update: {
+          author_id?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          label?: string | null
+          snapshot?: Json
+        }
+        Relationships: []
+      }
+      site_sections: {
+        Row: {
+          content: Json
+          created_at: string
+          enabled: boolean
+          id: string
+          page_id: string | null
+          position: number
+          section_key: string
+          type: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          content?: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          page_id?: string | null
+          position?: number
+          section_key: string
+          type: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          page_id?: string | null
+          position?: number
+          section_key?: string
+          type?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "site_sections_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "site_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings: {
+        Row: {
+          announcement: Json
+          brand: Json
+          contact: Json
+          id: string
+          seo: Json
+          singleton: boolean
+          social: Json
+          theme: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          announcement?: Json
+          brand?: Json
+          contact?: Json
+          id?: string
+          seo?: Json
+          singleton?: boolean
+          social?: Json
+          theme?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          announcement?: Json
+          brand?: Json
+          contact?: Json
+          id?: string
+          seo?: Json
+          singleton?: boolean
+          social?: Json
+          theme?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -174,6 +533,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_edit_site: { Args: { _user_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -182,11 +542,13 @@ export type Database = {
         Returns: boolean
       }
       increment_post_view: { Args: { _slug: string }; Returns: undefined }
+      is_owner_or_admin: { Args: { _user_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
       publish_due_posts: { Args: never; Returns: number }
     }
     Enums: {
       app_role: "admin" | "editor" | "owner" | "content_manager" | "viewer"
+      page_status: "draft" | "published" | "archived"
       post_status: "draft" | "scheduled" | "published"
     }
     CompositeTypes: {
@@ -316,6 +678,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "editor", "owner", "content_manager", "viewer"],
+      page_status: ["draft", "published", "archived"],
       post_status: ["draft", "scheduled", "published"],
     },
   },
