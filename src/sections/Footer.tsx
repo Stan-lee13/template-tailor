@@ -2,36 +2,43 @@ import { Link } from 'react-router-dom';
 import BrandLogo from '../components/BrandLogo';
 import { SITE } from '../config/site';
 import { useBooking } from '../hooks/useBooking';
+import { useAllNavItems, useSiteSettings } from '../hooks/useSiteData';
 
-const resources = [
-  { label: 'Blog', to: '/blog' },
-  { label: 'Case Studies', to: '/case-studies' },
-  { label: 'Integrations', to: '/integrations' },
-  { label: 'Pricing', to: '/#pricing' },
-];
+const fallbackCols: Record<string, { label: string; to: string }[]> = {
+  footer_resources: [
+    { label: 'Blog', to: '/blog' },
+    { label: 'Case Studies', to: '/case-studies' },
+    { label: 'Integrations', to: '/integrations' },
+    { label: 'Pricing', to: '/#pricing' },
+  ],
+  footer_solutions: [
+    { label: 'Ecommerce Brands', to: '/solutions/ecommerce-brands' },
+    { label: 'Retail', to: '/solutions/retail' },
+    { label: 'Publishers', to: '/solutions/publishers' },
+    { label: 'Partners', to: '/partners' },
+  ],
+  footer_company: [
+    { label: 'About Us', to: '/about' },
+    { label: 'Careers', to: '/careers' },
+    { label: 'Contact', to: '/contact' },
+    { label: 'Compliance', to: '/compliance' },
+  ],
+  footer_legal: [
+    { label: 'Privacy Policy', to: '/privacy' },
+    { label: 'Terms of Service', to: '/terms' },
+    { label: 'Cookies', to: '/cookies' },
+    { label: 'CCPA Opt-Out', to: '/legal/ccpa-opt-out' },
+    { label: 'Your Privacy Choices', to: '/legal/privacy-choices' },
+    { label: 'Database Opt-Out', to: '/legal/database-opt-out' },
+  ],
+};
 
-const solutions = [
-  { label: 'Ecommerce Brands', to: '/solutions/ecommerce-brands' },
-  { label: 'Retail', to: '/solutions/retail' },
-  { label: 'Publishers', to: '/solutions/publishers' },
-  { label: 'Partners', to: '/partners' },
-];
-
-const company = [
-  { label: 'About Us', to: '/about' },
-  { label: 'Careers', to: '/careers' },
-  { label: 'Contact', to: '/contact' },
-  { label: 'Compliance', to: '/compliance' },
-];
-
-const legal = [
-  { label: 'Privacy Policy', to: '/privacy' },
-  { label: 'Terms of Service', to: '/terms' },
-  { label: 'Cookies', to: '/cookies' },
-  { label: 'CCPA Opt-Out', to: '/legal/ccpa-opt-out' },
-  { label: 'Your Privacy Choices', to: '/legal/privacy-choices' },
-  { label: 'Database Opt-Out', to: '/legal/database-opt-out' },
-];
+const titles: Record<string, string> = {
+  footer_resources: 'Resources',
+  footer_solutions: 'Solutions',
+  footer_company: 'Company',
+  footer_legal: 'Legal',
+};
 
 function Col({ title, links }: { title: string; links: { label: string; to: string }[] }) {
   return (
