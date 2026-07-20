@@ -186,7 +186,7 @@ export type Database = {
       publish_due_posts: { Args: never; Returns: number }
     }
     Enums: {
-      app_role: "admin" | "editor"
+      app_role: "admin" | "editor" | "owner" | "content_manager" | "viewer"
       post_status: "draft" | "scheduled" | "published"
     }
     CompositeTypes: {
@@ -315,7 +315,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "editor"],
+      app_role: ["admin", "editor", "owner", "content_manager", "viewer"],
       post_status: ["draft", "scheduled", "published"],
     },
   },
