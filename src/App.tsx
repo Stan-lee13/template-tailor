@@ -37,6 +37,12 @@ import StudioDashboard from "./pages/studio/Dashboard.tsx";
 import PostsList from "./pages/studio/PostsList.tsx";
 import PostEditor from "./pages/studio/PostEditor.tsx";
 import Approvals from "./pages/studio/Approvals.tsx";
+import SiteSettings from "./pages/studio/SiteSettings.tsx";
+import NavigationEditor from "./pages/studio/NavigationEditor.tsx";
+import PagesEditor from "./pages/studio/PagesEditor.tsx";
+import MediaLibrary from "./pages/studio/MediaLibrary.tsx";
+import ActivityLog from "./pages/studio/ActivityLog.tsx";
+import AnnouncementBar from "./components/AnnouncementBar";
 
 import { BookingProvider } from "./hooks/useBooking";
 import BookingModal from "./components/BookingModal";
@@ -52,6 +58,7 @@ function AppShell() {
   useEffect(() => { initAnalytics(); }, []);
   return (
     <>
+      <AnnouncementBar />
       <Routes>
         <Route path="/" element={<Index />} />
         {/* Insights → Blog (permanent redirect, preserves old inbound links) */}
@@ -90,6 +97,11 @@ function AppShell() {
         <Route path="/studio/posts/new" element={<RequireStaff><StudioAIProvider><PostEditor /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/posts/:id" element={<RequireStaff><StudioAIProvider><PostEditor /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/approvals" element={<RequireStaff><RequireAdmin><StudioAIProvider><Approvals /></StudioAIProvider></RequireAdmin></RequireStaff>} />
+        <Route path="/studio/settings" element={<RequireStaff><RequireAdmin><StudioAIProvider><SiteSettings /></StudioAIProvider></RequireAdmin></RequireStaff>} />
+        <Route path="/studio/navigation" element={<RequireStaff><RequireAdmin><StudioAIProvider><NavigationEditor /></StudioAIProvider></RequireAdmin></RequireStaff>} />
+        <Route path="/studio/pages" element={<RequireStaff><StudioAIProvider><PagesEditor /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/media" element={<RequireStaff><StudioAIProvider><MediaLibrary /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/activity" element={<RequireStaff><RequireAdmin><StudioAIProvider><ActivityLog /></StudioAIProvider></RequireAdmin></RequireStaff>} />
 
 
         <Route path="*" element={<NotFound />} />

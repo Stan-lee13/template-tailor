@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BrandLogo from '../components/BrandLogo';
 import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
+import { useNavItems } from '../hooks/useSiteData';
 
-const sectionLinks = [
+const defaultLinks = [
   { label: 'Services', href: '#services' },
   { label: 'Process', href: '#process' },
   { label: 'Results', href: '#results' },
@@ -20,8 +21,11 @@ export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
-  // On non-home pages, force "scrolled" appearance (cream/black) since hero isn't there
   const compact = scrolled || !isHome;
+  const { data: dbNav } = useNavItems('header');
+  const sectionLinks = (dbNav && dbNav.length > 0)
+    ? dbNav.map((n) => ({ label: n.label, href: n.href }))
+    : defaultLinks;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -30,8 +34,9 @@ export default function Navigation() {
   }, []);
 
   const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
     setMobileOpen(false);
+    if (href.startsWith('/')) { return; } // let native <a> route (or use Link)
+    e.preventDefault();
     if (!isHome) {
       navigate('/', { state: { scrollTo: href } });
       setTimeout(() => {

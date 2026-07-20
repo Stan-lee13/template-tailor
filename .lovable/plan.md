@@ -1,85 +1,110 @@
-# Plan: Studio polish, AI assistant, blog fix, deploy audit
+# Studio → Visual Website Management System
 
-## 1. Fix "published post not showing on site"
+Goal: the owner manages every section, page, media asset, brand setting, and role from `/studio` without touching code. Public site, DB, auth, and existing pages stay intact — sections read from the DB and fall back to today's hardcoded content if a row is missing, so nothing breaks mid-migration.
 
-Root cause: two parallel blog surfaces exist.
+Ship in 4 phases inside this plan. Each phase is independently deployable; if we stop after any phase the site still works.
 
-- Nav + Footer link `/insights` → `Insights.tsx` (queries `posts` table) → article at `/insights/:slug` via `Article.tsx`.
-- Studio "View live" button + `BlogIndex.tsx` link `/blog/:slug` via `BlogPost.tsx`.
+---
 
-Both pull from the same `posts` table, so the post exists — but the two URL trees confuse everyone.
+## Phase 1 — Foundation (DB + settings + section registry)
 
-**Fix:** Pick `/blog` as the canonical public surface (it's the industry-standard slug and matches the studio's own links).
+### New tables (via migration tool, with GRANTs + RLS)
 
-- Update `Navigation.tsx` and `Footer.tsx` "Insights" links → `/blog`.
-- Update `App.tsx`: `/insights` and `/insights/:slug` become permanent redirects (`<Navigate replace>`) to `/blog` and `/blog/:slug`. Keeps old URLs working for SEO.
-- Delete `src/pages/Insights.tsx` and `src/pages/Article.tsx` (superseded by `BlogIndex` / `BlogPost`).
-- Update `sitemap.xml` and any internal links to `/blog`.
-- Update the article JSON-LD in `BlogPost.tsx` to use `/blog/:slug` URLs.
+```text
+site_settings            singleton row; brand, logo, favicon, colors, typography,
+                         social links, SEO defaults, contact info, announcement bar
+site_pages               id, path, title, meta_title, meta_description, og_image,
+                         status(draft|published|archived), noindex, updated_at
+site_sections            id, page_id (nullable = global e.g. nav/footer),
+                         section_key (e.g. "hero","services"), type,
+                         position, enabled, content jsonb, updated_at
+section_templates        reusable saved sections (id, name, type, content jsonb,
+                         thumbnail_url, owner_id)
+media_assets             id, path, url, folder, filename, mime, width, height,
+                         size_bytes, alt, uploaded_by, created_at
+media_folders            id, parent_id, name
+site_revisions           id, entity_type(page|section|settings), entity_id,
+                         snapshot jsonb, author_id, created_at, label
+activity_log             id, actor_id, action, entity_type, entity_id, meta, ts
+nav_items                id, parent_id, label, href, position, location(header|footer_col1..4)
+```
 
-Live site note: after these changes, redeploy on Vercel — the current live 404/missing-post symptoms are partly because the last deploy is stale.
+RLS: staff read/write, public reads only `enabled=true` sections of `published` pages and `site_settings`. Extend `app_role` enum with `owner`, `content_manager`, `viewer`. `has_role`/`is_staff` updated accordingly.
 
-## 2. Admin AI assistant in `/studio`
+### Section registry (code)
 
-New floating assistant available only inside the studio, powered by Lovable AI Gateway (Google Gemini 2.5 Flash — good balance of latency/quality for writing help).
+`src/studio/sections/registry.ts` defines every section type once:
 
-- Edge function `supabase/functions/studio-assistant/index.ts` — streams chat via AI SDK + `@ai-sdk/openai-compatible` against `https://ai.gateway.lovable.dev/v1` with `LOVABLE_API_KEY`. Verifies the caller is staff via `is_staff(auth.uid())` before responding; rejects otherwise. Handles 429/402 with clean JSON errors.
-- Client component `src/components/studio/AIAssistant.tsx` — floating button + slide-in panel, `useChat` transport, markdown rendering (`react-markdown`), full history sent every call. System prompt tuned for retention-marketing editorial help: outline drafts, sharpen headlines, meta description suggestions from a focus keyword, tone rewrites, SEO gap checks. Includes quick-action chips ("Draft outline", "Suggest meta title", "Rewrite for punch").
-- context injection: when opened from the PostEditor, sends current title/excerpt/focus keyword as context so replies are post-aware.
-- Mounted in `StudioLayout.tsx` so it's available on every studio page.
+```text
+{ key, label, component, schema (zod), defaults, previewThumb }
+```
 
-## 3. Studio production-ready polish
+Existing components (Hero, ProblemSection, Services, Process, FAQ, FinalCTA, Footer, Navigation, etc.) are refactored to accept a `content` prop matching their schema, with the current hardcoded values kept as `defaults`. A `useSectionContent(key)` hook returns DB row → falls back to defaults. **No visual change to the live site in this phase.**
 
-Small correctness/UX fixes surfaced by walking the studio code:
+### Seed
 
-- **DB grants**: add a migration granting `SELECT` on `posts` to `anon`, and standard `authenticated`/`service_role` grants on `posts`, `post_revisions`, `profiles`, `user_roles`. RLS policies already exist; grants are missing per Supabase's non-default policy. This future-proofs anon reads.
-- **Scheduled publishing**: currently only fires when someone loads `/blog` or `/insights`. Add a pg_cron job that calls `publish_due_posts()` every minute so posts publish on time even without traffic.
-- **Approvals**: show current role next to each user; disable "Grant admin" for self; add a confirm dialog on "Revoke".
-- **PostEditor**: add a "Duplicate post" action, warn on unsaved changes when navigating away, and show a small "Last saved &nbsp;s ago" indicator.
-- **BlogIndex**: add reading-time estimate + tag filter placeholder removed; fix the "featured image" fallback for posts with none.
+One-time seed inserts a row per existing section using today's copy so the DB mirrors current state; page rows created for `/`, `/about`, `/contact`, `/blog`, `/thank-you`, all solution/legal pages.
 
-## 4. Dependency & config audit
+---
 
-- Run `bun outdated` and upgrade only patch/minor for: `ai`, `@ai-sdk/*`, `@tiptap/*`, `@supabase/supabase-js`, `react-router-dom`. Skip majors this pass.
-- Verify `vercel.json` rewrite still targets the correct SPA fallback (`/(.*)` → `/index.html` with asset bypass). Report status; no change unless broken.
-- Confirm `supabase/config.toml` exposes the new `studio-assistant` function (`verify_jwt = true`).
-- README section documenting the studio (login → approvals → create post → AI assistant → publish).
+## Phase 2 — Visual editor (`/studio/site`)
+
+Layout: left sidebar (page tree + section list, drag to reorder), center canvas, right inspector.
+
+- **Canvas**: `<iframe src="/?studio_preview=SESSION_TOKEN">`. Iframe app reads a short-lived token, subscribes to a `BroadcastChannel`, receives live content patches, and re-renders sections without reload. Viewport buttons: Desktop / Tablet / Mobile (resize iframe width).
+- **Click-to-edit**: iframe wraps each section in a `data-section-id` div; clicking posts `{sectionId}` to parent → parent opens Inspector for that section.
+- **Inspector**: auto-generated form from the section's zod schema (text, rich text via existing Tiptap, image via Media Library picker, color, number, boolean, list of cards/FAQs/testimonials with drag-reorder using `@dnd-kit/sortable`).
+- **Section actions**: duplicate, delete, hide/show (`enabled`), move up/down, save as template.
+- **Autosave**: 800 ms debounce → `site_sections.content` upsert → BroadcastChannel patch → iframe repaints. Every save also writes a `site_revisions` row.
+- **Undo/redo**: in-memory command stack (Cmd+Z / Cmd+Shift+Z). Version history panel lists `site_revisions` with "Restore" button.
+- **Global editors**: Nav bar, Footer, Announcement bar edited the same way (page_id = null).
+
+---
+
+## Phase 3 — Page builder, media library, templates
+
+- **Pages screen** (`/studio/pages`): list all `site_pages`. Actions: new, duplicate, rename, change path, set SEO, publish/unpublish/archive, delete. New page opens Visual Editor with an empty canvas.
+- **Add section**: "+" button between sections opens a picker showing all registry types + saved templates + user-created templates with thumbnails. Insert at position N.
+- **Media library** (`/studio/media`, also embedded as picker):
+  - Uses existing `post-media` bucket + new `site-media` bucket.
+  - Grid + list view, folders, search, drag-to-upload, replace-in-place (keeps same URL), crop (react-image-crop), client-side compress (browser-image-compression), alt text, delete, bulk select. Video and doc upload supported.
+- **Templates**: "Save as template" from any section; templates library at `/studio/templates`.
+
+---
+
+## Phase 4 — Publishing, RBAC, analytics, settings, ownership
+
+- **Publishing workflow**: every page has Draft / Preview / Published states + `scheduled_publish_at`. Existing `publish_due_posts` cron extended to pages. Preview mode uses the same iframe token but forces draft content.
+- **Change log**: `/studio/activity` — reads `activity_log` (writes added throughout Phases 2–3).
+- **RBAC** (`/studio/team`): manage users + roles (Owner, Admin, Editor, Content Manager, Viewer). Permission matrix enforced in RLS + UI. Existing Approvals screen folded in.
+- **Analytics** (`/studio/analytics`): Vercel Web Analytics + existing `posts.view_count` + form submissions table. Cards: visitors, page views, top pages, recent form submissions, recent edits.
+- **Settings** (`/studio/settings`): tabs for Brand (logo, favicon, colors, typography), Company (name, address, email, phone), Social, SEO defaults + OG, Domains (read-only info + docs), Forms, Announcement bar, Email.
+- **Ownership migration prep**:
+  - Confirm zero email-based admin checks (already true — role lives in `user_roles`).
+  - Add `/studio/team/owner-transfer`: promote another verified user to `owner`, then demote current owner in one guarded action.
+  - Write `docs/OWNERSHIP_TRANSFER.md` covering Lovable Cloud account handover, Vercel project transfer, custom domain re-verification, and secret rotation checklist (no code side effects, purely operational).
+
+---
 
 ## Technical details
 
-Files created:
+- **Stack additions**: `@dnd-kit/core` + `@dnd-kit/sortable` (drag/drop), `react-image-crop`, `browser-image-compression`, `zod` (already), `zustand` (editor state + undo stack), `@tanstack/react-query` (already if present, else added) for DB caching.
+- **Section rendering contract**: every section component becomes `Section({ content }: { content: SchemaType })`. Pages compose sections by mapping over `site_sections` rows for their `page_id`, ordered by `position`, filtered by `enabled`. Missing rows fall back to `defaults` so the current site keeps rendering during migration.
+- **Iframe live preview**: parent → iframe via `postMessage` + `BroadcastChannel('studio-preview-<token>')`. Iframe overrides the `useSectionContent` hook to read from an in-memory store hydrated by messages. Token stored in `sessionStorage`, expires on tab close, never sent to public visitors.
+- **Autosave conflict handling**: last-write-wins with `updated_at` optimistic check; on conflict, show a toast + reload from DB.
+- **RLS**: all `site_*` tables — public SELECT gated on `enabled`/`status='published'`; write gated on `is_staff(auth.uid())`; owner-only actions gated on `has_role(auth.uid(),'owner')`.
+- **Fallback safety**: feature-flag `VITE_STUDIO_CMS=on`. If off, sections use hardcoded defaults (today's behavior). Flag turns on after Phase 1 migration + seed verified.
+- **Preserved**: `/studio/posts` blog CMS, AI Assistant, existing auth, Tiptap editor, all public pages, cron jobs, edge function.
 
-- `supabase/functions/studio-assistant/index.ts`
-- `supabase/functions/_shared/ai-gateway.ts` (if not already present)
-- `src/components/studio/AIAssistant.tsx`
-- `supabase/migrations/<ts>_grants_and_cron.sql`
+---
 
-Files edited:
+## Deliverables checklist
 
-- `src/App.tsx` (redirects, remove Insights/Article routes)
-- `src/sections/Navigation.tsx`, `src/sections/Footer.tsx` (Insights → Blog)
-- `src/components/studio/StudioLayout.tsx` (mount assistant)
-- `src/pages/studio/PostEditor.tsx` (unsaved-changes guard, duplicate, last-saved indicator, pass context to assistant)
-- `src/pages/studio/Approvals.tsx` (role badge, self-guard, confirm)
-- `src/pages/blog/BlogIndex.tsx`, `src/pages/blog/BlogPost.tsx` (JSON-LD, reading time)
-- `public/sitemap.xml`, `README.md`
-
-Files removed:
-
-- `src/pages/Insights.tsx`, `src/pages/Article.tsx`
-
-Migration outline:
-
-```sql
-GRANT SELECT ON public.posts TO anon;
-GRANT SELECT, INSERT, UPDATE, DELETE ON public.posts TO authenticated;
-GRANT ALL ON public.posts TO service_role;
--- same pattern for post_revisions (no anon), profiles (no anon), user_roles (no anon)
-
-SELECT cron.schedule('publish-due-posts', '* * * * *',
-  $$ SELECT public.publish_due_posts(); $$);
+```text
+[ ] Phase 1 migration + seed + section-registry refactor (no visual change)
+[ ] Phase 2 /studio/site iframe editor + inspector + autosave + undo/versions
+[ ] Phase 3 /studio/pages, media library, templates, add-section picker
+[ ] Phase 4 publishing states, RBAC, analytics, settings, owner transfer + docs
 ```
 
-## Open question
-
-Do you want the AI assistant to also be able to **insert generated content directly into the current post's editor** (e.g. "insert this outline"), or keep it read-only chat where you copy/paste? Insert-to-editor is ~30 min extra work and worth it if you'll use it daily. Yes I want it to be able to insert generated content directly if given the permission and also help the user if they have any issues while making the content like in meta title and the rest so that everything can match and be ticked before posting or publishing live.
+Estimated size: large. Recommend approving in sequence — I'll finish Phase 1 and also try to finish phase 2 at the same time end-to-end before starting Phase 3, so you can verify the live site is unchanged before we layer the editor on top. Goal try to finish phase 1 and phase 2 and the same time 
