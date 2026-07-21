@@ -1,17 +1,17 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionContent } from '../hooks/useSectionContent';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const painPoints = [
-  'Customers buy once and disappear',
-  'CAC keeps rising',
-  'Profit margins shrink',
-  'Growth becomes unpredictable',
-];
+type ProblemContent = {
+  eyebrow: string; headline_1: string; headline_2: string; intro: string;
+  pain_points: { text: string }[]; closer: string;
+};
 
 export default function ProblemSection() {
+  const c = useSectionContent<ProblemContent>('/', 'problem', 'problem');
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,55 +26,45 @@ export default function ProblemSection() {
       });
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [c.pain_points?.length]);
 
   return (
     <section ref={sectionRef} className="relative" style={{ background: 'linear-gradient(180deg, #0A0A0A 0%, #0C1622 60%, #0A0A0A 100%)', padding: '12vh clamp(20px, 5vw, 80px) 10vh' }}>
       <div className="absolute top-12 right-[10%] w-[200px] h-[1px] opacity-20 hidden sm:block" style={{ background: 'linear-gradient(90deg, transparent, #2C91E1, transparent)', transform: 'rotate(-8deg)' }} />
-      
+
       <div className="max-w-[800px] mx-auto">
         <div className="problem-headline" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-4 sm:mb-5" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>
-            <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;The Problem
+            <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;{c.eyebrow}
           </span>
           <h2 className="font-outfit font-medium mb-3 sm:mb-4" style={{ fontSize: 'clamp(26px, 5vw, 56px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em' }}>
-            You're Not Losing Money on Ads…
+            {c.headline_1}
           </h2>
           <h2 className="font-outfit font-medium mb-6 sm:mb-8" style={{ fontSize: 'clamp(26px, 5vw, 56px)', lineHeight: 1, letterSpacing: '-0.02em' }}>
-            <span style={{ color: '#F97316' }}>You're Losing It After the First Purchase</span>
+            <span style={{ color: '#F97316' }}>{c.headline_2}</span>
           </h2>
           <p className="font-inter mb-8 sm:mb-10" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.7, color: 'rgba(241,236,228,0.7)', maxWidth: '600px' }}>
-            Most brands spend thousands acquiring customers… but fail to bring them back, increase their value, or build real loyalty. So what happens?
+            {c.intro}
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          {painPoints.map((point, i) => (
+          {(c.pain_points || []).map((p, i) => (
             <div
               key={i}
               className="problem-item flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl transition-all duration-300"
-              style={{
-                opacity: 0,
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.06)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(239,68,68,0.2)';
-                e.currentTarget.style.background = 'rgba(239,68,68,0.04)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-              }}
+              style={{ opacity: 0, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(239,68,68,0.2)'; e.currentTarget.style.background = 'rgba(239,68,68,0.04)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
             >
               <span className="flex-shrink-0 mt-0.5" style={{ color: '#EF4444', fontSize: '16px' }}>✕</span>
-              <span className="font-inter" style={{ fontSize: 'clamp(14px, 2vw, 16px)', color: 'rgba(241,236,228,0.85)', lineHeight: 1.5 }}>{point}</span>
+              <span className="font-inter" style={{ fontSize: 'clamp(14px, 2vw, 16px)', color: 'rgba(241,236,228,0.85)', lineHeight: 1.5 }}>{p.text}</span>
             </div>
           ))}
         </div>
 
         <p className="font-inter font-medium mt-8 sm:mt-10" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#F97316', letterSpacing: '-0.01em' }}>
-          → You're paying for customers… but not keeping them.
+          {c.closer}
         </p>
       </div>
     </section>
