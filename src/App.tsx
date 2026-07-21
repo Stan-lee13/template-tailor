@@ -42,6 +42,8 @@ import NavigationEditor from "./pages/studio/NavigationEditor.tsx";
 import PagesEditor from "./pages/studio/PagesEditor.tsx";
 import MediaLibrary from "./pages/studio/MediaLibrary.tsx";
 import ActivityLog from "./pages/studio/ActivityLog.tsx";
+import SiteEditor from "./pages/studio/SiteEditor.tsx";
+import TemplatesLibrary from "./pages/studio/TemplatesLibrary.tsx";
 import AnnouncementBar from "./components/AnnouncementBar";
 
 import { BookingProvider } from "./hooks/useBooking";
