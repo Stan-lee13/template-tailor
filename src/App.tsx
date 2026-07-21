@@ -104,6 +104,8 @@ function AppShell() {
         <Route path="/studio/pages" element={<RequireStaff><StudioAIProvider><PagesEditor /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/media" element={<RequireStaff><StudioAIProvider><MediaLibrary /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/activity" element={<RequireStaff><RequireAdmin><StudioAIProvider><ActivityLog /></StudioAIProvider></RequireAdmin></RequireStaff>} />
+        <Route path="/studio/site" element={<RequireStaff><StudioAIProvider><SiteEditor /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/templates" element={<RequireStaff><StudioAIProvider><TemplatesLibrary /></StudioAIProvider></RequireStaff>} />
 
 
         <Route path="*" element={<NotFound />} />
