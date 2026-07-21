@@ -5,8 +5,17 @@ import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
 import WordRotate from '../components/ui/word-rotate';
 import { LiquidButton } from '../components/ui/liquid-glass-button';
+import { useSectionContent } from '../hooks/useSectionContent';
+
+type HeroContent = {
+  eyebrow: string; title_left: string; title_right: string; title_right_suffix: string;
+  subtitle_prefix: string; subtitle_suffix: string; rotating_words: { word: string }[];
+  primary_cta_label: string; secondary_cta_label: string; secondary_cta_target: string;
+  background_image?: string | null;
+};
 
 export default function Hero() {
+  const c = useSectionContent<HeroContent>('/', 'hero', 'hero');
   const { open } = useBooking();
   const [rotateStarted, setRotateStarted] = useState(false);
   const eyebrowRef = useRef<HTMLSpanElement>(null);
@@ -63,7 +72,7 @@ export default function Hero() {
             opacity: 0,
           }}
         >
-          <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;Retention Marketing Agency
+          <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;{c.eyebrow}
         </span>
 
         <h1
@@ -76,9 +85,9 @@ export default function Hero() {
             textShadow: '0 2px 28px rgba(0,0,0,0.45)',
           }}
         >
-          <span ref={leftRef} className="inline-block opacity-0">Turn Your Existing Customers Into Your&nbsp;</span>
+          <span ref={leftRef} className="inline-block opacity-0">{c.title_left}</span>
           <span ref={rightRef} className="inline-block opacity-0">
-            <span style={{ color: '#F97316' }}>Most Profitable</span> Growth Engine
+            <span style={{ color: '#F97316' }}>{c.title_right}</span>{c.title_right_suffix}
           </span>
         </h1>
 
@@ -96,17 +105,17 @@ export default function Hero() {
             textShadow: '0 1px 16px rgba(0,0,0,0.4)',
           }}
         >
-          We help ecommerce brands grow{' '}
+          {c.subtitle_prefix}{' '}
           {rotateStarted ? (
             <WordRotate
-              words={['retention', 'LTV', 'repeat revenue', 'lifecycle']}
+              words={(c.rotating_words || []).map((w) => w.word).filter(Boolean)}
               className="font-medium"
               motionProps={{ style: { color: '#F97316' } }}
             />
           ) : (
-            <span className="font-medium" style={{ color: '#F97316' }}>retention</span>
+            <span className="font-medium" style={{ color: '#F97316' }}>{c.rotating_words?.[0]?.word || ''}</span>
           )}
-          {' '}— without increasing ad spend.
+          {' '}{c.subtitle_suffix}
         </p>
 
         <div
@@ -115,20 +124,23 @@ export default function Hero() {
           style={{ opacity: 0 }}
         >
           <button
-            onClick={() => { track('cta_click', { location: 'hero', label: 'Book a Growth Audit' }); open('hero'); }}
+            onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
             className="font-inter font-medium text-white transition-colors duration-200 w-full sm:w-auto"
             style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = '#F97316'; }}
           >
-            Book a Growth Audit
+            {c.primary_cta_label}
           </button>
           <LiquidButton
-            onClick={() => scrollTo('#process')}
+            onClick={() => {
+              const t = c.secondary_cta_target || '#process';
+              if (t.startsWith('#')) scrollTo(t); else window.location.assign(t);
+            }}
             className="font-inter font-medium w-full sm:w-auto"
             style={{ fontSize: '15px' }}
           >
-            See How It Works
+            {c.secondary_cta_label}
           </LiquidButton>
         </div>
       </div>

@@ -42,6 +42,8 @@ import NavigationEditor from "./pages/studio/NavigationEditor.tsx";
 import PagesEditor from "./pages/studio/PagesEditor.tsx";
 import MediaLibrary from "./pages/studio/MediaLibrary.tsx";
 import ActivityLog from "./pages/studio/ActivityLog.tsx";
+import SiteEditor from "./pages/studio/SiteEditor.tsx";
+import TemplatesLibrary from "./pages/studio/TemplatesLibrary.tsx";
 import AnnouncementBar from "./components/AnnouncementBar";
 
 import { BookingProvider } from "./hooks/useBooking";
@@ -102,6 +104,8 @@ function AppShell() {
         <Route path="/studio/pages" element={<RequireStaff><StudioAIProvider><PagesEditor /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/media" element={<RequireStaff><StudioAIProvider><MediaLibrary /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/activity" element={<RequireStaff><RequireAdmin><StudioAIProvider><ActivityLog /></StudioAIProvider></RequireAdmin></RequireStaff>} />
+        <Route path="/studio/site" element={<RequireStaff><StudioAIProvider><SiteEditor /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/templates" element={<RequireStaff><StudioAIProvider><TemplatesLibrary /></StudioAIProvider></RequireStaff>} />
 
 
         <Route path="*" element={<NotFound />} />

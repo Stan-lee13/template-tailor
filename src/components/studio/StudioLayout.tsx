@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X, Settings, Menu as MenuIcon, FileCode, Image as ImageIcon, Activity } from 'lucide-react';
+import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X, Settings, Menu as MenuIcon, FileCode, Image as ImageIcon, Activity, Layout, Bookmark } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import AIAssistant from './AIAssistant';
 
@@ -9,10 +9,12 @@ import AIAssistant from './AIAssistant';
 
 const nav = [
   { to: '/studio', label: 'Dashboard', icon: LayoutDashboard, end: true },
+  { to: '/studio/site', label: 'Site editor', icon: Layout },
+  { to: '/studio/pages', label: 'Pages', icon: FileCode },
+  { to: '/studio/templates', label: 'Templates', icon: Bookmark },
+  { to: '/studio/media', label: 'Media', icon: ImageIcon },
   { to: '/studio/posts', label: 'Posts', icon: FileText },
   { to: '/studio/posts/new', label: 'New post', icon: PlusCircle },
-  { to: '/studio/pages', label: 'Pages', icon: FileCode },
-  { to: '/studio/media', label: 'Media', icon: ImageIcon },
 ];
 
 const adminNav = [

@@ -5,10 +5,14 @@ import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
 import { SparklesCore } from '../components/ui/sparkles';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
+import { useSectionContent } from '../hooks/useSectionContent';
 
 gsap.registerPlugin(ScrollTrigger);
 
+type FinalCTAContent = { headline_1: string; headline_2: string; body: string; kicker: string; cta_label: string };
+
 export default function FinalCTA() {
+  const c = useSectionContent<FinalCTAContent>('/', 'final_cta', 'final_cta');
   const sectionRef = useRef<HTMLDivElement>(null);
   const { open } = useBooking();
   const { lowPower, reducedMotion } = useDeviceCapabilities();
@@ -36,26 +40,26 @@ export default function FinalCTA() {
       )}
       <div className="relative max-w-[640px] mx-auto text-center px-1">
         <h2 className="cta-animate font-outfit font-medium mb-2" style={{ fontSize: 'clamp(24px, 5vw, 52px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em', opacity: 0 }}>
-          You Already Paid for Your Customers…
+          {c.headline_1}
         </h2>
         <h2 className="cta-animate font-outfit font-medium mb-5 sm:mb-6" style={{ fontSize: 'clamp(24px, 5vw, 52px)', lineHeight: 1, letterSpacing: '-0.02em', opacity: 0 }}>
-          <span style={{ color: '#F97316' }}>Now It's Time to Profit From Them</span>
+          <span style={{ color: '#F97316' }}>{c.headline_2}</span>
         </h2>
         <p className="cta-animate font-inter mx-auto mb-4" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.6, color: 'rgba(241,236,228,0.7)', maxWidth: '560px', opacity: 0 }}>
-          Every day you don't fix your retention… you're losing revenue you've already earned.
+          {c.body}
         </p>
         <p className="cta-animate font-inter font-medium mb-8 sm:mb-10" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#F97316', opacity: 0 }}>
-          → Let's turn that around.
+          {c.kicker}
         </p>
         <div className="cta-animate" style={{ opacity: 0 }}>
           <button
-            onClick={() => { track('cta_click', { location: 'final_cta', label: 'Book Your Free Growth Audit' }); open('final_cta'); }}
+            onClick={() => { track('cta_click', { location: 'final_cta', label: c.cta_label }); open('final_cta'); }}
             className="font-inter font-medium text-white transition-all duration-200 w-full sm:w-auto"
             style={{ background: '#F97316', padding: '16px 40px', borderRadius: '9999px', fontSize: '16px' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; e.currentTarget.style.transform = 'scale(1.03)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = '#F97316'; e.currentTarget.style.transform = 'scale(1)'; }}
           >
-            Book Your Free Growth Audit
+            {c.cta_label}
           </button>
         </div>
         <p className="cta-animate font-inter font-medium uppercase mt-5" style={{ fontSize: '11px', color: '#8A8A8A', letterSpacing: '0.04em', opacity: 0 }}>
