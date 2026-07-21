@@ -124,20 +124,23 @@ export default function Hero() {
           style={{ opacity: 0 }}
         >
           <button
-            onClick={() => { track('cta_click', { location: 'hero', label: 'Book a Growth Audit' }); open('hero'); }}
+            onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
             className="font-inter font-medium text-white transition-colors duration-200 w-full sm:w-auto"
             style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = '#F97316'; }}
           >
-            Book a Growth Audit
+            {c.primary_cta_label}
           </button>
           <LiquidButton
-            onClick={() => scrollTo('#process')}
+            onClick={() => {
+              const t = c.secondary_cta_target || '#process';
+              if (t.startsWith('#')) scrollTo(t); else window.location.assign(t);
+            }}
             className="font-inter font-medium w-full sm:w-auto"
             style={{ fontSize: '15px' }}
           >
-            See How It Works
+            {c.secondary_cta_label}
           </LiquidButton>
         </div>
       </div>
