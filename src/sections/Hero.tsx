@@ -5,8 +5,17 @@ import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
 import WordRotate from '../components/ui/word-rotate';
 import { LiquidButton } from '../components/ui/liquid-glass-button';
+import { useSectionContent } from '../hooks/useSectionContent';
+
+type HeroContent = {
+  eyebrow: string; title_left: string; title_right: string; title_right_suffix: string;
+  subtitle_prefix: string; subtitle_suffix: string; rotating_words: { word: string }[];
+  primary_cta_label: string; secondary_cta_label: string; secondary_cta_target: string;
+  background_image?: string | null;
+};
 
 export default function Hero() {
+  const c = useSectionContent<HeroContent>('/', 'hero', 'hero');
   const { open } = useBooking();
   const [rotateStarted, setRotateStarted] = useState(false);
   const eyebrowRef = useRef<HTMLSpanElement>(null);
