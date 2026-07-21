@@ -72,7 +72,7 @@ export default function Hero() {
             opacity: 0,
           }}
         >
-          <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;Retention Marketing Agency
+          <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;{c.eyebrow}
         </span>
 
         <h1
@@ -85,9 +85,9 @@ export default function Hero() {
             textShadow: '0 2px 28px rgba(0,0,0,0.45)',
           }}
         >
-          <span ref={leftRef} className="inline-block opacity-0">Turn Your Existing Customers Into Your&nbsp;</span>
+          <span ref={leftRef} className="inline-block opacity-0">{c.title_left}</span>
           <span ref={rightRef} className="inline-block opacity-0">
-            <span style={{ color: '#F97316' }}>Most Profitable</span> Growth Engine
+            <span style={{ color: '#F97316' }}>{c.title_right}</span>{c.title_right_suffix}
           </span>
         </h1>
 
@@ -105,17 +105,17 @@ export default function Hero() {
             textShadow: '0 1px 16px rgba(0,0,0,0.4)',
           }}
         >
-          We help ecommerce brands grow{' '}
+          {c.subtitle_prefix}{' '}
           {rotateStarted ? (
             <WordRotate
-              words={['retention', 'LTV', 'repeat revenue', 'lifecycle']}
+              words={(c.rotating_words || []).map((w) => w.word).filter(Boolean)}
               className="font-medium"
               motionProps={{ style: { color: '#F97316' } }}
             />
           ) : (
-            <span className="font-medium" style={{ color: '#F97316' }}>retention</span>
+            <span className="font-medium" style={{ color: '#F97316' }}>{c.rotating_words?.[0]?.word || ''}</span>
           )}
-          {' '}— without increasing ad spend.
+          {' '}{c.subtitle_suffix}
         </p>
 
         <div
