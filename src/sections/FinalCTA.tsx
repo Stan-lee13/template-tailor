@@ -5,10 +5,14 @@ import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
 import { SparklesCore } from '../components/ui/sparkles';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
+import { useSectionContent } from '../hooks/useSectionContent';
 
 gsap.registerPlugin(ScrollTrigger);
 
+type FinalCTAContent = { headline_1: string; headline_2: string; body: string; kicker: string; cta_label: string };
+
 export default function FinalCTA() {
+  const c = useSectionContent<FinalCTAContent>('/', 'final_cta', 'final_cta');
   const sectionRef = useRef<HTMLDivElement>(null);
   const { open } = useBooking();
   const { lowPower, reducedMotion } = useDeviceCapabilities();
