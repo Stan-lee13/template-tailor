@@ -51,7 +51,7 @@ function FieldEditor({ field, value, onChange }: { field: Field; value: unknown;
       <div>
         {label}
         <div className="border rounded-md" style={{ borderColor: '#E2DDD3' }}>
-          <TiptapEditor initialJson={html ? { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'text', text: html.replace(/<[^>]+>/g, '') }] }] } : null} onChange={(_j, h) => onChange(h)} />
+          <TiptapEditor initialJson={html || null} onChange={(_j, h) => onChange(h)} />
         </div>
       </div>
     );
