@@ -46,11 +46,12 @@ function FieldEditor({ field, value, onChange }: { field: Field; value: unknown;
     );
   }
   if (field.type === 'richtext') {
+    const html = (value as string) ?? '';
     return (
       <div>
         {label}
         <div className="border rounded-md" style={{ borderColor: '#E2DDD3' }}>
-          <TiptapEditor value={(value as string) ?? ''} onChange={onChange} />
+          <TiptapEditor initialJson={html ? { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'text', text: html.replace(/<[^>]+>/g, '') }] }] } : null} onChange={(_j, h) => onChange(h)} />
         </div>
       </div>
     );
