@@ -110,7 +110,10 @@ export default function SiteEditor() {
     if (error) return toast.error(error.message);
     await logActivity('section.create', 'section', data.id, { type });
     setSections((r) => [...r, data as Section]);
-    setSelectedId(data.id); setPickerOpen(false); refreshPreview();
+    setSelectedId(data.id); setPickerOpen(false);
+    qc.invalidateQueries({ queryKey: ['section_content'] });
+    qc.invalidateQueries({ queryKey: ['page_sections'] });
+    refreshPreview();
   };
 
   const saveAsTemplate = async (s: Section) => {
@@ -130,6 +133,8 @@ export default function SiteEditor() {
     setSections(next);
     await Promise.all(next.map((s) => supabase.from('site_sections').update({ position: s.position }).eq('id', s.id)));
     await logActivity('section.reorder', 'page', pageId || undefined);
+    qc.invalidateQueries({ queryKey: ['section_content'] });
+    qc.invalidateQueries({ queryKey: ['page_sections'] });
     refreshPreview();
   };
 

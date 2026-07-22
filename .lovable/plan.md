@@ -1,110 +1,132 @@
-# Studio → Visual Website Management System
+# Plan — Studio Hardening, Section Imagery, and Services/Projects Cinematic Rework
 
-Goal: the owner manages every section, page, media asset, brand setting, and role from `/studio` without touching code. Public site, DB, auth, and existing pages stay intact — sections read from the DB and fall back to today's hardcoded content if a row is missing, so nothing breaks mid-migration.
-
-Ship in 4 phases inside this plan. Each phase is independently deployable; if we stop after any phase the site still works.
+Three tracks. Ships as one release but scoped so each track is independently testable.
 
 ---
 
-## Phase 1 — Foundation (DB + settings + section registry)
+## Track A — Studio completeness & bug pass
 
-### New tables (via migration tool, with GRANTs + RLS)
+Goal: everything in `/studio` is production-ready. No broken buttons, no missing sections, roles/settings actually apply.
 
-```text
-site_settings            singleton row; brand, logo, favicon, colors, typography,
-                         social links, SEO defaults, contact info, announcement bar
-site_pages               id, path, title, meta_title, meta_description, og_image,
-                         status(draft|published|archived), noindex, updated_at
-site_sections            id, page_id (nullable = global e.g. nav/footer),
-                         section_key (e.g. "hero","services"), type,
-                         position, enabled, content jsonb, updated_at
-section_templates        reusable saved sections (id, name, type, content jsonb,
-                         thumbnail_url, owner_id)
-media_assets             id, path, url, folder, filename, mime, width, height,
-                         size_bytes, alt, uploaded_by, created_at
-media_folders            id, parent_id, name
-site_revisions           id, entity_type(page|section|settings), entity_id,
-                         snapshot jsonb, author_id, created_at, label
-activity_log             id, actor_id, action, entity_type, entity_id, meta, ts
-nav_items                id, parent_id, label, href, position, location(header|footer_col1..4)
-```
+### A1. Section registry expansion (missing editors)
+Extend `src/studio/sections/registry.ts` so every homepage block is DB-driven and editable:
+- `solution` — eyebrow, headline, body, bullet list, image
+- `services` — eyebrow, headline, intro, list of {number, title, items[], accent color, optional icon image}
+- `results` — eyebrow, headline, list of {metric, label, description, optional image}
+- `differentiation` — eyebrow, headline, body, comparison list, image
+- `process` — eyebrow, headline, list of {step, title, description, optional image}
+- `faq` — eyebrow, headline, list of {question, answer (richtext)}
+- `navigation` (global) — inline logo text/dot colors, CTA label
+- `announcement` (global) — enabled, message, link, background/text colors
 
-RLS: staff read/write, public reads only `enabled=true` sections of `published` pages and `site_settings`. Extend `app_role` enum with `owner`, `content_manager`, `viewer`. `has_role`/`is_staff` updated accordingly.
+Refactor the matching section components (`Services.tsx`, `Results.tsx`, `Process.tsx`, `FAQ.tsx`, `DifferentiationSection.tsx`, `SolutionSection.tsx`) to read via `useSectionContent` with the current hardcoded values kept as `defaults` so nothing breaks.
 
-### Section registry (code)
+### A2. Page builder fixes
+- "Add section" modal: seed a real `site_sections` row with `withDefaults(type)`, correct next `position`, invalidate the sections query, refresh preview.
+- Reorder DnD: persist `position` for all affected rows in one batched update (`upsert`), not just the moved item.
+- Delete/duplicate: verify cascade, activity log, revision write.
+- Live preview iframe: append `?studio=1&t=<key>` cache-buster on `previewKey`; add device-frame dimensions (desktop 100%, tablet 834, mobile 390).
 
-`src/studio/sections/registry.ts` defines every section type once:
+### A3. Media library + picker
+- Fix upload path (`user_id/filename`) and RLS-compatible signed URL generation via a `useSignedUrl` helper.
+- Fix delete: also remove storage object, not just row.
+- Rich-text inserted images: use the existing delete-node command; add a hover toolbar so users can remove any inserted image.
+- OG image upload in PostEditor SEO tab: use the same `MediaPickerDialog` + preview + clear button; save `og_image_url` explicitly on change.
 
-```text
-{ key, label, component, schema (zod), defaults, previewThumb }
-```
+### A4. Version history / revisions
+- Restore action: writes the snapshot back to `site_sections.content`, logs activity, invalidates queries, refreshes preview.
+- Show diff badge (fields changed) in the history drawer.
 
-Existing components (Hero, ProblemSection, Services, Process, FAQ, FinalCTA, Footer, Navigation, etc.) are refactored to accept a `content` prop matching their schema, with the current hardcoded values kept as `defaults`. A `useSectionContent(key)` hook returns DB row → falls back to defaults. **No visual change to the live site in this phase.**
+### A5. Roles, approvals, settings
+- `Approvals.tsx` (owner/admin only): list pending profiles, assign role from `{owner, admin, editor, content_manager, viewer}`, revoke, transfer ownership (guarded confirm).
+- `SiteSettings.tsx`: verify each field actually applies — theme colors written to CSS vars on `<html>`, announcement bar visibility, SEO defaults consumed by `SEO.tsx`. Add a "Preview changes" toast confirming save.
+- Fix the current RLS gap so admins can list all profiles (migration if needed).
 
-### Seed
-
-One-time seed inserts a row per existing section using today's copy so the DB mirrors current state; page rows created for `/`, `/about`, `/contact`, `/blog`, `/thank-you`, all solution/legal pages.
-
----
-
-## Phase 2 — Visual editor (`/studio/site`)
-
-Layout: left sidebar (page tree + section list, drag to reorder), center canvas, right inspector.
-
-- **Canvas**: `<iframe src="/?studio_preview=SESSION_TOKEN">`. Iframe app reads a short-lived token, subscribes to a `BroadcastChannel`, receives live content patches, and re-renders sections without reload. Viewport buttons: Desktop / Tablet / Mobile (resize iframe width).
-- **Click-to-edit**: iframe wraps each section in a `data-section-id` div; clicking posts `{sectionId}` to parent → parent opens Inspector for that section.
-- **Inspector**: auto-generated form from the section's zod schema (text, rich text via existing Tiptap, image via Media Library picker, color, number, boolean, list of cards/FAQs/testimonials with drag-reorder using `@dnd-kit/sortable`).
-- **Section actions**: duplicate, delete, hide/show (`enabled`), move up/down, save as template.
-- **Autosave**: 800 ms debounce → `site_sections.content` upsert → BroadcastChannel patch → iframe repaints. Every save also writes a `site_revisions` row.
-- **Undo/redo**: in-memory command stack (Cmd+Z / Cmd+Shift+Z). Version history panel lists `site_revisions` with "Restore" button.
-- **Global editors**: Nav bar, Footer, Announcement bar edited the same way (page_id = null).
+### A6. AI assistant end-to-end
+- Verify streaming works via the existing `studio-assistant` edge function.
+- Wire the three actions: `insert_html` (into Tiptap at cursor), `set_meta` (title/description/keywords), `suggest_slug`.
+- Add a compact chat panel to `SiteEditor` too (not just `PostEditor`) so admins can ask "rewrite this hero headline in 6 words".
 
 ---
 
-## Phase 3 — Page builder, media library, templates
+## Track B — Cinematic imagery (4 sections)
 
-- **Pages screen** (`/studio/pages`): list all `site_pages`. Actions: new, duplicate, rename, change path, set SEO, publish/unpublish/archive, delete. New page opens Visual Editor with an empty canvas.
-- **Add section**: "+" button between sections opens a picker showing all registry types + saved templates + user-created templates with thumbnails. Insert at position N.
-- **Media library** (`/studio/media`, also embedded as picker):
-  - Uses existing `post-media` bucket + new `site-media` bucket.
-  - Grid + list view, folders, search, drag-to-upload, replace-in-place (keeps same URL), crop (react-image-crop), client-side compress (browser-image-compression), alt text, delete, bulk select. Video and doc upload supported.
-- **Templates**: "Save as template" from any section; templates library at `/studio/templates`.
+Generate 4 premium, brand-matched images (navy `#04213F`, steel blue `#11538C`, cream `#EFEFF4`, cinematic lighting, no stock-photo cliché). Save under `src/assets/sections/`. Each image is also uploaded to `site-media` so admins can swap via the section inspector's `image` field.
 
----
+1. **Solution** — abstract data-flow visual: warm dashboard glow reflecting on dark glass, subtle grid lines.
+2. **Results** — moody boardroom / analytics wall at dusk, navy tones with warm accent light.
+3. **Process** — four-step tactile visual set (single composite): navy pipeline / gears / journey lines.
+4. **Differentiation + About hero** (shared visual language): editorial portrait-style workspace shot, cream + navy.
 
-## Phase 4 — Publishing, RBAC, analytics, settings, ownership
-
-- **Publishing workflow**: every page has Draft / Preview / Published states + `scheduled_publish_at`. Existing `publish_due_posts` cron extended to pages. Preview mode uses the same iframe token but forces draft content.
-- **Change log**: `/studio/activity` — reads `activity_log` (writes added throughout Phases 2–3).
-- **RBAC** (`/studio/team`): manage users + roles (Owner, Admin, Editor, Content Manager, Viewer). Permission matrix enforced in RLS + UI. Existing Approvals screen folded in.
-- **Analytics** (`/studio/analytics`): Vercel Web Analytics + existing `posts.view_count` + form submissions table. Cards: visitors, page views, top pages, recent form submissions, recent edits.
-- **Settings** (`/studio/settings`): tabs for Brand (logo, favicon, colors, typography), Company (name, address, email, phone), Social, SEO defaults + OG, Domains (read-only info + docs), Forms, Announcement bar, Email.
-- **Ownership migration prep**:
-  - Confirm zero email-based admin checks (already true — role lives in `user_roles`).
-  - Add `/studio/team/owner-transfer`: promote another verified user to `owner`, then demote current owner in one guarded action.
-  - Write `docs/OWNERSHIP_TRANSFER.md` covering Lovable Cloud account handover, Vercel project transfer, custom domain re-verification, and secret rotation checklist (no code side effects, purely operational).
+Each image gets: `loading="lazy"`, responsive `srcset`, `object-fit: cover`, gradient overlay for text legibility, and a Studio-editable slot via the expanded registry (A1).
 
 ---
 
-## Technical details
+## Track C — Services & Projects architecture review + cinematic rebuild
 
-- **Stack additions**: `@dnd-kit/core` + `@dnd-kit/sortable` (drag/drop), `react-image-crop`, `browser-image-compression`, `zod` (already), `zustand` (editor state + undo stack), `@tanstack/react-query` (already if present, else added) for DB caching.
-- **Section rendering contract**: every section component becomes `Section({ content }: { content: SchemaType })`. Pages compose sections by mapping over `site_sections` rows for their `page_id`, ordered by `position`, filtered by `enabled`. Missing rows fall back to `defaults` so the current site keeps rendering during migration.
-- **Iframe live preview**: parent → iframe via `postMessage` + `BroadcastChannel('studio-preview-<token>')`. Iframe overrides the `useSectionContent` hook to read from an in-memory store hydrated by messages. Token stored in `sessionStorage`, expires on tab close, never sent to public visitors.
-- **Autosave conflict handling**: last-write-wins with `updated_at` optimistic check; on conflict, show a toast + reload from DB.
-- **RLS**: all `site_*` tables — public SELECT gated on `enabled`/`status='published'`; write gated on `is_staff(auth.uid())`; owner-only actions gated on `has_role(auth.uid(),'owner')`.
-- **Fallback safety**: feature-flag `VITE_STUDIO_CMS=on`. If off, sections use hardcoded defaults (today's behavior). Flag turns on after Phase 1 migration + seed verified.
-- **Preserved**: `/studio/posts` blog CMS, AI Assistant, existing auth, Tiptap editor, all public pages, cron jobs, edge function.
+### C1. Architecture audit (findings)
+
+**Current state**
+- `Services.tsx`: hardcoded `services` array, single GSAP `ScrollTrigger` fade + sticky left column. Renders as vertical card stack — no depth, no signature motion.
+- No dedicated Projects/Case Studies section on the homepage. `/case-studies` page exists but isn't a homepage rail.
+- Data is component-local; no TanStack Query cache, no DB source.
+- GSAP is registered per-file, animations initialized in `useEffect` with `gsap.context()` (good), but no `useGSAP` hook, no shared timeline registry, no reduced-motion branching in these two sections.
+
+**Pros / Cons of adding TanStack + `@gsap/react`**
+
+| Concern | Keep as-is | Move to TanStack Query + `@gsap/react` |
+|---|---|---|
+| Data source | Hardcoded arrays; edits require redeploy | DB-backed via `site_sections`; editable in Studio; cached & deduped |
+| Re-renders | Fine (static) | Query cache prevents refetches; `select()` for shape |
+| Animation cleanup | Manual `ctx.revert()` | `useGSAP({ scope })` auto-cleans on unmount / dep change |
+| Reduced motion | Ad-hoc | Centralized `gsap.matchMedia()` per section |
+| SSR risk | None (SPA) | None |
+| Bundle | Baseline | +~6 KB (`@gsap/react`), TanStack already installed |
+
+**Recommendation:** yes to both. Data via TanStack Query hitting the expanded `services` / `projects` section rows (Track A1). Animations via `@gsap/react`'s `useGSAP` for lifecycle safety + `gsap.matchMedia` for reduced-motion + breakpoint branching.
+
+### C2. Services — circular / horizontal cinematic scroll
+
+Not a plain card slider. Cards orbit a virtual center: as the user scrolls, the active card enters along a circular arc from the right while the previous card exits along an arc to the left, creating an in/out rotation that reads as a carousel arranged around a hidden ring.
+
+Implementation:
+- Pin the section with `ScrollTrigger` (`pin: true`, `scrub: 1`, length ≈ `cards.length * 100vh`).
+- Compute each card's transform per progress `p`:
+  - `angle = (i - activeIndex(p)) * 22deg`
+  - `x = sin(angle) * radius`, `y = (1 - cos(angle)) * radius * 0.35`, `rotate = angle`, `opacity = cos(angle)`
+  - Radius ~ `min(vw*0.6, 640px)` desktop, disabled on mobile (fallback = stacked cards with staggered fade).
+- Use `gsap.quickSetter` inside a single `onUpdate` for GPU-friendly writes (`transform`, `opacity` only).
+- Background subtle rotating radial gradient tied to same progress.
+- Keyboard/aria: arrow keys jump to prev/next card by animating scroll to that trigger step; each card is a `<article>` with `aria-current`.
+- Reduced motion: `matchMedia('(prefers-reduced-motion: reduce)')` branch renders static grid.
+
+### C3. Projects — staggered reveal rail
+
+New homepage `ProjectsRail` section between Results and Differentiation:
+- Fetches up to 6 projects from a new `projects` table (or reuses `posts` with `type = 'case_study'` — decide during A1 by checking existing schema; if no dedicated table, add `type` filter to `posts` and expose in Studio).
+- Grid: asymmetric 12-col (2 tall, 4 wide, 3 medium… bento-style).
+- Reveal timeline: `ScrollTrigger.batch` with `stagger: { each: 0.08, from: 'random' }`, `y: 40 → 0`, `opacity: 0 → 1`, `clip-path` iris reveal on hero image, `ease: 'power3.out'`.
+- Hover: image scale 1.04, title underline sweep, meta fade in — all GSAP quickTo for 60fps.
+- Reduced motion: opacity-only fade.
+
+### C4. Phased implementation order
+
+1. **Phase 1 (foundation)** — Track A1 registry expansion + refactors (Services, Solution, Results, Process, FAQ, Differentiation → DB-driven). Ship behind existing fallbacks so nothing breaks.
+2. **Phase 2 (Studio bugs)** — A2–A6 in one pass; verify by clicking through Studio end to end.
+3. **Phase 3 (imagery)** — Generate 4 images, upload to `site-media`, seed default `image` field values on the expanded sections.
+4. **Phase 4 (cinematic Services)** — Install `@gsap/react`, rewrite `Services.tsx` with the circular scroll timeline + mobile fallback + a11y.
+5. **Phase 5 (Projects rail)** — Add `ProjectsRail.tsx`, wire to `posts` (case-study type) via TanStack Query, batch-stagger reveal, mount on `Index.tsx` between Results and Differentiation.
+6. **Phase 6 (verification)** — Playwright: load `/`, screenshot desktop + mobile, scroll through Services (verify no scroll trap), open `/studio`, exercise the Add Section → edit → save → restore → delete loop, confirm live site updates.
+
+### Technical notes
+- Add `@gsap/react` (peer of installed `gsap`) — small, no other deps.
+- Keep TanStack Query patterns already in the codebase; no state-management library added.
+- All new animations run inside `useGSAP({ scope: ref, dependencies: [data] })` for automatic cleanup on data changes.
+- No changes to the Lenis config from the mobile-scroll fix; the pinned Services section uses `ScrollTrigger.normalizeScroll(true)` only on desktop.
 
 ---
 
-## Deliverables checklist
-
-```text
-[ ] Phase 1 migration + seed + section-registry refactor (no visual change)
-[ ] Phase 2 /studio/site iframe editor + inspector + autosave + undo/versions
-[ ] Phase 3 /studio/pages, media library, templates, add-section picker
-[ ] Phase 4 publishing states, RBAC, analytics, settings, owner transfer + docs
-```
-
-Estimated size: large. Recommend approving in sequence — I'll finish Phase 1 and also try to finish phase 2 at the same time end-to-end before starting Phase 3, so you can verify the live site is unchanged before we layer the editor on top. Goal try to finish phase 1 and phase 2 and the same time 
+## Out of scope (explicit)
+- No Framer/Webflow-style true inline click-to-edit overlay this pass — the form inspector plus live iframe is the shipping UX.
+- No new payment/pricing work.
+- No auth provider changes.
