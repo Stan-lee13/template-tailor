@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Project = {
   id: string; slug: string; title: string; excerpt: string | null;
-  featured_image_url: string | null; category: string | null; published_at: string | null;
+  featured_image_url: string | null; published_at: string | null;
 };
 
 export default function ProjectsRail() {
@@ -21,7 +21,7 @@ export default function ProjectsRail() {
     queryFn: async () => {
       const { data } = await supabase
         .from('posts')
-        .select('id,slug,title,excerpt,featured_image_url,category,published_at')
+        .select('id,slug,title,excerpt,featured_image_url,published_at')
         .eq('status', 'published')
         .order('published_at', { ascending: false })
         .limit(6);
@@ -86,9 +86,6 @@ export default function ProjectsRail() {
                 )}
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,33,63,0.15) 0%, rgba(4,33,63,0.85) 100%)' }} />
                 <div className="relative h-full flex flex-col justify-end p-6 sm:p-8">
-                  {p.category && (
-                    <span className="font-inter uppercase mb-3" style={{ fontSize: '11px', letterSpacing: '0.08em', color: '#F97316' }}>{p.category}</span>
-                  )}
                   <h3 className="font-outfit font-medium mb-2" style={{ fontSize: 'clamp(18px, 2.5vw, 26px)', lineHeight: 1.15, color: '#f1ece4', letterSpacing: '-0.01em' }}>{p.title}</h3>
                   {p.excerpt && (
                     <p className="font-inter line-clamp-2" style={{ fontSize: '14px', color: 'rgba(241,236,228,0.72)', lineHeight: 1.55 }}>{p.excerpt}</p>
