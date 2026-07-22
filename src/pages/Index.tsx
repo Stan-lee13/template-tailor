@@ -23,6 +23,7 @@ const DifferentiationSection = lazy(() => import('../sections/DifferentiationSec
 const Process = lazy(() => import('../sections/Process'));
 const FAQ = lazy(() => import('../sections/FAQ'));
 const FinalCTA = lazy(() => import('../sections/FinalCTA'));
+const ProjectsRail = lazy(() => import('../sections/ProjectsRail'));
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -91,6 +92,7 @@ const Index = () => {
           <Services />
           <SectionDivider variant="diagonal" fromColor="#f1ece4" toColor="#f1ece4" />
           <Results />
+          <ProjectsRail />
           <SectionDivider variant="curve" fromColor="#f1ece4" toColor="#0A0A0A" />
           <DifferentiationSection />
           <SectionDivider variant="wave" fromColor="#0A0A0A" toColor="#0A0A0A" />

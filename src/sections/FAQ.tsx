@@ -1,16 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionContent } from '../hooks/useSectionContent';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const faqs = [
-  { q: 'How long does it take to see results from retention marketing?', a: 'Most clients see measurable improvements in repeat purchase rate and customer engagement within 30-60 days. Full LTV impact typically becomes clear within 90 days of implementation.' },
-  { q: 'Do you work with brands in any industry?', a: 'We specialize in DTC e-commerce and SaaS companies with at least $1M in annual revenue. Our strategies are tailored to subscription, repeat-purchase, and high-frequency business models.' },
-  { q: 'What platforms do you integrate with?', a: 'We work with all major platforms including Shopify, WooCommerce, Klaviyo, Attentive, Postscript, Recharge, and custom tech stacks. We\'re platform-agnostic and choose tools based on your specific needs.' },
-  { q: 'How do you measure success?', a: 'We track core retention metrics: repeat purchase rate, customer lifetime value, churn rate, cohort retention curves, and revenue from retention channels. Every engagement starts with clear KPI benchmarks.' },
-  { q: 'Can you work with our existing marketing team?', a: 'Absolutely. We often function as a retention-focused extension of in-house teams. We collaborate closely with your existing marketing, product, and data teams to ensure alignment across all customer touchpoints.' },
-];
+type FaqItem = { q: string; a: string };
+type FaqContent = { eyebrow: string; headline: string; faqs: FaqItem[] };
 
 function AccordionItem({ question, answer, isOpen, onClick }: { question: string; answer: string; isOpen: boolean; onClick: () => void }) {
   return (
@@ -24,7 +20,7 @@ function AccordionItem({ question, answer, isOpen, onClick }: { question: string
           </svg>
         </span>
       </button>
-      <div className="overflow-hidden transition-all duration-400" style={{ maxHeight: isOpen ? '300px' : '0', opacity: isOpen ? 1 : 0 }}>
+      <div className="overflow-hidden transition-all duration-400" style={{ maxHeight: isOpen ? '400px' : '0', opacity: isOpen ? 1 : 0 }}>
         <p className="font-inter pb-5 sm:pb-6" style={{ fontSize: 'clamp(14px, 2vw, 16px)', lineHeight: 1.6, color: '#2D2D2D' }}>{answer}</p>
       </div>
     </div>
@@ -32,15 +28,13 @@ function AccordionItem({ question, answer, isOpen, onClick }: { question: string
 }
 
 export default function FAQ() {
+  const c = useSectionContent<FaqContent>('/', 'faq', 'faq');
   const sectionRef = useRef<HTMLDivElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.faq-item', { opacity: 0 }, {
-        opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
-      });
+      gsap.fromTo('.faq-item', { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' } });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -48,12 +42,10 @@ export default function FAQ() {
   return (
     <section ref={sectionRef} id="faq" style={{ background: '#f1ece4', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
       <div className="max-w-[720px] mx-auto">
-        <span className="block text-center font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>FAQ</span>
-        <h2 className="text-center font-outfit font-medium mb-10 sm:mb-16" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>
-          Common Questions
-        </h2>
+        <span className="block text-center font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>{c.eyebrow}</span>
+        <h2 className="text-center font-outfit font-medium mb-10 sm:mb-16" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>{c.headline}</h2>
         <div>
-          {faqs.map((faq, i) => (
+          {(c.faqs || []).map((faq, i) => (
             <div key={i} className="faq-item" style={{ opacity: 0 }}>
               <AccordionItem question={faq.q} answer={faq.a} isOpen={openIndex === i} onClick={() => setOpenIndex(openIndex === i ? null : i)} />
             </div>
