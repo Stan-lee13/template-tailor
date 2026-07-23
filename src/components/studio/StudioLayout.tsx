@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X, Settings, Menu as MenuIcon, FileCode, Image as ImageIcon, Activity, Layout, Bookmark } from 'lucide-react';
+import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X, Settings, Menu as MenuIcon, FileCode, Image as ImageIcon, Activity, Layout, Bookmark, Sparkles } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import AIAssistant from './AIAssistant';
 
@@ -9,6 +9,7 @@ import AIAssistant from './AIAssistant';
 
 const nav = [
   { to: '/studio', label: 'Dashboard', icon: LayoutDashboard, end: true },
+  { to: '/studio/visual', label: 'Visual Editor', icon: Sparkles },
   { to: '/studio/site', label: 'Site editor', icon: Layout },
   { to: '/studio/pages', label: 'Pages', icon: FileCode },
   { to: '/studio/templates', label: 'Templates', icon: Bookmark },
