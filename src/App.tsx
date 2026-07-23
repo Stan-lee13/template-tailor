@@ -43,6 +43,7 @@ import PagesEditor from "./pages/studio/PagesEditor.tsx";
 import MediaLibrary from "./pages/studio/MediaLibrary.tsx";
 import ActivityLog from "./pages/studio/ActivityLog.tsx";
 import SiteEditor from "./pages/studio/SiteEditor.tsx";
+import VisualEditor from "./pages/studio/VisualEditor.tsx";
 import TemplatesLibrary from "./pages/studio/TemplatesLibrary.tsx";
 import AnnouncementBar from "./components/AnnouncementBar";
 
@@ -105,6 +106,7 @@ function AppShell() {
         <Route path="/studio/media" element={<RequireStaff><StudioAIProvider><MediaLibrary /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/activity" element={<RequireStaff><RequireAdmin><StudioAIProvider><ActivityLog /></StudioAIProvider></RequireAdmin></RequireStaff>} />
         <Route path="/studio/site" element={<RequireStaff><StudioAIProvider><SiteEditor /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio/visual" element={<RequireStaff><StudioAIProvider><VisualEditor /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/templates" element={<RequireStaff><StudioAIProvider><TemplatesLibrary /></StudioAIProvider></RequireStaff>} />
 
 
