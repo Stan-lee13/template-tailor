@@ -95,7 +95,7 @@ export default function Services() {
       <div className="hidden lg:block relative" style={{ minHeight: '100vh', padding: '10vh 5vw' }}>
         <div className="max-w-[1400px] mx-auto grid grid-cols-[38%,1fr] gap-10 items-center min-h-[80vh]">
           <div>
-            <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#555', letterSpacing: '0.04em' }}>{c.eyebrow}</span>
+            <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#94A3B8', letterSpacing: '0.04em' }}>{c.eyebrow}</span>
             <h2 className="font-outfit font-medium mb-5" style={{ fontSize: 'clamp(36px, 4vw, 56px)', lineHeight: 0.95, color: '#F8FAFC', letterSpacing: '-0.02em' }}>{c.headline}</h2>
             <p className="font-inter mb-6" style={{ fontSize: '17px', lineHeight: 1.65, color: '#94A3B8', maxWidth: '400px' }}>{c.intro}</p>
             <div className="h-[3px] w-16 rounded-full mb-8" style={{ background: 'linear-gradient(90deg, #F97316, #2C91E1)' }} />
@@ -104,7 +104,7 @@ export default function Services() {
                 <div key={i} className="h-1 rounded-full transition-all duration-300" style={{ width: i === activeIdx ? 32 : 8, background: i === activeIdx ? '#F97316' : 'rgba(10,10,10,0.15)' }} />
               ))}
             </div>
-            <p className="font-inter text-xs uppercase tracking-wider mt-6" style={{ color: '#888' }}>Scroll to navigate</p>
+            <p className="font-inter text-xs uppercase tracking-wider mt-6" style={{ color: '#64748B' }}>Scroll to navigate</p>
           </div>
 
           <div ref={stageRef} className="relative" style={{ height: '70vh' }}>
@@ -130,7 +130,7 @@ export default function Services() {
       {/* MOBILE: stacked */}
       <div className="lg:hidden relative" style={{ padding: '10vh 20px 12vh' }}>
         <div className="max-w-[720px] mx-auto">
-          <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#555', letterSpacing: '0.04em' }}>{c.eyebrow}</span>
+          <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#94A3B8', letterSpacing: '0.04em' }}>{c.eyebrow}</span>
           <h2 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(28px, 6vw, 40px)', lineHeight: 0.98, color: '#F8FAFC', letterSpacing: '-0.02em' }}>{c.headline}</h2>
           <p className="font-inter mb-8" style={{ fontSize: '15px', lineHeight: 1.65, color: '#94A3B8' }}>{c.intro}</p>
 

@@ -43,7 +43,7 @@ export default function Results() {
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = item.color + '40'; e.currentTarget.style.transform = 'translateX(8px)'; e.currentTarget.style.boxShadow = `0 4px 20px ${item.color}12`; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#D6D3CC'; e.currentTarget.style.transform = 'translateX(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
               <span className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-outfit font-bold" style={{ background: item.color + '10', color: item.color, fontSize: '15px' }}>{item.icon}</span>
-              <span className="font-inter font-medium" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#0A0A0A' }}>{item.text}</span>
+              <span className="font-inter font-medium" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#F8FAFC' }}>{item.text}</span>
             </div>
           ))}
         </div>

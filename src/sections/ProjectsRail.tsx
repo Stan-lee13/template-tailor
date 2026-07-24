@@ -54,14 +54,14 @@ export default function ProjectsRail() {
       <div className="max-w-[1280px] mx-auto">
         <div className="flex items-end justify-between gap-6 mb-10 sm:mb-14 flex-wrap">
           <div>
-            <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#555', letterSpacing: '0.04em' }}>
+            <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#94A3B8', letterSpacing: '0.04em' }}>
               <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;Recent Work
             </span>
             <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 0.95, color: '#F8FAFC', letterSpacing: '-0.02em' }}>
               Case Studies & Insights
             </h2>
           </div>
-          <Link to="/blog" className="font-inter font-medium text-sm story-link" style={{ color: '#0A0A0A' }}>View all →</Link>
+          <Link to="/blog" className="font-inter font-medium text-sm story-link" style={{ color: '#F8FAFC' }}>View all →</Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-5" style={{ gridAutoRows: 'minmax(220px, auto)' }}>

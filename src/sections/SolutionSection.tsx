@@ -58,7 +58,7 @@ export default function SolutionSection() {
             ))}
           </div>
 
-          <p className="font-inter font-medium mt-6 sm:mt-8" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#0A0A0A' }}>
+          <p className="font-inter font-medium mt-6 sm:mt-8" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#F8FAFC' }}>
             {c.closer_prefix} <span style={{ color: '#F97316' }}>{c.closer_highlight}</span>
           </p>
         </div>

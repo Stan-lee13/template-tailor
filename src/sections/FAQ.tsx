@@ -12,7 +12,7 @@ function AccordionItem({ question, answer, isOpen, onClick }: { question: string
   return (
     <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <button onClick={onClick} className="w-full flex items-center justify-between py-5 sm:py-6 text-left transition-colors duration-200">
-        <span className="font-inter pr-4" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', lineHeight: 1.4, color: '#0A0A0A' }}>{question}</span>
+        <span className="font-inter pr-4" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', lineHeight: 1.4, color: '#F8FAFC' }}>{question}</span>
         <span className="flex-shrink-0 transition-transform duration-300" style={{ transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <line x1="8" y1="0" x2="8" y2="16" stroke={isOpen ? '#F97316' : '#F8FAFC'} strokeWidth="2" />
