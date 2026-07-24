@@ -50,14 +50,14 @@ export default function ProjectsRail() {
   if (projects.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative" style={{ background: '#f1ece4', padding: '12vh clamp(20px, 5vw, 80px)' }}>
+    <section ref={ref} className="relative" style={{ background: '#0a0f1a', padding: '12vh clamp(20px, 5vw, 80px)' }}>
       <div className="max-w-[1280px] mx-auto">
         <div className="flex items-end justify-between gap-6 mb-10 sm:mb-14 flex-wrap">
           <div>
             <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#555', letterSpacing: '0.04em' }}>
               <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;Recent Work
             </span>
-            <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>
+            <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 0.95, color: '#F8FAFC', letterSpacing: '-0.02em' }}>
               Case Studies & Insights
             </h2>
           </div>
