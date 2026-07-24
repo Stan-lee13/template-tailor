@@ -74,7 +74,7 @@ export default function ProjectsRail() {
                 key={p.id}
                 to={`/blog/${p.slug}`}
                 className={`proj-card group relative overflow-hidden rounded-3xl ${span}`}
-                style={{ opacity: 0, background: '#0A0A0A', border: '1px solid #D6D3CC', minHeight: 240 }}
+                style={{ opacity: 0, background: '#111827', border: '1px solid rgba(255,255,255,0.08)', minHeight: 240 }}
               >
                 {p.featured_image_url && (
                   <img
