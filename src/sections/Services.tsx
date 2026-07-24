@@ -30,21 +30,13 @@ export default function Services() {
     // Desktop: circular orbit scroll
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const cards = gsap.utils.toArray<HTMLElement>('.svc-card');
-      const setters = cards.map((el) => ({
-        x: gsap.quickSetter(el, 'x', 'px'),
-        y: gsap.quickSetter(el, 'y', 'px'),
-        r: gsap.quickSetter(el, 'rotate', 'deg'),
-        o: gsap.quickSetter(el, 'opacity'),
-        s: gsap.quickSetter(el, 'scale'),
-        z: gsap.quickSetter(el, 'zIndex'),
-      }));
       const radius = () => Math.min(window.innerWidth * 0.42, 620);
       const spread = 26; // degrees between cards
 
       const apply = (progress: number) => {
         const active = progress * (cards.length - 1);
         setActiveIdx(Math.round(active));
-        cards.forEach((_, i) => {
+        cards.forEach((el, i) => {
           const angle = (i - active) * spread;
           const rad = (angle * Math.PI) / 180;
           const R = radius();
@@ -52,9 +44,10 @@ export default function Services() {
           const y = (1 - Math.cos(rad)) * R * 0.28;
           const opacity = Math.max(0, Math.cos(rad) * 0.9 + 0.1);
           const scale = 0.75 + Math.cos(rad) * 0.25;
-          const s = setters[i];
-          s.x(x); s.y(y); s.r(angle * 0.6); s.o(opacity); s.s(scale);
-          s.z(Math.round(100 - Math.abs(angle)));
+          gsap.set(el, {
+            x, y, rotate: angle * 0.6, opacity, scale,
+            zIndex: Math.round(100 - Math.abs(angle)),
+          });
         });
       };
       apply(0);
