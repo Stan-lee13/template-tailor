@@ -145,7 +145,7 @@ export default function SiteEditor() {
     <StudioLayout>
       <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
         <div>
-          <h1 className="font-outfit font-medium text-3xl" style={{ color: '#0A0A0A', letterSpacing: '-0.02em' }}>Site editor</h1>
+          <h1 className="font-outfit font-medium text-3xl" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Site editor</h1>
           <p className="font-inter text-sm" style={{ color: '#666' }}>Edit every section on every page. Changes go live instantly.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -154,7 +154,7 @@ export default function SiteEditor() {
           </select>
           <div className="flex rounded-md border overflow-hidden" style={{ borderColor: '#E2DDD3' }}>
             {(['desktop', 'tablet', 'mobile'] as const).map((d) => (
-              <button key={d} onClick={() => setDevice(d)} className="px-2.5 py-2" style={{ background: device === d ? '#0A0A0A' : '#fff', color: device === d ? '#fff' : '#0A0A0A' }}>
+              <button key={d} onClick={() => setDevice(d)} className="px-2.5 py-2" style={{ background: device === d ? '#000000' : '#fff', color: device === d ? '#fff' : '#000000' }}>
                 {d === 'desktop' ? <Monitor size={14} /> : d === 'tablet' ? <Tablet size={14} /> : <Smartphone size={14} />}
               </button>
             ))}
@@ -168,7 +168,7 @@ export default function SiteEditor() {
         <aside className="rounded-xl p-3 max-h-[80vh] overflow-y-auto" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
           <div className="flex items-center justify-between mb-2">
             <span className="font-inter text-xs uppercase tracking-wider" style={{ color: '#888' }}>Sections</span>
-            <button onClick={() => setPickerOpen(true)} className="inline-flex items-center gap-1 px-2 py-1 rounded font-inter text-xs" style={{ background: '#F97316', color: '#0A0A0A' }}><Plus size={12} />Add</button>
+            <button onClick={() => setPickerOpen(true)} className="inline-flex items-center gap-1 px-2 py-1 rounded font-inter text-xs" style={{ background: '#00D4FF', color: '#000000' }}><Plus size={12} />Add</button>
           </div>
           {sections.length === 0 ? (
             <p className="font-inter text-xs text-gray-500 p-2">No sections yet. Click "Add" to create one.</p>
@@ -184,7 +184,7 @@ export default function SiteEditor() {
         </aside>
 
         {/* Preview */}
-        <div className="rounded-xl overflow-hidden" style={{ background: '#0A0A0A', border: '1px solid #E2DDD3', minHeight: '80vh' }}>
+        <div className="rounded-xl overflow-hidden" style={{ background: '#000000', border: '1px solid #E2DDD3', minHeight: '80vh' }}>
           <div className="flex justify-center py-4">
             <iframe key={previewKey} src={previewSrc} title="Preview" style={{ width: deviceWidth, height: '78vh', background: '#fff', border: 'none', borderRadius: 8, transition: 'width 0.2s' }} />
           </div>
@@ -201,7 +201,7 @@ export default function SiteEditor() {
                 </div>
                 <div className="flex items-center gap-1">
                   <button onClick={() => setHistoryOpen(true)} title="Version history" className="p-2 rounded hover:bg-gray-100"><History size={14} /></button>
-                  <button onClick={commitSelected} disabled={saving} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md font-inter text-xs font-medium disabled:opacity-50" style={{ background: '#F97316', color: '#0A0A0A' }}><Save size={12} />{saving ? '…' : 'Save'}</button>
+                  <button onClick={commitSelected} disabled={saving} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md font-inter text-xs font-medium disabled:opacity-50" style={{ background: '#00D4FF', color: '#000000' }}><Save size={12} />{saving ? '…' : 'Save'}</button>
                 </div>
               </div>
               {getSection(selected.type) && (
@@ -299,7 +299,7 @@ function RevisionPanel({ sectionId, onRestore, onClose }: { sectionId: string; o
                 <p className="font-inter text-sm">{new Date(r.created_at).toLocaleString()}</p>
                 {r.label && <p className="font-inter text-xs text-gray-500">{r.label}</p>}
               </div>
-              <button onClick={() => onRestore(r.snapshot)} className="px-3 py-1.5 rounded-md font-inter text-xs" style={{ background: '#0A0A0A', color: '#fff' }}>Restore</button>
+              <button onClick={() => onRestore(r.snapshot)} className="px-3 py-1.5 rounded-md font-inter text-xs" style={{ background: '#000000', color: '#fff' }}>Restore</button>
             </li>
           ))}
         </ul>

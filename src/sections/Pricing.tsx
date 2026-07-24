@@ -14,7 +14,7 @@ const plans = [
     bestFor: 'Brands doing $20K–$80K/mo',
     description: 'Fix leaks + build foundation',
     featured: false,
-    accent: '#F97316',
+    accent: '#00D4FF',
     features: [
       'Email/SMS setup',
       'Core flows (welcome, cart, post-purchase)',
@@ -29,7 +29,7 @@ const plans = [
     bestFor: 'Brands doing $80K–$250K/mo',
     description: 'Increase LTV + repeat purchases',
     featured: true,
-    accent: '#4169E1',
+    accent: '#00D4FF',
     features: [
       'Everything in Foundation',
       'Advanced segmentation',
@@ -63,69 +63,71 @@ function PricingCard({ plan, large = false, onSelect }: { plan: typeof plans[0];
   const isDark = plan.featured;
   return (
     <div
-      className="relative rounded-xl transition-colors duration-300 h-full"
+      className="relative rounded-2xl transition-all duration-400 h-full"
       style={{
-        background: isDark ? '#0A0A0A' : '#FFFFFF',
-        border: isDark ? `2px solid ${plan.accent}25` : '1px solid #D6D3CC',
+        background: isDark ? 'rgba(26,32,53,0.8)' : 'rgba(26,32,53,0.4)',
+        border: isDark ? `2px solid ${plan.accent}40` : '1px solid rgba(255,255,255,0.06)',
+        boxShadow: isDark ? `0 20px 60px rgba(0,212,255,0.06)` : 'none',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = plan.accent + '50';
+        e.currentTarget.style.transform = 'translateY(-4px)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = isDark ? plan.accent + '25' : '#D6D3CC';
+        e.currentTarget.style.borderColor = isDark ? plan.accent + '40' : 'rgba(255,255,255,0.06)';
+        e.currentTarget.style.transform = 'translateY(0)';
       }}
     >
       <div className={`${large ? 'p-6 sm:p-9 md:p-11' : 'p-6 sm:p-7 md:p-8'} h-full flex flex-col`}>
-        <span className="font-inter text-xs font-medium px-2.5 py-1 rounded-md inline-block self-start mb-3 sm:mb-4" style={{ background: plan.accent + '10', color: plan.accent, fontSize: '11px' }}>
+        <span className="font-inter text-xs font-medium px-3 py-1.5 rounded-full inline-block self-start mb-4 sm:mb-5" style={{ background: plan.accent + '12', color: plan.accent, fontSize: '11px' }}>
           {plan.bestFor}
         </span>
-        <h3 className="font-outfit font-medium mb-2" style={{ fontSize: large ? 'clamp(22px, 3.5vw, 28px)' : 'clamp(20px, 3vw, 22px)', color: isDark ? '#f1ece4' : '#0A0A0A' }}>
+        <h3 className="font-outfit font-bold mb-2" style={{ fontSize: large ? 'clamp(22px, 3.5vw, 28px)' : 'clamp(20px, 3vw, 22px)', color: '#FFFFFF' }}>
           {plan.name}
         </h3>
         <div className="flex items-baseline gap-1 mb-2">
           <span className="font-outfit font-bold" style={{ fontSize: large ? 'clamp(30px, 5vw, 40px)' : 'clamp(26px, 4vw, 32px)', color: plan.accent }}>{plan.price}</span>
-          <span className="font-inter" style={{ fontSize: '14px', color: isDark ? '#8A8A8A' : '#555555' }}>{plan.period}</span>
+          <span className="font-inter" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>{plan.period}</span>
         </div>
-        <p className="font-inter text-sm mb-5 sm:mb-6" style={{ color: isDark ? 'rgba(241,236,228,0.55)' : '#555555' }}>
+        <p className="font-inter text-sm mb-5 sm:mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
           {plan.description}
         </p>
 
-        <div className="h-px mb-5 sm:mb-6" style={{ background: isDark ? 'rgba(255,255,255,0.06)' : '#E8E5DE' }} />
+        <div className="h-px mb-5 sm:mb-6" style={{ background: 'rgba(255,255,255,0.06)' }} />
 
-        <div className="flex flex-col gap-2.5 mb-6 sm:mb-8 flex-1">
+        <div className="flex flex-col gap-3 mb-6 sm:mb-8 flex-1">
           {plan.features.map((feature) => (
             <div key={feature} className="flex items-start gap-2.5">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5">
                 <path d="M3 8l4 4 6-6" stroke={plan.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="font-inter text-sm" style={{ color: isDark ? 'rgba(241,236,228,0.75)' : '#2D2D2D', lineHeight: 1.5 }}>
+              <span className="font-inter text-sm" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
                 {feature}
               </span>
             </div>
           ))}
         </div>
 
-        {isDark ? (
-          <button
-            onClick={onSelect}
-            className="w-full font-inter font-medium text-sm py-3 rounded-full text-white transition-all duration-200"
-            style={{ background: plan.accent }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.88')}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-          >
-            Get Started
-          </button>
-        ) : (
-          <button
-            onClick={onSelect}
-            className="w-full font-inter font-medium text-sm py-3 rounded-lg transition-all duration-200"
-            style={{ background: 'transparent', color: '#0A0A0A', border: '1px solid #D6D3CC' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#0A0A0A'; e.currentTarget.style.color = '#f1ece4'; e.currentTarget.style.borderColor = '#0A0A0A'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#0A0A0A'; e.currentTarget.style.borderColor = '#D6D3CC'; }}
-          >
-            Get Started
-          </button>
-        )}
+        <button
+          onClick={onSelect}
+          className="w-full font-inter font-bold text-sm py-3.5 rounded-full transition-all duration-300"
+          style={{
+            background: isDark ? `linear-gradient(135deg, ${plan.accent}, #0099cc)` : 'transparent',
+            color: isDark ? '#000000' : '#FFFFFF',
+            border: isDark ? 'none' : '1px solid rgba(255,255,255,0.15)',
+          }}
+          onMouseEnter={(e) => {
+            if (isDark) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 8px 25px ${plan.accent}40`; }
+            else { e.currentTarget.style.background = 'rgba(0,212,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(0,212,255,0.3)'; }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = 'none';
+            if (!isDark) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }
+          }}
+        >
+          Get Started
+        </button>
       </div>
     </div>
   );
@@ -137,13 +139,13 @@ export default function Pricing() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.pricing-head', { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+      gsap.fromTo('.pricing-head', { opacity: 0, y: 40 }, {
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       });
       gsap.fromTo('.pricing-card', { opacity: 0, y: 40 }, {
         opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' },
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -155,16 +157,19 @@ export default function Pricing() {
   const select = (planName: string) => { track('cta_click', { location: 'pricing', label: planName }); open(`pricing_${planName}`); };
 
   return (
-    <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#0a0f1a', padding: '10vh clamp(20px, 5vw, 80px) 12vh' }}>
+    <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
+      {/* Subtle separator */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent)' }} />
+
       <div className="relative max-w-[1100px] mx-auto">
-        <div className="pricing-head mb-10 sm:mb-14" style={{ opacity: 0 }}>
-          <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>
+        <div className="pricing-head mb-10 sm:mb-14 text-center" style={{ opacity: 0 }}>
+          <span className="block font-inter font-medium uppercase mb-5 sm:mb-6" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>
             Pricing
           </span>
-          <h2 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>
+          <h2 className="font-outfit font-bold mb-4" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
             Simple, Transparent Pricing
           </h2>
-          <p className="font-inter" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', lineHeight: 1.6, color: '#2D2D2D', maxWidth: '480px' }}>
+          <p className="font-inter mx-auto" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', maxWidth: '480px' }}>
             Choose a plan that fits your retention goals. All plans include a 30-day satisfaction guarantee.
           </p>
         </div>
@@ -183,11 +188,11 @@ export default function Pricing() {
           </div>
         </div>
 
-        <p className="font-inter text-center mt-8 sm:mt-10" style={{ fontSize: 'clamp(14px, 2vw, 15px)', color: '#555555' }}>
+        <p className="font-inter text-center mt-8 sm:mt-10" style={{ fontSize: 'clamp(14px, 2vw, 15px)', color: 'rgba(255,255,255,0.4)' }}>
           Not sure which plan?{' '}
-          <button onClick={() => select('not_sure')} className="font-medium underline underline-offset-2 transition-colors duration-200" style={{ color: '#F97316' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#EA580C')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = '#F97316')}
+          <button onClick={() => select('not_sure')} className="font-medium underline underline-offset-2 transition-colors duration-300" style={{ color: '#00D4FF' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#00D4FF')}
           >
             Book a free audit and we'll recommend one.
           </button>

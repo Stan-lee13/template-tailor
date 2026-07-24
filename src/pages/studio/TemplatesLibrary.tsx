@@ -28,7 +28,7 @@ export default function TemplatesLibrary() {
   return (
     <StudioLayout>
       <div className="mb-6">
-        <h1 className="font-outfit font-medium text-3xl" style={{ color: '#0A0A0A', letterSpacing: '-0.02em' }}>Templates</h1>
+        <h1 className="font-outfit font-medium text-3xl" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Templates</h1>
         <p className="font-inter text-sm" style={{ color: '#666' }}>Reusable section presets. Create from any section in the site editor.</p>
       </div>
       {loading ? <p className="font-inter text-sm text-gray-500">Loading…</p> :

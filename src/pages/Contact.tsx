@@ -13,10 +13,10 @@ export default function Contact() {
       intro="The fastest way to work with us is to book a free 30-minute growth audit. No pitch, no slide deck — we look at your retention setup and tell you what's leaking."
     >
       <div className="not-prose flex flex-col sm:flex-row gap-3 mb-8">
-        <button onClick={() => open('contact_page')} className="font-inter font-medium text-white" style={{ background: '#F97316', padding: '13px 28px', borderRadius: '9999px', fontSize: '14px' }}>
+        <button onClick={() => open('contact_page')} className="font-inter font-medium text-white" style={{ background: '#00D4FF', padding: '13px 28px', borderRadius: '9999px', fontSize: '14px' }}>
           Book a free audit
         </button>
-        <a href={`mailto:${SITE.email}`} className="font-inter font-medium inline-flex items-center justify-center" style={{ background: 'transparent', padding: '13px 28px', borderRadius: '9999px', fontSize: '14px', color: '#0A0A0A', border: '1px solid #D6D3CC' }}>
+        <a href={`mailto:${SITE.email}`} className="font-inter font-medium inline-flex items-center justify-center" style={{ background: 'transparent', padding: '13px 28px', borderRadius: '9999px', fontSize: '14px', color: '#000000', border: '1px solid #D6D3CC' }}>
           Email us
         </a>
       </div>

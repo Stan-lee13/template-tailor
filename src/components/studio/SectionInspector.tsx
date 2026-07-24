@@ -86,7 +86,7 @@ function FieldEditor({ field, value, onChange }: { field: Field; value: unknown;
             <div className="w-24 h-24 rounded border flex items-center justify-center bg-gray-50" style={{ borderColor: '#E2DDD3' }}><ImageIcon size={20} color="#aaa" /></div>
           )}
           <div className="flex flex-col gap-2">
-            <button type="button" onClick={() => setPickerOpen(true)} className="px-3 py-1.5 rounded-md font-inter text-xs" style={{ background: '#0A0A0A', color: '#fff' }}>Choose</button>
+            <button type="button" onClick={() => setPickerOpen(true)} className="px-3 py-1.5 rounded-md font-inter text-xs" style={{ background: '#000000', color: '#fff' }}>Choose</button>
             {value && <button type="button" onClick={() => onChange(null)} className="px-3 py-1.5 rounded-md font-inter text-xs border" style={{ borderColor: '#E2DDD3' }}>Remove</button>}
           </div>
         </div>

@@ -27,11 +27,11 @@ export default function CookieConsent() {
   if (!expanded) {
     return (
       <div className="fixed bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-auto z-[150] sm:max-w-[380px]" style={{ animation: 'rfSlideUp 420ms cubic-bezier(.2,.7,.2,1)' }}>
-        <div className="sm:hidden flex items-center justify-between gap-2 rounded-full px-4 py-2.5" style={{ background: 'rgba(241,236,228,0.96)', backdropFilter: 'blur(18px)', border: '1px solid rgba(10,10,10,0.08)', boxShadow: '0 12px 30px -10px rgba(0,0,0,0.18)' }}>
-          <span className="font-inter text-[12px]" style={{ color: '#0A0A0A' }}>🍪 Cookies</span>
+        <div className="sm:hidden flex items-center justify-between gap-2 rounded-full px-4 py-2.5" style={{ background: 'rgba(26,32,53,0.95)', backdropFilter: 'blur(18px)', border: '1px solid rgba(0,212,255,0.1)', boxShadow: '0 12px 30px -10px rgba(0,0,0,0.3)' }}>
+          <span className="font-inter text-[12px]" style={{ color: '#FFFFFF' }}>🍪 Cookies</span>
           <div className="flex items-center gap-1.5">
-            <button onClick={acceptAll} className="font-inter font-medium text-white" style={{ background: '#0A0A0A', padding: '6px 12px', borderRadius: '9999px', fontSize: '11.5px' }}>Accept</button>
-            <button onClick={() => setExpanded(true)} aria-label="Manage" className="font-inter" style={{ color: '#555', padding: '6px 8px', fontSize: '11.5px' }}>Manage</button>
+            <button onClick={acceptAll} className="font-inter font-medium" style={{ background: '#00D4FF', color: '#000000', padding: '6px 12px', borderRadius: '9999px', fontSize: '11.5px' }}>Accept</button>
+            <button onClick={() => setExpanded(true)} aria-label="Manage" className="font-inter" style={{ color: 'rgba(255,255,255,0.6)', padding: '6px 8px', fontSize: '11.5px' }}>Manage</button>
           </div>
         </div>
         <div className="hidden sm:block">
@@ -51,27 +51,27 @@ export default function CookieConsent() {
 
   function renderFull() {
     return (
-      <div style={{ background: 'rgba(241,236,228,0.96)', backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)', border: '1px solid rgba(10,10,10,0.08)', borderRadius: '16px', padding: '18px', boxShadow: '0 20px 50px -12px rgba(0,0,0,0.18)' }}>
-        <h4 className="font-outfit font-medium mb-1.5" style={{ fontSize: '15px', color: '#0A0A0A' }}>We use cookies</h4>
-        <p className="font-inter mb-3" style={{ fontSize: '13px', lineHeight: 1.55, color: '#2D2D2D' }}>
+      <div style={{ background: 'rgba(26,32,53,0.95)', backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)', border: '1px solid rgba(0,212,255,0.1)', borderRadius: '16px', padding: '18px', boxShadow: '0 20px 50px -12px rgba(0,0,0,0.4)' }}>
+        <h4 className="font-outfit font-medium mb-1.5" style={{ fontSize: '15px', color: '#FFFFFF' }}>We use cookies</h4>
+        <p className="font-inter mb-3" style={{ fontSize: '13px', lineHeight: 1.55, color: 'rgba(255,255,255,0.6)' }}>
           We use a small number of cookies to understand how the site is used and improve it. See our{' '}
-          <Link to="/cookies" className="underline underline-offset-2" style={{ color: '#0A0A0A' }}>cookie policy</Link>.
+          <Link to="/cookies" className="underline underline-offset-2" style={{ color: '#00D4FF' }}>cookie policy</Link>.
         </p>
         {showPrefs && (
-          <div className="mb-3 mt-2 flex flex-col gap-2.5" style={{ borderTop: '1px solid rgba(10,10,10,0.08)', paddingTop: '12px' }}>
+          <div className="mb-3 mt-2 flex flex-col gap-2.5" style={{ borderTop: '1px solid rgba(0,212,255,0.08)', paddingTop: '12px' }}>
             <Toggle label="Essential" description="Required for the site to function" checked disabled />
             <Toggle label="Analytics" description="Anonymous usage statistics" checked={analytics} onChange={setAnalytics} />
             <Toggle label="Marketing" description="Personalized content and ads" checked={marketing} onChange={setMarketing} />
           </div>
         )}
         <div className="flex flex-wrap items-center gap-2">
-          <button onClick={acceptAll} className="font-inter font-medium text-white flex-1 sm:flex-none" style={{ background: '#0A0A0A', padding: '9px 18px', borderRadius: '9999px', fontSize: '13px' }}>Accept all</button>
+          <button onClick={acceptAll} className="font-inter font-bold flex-1 sm:flex-none" style={{ background: 'linear-gradient(135deg, #00D4FF, #0099cc)', color: '#000000', padding: '9px 18px', borderRadius: '9999px', fontSize: '13px' }}>Accept all</button>
           {showPrefs ? (
-            <button onClick={savePrefs} className="font-inter font-medium" style={{ background: 'transparent', padding: '9px 14px', borderRadius: '9999px', fontSize: '13px', color: '#0A0A0A', border: '1px solid rgba(10,10,10,0.18)' }}>Save preferences</button>
+            <button onClick={savePrefs} className="font-inter font-medium" style={{ background: 'transparent', padding: '9px 14px', borderRadius: '9999px', fontSize: '13px', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)' }}>Save preferences</button>
           ) : (
-            <button onClick={() => setShowPrefs(true)} className="font-inter font-medium" style={{ background: 'transparent', padding: '9px 14px', borderRadius: '9999px', fontSize: '13px', color: '#0A0A0A', border: '1px solid rgba(10,10,10,0.18)' }}>Preferences</button>
+            <button onClick={() => setShowPrefs(true)} className="font-inter font-medium" style={{ background: 'transparent', padding: '9px 14px', borderRadius: '9999px', fontSize: '13px', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)' }}>Preferences</button>
           )}
-          <button onClick={rejectAll} className="font-inter text-xs underline underline-offset-2" style={{ color: '#555' }}>Reject</button>
+          <button onClick={rejectAll} className="font-inter text-xs underline underline-offset-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Reject</button>
         </div>
       </div>
     );
@@ -83,12 +83,12 @@ function Toggle({ label, description, checked, disabled, onChange }: { label: st
     <label className="flex items-start gap-3 cursor-pointer" style={{ opacity: disabled ? 0.7 : 1 }}>
       <span className="relative inline-block flex-shrink-0 mt-0.5" style={{ width: 32, height: 18 }}>
         <input type="checkbox" checked={checked} disabled={disabled} onChange={(e) => onChange?.(e.target.checked)} className="sr-only" />
-        <span style={{ position: 'absolute', inset: 0, background: checked ? '#0A0A0A' : 'rgba(10,10,10,0.18)', borderRadius: 9999, transition: 'background 160ms' }} />
+        <span style={{ position: 'absolute', inset: 0, background: checked ? '#00D4FF' : 'rgba(255,255,255,0.1)', borderRadius: 9999, transition: 'background 160ms' }} />
         <span style={{ position: 'absolute', top: 2, left: checked ? 16 : 2, width: 14, height: 14, borderRadius: 9999, background: '#fff', transition: 'left 160ms' }} />
       </span>
       <span>
-        <span className="block font-inter font-medium" style={{ fontSize: '12.5px', color: '#0A0A0A' }}>{label}</span>
-        <span className="block font-inter" style={{ fontSize: '11.5px', color: '#555', lineHeight: 1.4 }}>{description}</span>
+        <span className="block font-inter font-medium" style={{ fontSize: '12.5px', color: '#FFFFFF' }}>{label}</span>
+        <span className="block font-inter" style={{ fontSize: '11.5px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.4 }}>{description}</span>
       </span>
     </label>
   );

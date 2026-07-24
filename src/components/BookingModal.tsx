@@ -76,19 +76,19 @@ export default function BookingModal() {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6"
-      style={{ background: 'rgba(10,10,10,0.72)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', animation: 'rfFade 220ms ease-out' }}
+      style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', animation: 'rfFade 220ms ease-out' }}
       onClick={(e) => { if (e.target === e.currentTarget) close(); }}
     >
       <div
         className="relative w-full max-w-[920px] rounded-2xl overflow-hidden"
-        style={{ background: '#f1ece4', boxShadow: '0 30px 80px -20px rgba(0,0,0,0.5)', maxHeight: '92vh', animation: 'rfScale 260ms cubic-bezier(.2,.7,.2,1)' }}
+        style={{ background: '#0a0f1a', boxShadow: '0 30px 80px -20px rgba(0,212,255,0.1)', maxHeight: '92vh', animation: 'rfScale 260ms cubic-bezier(.2,.7,.2,1)', border: '1px solid rgba(0,212,255,0.1)' }}
       >
-        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b" style={{ borderColor: '#E2DDD3' }}>
+        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b" style={{ borderColor: 'rgba(0,212,255,0.1)' }}>
           <div>
-            <p className="font-inter text-[11px] uppercase tracking-wider" style={{ color: '#8A8A8A', letterSpacing: '0.06em' }}>
+            <p className="font-inter text-[11px] uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em' }}>
               Free 30-min Growth Audit
             </p>
-            <h3 className="font-outfit font-medium" style={{ fontSize: '18px', color: '#0A0A0A' }}>
+            <h3 className="font-outfit font-medium" style={{ fontSize: '18px', color: '#FFFFFF' }}>
               Book a call with {SITE.name}
             </h3>
           </div>
@@ -97,20 +97,20 @@ export default function BookingModal() {
             aria-label="Close"
             className="rounded-full p-2 transition-colors"
             style={{ background: 'transparent' }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.06)')}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
             onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
           </button>
         </div>
 
-        <div style={{ height: 'min(720px, 78vh)', background: '#fff' }}>
+        <div style={{ height: 'min(720px, 78vh)', background: '#0a0f1a' }}>
           {CALENDLY_URL ? (
             <div ref={containerRef} style={{ height: '100%', minWidth: '320px' }} />
           ) : (
             <div className="h-full flex flex-col items-center justify-center p-8 text-center">
               <p className="font-inter text-sm mb-3" style={{ color: '#555' }}>Booking link not configured yet.</p>
-              <a href={`mailto:${SITE.email}?subject=Growth Audit Request`} className="font-inter font-medium text-white" style={{ background: '#F97316', padding: '12px 28px', borderRadius: '9999px' }}>
+              <a href={`mailto:${SITE.email}?subject=Growth Audit Request`} className="font-inter font-medium text-white" style={{ background: '#00D4FF', padding: '12px 28px', borderRadius: '9999px' }}>
                 Email us instead
               </a>
             </div>

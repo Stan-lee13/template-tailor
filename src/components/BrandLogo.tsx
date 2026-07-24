@@ -20,11 +20,11 @@ interface BrandLogoProps {
 export default function BrandLogo({ variant = 'dark', size = 'md', className = '' }: BrandLogoProps) {
   const isDark = variant === 'dark';
 
-  const retentionColor = isDark ? '#f1ece4' : '#0A0A0A';
-  const retentionDot = isDark ? '#0A0A0A' : '#FFFFFF';
+  const retentionColor = isDark ? '#FFFFFF' : '#000000';
+  const retentionDot = isDark ? '#000000' : '#FFFFFF';
   const firmColor = isDark ? '#FFFFFF' : '#FFFFFF';
-  const firmDot = isDark ? '#f1ece4' : '#0A0A0A';
-  const periodColor = isDark ? '#f1ece4' : '#0A0A0A';
+  const firmDot = isDark ? '#FFFFFF' : '#000000';
+  const periodColor = isDark ? '#FFFFFF' : '#000000';
 
   const firmShadow = !isDark
     ? '0 0 2px rgba(0,0,0,0.12), 0 0 4px rgba(0,0,0,0.06)'

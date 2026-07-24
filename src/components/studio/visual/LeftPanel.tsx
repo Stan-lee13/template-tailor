@@ -47,8 +47,8 @@ export default function LeftPanel(props: {
             onClick={() => setTab(t.id)}
             className="flex flex-col items-center gap-1 py-2.5 text-[10px] uppercase tracking-wider font-inter transition-colors"
             style={{
-              background: tab === t.id ? '#0A0A0A' : 'transparent',
-              color: tab === t.id ? '#f1ece4' : '#555',
+              background: tab === t.id ? '#000000' : 'transparent',
+              color: tab === t.id ? '#FFFFFF' : '#555',
               fontWeight: tab === t.id ? 600 : 400,
             }}
           >
@@ -90,8 +90,8 @@ function PagesTab({ pages, pageId, setPageId }: { pages: Page[]; pageId: string 
             className="w-full text-left px-3 py-2 rounded-md font-inter text-sm transition-colors"
             style={{
               background: pageId === p.id ? '#fff7ed' : 'transparent',
-              color: '#0A0A0A',
-              borderLeft: pageId === p.id ? '3px solid #F97316' : '3px solid transparent',
+              color: '#000000',
+              borderLeft: pageId === p.id ? '3px solid #00D4FF' : '3px solid transparent',
             }}
           >
             <div className="font-medium truncate">{p.title || p.path}</div>
@@ -198,7 +198,7 @@ function ComponentsTab({ onAdd, canEdit }: { onAdd: (type: string, content?: Rec
               style={{ borderColor: '#E2DDD3' }}
             >
               <div className="flex items-center gap-2">
-                <Plus size={12} color="#F97316" />
+                <Plus size={12} color="#00D4FF" />
                 <span className="text-sm font-medium">{def.label}</span>
               </div>
               <p className="text-[10px] mt-0.5 text-gray-500 line-clamp-2">{def.description}</p>
@@ -274,7 +274,7 @@ function MediaTab() {
 
   return (
     <div className="p-3">
-      <label className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-inter text-xs cursor-pointer mb-3" style={{ background: '#0A0A0A', color: '#fff' }}>
+      <label className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-inter text-xs cursor-pointer mb-3" style={{ background: '#000000', color: '#fff' }}>
         <Upload size={12} /> {uploading ? 'Uploading…' : 'Upload'}
         <input type="file" accept="image/*,video/*" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
       </label>

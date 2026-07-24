@@ -67,7 +67,7 @@ export function useAuth() {
 export function RequireStaff({ children }: { children: ReactNode }) {
   const { loading, user, isStaff } = useAuth();
   const location = useLocation();
-  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: '#f1ece4' }}><p className="font-inter text-sm" style={{ color: '#555' }}>Loading…</p></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}><p className="font-inter text-sm" style={{ color: '#555' }}>Loading…</p></div>;
   if (!user) return <Navigate to="/studio/login" state={{ from: location }} replace />;
   if (!isStaff) return <Navigate to="/studio/pending" replace />;
   return <>{children}</>;

@@ -28,7 +28,7 @@ export default function ActivityLog() {
   return (
     <StudioLayout>
       <div className="mb-6">
-        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#0A0A0A', letterSpacing: '-0.02em' }}>Activity</h1>
+        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Activity</h1>
         <p className="font-inter text-sm" style={{ color: '#666' }}>Last 200 changes across the CMS.</p>
       </div>
       <div className="rounded-xl overflow-hidden" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
@@ -37,7 +37,7 @@ export default function ActivityLog() {
           <ul className="divide-y" style={{ borderColor: '#E2DDD3' }}>
             {logs.map((l) => (
               <li key={l.id} className="px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                <span className="font-inter text-[11px] uppercase tracking-wider px-2 py-0.5 rounded self-start" style={{ background: '#f1ece4', color: '#0A0A0A' }}>{l.action}</span>
+                <span className="font-inter text-[11px] uppercase tracking-wider px-2 py-0.5 rounded self-start" style={{ background: '#FFFFFF', color: '#000000' }}>{l.action}</span>
                 <span className="font-inter text-sm flex-1 truncate" style={{ color: '#333' }}>{l.entity_type}{l.entity_id ? ` · ${l.entity_id.slice(0, 8)}` : ''}</span>
                 <span className="font-inter text-xs" style={{ color: '#888' }}>{l.actor_id ? emails[l.actor_id] || l.actor_id.slice(0, 8) : 'system'}</span>
                 <span className="font-inter text-xs tabular-nums whitespace-nowrap" style={{ color: '#888' }}>{new Date(l.created_at).toLocaleString()}</span>

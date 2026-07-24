@@ -23,7 +23,7 @@ export default function Integrations() {
       <div className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {partners.map((p) => (
           <div key={p.name} className="p-5 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid #D6D3CC' }}>
-            <h3 className="font-outfit font-medium" style={{ fontSize: '18px', color: '#0A0A0A', marginBottom: 6 }}>{p.name}</h3>
+            <h3 className="font-outfit font-medium" style={{ fontSize: '18px', color: '#000000', marginBottom: 6 }}>{p.name}</h3>
             <p className="font-inter" style={{ fontSize: '14px', lineHeight: 1.55, color: '#555' }}>{p.desc}</p>
           </div>
         ))}

@@ -16,54 +16,59 @@ export default function ProblemSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.problem-headline', { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+      gsap.fromTo('.problem-headline', { opacity: 0, y: 50 }, {
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       });
-      gsap.fromTo('.problem-item', { opacity: 0, x: -30 }, {
-        opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
+      gsap.fromTo('.problem-item', { opacity: 0, y: 30, scale: 0.95 }, {
+        opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' },
+      });
+      gsap.fromTo('.problem-closer', { opacity: 0, y: 20 }, {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 40%' },
       });
     }, sectionRef);
     return () => ctx.revert();
   }, [c.pain_points?.length]);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ background: 'linear-gradient(180deg, #0A0A0A 0%, #0C1622 60%, #0A0A0A 100%)', padding: '12vh clamp(20px, 5vw, 80px) 10vh' }}>
-      <div className="absolute top-12 right-[10%] w-[200px] h-[1px] opacity-20 hidden sm:block" style={{ background: 'linear-gradient(90deg, transparent, #2C91E1, transparent)', transform: 'rotate(-8deg)' }} />
+    <section ref={sectionRef} className="relative" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
+      {/* Subtle cyan glow at top */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.3), transparent)' }} />
 
-      <div className="max-w-[800px] mx-auto">
+      <div className="max-w-[800px] mx-auto text-center">
         <div className="problem-headline" style={{ opacity: 0 }}>
-          <span className="block font-inter font-medium uppercase mb-4 sm:mb-5" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>
-            <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;{c.eyebrow}
+          <span className="block font-inter font-medium uppercase mb-5 sm:mb-6" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>
+            {c.eyebrow}
           </span>
-          <h2 className="font-outfit font-medium mb-3 sm:mb-4" style={{ fontSize: 'clamp(26px, 5vw, 56px)', lineHeight: 1, color: '#f1ece4', letterSpacing: '-0.02em' }}>
+          <h2 className="font-outfit font-bold mb-3 sm:mb-4" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
             {c.headline_1}
           </h2>
-          <h2 className="font-outfit font-medium mb-6 sm:mb-8" style={{ fontSize: 'clamp(26px, 5vw, 56px)', lineHeight: 1, letterSpacing: '-0.02em' }}>
-            <span style={{ color: '#F97316' }}>{c.headline_2}</span>
+          <h2 className="font-outfit font-bold mb-6 sm:mb-8" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 1.1, letterSpacing: '-0.03em' }}>
+            <span style={{ color: '#00D4FF' }}>{c.headline_2}</span>
           </h2>
-          <p className="font-inter mb-8 sm:mb-10" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.7, color: 'rgba(241,236,228,0.7)', maxWidth: '600px' }}>
+          <p className="font-inter mb-10 sm:mb-12 mx-auto" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.8, color: 'rgba(255,255,255,0.6)', maxWidth: '560px' }}>
             {c.intro}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {(c.pain_points || []).map((p, i) => (
             <div
               key={i}
-              className="problem-item flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl transition-all duration-300"
-              style={{ opacity: 0, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(239,68,68,0.2)'; e.currentTarget.style.background = 'rgba(239,68,68,0.04)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
+              className="problem-item flex items-start gap-4 p-6 sm:p-7 rounded-2xl transition-all duration-400"
+              style={{ opacity: 0, background: 'rgba(26,32,53,0.6)', border: '1px solid rgba(0,212,255,0.08)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(0,212,255,0.3)'; e.currentTarget.style.background = 'rgba(26,32,53,0.9)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 16px 48px rgba(0,212,255,0.08)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(0,212,255,0.08)'; e.currentTarget.style.background = 'rgba(26,32,53,0.6)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
             >
-              <span className="flex-shrink-0 mt-0.5" style={{ color: '#EF4444', fontSize: '16px' }}>✕</span>
-              <span className="font-inter" style={{ fontSize: 'clamp(14px, 2vw, 16px)', color: 'rgba(241,236,228,0.85)', lineHeight: 1.5 }}>{p.text}</span>
+              <span className="flex-shrink-0 mt-0.5" style={{ color: '#EF4444', fontSize: '14px' }}>✕</span>
+              <span className="font-inter" style={{ fontSize: 'clamp(14px, 2vw, 16px)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>{p.text}</span>
             </div>
           ))}
         </div>
 
-        <p className="font-inter font-medium mt-8 sm:mt-10" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#F97316', letterSpacing: '-0.01em' }}>
+        <p className="problem-closer font-inter font-medium mt-10 sm:mt-12" style={{ opacity: 0, fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#00D4FF', letterSpacing: '-0.01em' }}>
           {c.closer}
         </p>
       </div>

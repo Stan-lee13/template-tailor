@@ -44,7 +44,7 @@ export default function Approvals() {
   return (
     <StudioLayout>
       <div className="mb-6">
-        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#0A0A0A', letterSpacing: '-0.02em' }}>Approvals</h1>
+        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Approvals</h1>
         <p className="font-inter text-sm" style={{ color: '#666' }}>Grant or revoke team access.</p>
       </div>
 
@@ -63,12 +63,12 @@ export default function Approvals() {
               return (
                 <li key={u.id} className="flex flex-col sm:flex-row sm:items-center gap-3 px-4 sm:px-5 py-4">
                   <div className="flex-1 min-w-0">
-                    <p className="font-inter text-sm font-medium truncate" style={{ color: '#0A0A0A' }}>{u.display_name || u.email}</p>
+                    <p className="font-inter text-sm font-medium truncate" style={{ color: '#000000' }}>{u.display_name || u.email}</p>
                     <p className="font-inter text-xs truncate" style={{ color: '#888' }}>{u.email}</p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
                     {isAdmin && (
-                      <span className="inline-flex items-center gap-1 font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#F9731620', color: '#F97316' }}>
+                      <span className="inline-flex items-center gap-1 font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#00D4FF20', color: '#00D4FF' }}>
                         Admin
                         <button onClick={() => revoke(u.id, 'admin')} title="Revoke admin" className="hover:opacity-70"><X size={10} /></button>
                       </span>
@@ -79,14 +79,14 @@ export default function Approvals() {
                         <button onClick={() => revoke(u.id, 'editor')} title="Revoke editor" className="hover:opacity-70"><X size={10} /></button>
                       </span>
                     )}
-                    {!userRoles.length && <span className="font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#f1ece4', color: '#888' }}>Pending</span>}
+                    {!userRoles.length && <span className="font-inter text-[10px] uppercase tracking-wider px-2 py-1 rounded" style={{ background: '#FFFFFF', color: '#888' }}>Pending</span>}
                     {!isEditor && !isAdmin && (
                       <button onClick={() => grant(u.id, 'editor')} className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded font-inter text-xs" style={{ background: '#10B981', color: '#fff' }}>
                         <Check size={12} /> Editor
                       </button>
                     )}
                     {!isAdmin && (
-                      <button onClick={() => grant(u.id, 'admin')} className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded font-inter text-xs" style={{ background: '#F97316', color: '#0A0A0A' }}>
+                      <button onClick={() => grant(u.id, 'admin')} className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded font-inter text-xs" style={{ background: '#00D4FF', color: '#000000' }}>
                         <Check size={12} /> Admin
                       </button>
                     )}

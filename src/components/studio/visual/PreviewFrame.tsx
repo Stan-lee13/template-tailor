@@ -29,7 +29,7 @@ export default function PreviewFrame({
   }, [path, reloadKey]);
 
   return (
-    <div className="w-full h-full flex items-start justify-center overflow-auto p-4" style={{ background: '#111', backgroundImage: 'radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0A0A0A 100%)' }}>
+    <div className="w-full h-full flex items-start justify-center overflow-auto p-4" style={{ background: '#111', backgroundImage: 'radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000000 100%)' }}>
       <div className="rounded-lg overflow-hidden shadow-2xl transition-all duration-300" style={{ width, maxWidth: '100%', background: '#fff' }}>
         <iframe
           ref={ref}

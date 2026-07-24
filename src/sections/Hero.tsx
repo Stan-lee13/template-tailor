@@ -52,7 +52,7 @@ export default function Hero() {
     <section
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ minHeight: '100svh', background: '#0A0A0A', touchAction: 'pan-y' }}
+      style={{ minHeight: '100svh', background: '#000000', touchAction: 'pan-y' }}
     >
       <HeroBackground />
 
@@ -80,14 +80,14 @@ export default function Hero() {
           style={{
             fontSize: 'clamp(32px, 6.6vw, 84px)',
             lineHeight: 1.02,
-            color: '#f1ece4',
+            color: '#FFFFFF',
             letterSpacing: '-0.025em',
             textShadow: '0 2px 28px rgba(0,0,0,0.45)',
           }}
         >
           <span ref={leftRef} className="inline-block opacity-0">{c.title_left}</span>
           <span ref={rightRef} className="inline-block opacity-0">
-            <span style={{ color: '#F97316' }}>{c.title_right}</span>{c.title_right_suffix}
+            <span style={{ color: '#00D4FF' }}>{c.title_right}</span>{c.title_right_suffix}
           </span>
         </h1>
 
@@ -98,7 +98,7 @@ export default function Hero() {
             fontFamily: 'Inter, sans-serif',
             fontSize: 'clamp(15px, 2.4vw, 18px)',
             lineHeight: 1.6,
-            color: 'rgba(241,236,228,0.92)',
+            color: 'rgba(255,255,255,0.92)',
             maxWidth: '620px',
             letterSpacing: '-0.01em',
             opacity: 0,
@@ -110,10 +110,10 @@ export default function Hero() {
             <WordRotate
               words={(c.rotating_words || []).map((w) => w.word).filter(Boolean)}
               className="font-medium"
-              motionProps={{ style: { color: '#F97316' } }}
+              motionProps={{ style: { color: '#00D4FF' } }}
             />
           ) : (
-            <span className="font-medium" style={{ color: '#F97316' }}>{c.rotating_words?.[0]?.word || ''}</span>
+            <span className="font-medium" style={{ color: '#00D4FF' }}>{c.rotating_words?.[0]?.word || ''}</span>
           )}
           {' '}{c.subtitle_suffix}
         </p>
@@ -126,9 +126,9 @@ export default function Hero() {
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
             className="font-inter font-medium text-white transition-colors duration-200 w-full sm:w-auto"
-            style={{ background: '#F97316', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#EA580C'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#F97316'; }}
+            style={{ background: '#00D4FF', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = '#0099cc'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = '#00D4FF'; }}
           >
             {c.primary_cta_label}
           </button>

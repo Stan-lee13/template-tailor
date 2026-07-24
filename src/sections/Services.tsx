@@ -80,9 +80,9 @@ export default function Services() {
   }, { scope: sectionRef, dependencies: [services.length] });
 
   return (
-    <section ref={sectionRef} id="services" className="relative overflow-hidden" style={{ background: '#0a0f1a' }}>
+    <section ref={sectionRef} id="services" className="relative overflow-hidden" style={{ background: '#000000' }}>
       {/* Ambient rotating gradient (desktop only) */}
-      <div className="svc-ambient hidden lg:block absolute" style={{ top: '50%', left: '50%', width: '140vw', height: '140vw', marginLeft: '-70vw', marginTop: '-70vw', background: 'conic-gradient(from 0deg, rgba(249,115,22,0.05), rgba(44,145,225,0.06), rgba(16,185,129,0.05), rgba(249,115,22,0.05))', filter: 'blur(60px)', pointerEvents: 'none' }} />
+      <div className="svc-ambient hidden lg:block absolute" style={{ top: '50%', left: '50%', width: '140vw', height: '140vw', marginLeft: '-70vw', marginTop: '-70vw', background: 'conic-gradient(from 0deg, rgba(0,212,255,0.04), rgba(0,153,204,0.03), rgba(0,212,255,0.04))', filter: 'blur(60px)', pointerEvents: 'none' }} />
 
       {/* DESKTOP: pinned circular stage */}
       <div className="hidden lg:block relative" style={{ minHeight: '100vh', padding: '10vh 5vw' }}>
@@ -91,10 +91,10 @@ export default function Services() {
             <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#94A3B8', letterSpacing: '0.04em' }}>{c.eyebrow}</span>
             <h2 className="font-outfit font-medium mb-5" style={{ fontSize: 'clamp(36px, 4vw, 56px)', lineHeight: 0.95, color: '#F8FAFC', letterSpacing: '-0.02em' }}>{c.headline}</h2>
             <p className="font-inter mb-6" style={{ fontSize: '17px', lineHeight: 1.65, color: '#94A3B8', maxWidth: '400px' }}>{c.intro}</p>
-            <div className="h-[3px] w-16 rounded-full mb-8" style={{ background: 'linear-gradient(90deg, #F97316, #2C91E1)' }} />
+            <div className="h-[3px] w-16 rounded-full mb-8" style={{ background: 'linear-gradient(90deg, #00D4FF, #2C91E1)' }} />
             <div className="flex items-center gap-2">
               {services.map((_, i) => (
-                <div key={i} className="h-1 rounded-full transition-all duration-300" style={{ width: i === activeIdx ? 32 : 8, background: i === activeIdx ? '#F97316' : 'rgba(10,10,10,0.15)' }} />
+                <div key={i} className="h-1 rounded-full transition-all duration-300" style={{ width: i === activeIdx ? 32 : 8, background: i === activeIdx ? '#00D4FF' : 'rgba(10,10,10,0.15)' }} />
               ))}
             </div>
             <p className="font-inter text-xs uppercase tracking-wider mt-6" style={{ color: '#64748B' }}>Scroll to navigate</p>

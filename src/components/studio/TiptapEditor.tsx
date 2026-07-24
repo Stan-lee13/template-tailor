@@ -27,8 +27,8 @@ function Btn({ active, onClick, title, children, disabled }: { active?: boolean;
       disabled={disabled}
       className="p-2 rounded transition-colors disabled:opacity-40"
       style={{
-        background: active ? '#0A0A0A' : 'transparent',
-        color: active ? '#f1ece4' : '#0A0A0A',
+        background: active ? '#000000' : 'transparent',
+        color: active ? '#FFFFFF' : '#000000',
       }}
     >
       {children}

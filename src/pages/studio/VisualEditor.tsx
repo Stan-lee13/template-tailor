@@ -190,26 +190,26 @@ export default function VisualEditor() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden" style={{ background: '#0A0A0A' }}>
+    <div className="h-screen w-screen flex flex-col overflow-hidden" style={{ background: '#000000' }}>
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
         <title>Visual Editor — RetentionFirm Studio</title>
       </Helmet>
 
       {/* Top bar */}
-      <header className="flex items-center justify-between px-4 h-14 border-b shrink-0" style={{ background: '#0A0A0A', borderColor: '#1a1a1a', color: '#f1ece4' }}>
+      <header className="flex items-center justify-between px-4 h-14 border-b shrink-0" style={{ background: '#000000', borderColor: '#1a1a1a', color: '#FFFFFF' }}>
         <div className="flex items-center gap-3 min-w-0">
           <Link to="/studio" className="p-2 rounded hover:bg-white/5" title="Back to Studio">
             <ArrowLeft size={16} />
           </Link>
           <div className="font-outfit font-semibold text-sm truncate">
-            Retention<span style={{ color: '#F97316' }}>.</span>Visual
+            Retention<span style={{ color: '#00D4FF' }}>.</span>Visual
           </div>
           <select
             value={pageId || ''}
             onChange={(e) => setPageId(e.target.value)}
             className="hidden md:block ml-2 px-2 py-1 rounded-md text-xs font-inter"
-            style={{ background: '#1a1a1a', color: '#f1ece4', border: '1px solid #2a2a2a' }}
+            style={{ background: '#1a1a1a', color: '#FFFFFF', border: '1px solid #2a2a2a' }}
           >
             {pages.map((p) => <option key={p.id} value={p.id}>{p.title || p.path}</option>)}
           </select>
@@ -223,7 +223,7 @@ export default function VisualEditor() {
                 key={d}
                 onClick={() => setDevice(d)}
                 className="px-2.5 py-1.5"
-                style={{ background: device === d ? '#F97316' : 'transparent', color: device === d ? '#0A0A0A' : '#f1ece4' }}
+                style={{ background: device === d ? '#00D4FF' : 'transparent', color: device === d ? '#000000' : '#FFFFFF' }}
                 title={d}
               >
                 {d === 'desktop' ? <Monitor size={13} /> : d === 'tablet' ? <Tablet size={13} /> : <Smartphone size={13} />}
@@ -238,7 +238,7 @@ export default function VisualEditor() {
           <button onClick={() => setReloadKey((k) => k + 1)} title="Refresh preview" className="p-2 rounded hover:bg-white/5"><RefreshCw size={14} /></button>
 
           {/* Save state */}
-          <div className="hidden sm:flex items-center gap-1.5 px-2 text-[11px] font-inter" style={{ color: 'rgba(241,236,228,0.6)' }}>
+          <div className="hidden sm:flex items-center gap-1.5 px-2 text-[11px] font-inter" style={{ color: 'rgba(255,255,255,0.6)' }}>
             {saveState === 'saving' && (<><Loader2 size={12} className="animate-spin" /> Saving…</>)}
             {saveState === 'saved' && (<><Check size={12} color="#10B981" /> Saved</>)}
             {saveState === 'idle' && <span>Autosave on</span>}
@@ -250,7 +250,7 @@ export default function VisualEditor() {
             <button
               onClick={publishNow}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-inter text-xs font-semibold"
-              style={{ background: '#F97316', color: '#0A0A0A' }}
+              style={{ background: '#00D4FF', color: '#000000' }}
             >
               <Upload size={12} /> Publish
             </button>
@@ -312,7 +312,7 @@ export default function VisualEditor() {
           ) : (
             <div className="p-6 text-center">
               <div className="mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ background: '#fff7ed' }}>
-                <Save size={18} color="#F97316" />
+                <Save size={18} color="#00D4FF" />
               </div>
               <h3 className="font-outfit text-base font-medium mb-1">Select a section</h3>
               <p className="font-inter text-xs text-gray-500">

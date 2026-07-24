@@ -104,7 +104,7 @@ export const SECTIONS: Record<string, SectionDef> = {
         { text: 'Converts first-time buyers into repeat customers', color: '#10B981' },
         { text: 'Increases average order value (AOV)', color: '#F59E0B' },
         { text: 'Maximizes customer lifetime value (LTV)', color: '#4169E1' },
-        { text: "Builds loyalty that competitors can't steal", color: '#F97316' },
+        { text: "Builds loyalty that competitors can't steal", color: '#00D4FF' },
       ],
       closer_prefix: '→ Your customers stop being one-time transactions… and start becoming',
       closer_highlight: 'long-term revenue assets.',
@@ -130,7 +130,7 @@ export const SECTIONS: Record<string, SectionDef> = {
       headline: 'Everything You Need to Turn Customers Into Revenue',
       intro: 'From infrastructure to loyalty — every service is engineered to maximize lifetime value and reduce churn.',
       services: [
-        { number: '01', title: 'Retention Infrastructure Setup', items: 'Email + SMS system, CRM & segmentation, Tracking & analytics', accent: '#F97316' },
+        { number: '01', title: 'Retention Infrastructure Setup', items: 'Email + SMS system, CRM & segmentation, Tracking & analytics', accent: '#00D4FF' },
         { number: '02', title: 'Lifecycle Marketing Systems', items: 'Welcome flows, Post-purchase flows, Abandonment recovery, Re-engagement', accent: '#2C91E1' },
         { number: '03', title: 'Revenue Optimization', items: 'Upsells & cross-sells, Offer strategy, AOV boosters, Subscription models', accent: '#10B981' },
         { number: '04', title: 'Personalization & Segmentation', items: 'Behavior targeting, Customer segmentation, Dynamic messaging', accent: '#F59E0B' },
@@ -160,7 +160,7 @@ export const SECTIONS: Record<string, SectionDef> = {
       outcomes: [
         { text: 'More repeat purchases', icon: '↑', color: '#10B981' },
         { text: 'Higher customer lifetime value', icon: '◆', color: '#F59E0B' },
-        { text: 'Increased profitability', icon: '●', color: '#F97316' },
+        { text: 'Increased profitability', icon: '●', color: '#00D4FF' },
         { text: 'Less dependence on ads', icon: '→', color: '#2C91E1' },
         { text: 'Predictable, scalable growth', icon: '★', color: '#D4A853' },
       ],
@@ -211,7 +211,7 @@ export const SECTIONS: Record<string, SectionDef> = {
       headline: 'How We Work',
       image: '/assets/sections/process.jpg',
       steps: [
-        { number: '01', title: 'Growth Audit', description: 'We dig into your data to find exactly where revenue is slipping through the cracks.', deliverables: 'Revenue leak analysis, Customer journey mapping, Competitor benchmarking, 30-day action plan', accent: '#F97316' },
+        { number: '01', title: 'Growth Audit', description: 'We dig into your data to find exactly where revenue is slipping through the cracks.', deliverables: 'Revenue leak analysis, Customer journey mapping, Competitor benchmarking, 30-day action plan', accent: '#00D4FF' },
         { number: '02', title: 'System Build', description: 'We architect and deploy your complete retention engine — flows, segments, and automations.', deliverables: 'Email & SMS buildout, Segmentation architecture, Tech stack integration, QA & launch', accent: '#2C91E1' },
         { number: '03', title: 'Optimization', description: 'We test, iterate, and scale what works — turning retention into your most profitable channel.', deliverables: 'A/B testing cadence, Performance reporting, Strategy refinement, Revenue scaling', accent: '#10B981' },
       ],
@@ -273,8 +273,8 @@ export const SECTIONS: Record<string, SectionDef> = {
     defaults: {
       title: '',
       body_html: '<p>New rich text block. Click edit to customise.</p>',
-      background: '#f1ece4',
-      text_color: '#0A0A0A',
+      background: '#FFFFFF',
+      text_color: '#000000',
     },
   },
 };

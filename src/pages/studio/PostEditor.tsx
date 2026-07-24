@@ -241,8 +241,8 @@ export default function PostEditor() {
           <ArrowLeft size={14} /> Posts
         </Link>
         <div className="flex flex-wrap items-center gap-2">
-          <button onClick={() => ai.openPanel()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-            <Sparkles size={12} color="#F97316" /> Ask AI
+          <button onClick={() => ai.openPanel()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#000000', color: '#000000' }}>
+            <Sparkles size={12} color="#00D4FF" /> Ask AI
           </button>
 
           {p.status === 'published' && p.slug && (
@@ -250,13 +250,13 @@ export default function PostEditor() {
               View live <ExternalLink size={12} />
             </a>
           )}
-          <button onClick={() => save()} disabled={saving} className="px-4 py-2 rounded-md font-inter text-sm border" style={{ borderColor: '#0A0A0A', color: '#0A0A0A', background: 'transparent' }}>
+          <button onClick={() => save()} disabled={saving} className="px-4 py-2 rounded-md font-inter text-sm border" style={{ borderColor: '#000000', color: '#000000', background: 'transparent' }}>
             {saving ? '…' : 'Save draft'}
           </button>
           {p.status === 'published' ? (
-            <button onClick={handleUnpublish} className="px-4 py-2 rounded-md font-inter text-sm" style={{ background: '#0A0A0A', color: '#f1ece4' }}>Unpublish</button>
+            <button onClick={handleUnpublish} className="px-4 py-2 rounded-md font-inter text-sm" style={{ background: '#000000', color: '#FFFFFF' }}>Unpublish</button>
           ) : (
-            <button onClick={handlePublish} className="px-4 py-2 rounded-md font-inter text-sm font-medium" style={{ background: '#F97316', color: '#0A0A0A' }}>
+            <button onClick={handlePublish} className="px-4 py-2 rounded-md font-inter text-sm font-medium" style={{ background: '#00D4FF', color: '#000000' }}>
               Publish
             </button>
           )}
@@ -268,7 +268,7 @@ export default function PostEditor() {
         {(['content', 'seo', 'settings'] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)}
             className="px-4 py-2.5 font-inter text-sm capitalize border-b-2 -mb-px"
-            style={{ borderColor: tab === t ? '#0A0A0A' : 'transparent', color: tab === t ? '#0A0A0A' : '#888', fontWeight: tab === t ? 600 : 400 }}>
+            style={{ borderColor: tab === t ? '#000000' : 'transparent', color: tab === t ? '#000000' : '#888', fontWeight: tab === t ? 600 : 400 }}>
             {t}
           </button>
         ))}
@@ -278,7 +278,7 @@ export default function PostEditor() {
         <div className="space-y-5">
           <input value={p.title} onChange={(e) => setP({ ...p, title: e.target.value })} placeholder="Post title"
             className="w-full font-outfit font-medium bg-transparent focus:outline-none"
-            style={{ fontSize: 'clamp(28px, 4vw, 40px)', color: '#0A0A0A', letterSpacing: '-0.02em' }} />
+            style={{ fontSize: 'clamp(28px, 4vw, 40px)', color: '#000000', letterSpacing: '-0.02em' }} />
           <textarea value={p.excerpt} onChange={(e) => setP({ ...p, excerpt: e.target.value })} placeholder="Excerpt (1–2 sentences shown on listings)"
             rows={2}
             className="w-full px-0 font-inter text-base bg-transparent focus:outline-none resize-none"
@@ -290,7 +290,7 @@ export default function PostEditor() {
       {tab === 'seo' && (
         <div className="space-y-5 max-w-2xl">
           <div className="rounded-xl p-5" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-            <h3 className="font-outfit font-medium mb-3" style={{ color: '#0A0A0A' }}>SEO checklist</h3>
+            <h3 className="font-outfit font-medium mb-3" style={{ color: '#000000' }}>SEO checklist</h3>
             <ul className="space-y-2">
               {checklist.map((c) => (
                 <li key={c.id} className="flex items-start gap-2 font-inter text-sm">
@@ -376,7 +376,7 @@ export default function PostEditor() {
       {showChecklist && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowChecklist(false)}>
           <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-outfit font-medium text-xl mb-2" style={{ color: '#0A0A0A' }}>Pre-publish checklist</h3>
+            <h3 className="font-outfit font-medium text-xl mb-2" style={{ color: '#000000' }}>Pre-publish checklist</h3>
             <p className="font-inter text-sm mb-5" style={{ color: '#666' }}>Resolve these before publishing:</p>
             <ul className="space-y-3 mb-6">
               {checklist.map((c) => (
@@ -388,7 +388,7 @@ export default function PostEditor() {
             </ul>
             <div className="flex gap-2 justify-end">
               <button onClick={() => setShowChecklist(false)} className="px-4 py-2 rounded-md font-inter text-sm border" style={{ borderColor: '#E2DDD3' }}>Close</button>
-              <button onClick={() => { setShowChecklist(false); setTab('seo'); }} className="px-4 py-2 rounded-md font-inter text-sm" style={{ background: '#0A0A0A', color: '#f1ece4' }}>Fix in SEO tab</button>
+              <button onClick={() => { setShowChecklist(false); setTab('seo'); }} className="px-4 py-2 rounded-md font-inter text-sm" style={{ background: '#000000', color: '#FFFFFF' }}>Fix in SEO tab</button>
             </div>
           </div>
         </div>

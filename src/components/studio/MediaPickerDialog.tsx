@@ -52,7 +52,7 @@ export default function MediaPickerDialog({ open, onClose, onPick }: { open: boo
         <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: '#E2DDD3' }}>
           <h3 className="font-outfit font-medium text-lg">Pick media</h3>
           <div className="flex items-center gap-2">
-            <label className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-inter text-sm cursor-pointer" style={{ background: '#0A0A0A', color: '#fff' }}>
+            <label className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-inter text-sm cursor-pointer" style={{ background: '#000000', color: '#fff' }}>
               <Upload size={14} /> {uploading ? 'Uploading…' : 'Upload'}
               <input type="file" accept="image/*,video/*" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
             </label>

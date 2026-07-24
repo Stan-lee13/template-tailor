@@ -41,16 +41,16 @@ export default function StudioLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#f1ece4' }}>
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#FFFFFF' }}>
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
         <title>Studio Login</title>
       </Helmet>
       <div className="w-full max-w-md rounded-2xl p-8 sm:p-10" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-        <Link to="/" className="font-outfit text-2xl font-semibold inline-block mb-1" style={{ color: '#0A0A0A' }}>
-          Retention<span style={{ color: '#F97316' }}>.</span>
+        <Link to="/" className="font-outfit text-2xl font-semibold inline-block mb-1" style={{ color: '#000000' }}>
+          Retention<span style={{ color: '#00D4FF' }}>.</span>
         </Link>
-        <h1 className="font-outfit font-medium text-2xl mt-2 mb-1" style={{ color: '#0A0A0A', letterSpacing: '-0.01em' }}>
+        <h1 className="font-outfit font-medium text-2xl mt-2 mb-1" style={{ color: '#000000', letterSpacing: '-0.01em' }}>
           {mode === 'signin' ? 'Sign in to Studio' : 'Create an account'}
         </h1>
         <p className="font-inter text-sm mb-6" style={{ color: '#666' }}>
@@ -71,7 +71,7 @@ export default function StudioLogin() {
           </div>
           <button type="submit" disabled={loading}
             className="w-full py-3 rounded-md font-inter font-medium text-sm transition-opacity disabled:opacity-50"
-            style={{ background: '#0A0A0A', color: '#f1ece4' }}>
+            style={{ background: '#000000', color: '#FFFFFF' }}>
             {loading ? '…' : mode === 'signin' ? 'Sign in' : 'Create account'}
           </button>
         </form>

@@ -78,10 +78,10 @@ export default function AIAssistant() {
       <button
         onClick={() => setOpen(true)}
         className="fixed bottom-5 right-5 z-40 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg font-inter text-sm font-medium transition-transform hover:scale-105"
-        style={{ background: '#0A0A0A', color: '#f1ece4' }}
+        style={{ background: '#000000', color: '#FFFFFF' }}
         aria-label="Open AI assistant"
       >
-        <Sparkles size={16} color="#F97316" />
+        <Sparkles size={16} color="#00D4FF" />
         Assistant
       </button>
     );
@@ -91,12 +91,12 @@ export default function AIAssistant() {
     <div className="fixed inset-0 z-50 flex justify-end pointer-events-none">
       <div className="pointer-events-auto flex flex-col w-full sm:w-[420px] h-full shadow-2xl" style={{ background: '#fff', borderLeft: '1px solid #E2DDD3' }}>
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: '#E2DDD3', background: '#0A0A0A' }}>
+        <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: '#E2DDD3', background: '#000000' }}>
           <div className="flex items-center gap-2">
-            <Sparkles size={16} color="#F97316" />
-            <h3 className="font-outfit font-medium text-base" style={{ color: '#f1ece4' }}>Editorial assistant</h3>
+            <Sparkles size={16} color="#00D4FF" />
+            <h3 className="font-outfit font-medium text-base" style={{ color: '#FFFFFF' }}>Editorial assistant</h3>
           </div>
-          <button onClick={() => setOpen(false)} aria-label="Close"><X size={18} color="#f1ece4" /></button>
+          <button onClick={() => setOpen(false)} aria-label="Close"><X size={18} color="#FFFFFF" /></button>
         </div>
 
         {/* Context bar */}
@@ -104,7 +104,7 @@ export default function AIAssistant() {
           <div className="px-5 py-2.5 border-b flex items-center justify-between text-xs font-inter" style={{ borderColor: '#E2DDD3', background: '#f8f5ee' }}>
             <span className="truncate" style={{ color: '#555' }}>
               <span style={{ color: '#888' }}>Working on: </span>
-              <strong style={{ color: '#0A0A0A' }}>{context.title || 'Untitled'}</strong>
+              <strong style={{ color: '#000000' }}>{context.title || 'Untitled'}</strong>
               {context.focusKeyword && <span style={{ color: '#888' }}> · {context.focusKeyword}</span>}
             </span>
             <label className="flex items-center gap-1.5 shrink-0 ml-2" title="Allow assistant to insert / apply into fields">
@@ -133,7 +133,7 @@ export default function AIAssistant() {
           {messages.map((m, i) => (
             <div key={i} className="text-sm font-inter">
               {m.role === 'user' ? (
-                <div className="flex justify-end"><div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-br-sm" style={{ background: '#0A0A0A', color: '#f1ece4' }}>{m.content}</div></div>
+                <div className="flex justify-end"><div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-br-sm" style={{ background: '#000000', color: '#FFFFFF' }}>{m.content}</div></div>
               ) : (
                 <div>
                   <div className="prose prose-sm max-w-none prose-neutral prose-headings:font-outfit prose-headings:font-medium prose-p:my-2 prose-headings:mt-3 prose-headings:mb-2">
@@ -145,7 +145,7 @@ export default function AIAssistant() {
                     </button>
                     {allowInsert && context && (
                       <>
-                        <button onClick={() => insert(m.content)} className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]" style={{ background: '#F97316', color: '#0A0A0A' }}>
+                        <button onClick={() => insert(m.content)} className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]" style={{ background: '#00D4FF', color: '#000000' }}>
                           <Plus size={11} /> Insert into post
                         </button>
                         {(() => {
@@ -187,7 +187,7 @@ export default function AIAssistant() {
             className="flex-1 resize-none px-3 py-2 rounded-md border font-inter text-sm focus:outline-none focus:border-black"
             style={{ borderColor: '#E2DDD3', background: '#fff' }}
           />
-          <button type="submit" disabled={loading || !input.trim()} className="p-2.5 rounded-md disabled:opacity-40" style={{ background: '#0A0A0A', color: '#f1ece4' }} aria-label="Send">
+          <button type="submit" disabled={loading || !input.trim()} className="p-2.5 rounded-md disabled:opacity-40" style={{ background: '#000000', color: '#FFFFFF' }} aria-label="Send">
             <Send size={16} />
           </button>
         </form>

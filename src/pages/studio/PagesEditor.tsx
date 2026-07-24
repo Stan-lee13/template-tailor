@@ -67,10 +67,10 @@ export default function PagesEditor() {
     <StudioLayout>
       <div className="flex items-start justify-between mb-6 gap-4">
         <div>
-          <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#0A0A0A', letterSpacing: '-0.02em' }}>Pages</h1>
+          <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Pages</h1>
           <p className="font-inter text-sm" style={{ color: '#666' }}>SEO metadata for every route on the site.</p>
         </div>
-        <button onClick={createPage} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-inter text-sm font-medium" style={{ background: '#F97316', color: '#0A0A0A' }}>
+        <button onClick={createPage} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-inter text-sm font-medium" style={{ background: '#00D4FF', color: '#000000' }}>
           <Plus size={16} /> New page
         </button>
       </div>
@@ -100,7 +100,7 @@ export default function PagesEditor() {
               </div>
               <div className="flex gap-2">
                 <button onClick={() => remove(selected)} className="p-2 rounded hover:bg-red-50"><Trash2 size={16} color="#dc2626" /></button>
-                <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 px-3 py-2 rounded-md font-inter text-sm font-medium disabled:opacity-50" style={{ background: '#F97316', color: '#0A0A0A' }}><Save size={14} />{saving ? '…' : 'Save'}</button>
+                <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 px-3 py-2 rounded-md font-inter text-sm font-medium disabled:opacity-50" style={{ background: '#00D4FF', color: '#000000' }}><Save size={14} />{saving ? '…' : 'Save'}</button>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

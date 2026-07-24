@@ -78,8 +78,8 @@ function Group({ location, title, items, reload }: { location: string; title: st
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-outfit font-medium">{title}</h3>
         <div className="flex gap-2">
-          <button onClick={addRow} className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded font-inter text-xs" style={{ background: '#0A0A0A', color: '#f1ece4' }}><Plus size={12} /> Add</button>
-          <button onClick={saveAll} disabled={saving} className="px-2.5 py-1.5 rounded font-inter text-xs font-medium disabled:opacity-50" style={{ background: '#F97316', color: '#0A0A0A' }}>{saving ? 'Saving…' : 'Save order'}</button>
+          <button onClick={addRow} className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded font-inter text-xs" style={{ background: '#000000', color: '#FFFFFF' }}><Plus size={12} /> Add</button>
+          <button onClick={saveAll} disabled={saving} className="px-2.5 py-1.5 rounded font-inter text-xs font-medium disabled:opacity-50" style={{ background: '#00D4FF', color: '#000000' }}>{saving ? 'Saving…' : 'Save order'}</button>
         </div>
       </div>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
@@ -111,7 +111,7 @@ export default function NavigationEditor() {
   return (
     <StudioLayout>
       <div className="mb-6">
-        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#0A0A0A', letterSpacing: '-0.02em' }}>Navigation</h1>
+        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Navigation</h1>
         <p className="font-inter text-sm" style={{ color: '#666' }}>Manage header and footer menus. Drag to reorder, then save.</p>
       </div>
       {loading ? <p className="font-inter text-sm">Loading…</p> : (

@@ -11,11 +11,11 @@ export default function SocialProofTicker() {
   const doubled = [...items, ...items];
 
   return (
-    <div className="relative overflow-hidden" style={{ background: '#0A0A0A', borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)', padding: '14px 0' }}>
+    <div className="relative overflow-hidden" style={{ background: '#000000', borderTop: '1px solid rgba(0,212,255,0.06)', borderBottom: '1px solid rgba(0,212,255,0.06)', padding: '14px 0' }}>
       <div className="ticker-track flex items-center gap-12 whitespace-nowrap">
         {doubled.map((item, i) => (
-          <span key={i} className="font-inter flex items-center gap-3" style={{ fontSize: '13px', color: 'rgba(241,236,228,0.4)', letterSpacing: '0.01em' }}>
-            <span style={{ color: '#F97316', fontSize: '6px' }}>●</span>
+          <span key={i} className="font-inter flex items-center gap-3" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.01em' }}>
+            <span style={{ color: '#00D4FF', fontSize: '6px' }}>●</span>
             {item}
           </span>
         ))}

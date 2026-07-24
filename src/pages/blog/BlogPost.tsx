@@ -46,7 +46,7 @@ export default function BlogPost() {
     })();
   }, [slug]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: '#f1ece4' }}><p className="font-inter text-sm" style={{ color: '#666' }}>Loading…</p></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}><p className="font-inter text-sm" style={{ color: '#666' }}>Loading…</p></div>;
   if (!post) return <NotFound />;
 
   const ld = post.schema_jsonld || {
@@ -59,7 +59,7 @@ export default function BlogPost() {
   };
 
   return (
-    <div style={{ background: '#f1ece4', minHeight: '100vh' }}>
+    <div style={{ background: '#FFFFFF', minHeight: '100vh' }}>
       <SEO
         title={post.meta_title || post.title}
         description={post.meta_description || post.excerpt || ''}
@@ -73,15 +73,15 @@ export default function BlogPost() {
       <main style={{ padding: '140px clamp(20px, 5vw, 80px) 80px' }}>
         <article className="mx-auto" style={{ maxWidth: '780px' }}>
           <p className="font-inter mb-3" style={{ fontSize: '12px', color: '#888', letterSpacing: '0.04em' }}>{fmt(post.published_at)}</p>
-          <h1 className="font-outfit font-medium mb-5" style={{ fontSize: 'clamp(32px, 5vw, 56px)', color: '#0A0A0A', lineHeight: 1.05, letterSpacing: '-0.02em' }}>{post.title}</h1>
+          <h1 className="font-outfit font-medium mb-5" style={{ fontSize: 'clamp(32px, 5vw, 56px)', color: '#000000', lineHeight: 1.05, letterSpacing: '-0.02em' }}>{post.title}</h1>
           {post.excerpt && <p className="font-inter mb-8" style={{ fontSize: 'clamp(17px, 2vw, 20px)', color: '#444', lineHeight: 1.5 }}>{post.excerpt}</p>}
           {post.featured_image_url && (
-            <div className="rounded-2xl overflow-hidden mb-10" style={{ background: '#0A0A0A' }}>
+            <div className="rounded-2xl overflow-hidden mb-10" style={{ background: '#000000' }}>
               <SignedImage path={post.featured_image_url} alt={post.featured_image_alt || ''} className="w-full h-auto" />
             </div>
           )}
           <div
-            className="prose prose-neutral prose-lg max-w-none font-inter prose-headings:font-outfit prose-headings:font-medium prose-a:text-[#F97316] prose-a:no-underline hover:prose-a:underline"
+            className="prose prose-neutral prose-lg max-w-none font-inter prose-headings:font-outfit prose-headings:font-medium prose-a:text-[#00D4FF] prose-a:no-underline hover:prose-a:underline"
             style={{ color: '#1f1f1f' }}
             dangerouslySetInnerHTML={{ __html: post.content_html }}
           />

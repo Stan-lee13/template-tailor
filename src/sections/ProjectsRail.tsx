@@ -50,18 +50,18 @@ export default function ProjectsRail() {
   if (projects.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative" style={{ background: '#0a0f1a', padding: '12vh clamp(20px, 5vw, 80px)' }}>
+    <section ref={ref} className="relative" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px)' }}>
       <div className="max-w-[1280px] mx-auto">
         <div className="flex items-end justify-between gap-6 mb-10 sm:mb-14 flex-wrap">
           <div>
-            <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#94A3B8', letterSpacing: '0.04em' }}>
-              <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;Recent Work
+            <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>
+              <span style={{ color: '#00D4FF' }}>●</span>&nbsp;&nbsp;Recent Work
             </span>
-            <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 0.95, color: '#F8FAFC', letterSpacing: '-0.02em' }}>
+            <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
               Case Studies & Insights
             </h2>
           </div>
-          <Link to="/blog" className="font-inter font-medium text-sm story-link" style={{ color: '#F8FAFC' }}>View all →</Link>
+          <Link to="/blog" className="font-inter font-medium text-sm story-link" style={{ color: '#00D4FF' }}>View all →</Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-5" style={{ gridAutoRows: 'minmax(220px, auto)' }}>
@@ -74,7 +74,7 @@ export default function ProjectsRail() {
                 key={p.id}
                 to={`/blog/${p.slug}`}
                 className={`proj-card group relative overflow-hidden rounded-3xl ${span}`}
-                style={{ opacity: 0, background: '#111827', border: '1px solid rgba(255,255,255,0.08)', minHeight: 240 }}
+                style={{ opacity: 0, background: 'rgba(26,32,53,0.5)', border: '1px solid rgba(0,212,255,0.06)', minHeight: 240 }}
               >
                 {p.featured_image_url && (
                   <img
@@ -84,11 +84,11 @@ export default function ProjectsRail() {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
                   />
                 )}
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,33,63,0.15) 0%, rgba(4,33,63,0.85) 100%)' }} />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%)' }} />
                 <div className="relative h-full flex flex-col justify-end p-6 sm:p-8">
-                  <h3 className="font-outfit font-medium mb-2" style={{ fontSize: 'clamp(18px, 2.5vw, 26px)', lineHeight: 1.15, color: '#f1ece4', letterSpacing: '-0.01em' }}>{p.title}</h3>
+                  <h3 className="font-outfit font-medium mb-2" style={{ fontSize: 'clamp(18px, 2.5vw, 26px)', lineHeight: 1.15, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{p.title}</h3>
                   {p.excerpt && (
-                    <p className="font-inter line-clamp-2" style={{ fontSize: '14px', color: 'rgba(241,236,228,0.72)', lineHeight: 1.55 }}>{p.excerpt}</p>
+                    <p className="font-inter line-clamp-2" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.55 }}>{p.excerpt}</p>
                   )}
                 </div>
               </Link>

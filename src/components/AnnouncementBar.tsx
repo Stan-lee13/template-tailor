@@ -7,11 +7,11 @@ export default function AnnouncementBar() {
   const [dismissed, setDismissed] = useState(false);
   const a = data?.announcement;
   if (!a?.enabled || !a.text || dismissed) return null;
-  const bg = a.variant === 'promo' ? '#F97316' : a.variant === 'warning' ? '#dc2626' : '#0A0A0A';
+  const bg = a.variant === 'promo' ? '#00D4FF' : a.variant === 'warning' ? '#dc2626' : '#000000';
   const Wrapper = ({ children }: any) =>
     a.href ? <a href={a.href} className="block">{children}</a> : <div>{children}</div>;
   return (
-    <div style={{ background: bg, color: '#f1ece4' }} className="relative z-[60] font-inter text-xs sm:text-sm">
+    <div style={{ background: bg, color: '#FFFFFF' }} className="relative z-[60] font-inter text-xs sm:text-sm">
       <div className="max-w-[1200px] mx-auto flex items-center justify-center gap-3 px-4 py-2 text-center">
         <Wrapper>
           <span>{a.text}</span>

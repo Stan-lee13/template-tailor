@@ -69,12 +69,12 @@ export default function MediaLibrary() {
     <StudioLayout>
       <div className="flex items-start justify-between mb-6 gap-4">
         <div>
-          <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#0A0A0A', letterSpacing: '-0.02em' }}>Media library</h1>
+          <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Media library</h1>
           <p className="font-inter text-sm" style={{ color: '#666' }}>{assets.length} files</p>
         </div>
         <div>
           <input ref={inputRef} type="file" multiple hidden onChange={(e) => upload(e.target.files)} />
-          <button onClick={() => inputRef.current?.click()} disabled={uploading} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-inter text-sm font-medium disabled:opacity-50" style={{ background: '#F97316', color: '#0A0A0A' }}>
+          <button onClick={() => inputRef.current?.click()} disabled={uploading} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-inter text-sm font-medium disabled:opacity-50" style={{ background: '#00D4FF', color: '#000000' }}>
             <Upload size={16} /> {uploading ? 'Uploading…' : 'Upload files'}
           </button>
         </div>
@@ -97,10 +97,10 @@ export default function MediaLibrary() {
                       <span className="font-inter text-xs" style={{ color: '#888' }}>{a.mime || 'file'}</span>}
                   </div>
                   <div className="p-2.5">
-                    <p className="font-inter text-xs truncate" style={{ color: '#0A0A0A' }} title={a.filename}>{a.filename}</p>
+                    <p className="font-inter text-xs truncate" style={{ color: '#000000' }} title={a.filename}>{a.filename}</p>
                     <p className="font-inter text-[10px]" style={{ color: '#888' }}>{a.size_bytes ? `${Math.round(a.size_bytes / 1024)} KB` : ''}</p>
                     <div className="flex gap-1 mt-2">
-                      <button onClick={() => url && copy(a.id, url)} className="flex-1 inline-flex items-center justify-center gap-1 py-1 rounded text-[11px] font-inter" style={{ background: '#f1ece4', color: '#0A0A0A' }}>
+                      <button onClick={() => url && copy(a.id, url)} className="flex-1 inline-flex items-center justify-center gap-1 py-1 rounded text-[11px] font-inter" style={{ background: '#FFFFFF', color: '#000000' }}>
                         {copiedId === a.id ? <><Check size={10} /> Copied</> : <><Copy size={10} /> Copy URL</>}
                       </button>
                       <button onClick={() => remove(a)} className="p-1 rounded hover:bg-red-50"><Trash2 size={12} color="#dc2626" /></button>

@@ -6,7 +6,7 @@ interface DividerProps {
   className?: string;
 }
 
-export default function SectionDivider({ variant, fromColor = '#f1ece4', toColor = '#0A0A0A', flip = false, className = '' }: DividerProps) {
+export default function SectionDivider({ variant, fromColor = '#FFFFFF', toColor = '#000000', flip = false, className = '' }: DividerProps) {
   const transform = flip ? 'scaleY(-1)' : undefined;
 
   switch (variant) {
@@ -27,8 +27,8 @@ export default function SectionDivider({ variant, fromColor = '#f1ece4', toColor
             <polygon points="0,0 1440,0 1440,20 0,80" fill={fromColor} />
             <polygon points="0,80 1440,20 1440,80" fill={toColor} />
           </svg>
-          {/* Decorative accent line */}
-          <div className="absolute top-1/2 left-[15%] w-[120px] h-[2px] -translate-y-1/2" style={{ background: 'linear-gradient(90deg, transparent, #F97316, transparent)', opacity: 0.5, transform: `rotate(-3deg) ${flip ? 'scaleY(-1)' : ''}` }} />
+          {/* Cyan accent line */}
+          <div className="absolute top-1/2 left-[15%] w-[120px] h-[2px] -translate-y-1/2" style={{ background: 'linear-gradient(90deg, transparent, #00D4FF, transparent)', opacity: 0.4, transform: `rotate(-3deg) ${flip ? 'scaleY(-1)' : ''}` }} />
         </div>
       );
 
@@ -49,9 +49,8 @@ export default function SectionDivider({ variant, fromColor = '#f1ece4', toColor
             <polygon points="0,0 1440,0 1440,30 0,100" fill={fromColor} />
             <polygon points="0,100 1440,30 1440,100" fill={toColor} />
           </svg>
-          {/* Floating decorative element */}
-          <div className="absolute top-1/3 right-[10%] w-4 h-4 rounded-full" style={{ background: 'rgba(249,115,22,0.15)', filter: 'blur(8px)' }} />
-          <div className="absolute top-1/2 right-[20%] w-2 h-2 rounded-sm" style={{ background: 'rgba(30,64,175,0.2)', transform: 'rotate(45deg)' }} />
+          {/* Cyan floating dot */}
+          <div className="absolute top-1/3 right-[10%] w-3 h-3 rounded-full" style={{ background: 'rgba(0,212,255,0.3)', filter: 'blur(6px)' }} />
         </div>
       );
 
@@ -62,7 +61,8 @@ export default function SectionDivider({ variant, fromColor = '#f1ece4', toColor
             <path d={`M0,0 L0,80 Q200,40 500,70 Q800,100 1100,50 Q1300,30 1440,60 L1440,0 Z`} fill={fromColor} />
             <path d={`M0,80 Q200,40 500,70 Q800,100 1100,50 Q1300,30 1440,60 L1440,120 L0,120 Z`} fill={toColor} />
           </svg>
-          <div className="absolute bottom-[30%] left-[8%] w-[80px] h-[3px]" style={{ background: 'linear-gradient(90deg, #10B981, transparent)', opacity: 0.4, transform: 'rotate(-2deg)' }} />
+          {/* Cyan accent line */}
+          <div className="absolute bottom-[30%] left-[8%] w-[80px] h-[2px]" style={{ background: 'linear-gradient(90deg, #00D4FF, transparent)', opacity: 0.3, transform: 'rotate(-2deg)' }} />
         </div>
       );
 
