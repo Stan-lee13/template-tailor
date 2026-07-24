@@ -83,23 +83,23 @@ const Index = () => {
       <main>
         <Hero />
         <SocialProofTicker />
-        <SectionDivider variant="angle" fromColor="#0A0A0A" toColor="#0A0A0A" />
+        <SectionDivider variant="angle" fromColor="#0a0f1a" toColor="#0a0f1a" />
         <ProblemSection />
         <Suspense fallback={<div style={{ minHeight: '50vh' }} />}>
-          <SectionDivider variant="wave" fromColor="#0A0A0A" toColor="#f1ece4" />
+          <SectionDivider variant="wave" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <SolutionSection />
-          <SectionDivider variant="asymmetric" fromColor="#f1ece4" toColor="#f1ece4" />
+          <SectionDivider variant="asymmetric" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <Services />
-          <SectionDivider variant="diagonal" fromColor="#f1ece4" toColor="#f1ece4" />
+          <SectionDivider variant="diagonal" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <Results />
           <ProjectsRail />
-          <SectionDivider variant="curve" fromColor="#f1ece4" toColor="#0A0A0A" />
+          <SectionDivider variant="curve" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <DifferentiationSection />
-          <SectionDivider variant="wave" fromColor="#0A0A0A" toColor="#0A0A0A" />
+          <SectionDivider variant="wave" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <Process />
-          <SectionDivider variant="angle" fromColor="#0A0A0A" toColor="#f1ece4" flip />
+          <SectionDivider variant="angle" fromColor="#0a0f1a" toColor="#0a0f1a" flip />
           <FAQ />
-          <SectionDivider variant="curve" fromColor="#f1ece4" toColor="#0A0A0A" />
+          <SectionDivider variant="curve" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <FinalCTA />
         </Suspense>
       </main>

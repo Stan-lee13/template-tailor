@@ -23,27 +23,27 @@ export default function Results() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="results" className="relative overflow-hidden" style={{ background: '#f1ece4', padding: '12vh clamp(24px, 5vw, 80px)' }}>
+    <section ref={sectionRef} id="results" className="relative overflow-hidden" style={{ background: '#0a0f1a', padding: '12vh clamp(24px, 5vw, 80px)' }}>
       {/* Editorial image backdrop */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <img src={imgSrc} alt="" loading="lazy" width={1600} height={1008} className="absolute inset-0 w-full h-full object-cover" style={{ opacity: 0.08 }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(241,236,228,0.85), rgba(241,236,228,0.98))' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,15,26,0.85), rgba(10,15,26,0.98))' }} />
       </div>
 
       <div className="relative max-w-[1000px] mx-auto">
         <div className="results-head text-center mb-10 sm:mb-16" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '12px', color: '#8A8A8A', letterSpacing: '0.04em' }}>{c.eyebrow}</span>
-          <h2 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 0.95, color: '#0A0A0A', letterSpacing: '-0.02em' }}>{c.headline}</h2>
+          <h2 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 0.95, color: '#F8FAFC', letterSpacing: '-0.02em' }}>{c.headline}</h2>
         </div>
 
         <div className="flex flex-col gap-3 sm:gap-4 max-w-[700px] mx-auto">
           {(c.outcomes || []).map((item, i) => (
             <div key={i} className="result-item flex items-center gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl transition-all duration-300"
-              style={{ opacity: 0, background: '#FFFFFF', border: '1px solid #D6D3CC' }}
+              style={{ opacity: 0, background: '#111827', border: '1px solid rgba(255,255,255,0.08)' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = item.color + '40'; e.currentTarget.style.transform = 'translateX(8px)'; e.currentTarget.style.boxShadow = `0 4px 20px ${item.color}12`; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#D6D3CC'; e.currentTarget.style.transform = 'translateX(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
               <span className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-outfit font-bold" style={{ background: item.color + '10', color: item.color, fontSize: '15px' }}>{item.icon}</span>
-              <span className="font-inter font-medium" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#0A0A0A' }}>{item.text}</span>
+              <span className="font-inter font-medium" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#F8FAFC' }}>{item.text}</span>
             </div>
           ))}
         </div>
