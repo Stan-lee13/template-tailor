@@ -21,14 +21,13 @@ export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
-  const compact = scrolled || !isHome;
   const { data: dbNav } = useNavItems('header');
   const sectionLinks = (dbNav && dbNav.length > 0)
     ? dbNav.map((n) => ({ label: n.label, href: n.href }))
     : defaultLinks;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -59,105 +58,87 @@ export default function Navigation() {
     <>
       <nav
         ref={navRef}
-        className={`fixed z-50 transition-all duration-500 ease-out ${
-          compact
-            ? 'top-3 left-1/2 -translate-x-1/2 w-auto max-w-[900px]'
-            : 'top-0 left-0 right-0 w-full'
+        className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+          scrolled
+            ? 'top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1100px] rounded-full bg-black/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-4 px-8'
+            : 'top-0 left-0 right-0 w-full bg-transparent py-8 px-12'
         }`}
-        style={{
-          background: compact ? 'rgba(0,0,0,0.85)' : 'transparent',
-          backdropFilter: compact ? 'blur(20px)' : 'none',
-          WebkitBackdropFilter: compact ? 'blur(20px)' : 'none',
-          borderRadius: compact ? '9999px' : '0',
-          border: compact ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
-          padding: compact ? '8px 24px' : '0 clamp(16px, 5vw, 80px)',
-          boxShadow: compact ? '0 8px 32px rgba(0,0,0,0.4)' : 'none',
-        }}
       >
-        <div className={`flex items-center ${compact ? 'justify-center gap-6' : 'justify-between h-14 sm:h-16'}`}>
-          <Link to="/" className="inline-flex items-center" aria-label="RetentionFirm home" style={{ display: compact ? 'none' : 'flex' }}>
-            <BrandLogo variant={compact ? 'light' : 'dark'} size="sm" />
+        <div className="flex items-center justify-between">
+          <Link to="/" className="group flex items-center gap-3" aria-label="RetentionFirm home">
+            <BrandLogo variant="dark" size="sm" className="transition-transform duration-500 group-hover:scale-110" />
+            {!scrolled && (
+              <span className="text-white font-black text-xl tracking-tighter hidden sm:block">
+                RETENTION<span className="text-[#00D4FF]">FIRM</span>
+              </span>
+            )}
           </Link>
 
-          <div className={`hidden lg:flex items-center ${compact ? 'gap-5' : 'gap-8'}`}>
+          <div className="hidden lg:flex items-center gap-10">
             {sectionLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleSectionClick(e, link.href)}
-                className="text-sm font-medium transition-all duration-300"
-                style={{ color: compact ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.7)', letterSpacing: '-0.01em' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#00D4FF')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = compact ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.7)')}
+                className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#00D4FF] transition-all duration-300 relative group"
               >
                 {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
             <Link
               to="/blog"
-              className="text-sm font-medium transition-all duration-300"
-              style={{ color: compact ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.7)', letterSpacing: '-0.01em' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#00D4FF')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = compact ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.7)')}
+              className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#00D4FF] transition-all duration-300 relative group"
             >
               Blog
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
             </Link>
           </div>
 
-          <div className={`hidden lg:flex items-center ${compact ? 'gap-4' : 'gap-6'}`}>
+          <div className="flex items-center gap-6">
             <button
               onClick={() => onBook('nav')}
-              className="text-sm font-medium transition-all duration-300"
-              style={{
-                background: 'linear-gradient(135deg, #00D4FF, #0099cc)',
-                color: '#000000',
-                padding: compact ? '8px 20px' : '10px 24px',
-                borderRadius: '9999px',
-                fontWeight: 700,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,212,255,0.35)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              className={`hidden sm:flex items-center justify-center font-black text-[10px] uppercase tracking-widest transition-all duration-500 rounded-full ${
+                scrolled 
+                ? 'bg-[#00D4FF] text-black px-6 py-3 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
+                : 'bg-white/10 text-white px-8 py-4 hover:bg-white hover:text-black'
+              }`}
             >
-              Book a Growth Audit
+              Book Audit
+            </button>
+            
+            <button className="lg:hidden flex flex-col gap-1.5 p-2 group" onClick={() => setMobileOpen(true)} aria-label="Open menu">
+              <span className="block w-6 h-0.5 bg-white transition-all duration-300 group-hover:w-4" />
+              <span className="block w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-6" />
             </button>
           </div>
-
-          <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setMobileOpen(true)} aria-label="Open menu">
-            <span className="block w-5 h-0.5" style={{ background: '#FFFFFF', transition: 'all 0.3s' }} />
-            <span className="block w-5 h-0.5" style={{ background: '#FFFFFF', transition: 'all 0.3s' }} />
-            <span className="block w-5 h-0.5" style={{ background: '#FFFFFF', transition: 'all 0.3s' }} />
-          </button>
         </div>
       </nav>
 
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-6 sm:gap-8"
-          style={{ background: 'rgba(0,0,0,0.98)', backdropFilter: 'blur(20px)' }}
+          className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-black/95 backdrop-blur-3xl"
         >
-          <button className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2" onClick={() => setMobileOpen(false)} aria-label="Close menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2">
-              <line x1="4" y1="4" x2="20" y2="20" /><line x1="20" y1="4" x2="4" y2="20" />
+          <button className="absolute top-10 right-10 p-4 group" onClick={() => setMobileOpen(false)} aria-label="Close menu">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" className="transition-transform duration-500 group-hover:rotate-90">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
-          {sectionLinks.map((link) => (
-            <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="font-outfit text-2xl sm:text-3xl font-medium transition-colors duration-300" style={{ color: '#FFFFFF' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#00D4FF')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#FFFFFF')}
-            >
-              {link.label}
-            </a>
-          ))}
-          <Link to="/blog" onClick={() => setMobileOpen(false)} className="font-outfit text-2xl sm:text-3xl font-medium transition-colors duration-300" style={{ color: '#FFFFFF' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#00D4FF')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = '#FFFFFF')}
-          >
-            Blog
-          </Link>
+          
+          <div className="flex flex-col items-center gap-8">
+            {sectionLinks.map((link) => (
+              <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#00D4FF] transition-all duration-500 tracking-tighter">
+                {link.label}
+              </a>
+            ))}
+            <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#00D4FF] transition-all duration-500 tracking-tighter">
+              Blog
+            </Link>
 
-          <button onClick={() => onBook('mobile_nav')} className="mt-4 text-base font-medium" style={{ background: 'linear-gradient(135deg, #00D4FF, #0099cc)', color: '#000000', padding: '14px 32px', borderRadius: '9999px', fontWeight: 700 }}>
-            Book a Growth Audit
-          </button>
+            <button onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#00D4FF] text-black font-black text-lg uppercase tracking-widest hover:bg-white transition-all duration-500">
+              Book Growth Audit
+            </button>
+          </div>
         </div>
       )}
     </>

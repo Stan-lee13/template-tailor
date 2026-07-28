@@ -20,11 +20,11 @@ export default function Integrations() {
       description="Our retention systems are built on the platforms ecommerce teams already trust."
       intro="We don't sell software. We build the strategy, architecture, and execution inside the platforms you already use."
     >
-      <div className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+      <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
         {partners.map((p) => (
-          <div key={p.name} className="p-5 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid #D6D3CC' }}>
-            <h3 className="font-outfit font-medium" style={{ fontSize: '18px', color: '#000000', marginBottom: 6 }}>{p.name}</h3>
-            <p className="font-inter" style={{ fontSize: '14px', lineHeight: 1.55, color: '#555' }}>{p.desc}</p>
+          <div key={p.name} className="group p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-500 hover:-translate-y-1">
+            <h3 className="text-xl font-black text-white tracking-tight mb-4 group-hover:text-[#00D4FF] transition-colors">{p.name}</h3>
+            <p className="text-sm font-medium leading-relaxed text-white/40">{p.desc}</p>
           </div>
         ))}
       </div>

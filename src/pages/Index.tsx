@@ -80,26 +80,18 @@ const Index = () => {
       <ScrollProgress />
       <StickyCTA />
       <Navigation />
-      <main>
+      <main className="bg-black">
         <Hero />
         <SocialProofTicker />
-        <SectionDivider variant="angle" fromColor="#0a0f1a" toColor="#0a0f1a" />
         <ProblemSection />
-        <Suspense fallback={<div style={{ minHeight: '50vh' }} />}>
-          <SectionDivider variant="wave" fromColor="#0a0f1a" toColor="#0a0f1a" />
+        <Suspense fallback={<div className="min-h-[50vh] bg-black" />}>
           <SolutionSection />
-          <SectionDivider variant="asymmetric" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <Services />
-          <SectionDivider variant="diagonal" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <Results />
           <ProjectsRail />
-          <SectionDivider variant="curve" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <DifferentiationSection />
-          <SectionDivider variant="wave" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <Process />
-          <SectionDivider variant="angle" fromColor="#0a0f1a" toColor="#0a0f1a" flip />
           <FAQ />
-          <SectionDivider variant="curve" fromColor="#0a0f1a" toColor="#0a0f1a" />
           <FinalCTA />
         </Suspense>
       </main>

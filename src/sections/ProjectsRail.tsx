@@ -35,9 +35,9 @@ export default function ProjectsRail() {
     mm.add('(prefers-reduced-motion: no-preference)', () => {
       ScrollTrigger.batch('.proj-card', {
         start: 'top 85%',
-        onEnter: (batch) => gsap.fromTo(batch, { opacity: 0, y: 40, clipPath: 'inset(20% 20% 20% 20% round 24px)' }, {
-          opacity: 1, y: 0, clipPath: 'inset(0% 0% 0% 0% round 24px)',
-          duration: 0.9, stagger: { each: 0.08, from: 'random' }, ease: 'power3.out',
+        onEnter: (batch) => gsap.fromTo(batch, { opacity: 0, scale: 0.9, filter: 'blur(10px)' }, {
+          opacity: 1, scale: 1, filter: 'blur(0px)',
+          duration: 1.2, stagger: 0.1, ease: 'expo.out',
         }),
       });
     });
@@ -50,45 +50,53 @@ export default function ProjectsRail() {
   if (projects.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px)' }}>
-      <div className="max-w-[1280px] mx-auto">
-        <div className="flex items-end justify-between gap-6 mb-10 sm:mb-14 flex-wrap">
-          <div>
-            <span className="block font-inter font-medium uppercase mb-4" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>
-              <span style={{ color: '#00D4FF' }}>●</span>&nbsp;&nbsp;Recent Work
+    <section ref={ref} className="relative bg-black py-24 lg:py-32 px-6 lg:px-20 overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#00D4FF]/5 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-[1300px] mx-auto">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
+          <div className="max-w-2xl">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
+              The Vault
             </span>
-            <h2 className="font-outfit font-medium" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
-              Case Studies & Insights
+            <h2 className="text-4xl lg:text-7xl font-black text-white tracking-tighter leading-none">
+              Case Studies & <span className="text-gradient-cyan">Growth Insights</span>
             </h2>
           </div>
-          <Link to="/blog" className="font-inter font-medium text-sm story-link" style={{ color: '#00D4FF' }}>View all →</Link>
+          <Link to="/blog" className="group flex items-center gap-4 text-white font-black text-sm uppercase tracking-widest">
+            Explore All Work
+            <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-5" style={{ gridAutoRows: 'minmax(220px, auto)' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-8" style={{ gridAutoRows: 'minmax(280px, auto)' }}>
           {projects.map((p, i) => {
-            // Bento layout: alternate spans to create asymmetric grid
             const spans = ['lg:col-span-4 lg:row-span-2', 'lg:col-span-2 lg:row-span-1', 'lg:col-span-2 lg:row-span-1', 'lg:col-span-3', 'lg:col-span-3', 'lg:col-span-6'];
             const span = spans[i % spans.length];
             return (
               <Link
                 key={p.id}
                 to={`/blog/${p.slug}`}
-                className={`proj-card group relative overflow-hidden rounded-3xl ${span}`}
-                style={{ opacity: 0, background: 'rgba(26,32,53,0.5)', border: '1px solid rgba(0,212,255,0.06)', minHeight: 240 }}
+                className={`proj-card group relative overflow-hidden rounded-[2.5rem] ${span} border border-white/10 hover:border-[#00D4FF]/40 transition-all duration-700`}
+                style={{ opacity: 0 }}
               >
                 {p.featured_image_url && (
                   <img
                     src={p.featured_image_url}
                     alt={p.title}
                     loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   />
                 )}
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%)' }} />
-                <div className="relative h-full flex flex-col justify-end p-6 sm:p-8">
-                  <h3 className="font-outfit font-medium mb-2" style={{ fontSize: 'clamp(18px, 2.5vw, 26px)', lineHeight: 1.15, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{p.title}</h3>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-700" />
+                
+                <div className="relative h-full flex flex-col justify-end p-10 lg:p-12">
+                  <h3 className="text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-tight group-hover:text-[#00D4FF] transition-colors duration-500">{p.title}</h3>
                   {p.excerpt && (
-                    <p className="font-inter line-clamp-2" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.55 }}>{p.excerpt}</p>
+                    <p className="text-white/40 font-medium line-clamp-2 leading-relaxed">{p.excerpt}</p>
                   )}
                 </div>
               </Link>

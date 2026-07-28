@@ -41,44 +41,72 @@ export default function StudioLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#FFFFFF' }}>
+    <div className="min-h-screen flex items-center justify-center px-6 bg-black selection:bg-[#00D4FF] selection:text-black">
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
-        <title>Studio Login</title>
+        <title>Studio Login — RetentionFirm</title>
       </Helmet>
-      <div className="w-full max-w-md rounded-2xl p-8 sm:p-10" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-        <Link to="/" className="font-outfit text-2xl font-semibold inline-block mb-1" style={{ color: '#000000' }}>
-          Retention<span style={{ color: '#00D4FF' }}>.</span>
-        </Link>
-        <h1 className="font-outfit font-medium text-2xl mt-2 mb-1" style={{ color: '#000000', letterSpacing: '-0.01em' }}>
-          {mode === 'signin' ? 'Sign in to Studio' : 'Create an account'}
-        </h1>
-        <p className="font-inter text-sm mb-6" style={{ color: '#666' }}>
-          {mode === 'signin' ? 'Team members only.' : 'New accounts require admin approval before access.'}
-        </p>
-        <form onSubmit={handle} className="space-y-4">
-          <div>
-            <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Email</label>
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-md font-inter text-sm border focus:outline-none focus:border-black"
-              style={{ borderColor: '#E2DDD3', background: '#fafafa' }} />
-          </div>
-          <div>
-            <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Password</label>
-            <input type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-md font-inter text-sm border focus:outline-none focus:border-black"
-              style={{ borderColor: '#E2DDD3', background: '#fafafa' }} />
-          </div>
-          <button type="submit" disabled={loading}
-            className="w-full py-3 rounded-md font-inter font-medium text-sm transition-opacity disabled:opacity-50"
-            style={{ background: '#000000', color: '#FFFFFF' }}>
-            {loading ? '…' : mode === 'signin' ? 'Sign in' : 'Create account'}
+      
+      {/* Immersive Background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00D4FF]/10 rounded-full blur-[160px]" />
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
+        <div className="text-center mb-12">
+          <Link to="/" className="text-3xl font-black tracking-tighter text-white inline-block mb-4">
+            RETENTION<span className="text-[#00D4FF]">.</span>STUDIO
+          </Link>
+          <h1 className="text-4xl font-black text-white tracking-tighter leading-none mb-4">
+            {mode === 'signin' ? 'Welcome Back' : 'Join the Engine'}
+          </h1>
+          <p className="text-white/40 font-medium">
+            {mode === 'signin' ? 'Access your command center.' : 'Apply for operator access.'}
+          </p>
+        </div>
+
+        <div className="p-10 lg:p-12 rounded-[3rem] bg-white/5 border border-white/10 backdrop-blur-xl">
+          <form onSubmit={handle} className="space-y-8">
+            <div className="space-y-2">
+              <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 ml-4">Email Address</label>
+              <input 
+                type="email" 
+                required 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300"
+                placeholder="operator@retentionfirm.com"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 ml-4">Password</label>
+              <input 
+                type="password" 
+                required 
+                minLength={8} 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300"
+                placeholder="••••••••"
+              />
+            </div>
+            
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="w-full py-5 rounded-2xl bg-[#00D4FF] text-black font-black text-sm uppercase tracking-widest hover:bg-white hover:scale-[1.02] transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.2)] disabled:opacity-50"
+            >
+              {loading ? 'SYNCHRONIZING...' : mode === 'signin' ? 'ENTER STUDIO' : 'APPLY FOR ACCESS'}
+            </button>
+          </form>
+          
+          <button 
+            onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
+            className="mt-8 text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-[#00D4FF] transition-colors duration-300 w-full text-center"
+          >
+            {mode === 'signin' ? 'Need operator credentials? Apply' : 'Existing operator? Sign in'}
           </button>
-        </form>
-        <button onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
-          className="mt-5 font-inter text-xs w-full" style={{ color: '#666' }}>
-          {mode === 'signin' ? 'Need an account? Sign up' : 'Have an account? Sign in'}
-        </button>
+        </div>
       </div>
     </div>
   );

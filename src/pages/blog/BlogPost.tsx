@@ -59,7 +59,7 @@ export default function BlogPost() {
   };
 
   return (
-    <div style={{ background: '#FFFFFF', minHeight: '100vh' }}>
+    <div className="bg-black min-h-screen selection:bg-[#00D4FF] selection:text-black">
       <SEO
         title={post.meta_title || post.title}
         description={post.meta_description || post.excerpt || ''}
@@ -70,19 +70,26 @@ export default function BlogPost() {
         jsonLd={ld}
       />
       <Navigation />
-      <main style={{ padding: '140px clamp(20px, 5vw, 80px) 80px' }}>
-        <article className="mx-auto" style={{ maxWidth: '780px' }}>
-          <p className="font-inter mb-3" style={{ fontSize: '12px', color: '#888', letterSpacing: '0.04em' }}>{fmt(post.published_at)}</p>
-          <h1 className="font-outfit font-medium mb-5" style={{ fontSize: 'clamp(32px, 5vw, 56px)', color: '#000000', lineHeight: 1.05, letterSpacing: '-0.02em' }}>{post.title}</h1>
-          {post.excerpt && <p className="font-inter mb-8" style={{ fontSize: 'clamp(17px, 2vw, 20px)', color: '#444', lineHeight: 1.5 }}>{post.excerpt}</p>}
+      <main className="relative pt-40 pb-32 px-6 overflow-hidden">
+        {/* Background Accents */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden opacity-50">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/5 blur-[120px] rounded-full" />
+        </div>
+
+        <article className="relative z-10 mx-auto max-w-3xl">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-6">{fmt(post.published_at)}</p>
+          <h1 className="text-5xl lg:text-7xl font-black text-white tracking-tighter mb-8 leading-[0.9]">{post.title}</h1>
+          {post.excerpt && <p className="text-lg lg:text-xl font-medium text-white/40 mb-12 leading-relaxed">{post.excerpt}</p>}
+          
           {post.featured_image_url && (
-            <div className="rounded-2xl overflow-hidden mb-10" style={{ background: '#000000' }}>
+            <div className="rounded-[2.5rem] overflow-hidden mb-16 border border-white/10 bg-white/[0.03]">
               <SignedImage path={post.featured_image_url} alt={post.featured_image_alt || ''} className="w-full h-auto" />
             </div>
           )}
+
           <div
-            className="prose prose-neutral prose-lg max-w-none font-inter prose-headings:font-outfit prose-headings:font-medium prose-a:text-[#00D4FF] prose-a:no-underline hover:prose-a:underline"
-            style={{ color: '#1f1f1f' }}
+            className="prose prose-invert prose-lg max-w-none font-inter prose-headings:font-black prose-headings:tracking-tighter prose-headings:uppercase prose-headings:text-white prose-p:text-white/40 prose-p:leading-relaxed prose-a:text-[#00D4FF] prose-a:no-underline hover:prose-a:border-b hover:prose-a:border-[#00D4FF] prose-strong:text-white prose-blockquote:border-[#00D4FF] prose-blockquote:text-white prose-blockquote:font-black prose-blockquote:uppercase prose-blockquote:tracking-tight"
             dangerouslySetInnerHTML={{ __html: post.content_html }}
           />
         </article>

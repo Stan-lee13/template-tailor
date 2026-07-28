@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
-import diffImg from '../assets/sections/differentiation.jpg';
+import diffVisual from '../assets/differentiation-visual.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,67 +15,83 @@ type DiffContent = {
 export default function DifferentiationSection() {
   const c = useSectionContent<DiffContent>('/', 'differentiation', 'differentiation');
   const sectionRef = useRef<HTMLDivElement>(null);
-  const imgSrc = c.image && c.image.startsWith('/assets/') ? diffImg : (c.image || diffImg);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.diff-content', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } });
-      gsap.fromTo('.diff-media', { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' } });
-      gsap.fromTo('.diff-card', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.7, stagger: 0.12, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' } });
-      gsap.fromTo('.diff-closer', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 40%' } });
+      gsap.fromTo('.diff-content', { opacity: 0, y: 60 }, { 
+        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', 
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } 
+      });
+      gsap.fromTo('.diff-media', { opacity: 0, scale: 0.9, rotate: -2 }, { 
+        opacity: 1, scale: 1, rotate: 0, duration: 1.5, ease: 'expo.out', 
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' } 
+      });
+      gsap.fromTo('.diff-card', { opacity: 0, x: 40 }, { 
+        opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', 
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' } 
+      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px) 14vh' }}>
-      <div className="relative max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr,1fr] gap-10 lg:gap-16 items-center">
-        <div>
-          <div className="diff-content mb-8 sm:mb-10" style={{ opacity: 0 }}>
-            <span className="block font-inter font-medium uppercase mb-5 sm:mb-6" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>
-              {c.eyebrow}
-            </span>
-            <h2 className="font-outfit font-bold mb-5 sm:mb-6" style={{ fontSize: 'clamp(26px, 5vw, 56px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>{c.headline}</h2>
-            <p className="font-inter" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.8, color: 'rgba(255,255,255,0.6)', maxWidth: '520px' }}>{c.body}</p>
-          </div>
+    <section ref={sectionRef} className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00D4FF]/5 rounded-full blur-[150px] pointer-events-none" />
+      
+      <div className="relative max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr,1fr] gap-16 lg:gap-24 items-center">
+        <div className="diff-content" style={{ opacity: 0 }}>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
+            {c.eyebrow}
+          </span>
+          <h2 className="text-4xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight">
+            {c.headline}
+          </h2>
+          <p className="text-lg lg:text-xl text-white/60 mb-12 leading-relaxed max-w-xl">
+            {c.body}
+          </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div className="diff-card p-6 sm:p-7 rounded-2xl transition-all duration-400" style={{ opacity: 0, background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.1)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(239,68,68,0.3)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(239,68,68,0.1)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-            >
-              <h4 className="font-outfit font-bold mb-4 sm:mb-5" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>We Don't Focus On</h4>
-              <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+            <div className="diff-card group p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:border-red-500/30 transition-all duration-500" style={{ opacity: 0 }}>
+              <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-8">We Don't Focus On</h4>
+              <div className="space-y-4">
                 {(c.dont_focus || []).map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <span style={{ color: 'rgba(239,68,68,0.5)', fontSize: '13px' }}>✕</span>
-                    <span className="font-inter" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.45)', textDecoration: 'line-through' }}>{item.text}</span>
+                  <div key={i} className="flex items-center gap-4 group-hover:translate-x-1 transition-transform duration-500">
+                    <span className="text-red-500/40 font-bold">✕</span>
+                    <span className="text-white/40 line-through decoration-red-500/20">{item.text}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="diff-card p-6 sm:p-7 rounded-2xl transition-all duration-400" style={{ opacity: 0, background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.15)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(0,212,255,0.3)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(0,212,255,0.15)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-            >
-              <h4 className="font-outfit font-bold mb-4 sm:mb-5" style={{ fontSize: '12px', color: '#00D4FF', letterSpacing: '0.08em', textTransform: 'uppercase' }}>We Focus On</h4>
-              <div className="flex flex-col gap-3">
+
+            <div className="diff-card group p-8 rounded-[2rem] bg-[#00D4FF]/5 border border-[#00D4FF]/20 hover:border-[#00D4FF]/50 transition-all duration-500" style={{ opacity: 0 }}>
+              <h4 className="text-xs font-bold text-[#00D4FF] uppercase tracking-widest mb-8">We Focus On</h4>
+              <div className="space-y-4">
                 {(c.do_focus || []).map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <span style={{ color: '#00D4FF', fontSize: '13px' }}>✓</span>
-                    <span className="font-inter font-medium" style={{ fontSize: '14px', color: '#FFFFFF' }}>{item.text}</span>
+                  <div key={i} className="flex items-center gap-4 group-hover:translate-x-2 transition-transform duration-500">
+                    <div className="w-5 h-5 rounded-full bg-[#00D4FF] flex items-center justify-center text-black">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <span className="text-white font-bold">{item.text}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <p className="diff-closer font-inter font-medium mt-8 sm:mt-10" style={{ opacity: 0, fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#00D4FF' }}>{c.closer}</p>
+          <div className="flex items-center gap-4">
+            <div className="h-px flex-grow bg-white/10" />
+            <p className="text-[#00D4FF] font-bold text-lg lg:text-xl whitespace-nowrap tracking-tight">
+              {c.closer}
+            </p>
+            <div className="h-px flex-grow bg-white/10" />
+          </div>
         </div>
 
-        <div className="diff-media relative rounded-2xl overflow-hidden" style={{ opacity: 0, aspectRatio: '4/5', boxShadow: '0 40px 100px rgba(0,0,0,0.6)' }}>
-          <img src={imgSrc} alt="" loading="lazy" width={1600} height={1200} className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5))' }} />
+        <div className="diff-media relative group" style={{ opacity: 0 }}>
+          <div className="absolute -inset-4 bg-[#00D4FF]/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
+            <img src={diffVisual} alt="Precision Marketing" className="w-full h-auto object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" />
+          </div>
         </div>
       </div>
     </section>

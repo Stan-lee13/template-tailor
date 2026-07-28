@@ -42,60 +42,89 @@ export default function PostsList() {
 
   return (
     <StudioLayout>
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12">
         <div>
-          <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Posts</h1>
-          <p className="font-inter text-sm" style={{ color: '#666' }}>{rows.length} total</p>
+          <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Content <span className="text-gradient-cyan">Assets</span></h1>
+          <p className="text-white/40 font-medium">{rows.length} systems deployed in the engine.</p>
         </div>
         <Link to="/studio/posts/new"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-inter text-sm font-medium self-start"
-          style={{ background: '#00D4FF', color: '#000000' }}>
-          <Plus size={16} /> New post
+          className="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+        >
+          <Plus size={18} strokeWidth={3} /> New Asset
         </Link>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 mb-4">
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search title or slug…"
-          className="flex-1 px-3 py-2 rounded-md font-inter text-sm border focus:outline-none focus:border-black"
-          style={{ borderColor: '#E2DDD3', background: '#fff' }} />
-        <select value={filter} onChange={(e) => setFilter(e.target.value as any)}
-          className="px-3 py-2 rounded-md font-inter text-sm border"
-          style={{ borderColor: '#E2DDD3', background: '#fff' }}>
-          <option value="all">All statuses</option>
-          <option value="draft">Drafts</option>
-          <option value="scheduled">Scheduled</option>
-          <option value="published">Published</option>
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="relative flex-1 group">
+          <input 
+            value={q} 
+            onChange={(e) => setQ(e.target.value)} 
+            placeholder="Search assets by title or slug..."
+            className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300"
+          />
+          <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#00D4FF] transition-colors">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </div>
+        <select 
+          value={filter} 
+          onChange={(e) => setFilter(e.target.value as any)}
+          className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#00D4FF]/50 transition-all cursor-pointer"
+        >
+          <option value="all" className="bg-black">All Assets</option>
+          <option value="draft" className="bg-black">Drafts</option>
+          <option value="scheduled" className="bg-black">Pipeline</option>
+          <option value="published" className="bg-black">Live</option>
         </select>
       </div>
 
-      <div className="rounded-xl overflow-hidden" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
+      <div className="rounded-[2.5rem] overflow-hidden bg-black border border-white/10">
         {loading ? (
-          <div className="p-8 text-center font-inter text-sm" style={{ color: '#888' }}>Loading…</div>
+          <div className="p-20 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
+            <div className="w-8 h-8 rounded-full border-4 border-white/5 border-t-[#00D4FF] animate-spin" />
+            Syncing Assets...
+          </div>
         ) : filtered.length === 0 ? (
-          <div className="p-10 text-center">
-            <p className="font-inter text-sm mb-3" style={{ color: '#666' }}>No posts yet.</p>
-            <Link to="/studio/posts/new" className="font-inter text-sm" style={{ color: '#00D4FF' }}>Create your first post →</Link>
+          <div className="p-20 text-center">
+            <p className="text-white/40 font-medium mb-6">No assets matching your query.</p>
+            <Link to="/studio/posts/new" className="text-xs font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors duration-300">Deploy New Asset →</Link>
           </div>
         ) : (
-          <ul className="divide-y" style={{ borderColor: '#E2DDD3' }}>
+          <div className="divide-y divide-white/5">
             {filtered.map((r) => (
-              <li key={r.id} className="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 hover:bg-black/[0.02]">
+              <div key={r.id} className="group flex items-center gap-6 px-8 py-8 hover:bg-white/[0.02] transition-all duration-500">
                 <div className="flex-1 min-w-0">
-                  <Link to={`/studio/posts/${r.id}`} className="font-outfit font-medium text-base sm:text-lg block truncate" style={{ color: '#000000' }}>
+                  <Link to={`/studio/posts/${r.id}`} className="text-xl font-black text-white tracking-tight block truncate group-hover:translate-x-2 transition-transform duration-500">
                     {r.title || '(untitled)'}
                   </Link>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
-                    <span className="font-inter text-[11px] uppercase tracking-wider px-1.5 py-0.5 rounded" style={{ background: `${statusColors[r.status]}20`, color: statusColors[r.status] }}>{r.status}</span>
-                    <span className="font-inter text-xs truncate" style={{ color: '#888' }}>/{r.slug}</span>
-                    <span className="font-inter text-xs" style={{ color: '#888' }}>{r.view_count} views</span>
+                  <div className="flex flex-wrap items-center gap-6 mt-4">
+                    <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border" style={{ borderColor: `${statusColors[r.status]}30`, color: statusColors[r.status], background: `${statusColors[r.status]}10` }}>
+                      {r.status}
+                    </span>
+                    <span className="text-xs font-black text-white/20 tracking-widest truncate max-w-[200px]">/{r.slug}</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-1 h-1 rounded-full bg-white/20" />
+                      <span className="text-xs font-black text-white/20 tracking-widest uppercase">{r.view_count} Impressions</span>
+                    </div>
                   </div>
                 </div>
-                <button onClick={() => remove(r.id)} className="p-2 rounded hover:bg-red-50" title="Delete">
-                  <Trash2 size={16} color="#dc2626" />
-                </button>
-              </li>
+                <div className="flex items-center gap-3">
+                  <Link 
+                    to={`/studio/posts/${r.id}`} 
+                    className="p-4 rounded-2xl bg-white/5 text-white/40 hover:text-white hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </Link>
+                  <button 
+                    onClick={() => remove(r.id)} 
+                    className="p-4 rounded-2xl bg-rose-500/5 text-rose-500/40 hover:text-rose-500 hover:bg-rose-500/10 transition-all opacity-0 group-hover:opacity-100"
+                  >
+                    <Trash2 size={18} strokeWidth={3} />
+                  </button>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </StudioLayout>

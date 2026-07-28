@@ -26,52 +26,59 @@ export default function CookieConsent() {
   // Mobile collapsed pill
   if (!expanded) {
     return (
-      <div className="fixed bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-auto z-[150] sm:max-w-[380px]" style={{ animation: 'rfSlideUp 420ms cubic-bezier(.2,.7,.2,1)' }}>
-        <div className="sm:hidden flex items-center justify-between gap-2 rounded-full px-4 py-2.5" style={{ background: 'rgba(26,32,53,0.95)', backdropFilter: 'blur(18px)', border: '1px solid rgba(0,212,255,0.1)', boxShadow: '0 12px 30px -10px rgba(0,0,0,0.3)' }}>
-          <span className="font-inter text-[12px]" style={{ color: '#FFFFFF' }}>🍪 Cookies</span>
-          <div className="flex items-center gap-1.5">
-            <button onClick={acceptAll} className="font-inter font-medium" style={{ background: '#00D4FF', color: '#000000', padding: '6px 12px', borderRadius: '9999px', fontSize: '11.5px' }}>Accept</button>
-            <button onClick={() => setExpanded(true)} aria-label="Manage" className="font-inter" style={{ color: 'rgba(255,255,255,0.6)', padding: '6px 8px', fontSize: '11.5px' }}>Manage</button>
+      <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 600ms cubic-bezier(.2,.7,.2,1)' }}>
+        <div className="sm:hidden flex items-center justify-between gap-4 rounded-3xl px-6 py-4 bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Intelligence Access</span>
+          <div className="flex items-center gap-2">
+            <button onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">Accept</button>
+            <button onClick={() => setExpanded(true)} aria-label="Manage" className="text-white/20 hover:text-white transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
           </div>
         </div>
         <div className="hidden sm:block">
           {renderFull()}
         </div>
-        <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }`}</style>
+        <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(32px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }`}</style>
       </div>
     );
   }
 
   return (
-    <div className="fixed bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-auto z-[150] sm:max-w-[380px]" style={{ animation: 'rfSlideUp 420ms cubic-bezier(.2,.7,.2,1)' }}>
+    <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 600ms cubic-bezier(.2,.7,.2,1)' }}>
       {renderFull()}
-      <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }`}</style>
+      <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(32px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }`}</style>
     </div>
   );
 
   function renderFull() {
     return (
-      <div style={{ background: 'rgba(26,32,53,0.95)', backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)', border: '1px solid rgba(0,212,255,0.1)', borderRadius: '16px', padding: '18px', boxShadow: '0 20px 50px -12px rgba(0,0,0,0.4)' }}>
-        <h4 className="font-outfit font-medium mb-1.5" style={{ fontSize: '15px', color: '#FFFFFF' }}>We use cookies</h4>
-        <p className="font-inter mb-3" style={{ fontSize: '13px', lineHeight: 1.55, color: 'rgba(255,255,255,0.6)' }}>
-          We use a small number of cookies to understand how the site is used and improve it. See our{' '}
-          <Link to="/cookies" className="underline underline-offset-2" style={{ color: '#00D4FF' }}>cookie policy</Link>.
+      <div className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
+        <h4 className="text-xl font-black text-white tracking-tighter mb-4">Intelligence <span className="text-[#00D4FF]">Access</span></h4>
+        <p className="text-sm font-medium leading-relaxed text-white/40 mb-8">
+          We use minimal cookies to optimize your retention intelligence experience. Review our{' '}
+          <Link to="/cookies" className="text-[#00D4FF] hover:text-white transition-colors">protocol policy</Link>.
         </p>
         {showPrefs && (
-          <div className="mb-3 mt-2 flex flex-col gap-2.5" style={{ borderTop: '1px solid rgba(0,212,255,0.08)', paddingTop: '12px' }}>
-            <Toggle label="Essential" description="Required for the site to function" checked disabled />
-            <Toggle label="Analytics" description="Anonymous usage statistics" checked={analytics} onChange={setAnalytics} />
-            <Toggle label="Marketing" description="Personalized content and ads" checked={marketing} onChange={setMarketing} />
+          <div className="mb-8 space-y-6 pt-8 border-t border-white/5">
+            <Toggle label="Essential" description="Required for system integrity" checked disabled />
+            <Toggle label="Analytics" description="Anonymous intelligence gathering" checked={analytics} onChange={setAnalytics} />
+            <Toggle label="Marketing" description="Targeted protocol updates" checked={marketing} onChange={setMarketing} />
           </div>
         )}
-        <div className="flex flex-wrap items-center gap-2">
-          <button onClick={acceptAll} className="font-inter font-bold flex-1 sm:flex-none" style={{ background: 'linear-gradient(135deg, #00D4FF, #0099cc)', color: '#000000', padding: '9px 18px', borderRadius: '9999px', fontSize: '13px' }}>Accept all</button>
-          {showPrefs ? (
-            <button onClick={savePrefs} className="font-inter font-medium" style={{ background: 'transparent', padding: '9px 14px', borderRadius: '9999px', fontSize: '13px', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)' }}>Save preferences</button>
-          ) : (
-            <button onClick={() => setShowPrefs(true)} className="font-inter font-medium" style={{ background: 'transparent', padding: '9px 14px', borderRadius: '9999px', fontSize: '13px', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)' }}>Preferences</button>
-          )}
-          <button onClick={rejectAll} className="font-inter text-xs underline underline-offset-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Reject</button>
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-3">
+            <button onClick={acceptAll} className="flex-1 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">Accept All</button>
+            <button onClick={() => setShowPrefs(!showPrefs)} className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white transition-all">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div className="flex items-center justify-between px-2">
+            <button onClick={rejectAll} className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-rose-500 transition-colors">Reject Non-Essential</button>
+            {showPrefs && (
+              <button onClick={savePrefs} className="text-[10px] font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors">Save Selection</button>
+            )}
+          </div>
         </div>
       </div>
     );
