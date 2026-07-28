@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
-import resultsImg from '../assets/sections/results.jpg';
+import resultsVisual from '../assets/results-visual.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,44 +12,70 @@ type ResultsContent = { eyebrow: string; headline: string; image?: string | null
 export default function Results() {
   const c = useSectionContent<ResultsContent>('/', 'results', 'results');
   const sectionRef = useRef<HTMLDivElement>(null);
-  const imgSrc = c.image && c.image.startsWith('/assets/') ? resultsImg : (c.image || resultsImg);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.results-head', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } });
-      gsap.fromTo('.result-item', { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 55%' } });
-      gsap.fromTo('.result-closer', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 40%' } });
+      gsap.fromTo('.results-head', { opacity: 0, y: 50 }, { 
+        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', 
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } 
+      });
+      gsap.fromTo('.result-card', { opacity: 0, scale: 0.9, y: 30 }, { 
+        opacity: 1, scale: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'expo.out', 
+        scrollTrigger: { trigger: '.results-grid', start: 'top 70%' } 
+      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} id="results" className="relative overflow-hidden" style={{ background: '#000000', padding: '14vh clamp(24px, 5vw, 80px)' }}>
-      {/* Editorial image backdrop */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <img src={imgSrc} alt="" loading="lazy" width={1600} height={1008} className="absolute inset-0 w-full h-full object-cover" style={{ opacity: 0.06 }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.98))' }} />
+    <section ref={sectionRef} id="results" className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+      {/* Background image with subtle parallax */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <img src={resultsVisual} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
       </div>
 
-      <div className="relative max-w-[1000px] mx-auto text-center">
-        <div className="results-head mb-10 sm:mb-16" style={{ opacity: 0 }}>
-          <span className="block font-inter font-medium uppercase mb-5 sm:mb-6" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>{c.eyebrow}</span>
-          <h2 className="font-outfit font-bold mb-0" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>{c.headline}</h2>
+      <div className="relative max-w-[1300px] mx-auto">
+        <div className="results-head text-center mb-16 lg:mb-24" style={{ opacity: 0 }}>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
+            {c.eyebrow}
+          </span>
+          <h2 className="text-4xl lg:text-7xl font-bold text-white mb-6 tracking-tighter">
+            {c.headline}
+          </h2>
         </div>
 
-        <div className="flex flex-col gap-4 sm:gap-5 max-w-[700px] mx-auto">
+        <div className="results-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {(c.outcomes || []).map((item, i) => (
-            <div key={i} className="result-item flex items-center gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl transition-all duration-400"
-              style={{ opacity: 0, background: 'rgba(26,32,53,0.6)', border: '1px solid rgba(0,212,255,0.08)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#00D4FF'; e.currentTarget.style.transform = 'translateX(6px)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,212,255,0.1)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(0,212,255,0.08)'; e.currentTarget.style.transform = 'translateX(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
-              <span className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-outfit font-bold" style={{ background: 'rgba(0,212,255,0.1)', color: '#00D4FF', fontSize: '15px' }}>{item.icon}</span>
-              <span className="font-inter font-medium" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#FFFFFF' }}>{item.text}</span>
+            <div 
+              key={i} 
+              className={`result-card group relative p-8 lg:p-10 rounded-[2rem] bg-white/5 border border-white/10 hover:border-[#00D4FF]/40 transition-all duration-700 overflow-hidden ${i === 0 ? 'lg:col-span-2' : ''}`}
+              style={{ opacity: 0 }}
+            >
+              <div className="absolute top-0 right-0 p-8 text-6xl opacity-10 group-hover:opacity-20 transition-opacity duration-700">
+                {item.icon}
+              </div>
+              
+              <div className="relative z-10 h-full flex flex-col justify-between">
+                <div className="w-14 h-14 rounded-2xl bg-[#00D4FF]/10 flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform duration-500">
+                  {item.icon}
+                </div>
+                <p className="text-xl lg:text-2xl font-bold text-white leading-snug group-hover:text-[#00D4FF] transition-colors duration-500">
+                  {item.text}
+                </p>
+              </div>
+              
+              {/* Hover glow effect */}
+              <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-[#00D4FF]/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </div>
           ))}
         </div>
 
-        <p className="result-closer text-center font-inter font-medium mt-10 sm:mt-12" style={{ opacity: 0, fontSize: 'clamp(16px, 2.5vw, 18px)', color: '#00D4FF' }}>{c.closer}</p>
+        <div className="mt-16 lg:mt-24 text-center">
+          <p className="text-2xl lg:text-3xl font-bold text-white/90 tracking-tight">
+            → <span className="text-gradient-cyan">{c.closer}</span>
+          </p>
+        </div>
       </div>
     </section>
   );

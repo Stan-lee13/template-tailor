@@ -39,26 +39,21 @@ export default function LeftPanel(props: {
   ];
 
   return (
-    <div className="flex flex-col h-full" style={{ background: '#fff', borderRight: '1px solid #E2DDD3' }}>
-      <div className="grid grid-cols-4 border-b" style={{ borderColor: '#E2DDD3' }}>
+    <div className="flex flex-col h-full bg-black border-r border-white/10">
+      <div className="grid grid-cols-4 border-b border-white/10 bg-white/[0.02]">
         {tabs.map((t) => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className="flex flex-col items-center gap-1 py-2.5 text-[10px] uppercase tracking-wider font-inter transition-colors"
-            style={{
-              background: tab === t.id ? '#000000' : 'transparent',
-              color: tab === t.id ? '#FFFFFF' : '#555',
-              fontWeight: tab === t.id ? 600 : 400,
-            }}
+            className={`flex flex-col items-center gap-2 py-4 text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${tab === t.id ? 'text-[#00D4FF] bg-[#00D4FF]/5' : 'text-white/20 hover:text-white/60'}`}
           >
-            <t.icon size={14} />
+            <t.icon size={14} strokeWidth={tab === t.id ? 3 : 2} />
             {t.label}
           </button>
         ))}
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto scrollbar-hide">
         {tab === 'pages' && <PagesTab pages={props.pages} pageId={props.pageId} setPageId={props.setPageId} />}
         {tab === 'sections' && (
           <SectionsTab
@@ -82,24 +77,22 @@ export default function LeftPanel(props: {
 
 function PagesTab({ pages, pageId, setPageId }: { pages: Page[]; pageId: string | null; setPageId: (id: string) => void }) {
   return (
-    <ul className="p-2 space-y-1">
+    <ul className="p-4 space-y-2">
+      <div className="px-4 mb-4">
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Site Nodes</span>
+      </div>
       {pages.map((p) => (
         <li key={p.id}>
           <button
             onClick={() => setPageId(p.id)}
-            className="w-full text-left px-3 py-2 rounded-md font-inter text-sm transition-colors"
-            style={{
-              background: pageId === p.id ? '#fff7ed' : 'transparent',
-              color: '#000000',
-              borderLeft: pageId === p.id ? '3px solid #00D4FF' : '3px solid transparent',
-            }}
+            className={`w-full text-left px-5 py-4 rounded-2xl transition-all duration-300 group ${pageId === p.id ? 'bg-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.2)]' : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:bg-white/5'}`}
           >
-            <div className="font-medium truncate">{p.title || p.path}</div>
-            <div className="text-[10px] text-gray-500 truncate">{p.path}</div>
+            <div className="text-xs font-black uppercase tracking-tight truncate">{p.title || p.path}</div>
+            <div className={`text-[9px] font-black uppercase tracking-widest mt-1 truncate ${pageId === p.id ? 'text-black/40' : 'text-white/10 group-hover:text-[#00D4FF]'}`}>{p.path}</div>
           </button>
         </li>
       ))}
-      {pages.length === 0 && <li className="p-3 text-xs text-gray-500 font-inter">No pages yet — create one from the Pages editor.</li>}
+      {pages.length === 0 && <li className="p-8 text-center text-[10px] font-black uppercase tracking-widest text-white/10">Zero nodes detected.</li>}
     </ul>
   );
 }
@@ -154,23 +147,23 @@ function SectionsTab(props: {
 
 function SortableRow({ s, selected, canEdit, onSelect, onToggle, onDuplicate, onRemove, onTemplate }: any) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: s.id });
-  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.6 : 1 };
+  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 };
   const def = getSection(s.type);
   return (
-    <li ref={setNodeRef} style={style} className={`rounded-md border ${selected ? 'ring-2 ring-orange-500' : ''}`} onClick={onSelect}>
-      <div className="flex items-center gap-1 p-2" style={{ background: selected ? '#fff7ed' : '#fff', borderColor: '#E2DDD3' }}>
-        {canEdit && <button {...attributes} {...listeners} className="cursor-grab p-1" onClick={(e) => e.stopPropagation()}><GripVertical size={12} color="#aaa" /></button>}
+    <li ref={setNodeRef} style={style} className="group" onClick={onSelect}>
+      <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${selected ? 'bg-[#00D4FF] border-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.2)]' : 'bg-white/[0.02] border-white/5 text-white/40 hover:bg-white/5 hover:text-white'}`}>
+        {canEdit && <button {...attributes} {...listeners} className="cursor-grab p-1 text-inherit opacity-20 hover:opacity-100" onClick={(e) => e.stopPropagation()}><GripVertical size={14} /></button>}
         <div className="flex-1 min-w-0">
-          <p className="font-inter text-xs font-medium truncate" style={{ opacity: s.enabled ? 1 : 0.5 }}>{def?.label || s.section_key}</p>
-          <p className="font-inter text-[9px]" style={{ color: '#888' }}>{s.section_key}</p>
+          <p className={`text-xs font-black uppercase tracking-tight truncate ${!s.enabled && 'opacity-30'}`}>{def?.label || s.section_key}</p>
+          <p className={`text-[9px] font-black uppercase tracking-widest mt-0.5 ${selected ? 'text-black/40' : 'text-white/10'}`}>{s.section_key}</p>
         </div>
         {canEdit && (
-          <>
-            <button onClick={(e) => { e.stopPropagation(); onToggle(); }} title={s.enabled ? 'Hide' : 'Show'} className="p-1 rounded hover:bg-gray-100">{s.enabled ? <Eye size={12} /> : <EyeOff size={12} color="#aaa" />}</button>
-            <button onClick={(e) => { e.stopPropagation(); onTemplate(); }} title="Save as template" className="p-1 rounded hover:bg-gray-100"><BookmarkPlus size={12} /></button>
-            <button onClick={(e) => { e.stopPropagation(); onDuplicate(); }} title="Duplicate" className="p-1 rounded hover:bg-gray-100"><Copy size={12} /></button>
-            <button onClick={(e) => { e.stopPropagation(); onRemove(); }} title="Delete" className="p-1 rounded hover:bg-red-50"><Trash2 size={12} color="#dc2626" /></button>
-          </>
+          <div className="flex items-center gap-1">
+            <button onClick={(e) => { e.stopPropagation(); onToggle(); }} title={s.enabled ? 'Disable' : 'Enable'} className={`p-1.5 rounded-lg transition-colors ${selected ? 'hover:bg-black/10' : 'hover:bg-white/10'}`}>{s.enabled ? <Eye size={14} strokeWidth={3} /> : <EyeOff size={14} strokeWidth={3} className="opacity-40" />}</button>
+            <button onClick={(e) => { e.stopPropagation(); onTemplate(); }} title="Blueprint" className={`p-1.5 rounded-lg transition-colors ${selected ? 'hover:bg-black/10' : 'hover:bg-white/10'}`}><BookmarkPlus size={14} strokeWidth={3} /></button>
+            <button onClick={(e) => { e.stopPropagation(); onDuplicate(); }} title="Clone" className={`p-1.5 rounded-lg transition-colors ${selected ? 'hover:bg-black/10' : 'hover:bg-white/10'}`}><Copy size={14} strokeWidth={3} /></button>
+            <button onClick={(e) => { e.stopPropagation(); onRemove(); }} title="Purge" className={`p-1.5 rounded-lg transition-colors ${selected ? 'hover:bg-rose-500 hover:text-white' : 'hover:bg-rose-500/20 hover:text-rose-500'}`}><Trash2 size={14} strokeWidth={3} /></button>
+          </div>
         )}
       </div>
     </li>
@@ -183,47 +176,51 @@ function ComponentsTab({ onAdd, canEdit }: { onAdd: (type: string, content?: Rec
     supabase.from('section_templates').select('*').order('created_at', { ascending: false }).then(({ data }) => setTemplates((data as any) || []));
   }, []);
 
-  if (!canEdit) return <p className="p-4 text-xs text-gray-500 font-inter">You don't have permission to add sections.</p>;
+  if (!canEdit) return <div className="p-8 text-center text-[10px] font-black uppercase tracking-widest text-white/10">Access denied for node deployment.</div>;
 
   return (
-    <div className="p-3 space-y-4">
-      <div>
-        <p className="font-inter text-[10px] uppercase tracking-wider mb-2" style={{ color: '#888' }}>Section types</p>
-        <div className="grid grid-cols-1 gap-1.5">
+    <div className="p-6 space-y-12">
+      <section>
+        <div className="px-4 mb-6">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">System Nodes</span>
+        </div>
+        <div className="grid grid-cols-1 gap-3">
           {SECTION_LIST.map((def) => (
             <button
               key={def.key}
               onClick={() => onAdd(def.type)}
-              className="text-left p-2.5 rounded-md border font-inter transition-colors hover:border-orange-500 hover:bg-orange-50"
-              style={{ borderColor: '#E2DDD3' }}
+              className="group text-left p-5 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all duration-300"
             >
-              <div className="flex items-center gap-2">
-                <Plus size={12} color="#00D4FF" />
-                <span className="text-sm font-medium">{def.label}</span>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-6 h-6 rounded-lg bg-[#00D4FF]/10 flex items-center justify-center text-[#00D4FF] group-hover:bg-[#00D4FF] group-hover:text-black transition-all">
+                  <Plus size={14} strokeWidth={3} />
+                </div>
+                <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#00D4FF] transition-colors">{def.label}</span>
               </div>
-              <p className="text-[10px] mt-0.5 text-gray-500 line-clamp-2">{def.description}</p>
+              <p className="text-[10px] font-medium leading-relaxed text-white/20 line-clamp-2">{def.description}</p>
             </button>
           ))}
         </div>
-      </div>
+      </section>
 
       {templates.length > 0 && (
-        <div>
-          <p className="font-inter text-[10px] uppercase tracking-wider mb-2" style={{ color: '#888' }}>Saved templates</p>
-          <div className="grid grid-cols-1 gap-1.5">
+        <section>
+          <div className="px-4 mb-6">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Saved Blueprints</span>
+          </div>
+          <div className="grid grid-cols-1 gap-3">
             {templates.map((t) => (
               <button
                 key={t.id}
                 onClick={() => onAdd(t.type, t.content)}
-                className="text-left p-2.5 rounded-md border font-inter hover:border-orange-500 hover:bg-orange-50"
-                style={{ borderColor: '#E2DDD3' }}
+                className="group text-left p-5 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all duration-300"
               >
-                <span className="text-sm font-medium">{t.name}</span>
-                <p className="text-[10px] text-gray-500">{getSection(t.type)?.label || t.type}</p>
+                <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#00D4FF] transition-colors">{t.name}</span>
+                <p className="text-[9px] font-black uppercase tracking-widest text-white/10 mt-1">{getSection(t.type)?.label || t.type}</p>
               </button>
             ))}
           </div>
-        </div>
+        </section>
       )}
     </div>
   );
@@ -273,30 +270,38 @@ function MediaTab() {
   };
 
   return (
-    <div className="p-3">
-      <label className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-inter text-xs cursor-pointer mb-3" style={{ background: '#000000', color: '#fff' }}>
-        <Upload size={12} /> {uploading ? 'Uploading…' : 'Upload'}
+    <div className="p-6">
+      <div className="px-4 mb-6">
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Asset Cluster</span>
+      </div>
+      <label className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest cursor-pointer mb-8 hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">
+        <Upload size={14} strokeWidth={3} /> {uploading ? 'Uploading...' : 'Inject Asset'}
         <input type="file" accept="image/*,video/*" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
       </label>
+      
       {loading ? (
-        <p className="text-xs text-gray-500 font-inter">Loading…</p>
+        <div className="flex items-center justify-center py-12 text-[10px] font-black uppercase tracking-widest text-white/10 animate-pulse">Syncing assets...</div>
       ) : assets.length === 0 ? (
-        <p className="text-xs text-gray-500 font-inter">No media yet.</p>
+        <div className="text-center py-12 text-[10px] font-black uppercase tracking-widest text-white/10">Zero assets detected.</div>
       ) : (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3">
           {assets.map((a) => (
             <button
               key={a.id}
               onClick={() => a.url && copyUrl(a.url)}
-              className="aspect-square rounded-md border overflow-hidden hover:ring-2 hover:ring-orange-500 relative group"
-              style={{ borderColor: '#E2DDD3', background: '#f5f5f5' }}
-              title={`Click to copy URL: ${a.filename}`}
+              className="aspect-square rounded-2xl border border-white/5 overflow-hidden relative group bg-white/[0.02] hover:border-[#00D4FF]/30 transition-all duration-500"
+              title={`Copy Protocol URL: ${a.filename}`}
             >
               {a.url && a.mime?.startsWith('image/') ? (
-                <img src={a.url} alt={a.filename} className="w-full h-full object-cover" loading="lazy" />
+                <img src={a.url} alt={a.filename} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
               ) : (
-                <div className="text-[10px] p-1 text-center text-gray-500">{a.filename}</div>
+                <div className="h-full flex items-center justify-center p-4 text-center">
+                  <span className="text-[8px] font-black uppercase tracking-widest text-white/20 truncate">{a.filename}</span>
+                </div>
               )}
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-[8px] font-black uppercase tracking-widest text-[#00D4FF]">Copy URL</span>
+              </div>
             </button>
           ))}
         </div>

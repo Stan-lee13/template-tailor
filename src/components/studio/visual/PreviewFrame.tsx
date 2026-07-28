@@ -29,14 +29,18 @@ export default function PreviewFrame({
   }, [path, reloadKey]);
 
   return (
-    <div className="w-full h-full flex items-start justify-center overflow-auto p-4" style={{ background: '#111', backgroundImage: 'radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000000 100%)' }}>
-      <div className="rounded-lg overflow-hidden shadow-2xl transition-all duration-300" style={{ width, maxWidth: '100%', background: '#fff' }}>
+    <div className="w-full h-full flex items-center justify-center overflow-hidden relative">
+      <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff10 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+      <div 
+        className="rounded-[2rem] overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.5)] border border-white/10 transition-all duration-700 bg-white" 
+        style={{ width, maxWidth: '100%', height: '80vh' }}
+      >
         <iframe
           ref={ref}
           key={reloadKey}
           src={src}
           title="Live preview"
-          style={{ width: '100%', height: maxHeight, minHeight: '640px', border: 'none', display: 'block' }}
+          className="w-full h-full border-none block"
           sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
         />
       </div>

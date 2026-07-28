@@ -10,31 +10,40 @@ interface Props {
 
 export default function LegalLayout({ title, updated, children }: Props) {
   return (
-    <div style={{ background: '#FFFFFF', minHeight: '100vh' }}>
+    <div className="bg-black min-h-screen selection:bg-[#00D4FF] selection:text-black">
       <Navigation />
-      <main style={{ padding: '140px clamp(20px, 5vw, 80px) 80px' }}>
-        <article className="mx-auto" style={{ maxWidth: '720px' }}>
-          <p className="font-inter uppercase mb-3" style={{ fontSize: '11px', color: '#8A8A8A', letterSpacing: '0.08em' }}>
-            Legal
+      <main className="relative pt-40 pb-32 px-6 overflow-hidden">
+        {/* Background Accents */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden opacity-50">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/5 blur-[120px] rounded-full" />
+        </div>
+
+        <article className="relative z-10 mx-auto max-w-3xl">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-6">
+            Legal Protocol
           </p>
-          <h1 className="font-outfit font-medium mb-2" style={{ fontSize: 'clamp(32px, 5vw, 56px)', color: '#000000', lineHeight: 1, letterSpacing: '-0.02em' }}>
+          <h1 className="text-5xl lg:text-7xl font-black text-white tracking-tighter mb-4 leading-[0.9]">
             {title}
           </h1>
-          <p className="font-inter mb-10" style={{ fontSize: '13px', color: '#555' }}>
-            Last updated: {updated}
+          <p className="text-xs font-black uppercase tracking-widest text-white/20 mb-16">
+            Revision Date: {updated}
           </p>
           <div className="rf-prose">{children}</div>
         </article>
       </main>
       <Footer />
       <style>{`
-        .rf-prose { font-family: 'Inter', sans-serif; color: #2D2D2D; font-size: 15px; line-height: 1.75; }
-        .rf-prose h2 { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 22px; color: #000000; margin-top: 36px; margin-bottom: 12px; letter-spacing: -0.01em; }
-        .rf-prose h3 { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 17px; color: #000000; margin-top: 24px; margin-bottom: 8px; }
-        .rf-prose p { margin-bottom: 14px; }
-        .rf-prose ul { padding-left: 22px; margin-bottom: 14px; list-style: disc; }
-        .rf-prose li { margin-bottom: 6px; }
-        .rf-prose a { color: #00D4FF; text-decoration: underline; text-underline-offset: 3px; }
+        .rf-prose { font-family: 'Inter', sans-serif; color: rgba(255,255,255,0.4); font-size: 16px; line-height: 1.8; font-weight: 500; }
+        .rf-prose h2 { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 28px; color: #FFFFFF; margin-top: 64px; margin-bottom: 24px; letter-spacing: -0.04em; text-transform: uppercase; }
+        .rf-prose h3 { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 20px; color: #FFFFFF; margin-top: 48px; margin-bottom: 16px; letter-spacing: -0.02em; }
+        .rf-prose p { margin-bottom: 24px; }
+        .rf-prose ul { padding-left: 24px; margin-bottom: 24px; list-style: none; }
+        .rf-prose li { margin-bottom: 12px; position: relative; }
+        .rf-prose li::before { content: ''; position: absolute; left: -24px; top: 10px; width: 8px; height: 2px; background: #00D4FF; }
+        .rf-prose a { color: #00D4FF; text-decoration: none; border-bottom: 1px solid rgba(0,212,255,0.3); transition: all 0.3s ease; }
+        .rf-prose a:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+        .rf-prose strong { color: #FFFFFF; font-weight: 700; }
       `}</style>
     </div>
   );

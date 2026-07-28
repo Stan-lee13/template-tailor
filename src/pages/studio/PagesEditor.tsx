@@ -65,74 +65,135 @@ export default function PagesEditor() {
 
   return (
     <StudioLayout>
-      <div className="flex items-start justify-between mb-6 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12">
         <div>
-          <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Pages</h1>
-          <p className="font-inter text-sm" style={{ color: '#666' }}>SEO metadata for every route on the site.</p>
+          <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Route <span className="text-gradient-cyan">Intelligence</span></h1>
+          <p className="text-white/40 font-medium">SEO and metadata parameters for every system route.</p>
         </div>
-        <button onClick={createPage} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-inter text-sm font-medium" style={{ background: '#00D4FF', color: '#000000' }}>
-          <Plus size={16} /> New page
+        <button 
+          onClick={createPage} 
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+        >
+          <Plus size={18} strokeWidth={3} /> Inject Route
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-4">
-        <aside className="rounded-xl overflow-hidden max-h-[70vh] overflow-y-auto" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-          {loading ? <p className="p-4 font-inter text-sm text-gray-500">Loading…</p> :
-            <ul className="divide-y" style={{ borderColor: '#E2DDD3' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-8">
+        <aside className="rounded-[2.5rem] overflow-hidden max-h-[70vh] overflow-y-auto bg-black border border-white/10 scrollbar-hide">
+          {loading ? (
+            <div className="p-12 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
+              <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#00D4FF] animate-spin" />
+              Syncing...
+            </div>
+          ) : (
+            <div className="divide-y divide-white/5">
               {pages.map((p) => (
-                <li key={p.id}>
-                  <button onClick={() => setSelected(p)} className={`w-full text-left px-3 py-2.5 font-inter text-sm ${selected?.id === p.id ? 'bg-orange-50' : 'hover:bg-black/[0.02]'}`}>
-                    <div className="font-medium truncate">{p.title || p.path}</div>
-                    <div className="text-xs" style={{ color: '#888' }}>{p.path}</div>
-                  </button>
-                </li>
+                <button 
+                  key={p.id} 
+                  onClick={() => setSelected(p)} 
+                  className={`w-full text-left px-8 py-6 transition-all duration-500 ${selected?.id === p.id ? 'bg-white/5 border-l-4 border-l-[#00D4FF]' : 'hover:bg-white/[0.02]'}`}
+                >
+                  <div className={`font-black text-sm tracking-tight mb-1 ${selected?.id === p.id ? 'text-white' : 'text-white/40'}`}>
+                    {p.title || p.path}
+                  </div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-white/20">{p.path}</div>
+                </button>
               ))}
-            </ul>
-          }
+            </div>
+          )}
         </aside>
 
         {selected ? (
-          <div className="rounded-xl p-5 sm:p-6 space-y-4" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-            <div className="flex items-center justify-between gap-3">
+          <div className="rounded-[2.5rem] p-10 lg:p-12 bg-black border border-white/10 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00D4FF]/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
+            
+            <div className="flex items-center justify-between gap-6 mb-12 relative z-10">
               <div>
-                <p className="font-inter text-xs uppercase tracking-wider" style={{ color: '#888' }}>{selected.path}</p>
-                <h2 className="font-outfit text-xl font-medium">{selected.title || 'Untitled'}</h2>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00D4FF] mb-2">{selected.path}</p>
+                <h2 className="text-3xl font-black text-white tracking-tighter">{selected.title || 'Untitled Node'}</h2>
               </div>
-              <div className="flex gap-2">
-                <button onClick={() => remove(selected)} className="p-2 rounded hover:bg-red-50"><Trash2 size={16} color="#dc2626" /></button>
-                <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 px-3 py-2 rounded-md font-inter text-sm font-medium disabled:opacity-50" style={{ background: '#00D4FF', color: '#000000' }}><Save size={14} />{saving ? '…' : 'Save'}</button>
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => remove(selected)} 
+                  className="p-4 rounded-2xl bg-rose-500/5 text-rose-500/40 hover:text-rose-500 hover:bg-rose-500/10 transition-all"
+                  title="Delete Route"
+                >
+                  <Trash2 size={18} strokeWidth={3} />
+                </button>
+                <button 
+                  onClick={save} 
+                  disabled={saving} 
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-white text-black hover:bg-[#00D4FF] transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)] disabled:opacity-50"
+                >
+                  <Save size={18} strokeWidth={3} /> {saving ? 'SYNCING...' : 'SAVE DATA'}
+                </button>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Title</label>
-                <input className="w-full px-3 py-2 rounded-md border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} value={selected.title || ''} onChange={(e) => setSelected({ ...selected, title: e.target.value })} />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+              <div className="space-y-3">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">System Title</label>
+                <input 
+                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300" 
+                  value={selected.title || ''} 
+                  onChange={(e) => setSelected({ ...selected, title: e.target.value })} 
+                />
               </div>
-              <div>
-                <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Status</label>
-                <select className="w-full px-3 py-2 rounded-md border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} value={selected.status} onChange={(e) => setSelected({ ...selected, status: e.target.value as Page['status'] })}>
-                  <option value="published">Published</option><option value="draft">Draft</option><option value="archived">Archived</option>
+              <div className="space-y-3">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">Deployment Status</label>
+                <select 
+                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#00D4FF]/50 transition-all cursor-pointer" 
+                  value={selected.status} 
+                  onChange={(e) => setSelected({ ...selected, status: e.target.value as Page['status'] })}
+                >
+                  <option value="published" className="bg-black">LIVE</option>
+                  <option value="draft" className="bg-black">STAGING</option>
+                  <option value="archived" className="bg-black">ARCHIVED</option>
                 </select>
               </div>
-              <div className="sm:col-span-2">
-                <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Meta title</label>
-                <input className="w-full px-3 py-2 rounded-md border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} value={selected.meta_title || ''} onChange={(e) => setSelected({ ...selected, meta_title: e.target.value })} />
-                <p className="font-inter text-xs mt-1" style={{ color: selected.meta_title && selected.meta_title.length > 60 ? '#dc2626' : '#888' }}>{(selected.meta_title || '').length}/60</p>
+              <div className="md:col-span-2 space-y-3">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">SEO Meta Title</label>
+                <div className="relative">
+                  <input 
+                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300" 
+                    value={selected.meta_title || ''} 
+                    onChange={(e) => setSelected({ ...selected, meta_title: e.target.value })} 
+                  />
+                  <div className={`absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black ${(selected.meta_title || '').length > 60 ? 'text-rose-500' : 'text-white/20'}`}>
+                    {(selected.meta_title || '').length}/60
+                  </div>
+                </div>
               </div>
-              <div className="sm:col-span-2">
-                <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Meta description</label>
-                <textarea rows={2} className="w-full px-3 py-2 rounded-md border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} value={selected.meta_description || ''} onChange={(e) => setSelected({ ...selected, meta_description: e.target.value })} />
-                <p className="font-inter text-xs mt-1" style={{ color: (selected.meta_description || '').length > 160 ? '#dc2626' : '#888' }}>{(selected.meta_description || '').length}/160</p>
+              <div className="md:col-span-2 space-y-3">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">SEO Meta Description</label>
+                <div className="relative">
+                  <textarea 
+                    rows={3} 
+                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300 resize-none" 
+                    value={selected.meta_description || ''} 
+                    onChange={(e) => setSelected({ ...selected, meta_description: e.target.value })} 
+                  />
+                  <div className={`absolute right-6 bottom-4 text-[10px] font-black ${(selected.meta_description || '').length > 160 ? 'text-rose-500' : 'text-white/20'}`}>
+                    {(selected.meta_description || '').length}/160
+                  </div>
+                </div>
               </div>
-              <div className="sm:col-span-2">
-                <label className="block font-inter text-xs uppercase tracking-wider mb-1.5" style={{ color: '#555' }}>Open Graph image URL</label>
-                <input className="w-full px-3 py-2 rounded-md border font-inter text-sm" style={{ borderColor: '#E2DDD3' }} value={selected.og_image_url || ''} onChange={(e) => setSelected({ ...selected, og_image_url: e.target.value })} />
+              <div className="md:col-span-2 space-y-3">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">OG Intelligence Asset URL</label>
+                <input 
+                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300" 
+                  value={selected.og_image_url || ''} 
+                  onChange={(e) => setSelected({ ...selected, og_image_url: e.target.value })} 
+                />
               </div>
             </div>
           </div>
         ) : (
-          <div className="rounded-xl p-8 text-center" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-            <p className="font-inter text-sm" style={{ color: '#666' }}>Select a page from the list to edit its SEO.</p>
+          <div className="rounded-[2.5rem] p-20 text-center bg-black border border-white/10">
+            <div className="w-16 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-8 animate-pulse">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#00D4FF]"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+            </div>
+            <p className="text-white/40 font-medium">Select a route node to configure intelligence parameters.</p>
           </div>
         )}
       </div>

@@ -77,53 +77,66 @@ export default function AIAssistant() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg font-inter text-sm font-medium transition-transform hover:scale-105"
-        style={{ background: '#000000', color: '#FFFFFF' }}
+        className="fixed bottom-8 right-8 z-40 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] font-black text-xs uppercase tracking-widest transition-all hover:scale-105 bg-[#00D4FF] text-black border border-[#00D4FF]/20"
         aria-label="Open AI assistant"
       >
-        <Sparkles size={16} color="#00D4FF" />
-        Assistant
+        <Sparkles size={16} strokeWidth={3} />
+        Intelligence Assistant
       </button>
     );
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end pointer-events-none">
-      <div className="pointer-events-auto flex flex-col w-full sm:w-[420px] h-full shadow-2xl" style={{ background: '#fff', borderLeft: '1px solid #E2DDD3' }}>
+    <div className="fixed inset-0 z-[100] flex justify-end pointer-events-none">
+      <div className="pointer-events-auto flex flex-col w-full sm:w-[480px] h-full shadow-[0_0_100px_rgba(0,0,0,1)] bg-black border-l border-white/10 animate-in slide-in-from-right duration-500">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: '#E2DDD3', background: '#000000' }}>
-          <div className="flex items-center gap-2">
-            <Sparkles size={16} color="#00D4FF" />
-            <h3 className="font-outfit font-medium text-base" style={{ color: '#FFFFFF' }}>Editorial assistant</h3>
+        <div className="flex items-center justify-between px-8 py-6 border-b border-white/10 bg-white/[0.02]">
+          <div className="flex items-center gap-3">
+            <Sparkles size={18} className="text-[#00D4FF]" strokeWidth={3} />
+            <h3 className="text-sm font-black text-white uppercase tracking-widest">System Assistant</h3>
           </div>
-          <button onClick={() => setOpen(false)} aria-label="Close"><X size={18} color="#FFFFFF" /></button>
+          <button 
+            onClick={() => setOpen(false)} 
+            aria-label="Close"
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-white/20 hover:text-white hover:bg-white/5 transition-all"
+          >
+            <X size={20} strokeWidth={3} />
+          </button>
         </div>
 
         {/* Context bar */}
         {context && (
-          <div className="px-5 py-2.5 border-b flex items-center justify-between text-xs font-inter" style={{ borderColor: '#E2DDD3', background: '#f8f5ee' }}>
-            <span className="truncate" style={{ color: '#555' }}>
-              <span style={{ color: '#888' }}>Working on: </span>
-              <strong style={{ color: '#000000' }}>{context.title || 'Untitled'}</strong>
-              {context.focusKeyword && <span style={{ color: '#888' }}> · {context.focusKeyword}</span>}
+          <div className="px-8 py-4 border-b border-white/5 flex items-center justify-between text-[10px] font-black uppercase tracking-widest bg-white/[0.01]">
+            <span className="truncate text-white/20">
+              Active Node: <span className="text-white">{context.title || 'UNNAMED_ENTITY'}</span>
+              {context.focusKeyword && <span className="text-[#00D4FF]"> · {context.focusKeyword}</span>}
             </span>
-            <label className="flex items-center gap-1.5 shrink-0 ml-2" title="Allow assistant to insert / apply into fields">
-              <input type="checkbox" checked={allowInsert} onChange={(e) => setAllowInsert(e.target.checked)} />
-              <span style={{ color: '#555' }}>Allow insert</span>
+            <label className="flex items-center gap-2 shrink-0 ml-4 cursor-pointer group" title="Allow assistant to modify node data">
+              <input 
+                type="checkbox" 
+                checked={allowInsert} 
+                onChange={(e) => setAllowInsert(e.target.checked)}
+                className="w-3 h-3 rounded bg-white/5 border-white/10 text-[#00D4FF] focus:ring-0"
+              />
+              <span className="text-white/20 group-hover:text-white transition-colors">Direct Injection</span>
             </label>
           </div>
         )}
 
         {/* Messages */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto px-8 py-8 space-y-8 scrollbar-hide">
           {messages.length === 0 && (
-            <div className="space-y-3">
-              <p className="font-inter text-sm" style={{ color: '#666' }}>
-                Ask me to draft outlines, sharpen headlines, write meta tags, or check SEO gaps. {context ? "I'll use the current post as context." : 'Open a post for post-aware answers.'}
+            <div className="space-y-8">
+              <p className="text-sm font-medium leading-relaxed text-white/40">
+                Awaiting protocol instructions. I can draft architectures, refine headlines, or audit SEO integrity for the current entity.
               </p>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="grid grid-cols-1 gap-3">
                 {QUICK_ACTIONS.map((a) => (
-                  <button key={a.label} onClick={() => send(a.prompt)} className="px-2.5 py-1.5 rounded-full text-xs font-inter border" style={{ borderColor: '#E2DDD3', color: '#333' }}>
+                  <button 
+                    key={a.label} 
+                    onClick={() => send(a.prompt)} 
+                    className="px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-white/5 border border-white/10 text-white/40 hover:text-[#00D4FF] hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all text-left"
+                  >
                     {a.label}
                   </button>
                 ))}
@@ -131,33 +144,49 @@ export default function AIAssistant() {
             </div>
           )}
           {messages.map((m, i) => (
-            <div key={i} className="text-sm font-inter">
+            <div key={i} className="animate-in fade-in slide-in-from-bottom-2 duration-500">
               {m.role === 'user' ? (
-                <div className="flex justify-end"><div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-br-sm" style={{ background: '#000000', color: '#FFFFFF' }}>{m.content}</div></div>
+                <div className="flex justify-end">
+                  <div className="max-w-[85%] px-6 py-4 rounded-[2rem] rounded-br-lg bg-[#00D4FF] text-black text-sm font-black tracking-tight shadow-[0_0_30px_rgba(0,212,255,0.1)]">
+                    {m.content}
+                  </div>
+                </div>
               ) : (
-                <div>
-                  <div className="prose prose-sm max-w-none prose-neutral prose-headings:font-outfit prose-headings:font-medium prose-p:my-2 prose-headings:mt-3 prose-headings:mb-2">
+                <div className="space-y-6">
+                  <div className="prose prose-invert prose-sm max-w-none prose-p:text-white/60 prose-p:leading-relaxed prose-headings:text-white prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-strong:text-white prose-code:text-[#00D4FF] prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded">
                     <ReactMarkdown>{m.content}</ReactMarkdown>
                   </div>
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    <button onClick={() => copy(m.content)} className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px] border" style={{ borderColor: '#E2DDD3', color: '#555' }}>
-                      <ClipboardCopy size={11} /> Copy
+                  <div className="flex flex-wrap gap-2">
+                    <button 
+                      onClick={() => copy(m.content)} 
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/10 transition-all"
+                    >
+                      <ClipboardCopy size={12} strokeWidth={3} /> Copy
                     </button>
                     {allowInsert && context && (
                       <>
-                        <button onClick={() => insert(m.content)} className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]" style={{ background: '#00D4FF', color: '#000000' }}>
-                          <Plus size={11} /> Insert into post
+                        <button 
+                          onClick={() => insert(m.content)} 
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[10px] font-black uppercase tracking-widest text-[#00D4FF] hover:bg-[#00D4FF] hover:text-black transition-all"
+                        >
+                          <Plus size={12} strokeWidth={3} /> Inject to Post
                         </button>
                         {(() => {
                           const candidate = tryApplyMeta(m.content);
                           if (!candidate) return null;
                           return (
                             <>
-                              <button onClick={() => { if (setField('metaTitle', candidate)) toast.success('Applied to meta title'); }} className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px] border" style={{ borderColor: '#E2DDD3', color: '#333' }}>
-                                Apply as meta title
+                              <button 
+                                onClick={() => { if (setField('metaTitle', candidate)) toast.success('Applied to meta title'); }} 
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/10 transition-all"
+                              >
+                                Set Meta Title
                               </button>
-                              <button onClick={() => { if (setField('metaDescription', candidate)) toast.success('Applied to meta description'); }} className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px] border" style={{ borderColor: '#E2DDD3', color: '#333' }}>
-                                Apply as meta description
+                              <button 
+                                onClick={() => { if (setField('metaDescription', candidate)) toast.success('Applied to meta description'); }} 
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/10 transition-all"
+                              >
+                                Set Meta Description
                               </button>
                             </>
                           );
@@ -170,32 +199,43 @@ export default function AIAssistant() {
             </div>
           ))}
           {loading && (
-            <div className="flex items-center gap-2 text-xs font-inter" style={{ color: '#888' }}>
-              <Loader2 size={14} className="animate-spin" /> Thinking…
+            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-[#00D4FF] animate-pulse">
+              <Loader2 size={14} className="animate-spin" strokeWidth={3} /> Decrypting Signal...
             </div>
           )}
         </div>
 
         {/* Composer */}
-        <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="border-t p-3 flex items-end gap-2" style={{ borderColor: '#E2DDD3' }}>
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input); } }}
-            placeholder="Ask about this post, or paste text to rewrite…"
-            rows={2}
-            className="flex-1 resize-none px-3 py-2 rounded-md border font-inter text-sm focus:outline-none focus:border-black"
-            style={{ borderColor: '#E2DDD3', background: '#fff' }}
-          />
-          <button type="submit" disabled={loading || !input.trim()} className="p-2.5 rounded-md disabled:opacity-40" style={{ background: '#000000', color: '#FFFFFF' }} aria-label="Send">
-            <Send size={16} />
-          </button>
-        </form>
-        {messages.length > 0 && (
-          <button onClick={() => setMessages([])} className="text-[11px] font-inter py-1.5 border-t" style={{ borderColor: '#E2DDD3', color: '#888' }}>
-            Clear conversation
-          </button>
-        )}
+        <div className="p-8 border-t border-white/10 bg-white/[0.02]">
+          <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex flex-col gap-4">
+            <div className="relative">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input); } }}
+                placeholder="Enter transmission..."
+                rows={3}
+                className="w-full resize-none px-6 py-4 rounded-[1.5rem] bg-black border border-white/10 text-white text-sm font-medium placeholder:text-white/10 focus:outline-none focus:border-[#00D4FF]/50 transition-all"
+              />
+              <button 
+                type="submit" 
+                disabled={loading || !input.trim()} 
+                className="absolute bottom-4 right-4 p-3 rounded-xl bg-[#00D4FF] text-black disabled:opacity-20 disabled:grayscale transition-all hover:bg-white"
+                aria-label="Send"
+              >
+                <Send size={18} strokeWidth={3} />
+              </button>
+            </div>
+            {messages.length > 0 && (
+              <button 
+                onClick={() => setMessages([])} 
+                className="text-[9px] font-black uppercase tracking-[0.3em] text-white/10 hover:text-rose-500 transition-colors self-center"
+              >
+                Purge History
+              </button>
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );

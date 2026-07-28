@@ -47,32 +47,55 @@ export default function MediaPickerDialog({ open, onClose, onPick }: { open: boo
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }} onClick={onClose}>
-      <div className="rounded-xl w-full max-w-4xl max-h-[85vh] flex flex-col" style={{ background: '#fff' }} onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: '#E2DDD3' }}>
-          <h3 className="font-outfit font-medium text-lg">Pick media</h3>
-          <div className="flex items-center gap-2">
-            <label className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-inter text-sm cursor-pointer" style={{ background: '#000000', color: '#fff' }}>
-              <Upload size={14} /> {uploading ? 'Uploading…' : 'Upload'}
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-8 bg-black/90 backdrop-blur-2xl animate-in fade-in duration-500" onClick={onClose}>
+      <div className="w-full max-w-6xl max-h-[90vh] flex flex-col bg-black border border-white/10 rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)]" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-10 py-8 border-b border-white/10 bg-white/[0.02]">
+          <div>
+            <h3 className="text-xl font-black uppercase tracking-tight text-white">Asset Cluster</h3>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mt-1">Select protocol for injection</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <label className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all hover:bg-white shadow-[0_0_20px_rgba(0,212,255,0.2)]">
+              <Upload size={16} strokeWidth={3} /> {uploading ? 'Syncing...' : 'Upload Asset'}
               <input type="file" accept="image/*,video/*" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
             </label>
-            <button onClick={onClose} className="p-1.5 rounded hover:bg-gray-100"><X size={18} /></button>
+            <button 
+              onClick={onClose} 
+              className="w-12 h-12 rounded-2xl flex items-center justify-center text-white/20 hover:text-white hover:bg-white/5 transition-all"
+            >
+              <X size={24} strokeWidth={3} />
+            </button>
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-4">
-          {loading ? <p className="font-inter text-sm text-gray-500">Loading…</p> :
-            assets.length === 0 ? <p className="font-inter text-sm text-gray-500">No media yet — upload something.</p> :
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <div className="flex-1 overflow-y-auto p-10 scrollbar-hide">
+          {loading ? (
+            <div className="flex items-center justify-center py-24 text-[10px] font-black uppercase tracking-widest text-[#00D4FF] animate-pulse">Syncing Signal...</div>
+          ) : assets.length === 0 ? (
+            <div className="text-center py-24">
+              <p className="text-[10px] font-black uppercase tracking-widest text-white/10">Zero assets detected in cluster.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {assets.map((a) => (
-                <button key={a.id} onClick={() => a.url && (onPick(a.url), onClose())} className="group relative aspect-square rounded-lg overflow-hidden border hover:ring-2 hover:ring-orange-500" style={{ borderColor: '#E2DDD3', background: '#f5f5f5' }}>
+                <button 
+                  key={a.id} 
+                  onClick={() => a.url && (onPick(a.url), onClose())} 
+                  className="group relative aspect-square rounded-[2rem] overflow-hidden border border-white/5 bg-white/[0.02] hover:border-[#00D4FF]/30 transition-all duration-500"
+                >
                   {a.url && a.mime?.startsWith('image/') ? (
-                    <img src={a.url} alt={a.alt || a.filename} className="w-full h-full object-cover" loading="lazy" />
+                    <img src={a.url} alt={a.alt || a.filename} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
                   ) : (
-                    <div className="flex items-center justify-center h-full text-xs text-gray-500 p-2 text-center break-all">{a.filename}</div>
+                    <div className="flex items-center justify-center h-full p-6 text-center">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white/20 break-all">{a.filename}</span>
+                    </div>
                   )}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#00D4FF]">Inject Asset</span>
+                  </div>
                 </button>
               ))}
             </div>
+          )
           }
         </div>
       </div>

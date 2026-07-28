@@ -35,54 +35,73 @@ export default function BlogIndex() {
   const [featured, ...rest] = posts;
 
   return (
-    <div style={{ background: '#FFFFFF', minHeight: '100vh' }}>
-      <SEO title="Blog" description="Strategic essays on retention, lifecycle marketing, and customer lifetime value from RetentionFirm." path="/blog" />
+    <div className="bg-black min-h-screen selection:bg-[#00D4FF] selection:text-black">
+      <SEO title="Intelligence Hub" description="Strategic essays on retention, lifecycle marketing, and customer lifetime value from RetentionFirm." path="/blog" />
       <Navigation />
-      <main style={{ padding: '140px clamp(20px, 5vw, 80px) 80px' }}>
-        <div className="mx-auto" style={{ maxWidth: '1100px' }}>
-          <header className="mb-12 sm:mb-16">
-            <p className="font-inter uppercase mb-3" style={{ fontSize: '11px', color: '#8A8A8A', letterSpacing: '0.08em' }}>Blog</p>
-            <h1 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(36px, 6vw, 64px)', color: '#000000', lineHeight: 1, letterSpacing: '-0.02em' }}>
-              Insights from the field.
+      <main className="relative pt-40 pb-32 px-6 overflow-hidden">
+        {/* Background Accents */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden opacity-50">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/5 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <header className="mb-20 lg:mb-32">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-6">Intelligence Hub</p>
+            <h1 className="text-5xl lg:text-8xl font-black text-white tracking-tighter mb-8 leading-[0.9]">
+              Notes from the <span className="text-gradient-cyan">Retention</span> Field.
             </h1>
-            <p className="font-inter" style={{ fontSize: 'clamp(15px, 2vw, 17px)', color: '#2D2D2D', maxWidth: '560px', lineHeight: 1.6 }}>
-              Strategic notes on retention, lifecycle, and the operational details that actually move LTV.
+            <p className="text-lg lg:text-xl font-medium text-white/40 max-w-2xl leading-relaxed">
+              Strategic architecture on lifecycle, LTV optimization, and the operational precision that defines award-winning retention.
             </p>
           </header>
 
           {loading ? (
-            <p className="font-inter text-sm" style={{ color: '#888' }}>Loading…</p>
+            <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
+              <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#00D4FF] animate-spin" />
+              Decrypting Insights...
+            </div>
           ) : posts.length === 0 ? (
-            <p className="font-inter" style={{ color: '#666' }}>No posts published yet.</p>
+            <p className="text-white/20 font-black text-xs uppercase tracking-widest">System offline. No intelligence assets deployed.</p>
           ) : (
-            <>
+            <div className="space-y-8">
               {featured && (
-                <Link to={`/blog/${featured.slug}`} className="block group rounded-2xl overflow-hidden mb-6 transition-all duration-300"
-                  style={{ background: '#000000', padding: 'clamp(28px, 5vw, 56px)' }}>
-                  <p className="font-inter uppercase mb-3" style={{ fontSize: '11px', color: '#00D4FF', letterSpacing: '0.08em', fontWeight: 500 }}>Featured</p>
-                  <h2 className="font-outfit font-medium mb-4" style={{ fontSize: 'clamp(26px, 4vw, 40px)', color: '#FFFFFF', lineHeight: 1.1, letterSpacing: '-0.02em' }}>{featured.title}</h2>
-                  {featured.excerpt && <p className="font-inter mb-5" style={{ fontSize: 'clamp(15px, 2vw, 17px)', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, maxWidth: '640px' }}>{featured.excerpt}</p>}
-                  <p className="font-inter" style={{ fontSize: '13px', color: '#8A8A8A' }}>{fmt(featured.published_at)}</p>
+                <Link to={`/blog/${featured.slug}`} className="group relative block rounded-[2.5rem] overflow-hidden bg-white/[0.03] border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-700">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D4FF]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-[#00D4FF]/10 transition-colors duration-700" />
+                  
+                  <div className="relative z-10 p-10 lg:p-20">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-8">Priority Intelligence</p>
+                    <h2 className="text-3xl lg:text-6xl font-black text-white tracking-tighter mb-8 leading-[0.9] max-w-4xl group-hover:text-gradient-cyan transition-all duration-700">{featured.title}</h2>
+                    {featured.excerpt && <p className="text-lg lg:text-xl font-medium text-white/40 mb-10 max-w-2xl leading-relaxed">{featured.excerpt}</p>}
+                    <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-white/20">
+                      <span>{fmt(featured.published_at)}</span>
+                      <span className="w-1 h-1 rounded-full bg-white/10" />
+                      <span className="text-[#00D4FF]">Read Protocol →</span>
+                    </div>
+                  </div>
                 </Link>
               )}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {rest.map((p) => (
-                  <Link key={p.id} to={`/blog/${p.slug}`} className="block rounded-xl overflow-hidden transition-all duration-300"
-                    style={{ background: '#FFFFFF', border: '1px solid #E2DDD3' }}>
+                  <Link key={p.id} to={`/blog/${p.slug}`} className="group relative rounded-[2.5rem] overflow-hidden bg-white/[0.03] border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-700 flex flex-col">
                     {p.featured_image_url && (
-                      <div className="aspect-video overflow-hidden" style={{ background: '#FFFFFF' }}>
-                        <SignedImage path={p.featured_image_url} alt="" className="w-full h-full object-cover" />
+                      <div className="aspect-[16/10] overflow-hidden border-b border-white/5">
+                        <SignedImage path={p.featured_image_url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
                       </div>
                     )}
-                    <div className="p-6 sm:p-8">
-                      <h3 className="font-outfit font-medium mb-3" style={{ fontSize: 'clamp(19px, 2.4vw, 23px)', color: '#000000', lineHeight: 1.2, letterSpacing: '-0.01em' }}>{p.title}</h3>
-                      {p.excerpt && <p className="font-inter mb-5" style={{ fontSize: '14.5px', color: '#555', lineHeight: 1.55 }}>{p.excerpt}</p>}
-                      <p className="font-inter" style={{ fontSize: '12.5px', color: '#8A8A8A' }}>{fmt(p.published_at)}</p>
+                    <div className="p-10 lg:p-12 flex-1 flex flex-col">
+                      <h3 className="text-2xl lg:text-3xl font-black text-white tracking-tighter mb-6 leading-none group-hover:text-[#00D4FF] transition-colors duration-500">{p.title}</h3>
+                      {p.excerpt && <p className="text-sm font-medium text-white/40 mb-10 leading-relaxed flex-1">{p.excerpt}</p>}
+                      <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-white/20">
+                        <span>{fmt(p.published_at)}</span>
+                        <span className="text-[#00D4FF] opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500">Read Protocol →</span>
+                      </div>
                     </div>
                   </Link>
                 ))}
               </div>
-            </>
+            </div>
           )}
         </div>
       </main>

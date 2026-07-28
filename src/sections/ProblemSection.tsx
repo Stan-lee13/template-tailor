@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
+import { ThreeDCard, ThreeDCardItem } from '../components/ui/three-d-card';
+import problemVisual from '../assets/problem-visual.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,61 +18,70 @@ export default function ProblemSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.problem-headline', { opacity: 0, y: 50 }, {
-        opacity: 1, y: 0, duration: 1, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
+      gsap.fromTo('.problem-headline', { opacity: 0, y: 60 }, {
+        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
       });
-      gsap.fromTo('.problem-item', { opacity: 0, y: 30, scale: 0.95 }, {
-        opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12, ease: 'power3.out',
+      gsap.fromTo('.problem-visual', { opacity: 0, scale: 0.9, y: 40 }, {
+        opacity: 1, scale: 1, y: 0, duration: 1.4, ease: 'expo.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' },
       });
-      gsap.fromTo('.problem-closer', { opacity: 0, y: 20 }, {
-        opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 40%' },
+      gsap.fromTo('.problem-item', { opacity: 0, x: -30 }, {
+        opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: { trigger: '.problem-grid', start: 'top 70%' },
       });
     }, sectionRef);
     return () => ctx.revert();
   }, [c.pain_points?.length]);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
-      {/* Subtle cyan glow at top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.3), transparent)' }} />
-
-      <div className="max-w-[800px] mx-auto text-center">
-        <div className="problem-headline" style={{ opacity: 0 }}>
-          <span className="block font-inter font-medium uppercase mb-5 sm:mb-6" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>
+    <section ref={sectionRef} className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+      {/* Dynamic background glow */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00D4FF]/5 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-[1300px] mx-auto">
+        <div className="problem-headline text-center mb-16 lg:mb-24" style={{ opacity: 0 }}>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
             {c.eyebrow}
           </span>
-          <h2 className="font-outfit font-bold mb-3 sm:mb-4" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
-            {c.headline_1}
+          <h2 className="text-4xl lg:text-7xl font-bold text-white mb-6 tracking-tighter">
+            {c.headline_1} <br />
+            <span className="text-gradient-cyan">{c.headline_2}</span>
           </h2>
-          <h2 className="font-outfit font-bold mb-6 sm:mb-8" style={{ fontSize: 'clamp(28px, 5vw, 56px)', lineHeight: 1.1, letterSpacing: '-0.03em' }}>
-            <span style={{ color: '#00D4FF' }}>{c.headline_2}</span>
-          </h2>
-          <p className="font-inter mb-10 sm:mb-12 mx-auto" style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.8, color: 'rgba(255,255,255,0.6)', maxWidth: '560px' }}>
+          <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed">
             {c.intro}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-          {(c.pain_points || []).map((p, i) => (
-            <div
-              key={i}
-              className="problem-item flex items-start gap-4 p-6 sm:p-7 rounded-2xl transition-all duration-400"
-              style={{ opacity: 0, background: 'rgba(26,32,53,0.6)', border: '1px solid rgba(0,212,255,0.08)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(0,212,255,0.3)'; e.currentTarget.style.background = 'rgba(26,32,53,0.9)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 16px 48px rgba(0,212,255,0.08)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(0,212,255,0.08)'; e.currentTarget.style.background = 'rgba(26,32,53,0.6)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
-            >
-              <span className="flex-shrink-0 mt-0.5" style={{ color: '#EF4444', fontSize: '14px' }}>✕</span>
-              <span className="font-inter" style={{ fontSize: 'clamp(14px, 2vw, 16px)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>{p.text}</span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="problem-visual relative group" style={{ opacity: 0 }}>
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#00D4FF]/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm">
+              <img src={problemVisual} alt="Revenue Leakage" className="w-full h-auto object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" />
             </div>
-          ))}
-        </div>
+          </div>
 
-        <p className="problem-closer font-inter font-medium mt-10 sm:mt-12" style={{ opacity: 0, fontSize: 'clamp(15px, 2.5vw, 17px)', color: '#00D4FF', letterSpacing: '-0.01em' }}>
-          {c.closer}
-        </p>
+          <div className="problem-grid grid gap-6">
+            {(c.pain_points || []).map((p, i) => (
+              <ThreeDCard key={i} className="w-full">
+                <ThreeDCardItem translateZ={20} className="problem-item group flex items-center gap-6 p-6 lg:p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#00D4FF]/30 transition-colors duration-500" style={{ opacity: 0 }}>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all duration-500">
+                    <span className="text-xl font-bold">✕</span>
+                  </div>
+                  <p className="text-lg lg:text-xl text-white/80 group-hover:text-white transition-colors">
+                    {p.text}
+                  </p>
+                </ThreeDCardItem>
+              </ThreeDCard>
+            ))}
+            
+            <div className="mt-8">
+              <p className="text-[#00D4FF] font-bold text-lg lg:text-xl tracking-tight">
+                {c.closer}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

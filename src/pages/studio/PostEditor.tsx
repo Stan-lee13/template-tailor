@@ -45,7 +45,7 @@ const empty: PostState = {
 
 function Counter({ value, max }: { value: number; max: number }) {
   const over = value > max;
-  return <span className="font-inter text-[10px] tabular-nums" style={{ color: over ? '#dc2626' : '#888' }}>{value}/{max}</span>;
+  return <span className={`text-[9px] font-black uppercase tracking-widest tabular-nums ${over ? 'text-rose-500' : 'text-white/20'}`}>{value}/{max}</span>;
 }
 
 export default function PostEditor() {
@@ -236,66 +236,92 @@ export default function PostEditor() {
   return (
     <StudioLayout>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <Link to="/studio/posts" className="inline-flex items-center gap-1.5 font-inter text-sm" style={{ color: '#666' }}>
-          <ArrowLeft size={14} /> Posts
-        </Link>
-        <div className="flex flex-wrap items-center gap-2">
-          <button onClick={() => ai.openPanel()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#000000', color: '#000000' }}>
-            <Sparkles size={12} color="#00D4FF" /> Ask AI
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12">
+        <div className="flex items-center gap-4">
+          <Link to="/studio/posts" className="p-3 rounded-2xl bg-white/5 text-white/40 hover:text-white transition-all">
+            <ArrowLeft size={16} />
+          </Link>
+          <h1 className="text-2xl font-black text-white tracking-tight">Content <span className="text-[#00D4FF]">Architect</span></h1>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <button 
+            onClick={() => ai.openPanel()} 
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all"
+          >
+            <Sparkles size={12} className="text-[#00D4FF]" /> AI Assistant
           </button>
 
           {p.status === 'published' && p.slug && (
-            <a href={`/blog/${p.slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs" style={{ color: '#666' }}>
-              View live <ExternalLink size={12} />
+            <a href={`/blog/${p.slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-all">
+              Live Preview <ExternalLink size={12} />
             </a>
           )}
-          <button onClick={() => save()} disabled={saving} className="px-4 py-2 rounded-md font-inter text-sm border" style={{ borderColor: '#000000', color: '#000000', background: 'transparent' }}>
-            {saving ? '…' : 'Save draft'}
+          <button 
+            onClick={() => save()} 
+            disabled={saving} 
+            className="px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all"
+          >
+            {saving ? '...' : 'Save Pipeline'}
           </button>
           {p.status === 'published' ? (
-            <button onClick={handleUnpublish} className="px-4 py-2 rounded-md font-inter text-sm" style={{ background: '#000000', color: '#FFFFFF' }}>Unpublish</button>
+            <button onClick={handleUnpublish} className="px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-rose-500/10 text-rose-500 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all">Recall</button>
           ) : (
-            <button onClick={handlePublish} className="px-4 py-2 rounded-md font-inter text-sm font-medium" style={{ background: '#00D4FF', color: '#000000' }}>
-              Publish
+            <button 
+              onClick={handlePublish} 
+              className="px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+            >
+              Deploy Live
             </button>
           )}
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-5 border-b" style={{ borderColor: '#E2DDD3' }}>
+      <div className="flex gap-4 mb-10 p-1.5 rounded-2xl bg-white/5 border border-white/5 w-fit">
         {(['content', 'seo', 'settings'] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)}
-            className="px-4 py-2.5 font-inter text-sm capitalize border-b-2 -mb-px"
-            style={{ borderColor: tab === t ? '#000000' : 'transparent', color: tab === t ? '#000000' : '#888', fontWeight: tab === t ? 600 : 400 }}>
+            className={`px-6 py-2 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-300 ${tab === t ? 'bg-[#00D4FF] text-black' : 'text-white/30 hover:text-white'}`}
+          >
             {t}
           </button>
         ))}
       </div>
 
       {tab === 'content' && (
-        <div className="space-y-5">
-          <input value={p.title} onChange={(e) => setP({ ...p, title: e.target.value })} placeholder="Post title"
-            className="w-full font-outfit font-medium bg-transparent focus:outline-none"
-            style={{ fontSize: 'clamp(28px, 4vw, 40px)', color: '#000000', letterSpacing: '-0.02em' }} />
-          <textarea value={p.excerpt} onChange={(e) => setP({ ...p, excerpt: e.target.value })} placeholder="Excerpt (1–2 sentences shown on listings)"
+        <div className="space-y-8 max-w-4xl">
+          <input 
+            value={p.title} 
+            onChange={(e) => setP({ ...p, title: e.target.value })} 
+            placeholder="System Title"
+            className="w-full font-black bg-transparent focus:outline-none text-white tracking-tighter"
+            style={{ fontSize: 'clamp(32px, 5vw, 64px)' }} 
+          />
+          <textarea 
+            value={p.excerpt} 
+            onChange={(e) => setP({ ...p, excerpt: e.target.value })} 
+            placeholder="Core retention summary (1–2 sentences for listing optimization)"
             rows={2}
-            className="w-full px-0 font-inter text-base bg-transparent focus:outline-none resize-none"
-            style={{ color: '#444' }} />
-          <TiptapEditor ref={editorRef} initialJson={p.content_json} onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))} />
+            className="w-full px-0 font-medium text-xl bg-transparent focus:outline-none resize-none text-white/40 leading-relaxed"
+          />
+          <div className="pt-8 border-t border-white/5">
+            <TiptapEditor 
+              ref={editorRef} 
+              initialJson={p.content_json} 
+              onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))} 
+            />
+          </div>
         </div>
       )}
 
       {tab === 'seo' && (
-        <div className="space-y-5 max-w-2xl">
-          <div className="rounded-xl p-5" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-            <h3 className="font-outfit font-medium mb-3" style={{ color: '#000000' }}>SEO checklist</h3>
-            <ul className="space-y-2">
+        <div className="space-y-8 max-w-2xl">
+          <div className="rounded-[2.5rem] p-10 bg-white/[0.02] border border-white/10">
+            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-6">SEO Protocol</h3>
+            <ul className="space-y-4">
               {checklist.map((c) => (
-                <li key={c.id} className="flex items-start gap-2 font-inter text-sm">
-                  <span className="mt-0.5">{c.pass ? <Check size={16} color="#10B981" /> : <X size={16} color="#dc2626" />}</span>
-                  <span style={{ color: '#333' }}>{c.label} {c.hint && <span style={{ color: '#888' }}>· {c.hint}</span>}</span>
+                <li key={c.id} className="flex items-start gap-3">
+                  <span className="mt-0.5">{c.pass ? <Check size={16} className="text-[#00D4FF]" strokeWidth={3} /> : <X size={16} className="text-rose-500" strokeWidth={3} />}</span>
+                  <span className="text-xs font-black uppercase tracking-widest text-white/40">{c.label} {c.hint && <span className="text-white/10 lowercase tracking-normal font-medium">· {c.hint}</span>}</span>
                 </li>
               ))}
             </ul>
@@ -311,20 +337,24 @@ export default function PostEditor() {
             <input value={p.focus_keyword} onChange={(e) => setP({ ...p, focus_keyword: e.target.value })} className={inputCls} placeholder="e.g. customer retention" />
           </Field>
           <Field label="Open Graph image">
-            <div className="space-y-3">
-              {ogPreview && <img src={ogPreview} alt="OG preview" className="rounded-lg max-h-40 object-cover" />}
-              <div className="flex flex-wrap items-center gap-3">
-                <button onClick={() => ogRef.current?.click()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#E2DDD3' }}>
-                  <Upload size={12} /> {p.og_image_url ? 'Replace' : 'Upload'}
+            <div className="space-y-6">
+              {ogPreview && (
+                <div className="rounded-[2rem] border border-white/10 overflow-hidden bg-white/[0.02] max-w-md">
+                  <img src={ogPreview} alt="OG preview" className="w-full h-auto object-cover" />
+                </div>
+              )}
+              <div className="flex flex-wrap items-center gap-4">
+                <button onClick={() => ogRef.current?.click()} className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">
+                  <Upload size={14} strokeWidth={3} /> {p.og_image_url ? 'Replace' : 'Upload'}
                 </button>
                 {p.og_image_url && (
-                  <button onClick={async () => { setP((s) => ({ ...s, og_image_url: null })); if (p.id) await save({ og_image_url: null }, true); }} className="font-inter text-xs" style={{ color: '#dc2626' }}>
+                  <button onClick={async () => { setP((s) => ({ ...s, og_image_url: null })); if (p.id) await save({ og_image_url: null }, true); }} className="text-[10px] font-black uppercase tracking-widest text-rose-500 hover:text-white transition-colors">
                     Remove
                   </button>
                 )}
                 <input ref={ogRef} type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadOg(f); e.target.value = ''; }} />
               </div>
-              <p className="font-inter text-xs" style={{ color: '#888' }}>Recommended 1200×630. Shown when this post is shared on social.</p>
+              <p className="text-[10px] font-medium text-white/20">Recommended 1200×630. Shown when this post is shared on social.</p>
             </div>
           </Field>
           <Field label="Canonical URL">
@@ -333,27 +363,31 @@ export default function PostEditor() {
           <Field label="Schema markup (JSON-LD)">
             <textarea value={p.schema_jsonld} onChange={(e) => setP({ ...p, schema_jsonld: e.target.value })} rows={8} placeholder='{ "@context": "https://schema.org", "@type": "Article", ... }'
               className={inputCls + ' font-mono text-xs'} />
-            <p className="font-inter text-xs mt-1" style={{ color: '#888' }}>Leave blank to auto-generate Article schema.</p>
+            <p className="text-[10px] font-medium text-white/20 mt-3">Leave blank to auto-generate Article schema.</p>
           </Field>
         </div>
       )}
 
       {tab === 'settings' && (
-        <div className="space-y-5 max-w-2xl">
+        <div className="space-y-8 max-w-2xl">
           <Field label="URL slug">
             <div className="flex items-center">
-              <span className="font-inter text-sm pr-1" style={{ color: '#888' }}>/blog/</span>
+              <span className="text-sm font-black text-white/10 pr-3">/blog/</span>
               <input value={p.slug} onChange={(e) => { setSlugTouched(true); setP({ ...p, slug: slugify(e.target.value) }); }} className={inputCls} />
             </div>
           </Field>
           <Field label="Featured image">
-            <div className="space-y-3">
-              {featuredPreview && <img src={featuredPreview} alt="" className="rounded-lg max-h-40 object-cover" />}
-              <div className="flex flex-wrap items-center gap-3">
-                <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md font-inter text-xs border" style={{ borderColor: '#E2DDD3' }}>
-                  <Upload size={12} /> {p.featured_image_url ? 'Replace' : 'Upload'}
+            <div className="space-y-6">
+              {featuredPreview && (
+                <div className="rounded-[2rem] border border-white/10 overflow-hidden bg-white/[0.02] max-w-md">
+                  <img src={featuredPreview} alt="" className="w-full h-auto object-cover" />
+                </div>
+              )}
+              <div className="flex flex-wrap items-center gap-4">
+                <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">
+                  <Upload size={14} strokeWidth={3} /> {p.featured_image_url ? 'Replace' : 'Upload'}
                 </button>
-                {p.featured_image_url && <button onClick={async () => { setP((s) => ({ ...s, featured_image_url: null })); if (p.id) await save({ featured_image_url: null }, true); }} className="font-inter text-xs" style={{ color: '#dc2626' }}>Remove</button>}
+                {p.featured_image_url && <button onClick={async () => { setP((s) => ({ ...s, featured_image_url: null })); if (p.id) await save({ featured_image_url: null }, true); }} className="text-[10px] font-black uppercase tracking-widest text-rose-500 hover:text-white transition-colors">Remove</button>}
                 <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadFeatured(f); e.target.value = ''; }} />
               </div>
             </div>
@@ -366,7 +400,7 @@ export default function PostEditor() {
               onChange={(e) => setP({ ...p, scheduled_for: e.target.value ? new Date(e.target.value).toISOString() : null })}
               className={inputCls} />
             {p.scheduled_for && p.status !== 'scheduled' && (
-              <button onClick={handleSchedule} className="mt-2 px-3 py-1.5 rounded font-inter text-xs" style={{ background: '#4169E1', color: '#fff' }}>Schedule this post</button>
+              <button onClick={handleSchedule} className="mt-4 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">Schedule Pipeline</button>
             )}
           </Field>
         </div>
@@ -374,21 +408,25 @@ export default function PostEditor() {
 
       {/* Checklist modal */}
       {showChecklist && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowChecklist(false)}>
-          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-outfit font-medium text-xl mb-2" style={{ color: '#000000' }}>Pre-publish checklist</h3>
-            <p className="font-inter text-sm mb-5" style={{ color: '#666' }}>Resolve these before publishing:</p>
-            <ul className="space-y-3 mb-6">
-              {checklist.map((c) => (
-                <li key={c.id} className="flex items-start gap-2 font-inter text-sm">
-                  {c.pass ? <Check size={16} color="#10B981" className="mt-0.5" /> : <X size={16} color="#dc2626" className="mt-0.5" />}
-                  <span style={{ color: '#333' }}>{c.label}{c.hint && <span style={{ color: '#888' }}> · {c.hint}</span>}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="flex gap-2 justify-end">
-              <button onClick={() => setShowChecklist(false)} className="px-4 py-2 rounded-md font-inter text-sm border" style={{ borderColor: '#E2DDD3' }}>Close</button>
-              <button onClick={() => { setShowChecklist(false); setTab('seo'); }} className="px-4 py-2 rounded-md font-inter text-sm" style={{ background: '#000000', color: '#FFFFFF' }}>Fix in SEO tab</button>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-8 bg-black/90 backdrop-blur-2xl animate-in fade-in duration-500" onClick={() => setShowChecklist(false)}>
+          <div className="w-full max-w-md bg-black border border-white/10 rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)]" onClick={(e) => e.stopPropagation()}>
+            <div className="px-10 py-8 border-b border-white/10 bg-white/[0.02]">
+              <h3 className="text-xl font-black uppercase tracking-tight text-white">Pre-publish Checklist</h3>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mt-1">Resolve protocol errors before deployment</p>
+            </div>
+            <div className="p-10 space-y-6">
+              <ul className="space-y-4">
+                {checklist.map((c) => (
+                  <li key={c.id} className="flex items-start gap-3">
+                    {c.pass ? <Check size={16} className="text-[#00D4FF] mt-0.5" strokeWidth={3} /> : <X size={16} className="text-rose-500 mt-0.5" strokeWidth={3} />}
+                    <span className="text-xs font-black uppercase tracking-widest text-white/40">{c.label}{c.hint && <span className="text-white/10 lowercase tracking-normal font-medium"> · {c.hint}</span>}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex gap-4 pt-4">
+                <button onClick={() => setShowChecklist(false)} className="flex-1 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:text-white hover:bg-white/10 transition-all">Close</button>
+                <button onClick={() => { setShowChecklist(false); setTab('seo'); }} className="flex-1 px-6 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500">Fix Protocol</button>
+              </div>
             </div>
           </div>
         </div>
@@ -397,13 +435,13 @@ export default function PostEditor() {
   );
 }
 
-const inputCls = 'w-full px-3 py-2.5 rounded-md font-inter text-sm border focus:outline-none focus:border-black bg-white';
+const inputCls = 'w-full px-6 py-4 rounded-2xl bg-white/[0.02] border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300 placeholder:text-white/10';
 
 function Field({ label, children }: { label: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div>
-      <label className="flex items-center justify-between mb-1.5">
-        <span className="font-inter text-xs uppercase tracking-wider" style={{ color: '#555' }}>{label}</span>
+    <div className="space-y-3">
+      <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 ml-4">
+        {label}
       </label>
       {children}
     </div>

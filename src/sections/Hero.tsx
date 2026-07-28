@@ -33,12 +33,12 @@ export default function Hero() {
       return;
     }
 
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.25 });
-    tl.fromTo(eyebrowRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 })
-      .fromTo(leftRef.current, { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 1.0 }, '-=0.2')
-      .fromTo(rightRef.current, { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 1.0 }, '<')
-      .fromTo(subRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, onComplete: () => setRotateStarted(true) }, '-=0.35')
-      .fromTo(ctaRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.3');
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.5 });
+    tl.fromTo(eyebrowRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2 })
+      .fromTo(leftRef.current, { opacity: 0, x: -100, filter: 'blur(10px)' }, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.5 }, '-=0.8')
+      .fromTo(rightRef.current, { opacity: 0, x: 100, filter: 'blur(10px)' }, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.5 }, '<')
+      .fromTo(subRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, onComplete: () => setRotateStarted(true) }, '-=1')
+      .fromTo(ctaRef.current, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 1.2 }, '-=0.8');
 
     return () => { tl.kill(); };
   }, []);
@@ -57,78 +57,57 @@ export default function Hero() {
       <HeroBackground />
 
       <div
-        className="relative z-10 flex flex-col items-center justify-center px-5 sm:px-6 text-center"
-        style={{ maxWidth: '960px', margin: '0 auto', minHeight: '100svh' }}
+        className="relative z-10 flex flex-col items-center justify-center px-6 lg:px-20 text-center"
+        style={{ maxWidth: '1200px', margin: '0 auto', minHeight: '100svh' }}
       >
         <span
           ref={eyebrowRef}
-          className="block uppercase tracking-widest mb-4 sm:mb-6"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '11px',
-            fontWeight: 500,
-            color: 'rgba(239,239,244,0.75)',
-            letterSpacing: '0.12em',
-            opacity: 0,
-          }}
+          className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-[0.3em] mb-10"
+          style={{ opacity: 0 }}
         >
-          <span style={{ color: '#2C91E1' }}>●</span>&nbsp;&nbsp;{c.eyebrow}
+          {c.eyebrow}
         </span>
 
         <h1
-          className="font-outfit font-medium"
+          className="font-black"
           style={{
-            fontSize: 'clamp(32px, 6.6vw, 84px)',
-            lineHeight: 1.02,
+            fontSize: 'clamp(40px, 9vw, 120px)',
+            lineHeight: 0.9,
             color: '#FFFFFF',
-            letterSpacing: '-0.025em',
-            textShadow: '0 2px 28px rgba(0,0,0,0.45)',
+            letterSpacing: '-0.05em',
           }}
         >
-          <span ref={leftRef} className="inline-block opacity-0">{c.title_left}</span>
-          <span ref={rightRef} className="inline-block opacity-0">
-            <span style={{ color: '#00D4FF' }}>{c.title_right}</span>{c.title_right_suffix}
+          <span ref={leftRef} className="block opacity-0">{c.title_left}</span>
+          <span ref={rightRef} className="block opacity-0">
+            <span className="text-gradient-cyan">{c.title_right}</span>{c.title_right_suffix}
           </span>
         </h1>
 
         <p
           ref={subRef}
-          className="mt-6 sm:mt-7 mx-auto"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: 'clamp(15px, 2.4vw, 18px)',
-            lineHeight: 1.6,
-            color: 'rgba(255,255,255,0.92)',
-            maxWidth: '620px',
-            letterSpacing: '-0.01em',
-            opacity: 0,
-            textShadow: '0 1px 16px rgba(0,0,0,0.4)',
-          }}
+          className="mt-10 lg:mt-12 text-xl lg:text-3xl text-white/60 max-w-3xl leading-tight tracking-tight"
+          style={{ opacity: 0 }}
         >
           {c.subtitle_prefix}{' '}
           {rotateStarted ? (
             <WordRotate
               words={(c.rotating_words || []).map((w) => w.word).filter(Boolean)}
-              className="font-medium"
-              motionProps={{ style: { color: '#00D4FF' } }}
+              className="font-black text-[#00D4FF]"
             />
           ) : (
-            <span className="font-medium" style={{ color: '#00D4FF' }}>{c.rotating_words?.[0]?.word || ''}</span>
+            <span className="font-black text-[#00D4FF]">{c.rotating_words?.[0]?.word || ''}</span>
           )}
           {' '}{c.subtitle_suffix}
         </p>
 
         <div
           ref={ctaRef}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-14 w-full sm:w-auto"
           style={{ opacity: 0 }}
         >
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
-            className="font-inter font-medium text-white transition-colors duration-200 w-full sm:w-auto"
-            style={{ background: '#00D4FF', padding: '14px 32px', borderRadius: '9999px', fontSize: '15px' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#0099cc'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#00D4FF'; }}
+            className="group relative px-10 py-5 rounded-full bg-[#00D4FF] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(0,212,255,0.3)] w-full sm:w-auto"
           >
             {c.primary_cta_label}
           </button>
@@ -137,8 +116,7 @@ export default function Hero() {
               const t = c.secondary_cta_target || '#process';
               if (t.startsWith('#')) scrollTo(t); else window.location.assign(t);
             }}
-            className="font-inter font-medium w-full sm:w-auto"
-            style={{ fontSize: '15px' }}
+            className="px-10 py-5 rounded-full border border-white/10 text-white font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:text-black w-full sm:w-auto"
           >
             {c.secondary_cta_label}
           </LiquidButton>

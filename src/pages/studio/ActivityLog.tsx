@@ -27,24 +27,36 @@ export default function ActivityLog() {
 
   return (
     <StudioLayout>
-      <div className="mb-6">
-        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Activity</h1>
-        <p className="font-inter text-sm" style={{ color: '#666' }}>Last 200 changes across the CMS.</p>
+      <div className="mb-12">
+        <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">System <span className="text-gradient-cyan">Logs</span></h1>
+        <p className="text-white/40 font-medium">Last 200 operations executed within the CMS cluster.</p>
       </div>
-      <div className="rounded-xl overflow-hidden" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-        {loading ? <p className="p-6 font-inter text-sm text-gray-500">Loading…</p> :
-          logs.length === 0 ? <p className="p-6 font-inter text-sm text-gray-500">No activity yet.</p> :
-          <ul className="divide-y" style={{ borderColor: '#E2DDD3' }}>
+      <div className="rounded-[2.5rem] overflow-hidden bg-black border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        {loading ? (
+          <div className="p-12 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
+            <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#00D4FF] animate-spin" />
+            Syncing logs...
+          </div>
+        ) : logs.length === 0 ? (
+          <div className="p-20 text-center">
+            <p className="text-white/20 font-black text-xs uppercase tracking-widest">Zero activity detected in current cycle.</p>
+          </div>
+        ) : (
+          <ul className="divide-y divide-white/5">
             {logs.map((l) => (
-              <li key={l.id} className="px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                <span className="font-inter text-[11px] uppercase tracking-wider px-2 py-0.5 rounded self-start" style={{ background: '#FFFFFF', color: '#000000' }}>{l.action}</span>
-                <span className="font-inter text-sm flex-1 truncate" style={{ color: '#333' }}>{l.entity_type}{l.entity_id ? ` · ${l.entity_id.slice(0, 8)}` : ''}</span>
-                <span className="font-inter text-xs" style={{ color: '#888' }}>{l.actor_id ? emails[l.actor_id] || l.actor_id.slice(0, 8) : 'system'}</span>
-                <span className="font-inter text-xs tabular-nums whitespace-nowrap" style={{ color: '#888' }}>{new Date(l.created_at).toLocaleString()}</span>
+              <li key={l.id} className="px-8 py-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 hover:bg-white/[0.02] transition-colors group">
+                <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg bg-white/5 text-[#00D4FF] border border-white/5 group-hover:border-[#00D4FF]/30 transition-all">{l.action}</span>
+                <span className="text-sm font-black text-white/60 flex-1 truncate tracking-tight">
+                  {l.entity_type} <span className="text-white/20 mx-2">/</span> {l.entity_id ? l.entity_id.slice(0, 12) : 'SYSTEM_NODE'}
+                </span>
+                <div className="flex items-center gap-8">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/20">{l.actor_id ? emails[l.actor_id] || l.actor_id.slice(0, 8) : 'CORE_ENGINE'}</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/10 tabular-nums">{new Date(l.created_at).toLocaleString()}</span>
+                </div>
               </li>
             ))}
           </ul>
-        }
+        )}
       </div>
     </StudioLayout>
   );

@@ -10,18 +10,15 @@ type FaqContent = { eyebrow: string; headline: string; faqs: FaqItem[] };
 
 function AccordionItem({ question, answer, isOpen, onClick }: { question: string; answer: string; isOpen: boolean; onClick: () => void }) {
   return (
-    <div className="rounded-2xl mb-3 transition-all duration-300" style={{ background: isOpen ? 'rgba(26,32,53,0.6)' : 'transparent', border: isOpen ? '1px solid rgba(0,212,255,0.15)' : '1px solid rgba(255,255,255,0.06)' }}>
-      <button onClick={onClick} className="w-full flex items-center justify-between py-5 sm:py-6 px-5 sm:px-6 text-left transition-all duration-300">
-        <span className="font-inter pr-4" style={{ fontSize: 'clamp(15px, 2.5vw, 17px)', lineHeight: 1.4, color: '#FFFFFF', fontWeight: isOpen ? 600 : 400 }}>{question}</span>
-        <span className="flex-shrink-0 transition-transform duration-400" style={{ transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <line x1="8" y1="0" x2="8" y2="16" stroke={isOpen ? '#00D4FF' : 'rgba(255,255,255,0.4)'} strokeWidth="2" />
-            <line x1="0" y1="8" x2="16" y2="8" stroke={isOpen ? '#00D4FF' : 'rgba(255,255,255,0.4)'} strokeWidth="2" />
-          </svg>
-        </span>
+    <div className={`rounded-[2rem] mb-4 transition-all duration-500 overflow-hidden ${isOpen ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10'} border`}>
+      <button onClick={onClick} className="w-full flex items-center justify-between p-8 text-left transition-all duration-300 group">
+        <span className={`text-lg lg:text-xl font-bold tracking-tight pr-8 transition-colors duration-300 ${isOpen ? 'text-[#00D4FF]' : 'text-white/80 group-hover:text-white'}`}>{question}</span>
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-[#00D4FF] border-[#00D4FF] rotate-45' : 'group-hover:border-white/30'}`}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={isOpen ? 'black' : 'white'} strokeWidth="3" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
       </button>
-      <div className="overflow-hidden transition-all duration-400" style={{ maxHeight: isOpen ? '400px' : '0', opacity: isOpen ? 1 : 0 }}>
-        <p className="font-inter px-5 sm:px-6 pb-5 sm:pb-6" style={{ fontSize: 'clamp(14px, 2vw, 16px)', lineHeight: 1.7, color: 'rgba(255,255,255,0.55)' }}>{answer}</p>
+      <div className={`transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <p className="px-8 pb-8 text-lg text-white/50 leading-relaxed">{answer}</p>
       </div>
     </div>
   );

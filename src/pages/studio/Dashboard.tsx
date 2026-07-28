@@ -8,9 +8,9 @@ type TopPost = { id: string; title: string; slug: string; view_count: number; st
 
 function Stat({ label, value, accent }: { label: string; value: number; accent?: string }) {
   return (
-    <div className="rounded-xl p-5 sm:p-6" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-      <p className="font-inter text-xs uppercase tracking-wider mb-2" style={{ color: '#888' }}>{label}</p>
-      <p className="font-outfit text-3xl sm:text-4xl font-medium" style={{ color: accent || '#000000', letterSpacing: '-0.02em' }}>{value}</p>
+    <div className="rounded-3xl p-8 bg-black border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-500 group">
+      <p className="font-black text-[10px] uppercase tracking-[0.2em] text-white/30 mb-4 group-hover:text-[#00D4FF] transition-colors duration-500">{label}</p>
+      <p className="text-5xl font-black tracking-tighter" style={{ color: accent || '#FFFFFF' }}>{value}</p>
     </div>
   );
 }
@@ -42,34 +42,53 @@ export default function StudioDashboard() {
 
   return (
     <StudioLayout>
-      <div className="mb-8">
-        <h1 className="font-outfit font-medium text-3xl sm:text-4xl mb-1" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Dashboard</h1>
-        <p className="font-inter text-sm" style={{ color: '#666' }}>Overview of your content.</p>
+      <div className="mb-12">
+        <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Command <span className="text-gradient-cyan">Center</span></h1>
+        <p className="text-white/40 font-medium">Your retention engine performance at a glance.</p>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
-        <Stat label="Total posts" value={stats.total} />
-        <Stat label="Published" value={stats.published} accent="#10B981" />
-        <Stat label="Drafts" value={stats.drafts} accent="#00D4FF" />
-        <Stat label="Scheduled" value={stats.scheduled} accent="#4169E1" />
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <Stat label="Total Systems" value={stats.total} />
+        <Stat label="Live Assets" value={stats.published} accent="#10B981" />
+        <Stat label="In Development" value={stats.drafts} accent="#00D4FF" />
+        <Stat label="Pipeline" value={stats.scheduled} accent="#4169E1" />
       </div>
-      <div className="rounded-xl p-5 sm:p-6" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-outfit text-lg font-medium" style={{ color: '#000000' }}>Most viewed</h2>
-          <Link to="/studio/posts" className="font-inter text-xs" style={{ color: '#00D4FF' }}>All posts →</Link>
+      
+      <div className="rounded-[2.5rem] p-10 bg-black border border-white/10">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-2xl font-black text-white tracking-tight">Top Performing Assets</h2>
+          <Link to="/studio/posts" className="text-xs font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors duration-300">View All Systems →</Link>
         </div>
         {loading ? (
-          <p className="font-inter text-sm" style={{ color: '#888' }}>Loading…</p>
+          <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
+            <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#00D4FF] animate-spin" />
+            Synchronizing...
+          </div>
         ) : top.length === 0 ? (
-          <p className="font-inter text-sm" style={{ color: '#888' }}>No posts yet. <Link to="/studio/posts/new" style={{ color: '#00D4FF' }}>Create your first one →</Link></p>
+          <p className="text-white/40 font-medium">No assets deployed yet. <Link to="/studio/posts/new" className="text-[#00D4FF] underline underline-offset-4">Deploy your first system →</Link></p>
         ) : (
-          <ul className="divide-y" style={{ borderColor: '#E2DDD3' }}>
+          <div className="space-y-4">
             {top.map((p) => (
-              <li key={p.id} className="py-3 flex items-center justify-between gap-4">
-                <Link to={`/studio/posts/${p.id}`} className="font-inter text-sm truncate hover:underline" style={{ color: '#000000' }}>{p.title || '(untitled)'}</Link>
-                <span className="font-inter text-xs tabular-nums whitespace-nowrap" style={{ color: '#888' }}>{p.view_count} views</span>
-              </li>
+              <Link 
+                key={p.id} 
+                to={`/studio/posts/${p.id}`} 
+                className="flex items-center justify-between p-6 rounded-2xl bg-white/5 border border-transparent hover:border-white/10 hover:bg-white/[0.08] transition-all duration-500 group"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-[10px] font-black text-white/20 group-hover:text-[#00D4FF] transition-colors duration-500">
+                    {p.status === 'published' ? '●' : '○'}
+                  </div>
+                  <span className="text-lg font-black text-white group-hover:translate-x-2 transition-transform duration-500">{p.title || '(untitled)'}</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-xs font-black tabular-nums text-white/20 tracking-widest">{p.view_count} IMPRESSIONS</span>
+                  <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </div>
+                </div>
+              </Link>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </StudioLayout>

@@ -27,23 +27,46 @@ export default function TemplatesLibrary() {
 
   return (
     <StudioLayout>
-      <div className="mb-6">
-        <h1 className="font-outfit font-medium text-3xl" style={{ color: '#000000', letterSpacing: '-0.02em' }}>Templates</h1>
-        <p className="font-inter text-sm" style={{ color: '#666' }}>Reusable section presets. Create from any section in the site editor.</p>
+      <div className="mb-12">
+        <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Preset <span className="text-gradient-cyan">Blueprints</span></h1>
+        <p className="text-white/40 font-medium">Reusable system architectures. Create from any node in the visual engine.</p>
       </div>
-      {loading ? <p className="font-inter text-sm text-gray-500">Loading…</p> :
-        items.length === 0 ? <p className="font-inter text-sm text-gray-500">No templates yet.</p> :
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {items.map((t) => (
-            <li key={t.id} className="p-4 rounded-xl flex items-start justify-between gap-3" style={{ background: '#fff', border: '1px solid #E2DDD3' }}>
-              <div className="min-w-0">
-                <p className="font-inter font-medium truncate">{t.name}</p>
-                <p className="font-inter text-xs" style={{ color: '#888' }}>{getSection(t.type)?.label || t.type} · {new Date(t.created_at).toLocaleDateString()}</p>
-              </div>
-              <button onClick={() => remove(t)} className="p-2 rounded hover:bg-red-50"><Trash2 size={14} color="#dc2626" /></button>
-            </li>
-          ))}
-        </ul>
+      {loading ? (
+        <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
+          <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#00D4FF] animate-spin" />
+          Synchronizing blueprints...
+        </div>
+      ) : items.length === 0 ? (
+          <div className="rounded-[2.5rem] p-20 text-center bg-black border border-white/10">
+            <p className="text-white/20 font-black text-xs uppercase tracking-widest">Blueprint library empty.</p>
+          </div>
+        ) : (
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {items.map((t) => (
+              <li key={t.id} className="group p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-500 flex flex-col justify-between">
+                <div className="min-w-0 mb-8">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="px-2 py-0.5 rounded bg-[#00D4FF]/10 text-[#00D4FF] text-[8px] font-black uppercase tracking-[0.2em]">
+                      {t.type}
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-black text-white tracking-tight truncate group-hover:text-[#00D4FF] transition-colors">{t.name}</h3>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/20 mt-2">Deployed: {new Date(t.created_at).toLocaleDateString()}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/10">{getSection(t.type)?.label || t.type}</span>
+                  <button 
+                    onClick={() => remove(t)} 
+                    className="p-3 rounded-xl bg-rose-500/5 text-rose-500/20 hover:text-rose-500 hover:bg-rose-500/10 transition-all"
+                    title="Purge Blueprint"
+                  >
+                    <Trash2 size={16} strokeWidth={3} />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )
       }
     </StudioLayout>
   );

@@ -11,17 +11,22 @@ export default function SocialProofTicker() {
   const doubled = [...items, ...items];
 
   return (
-    <div className="relative overflow-hidden" style={{ background: '#000000', borderTop: '1px solid rgba(0,212,255,0.06)', borderBottom: '1px solid rgba(0,212,255,0.06)', padding: '14px 0' }}>
-      <div className="ticker-track flex items-center gap-12 whitespace-nowrap">
+    <div className="relative overflow-hidden bg-black py-8 border-y border-white/5">
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
+      
+      <div className="ticker-track flex items-center gap-20 whitespace-nowrap">
         {doubled.map((item, i) => (
-          <span key={i} className="font-inter flex items-center gap-3" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.01em' }}>
-            <span style={{ color: '#00D4FF', fontSize: '6px' }}>●</span>
-            {item}
-          </span>
+          <div key={i} className="flex items-center gap-6">
+            <span className="text-xs font-black uppercase tracking-[0.3em] text-white/20">
+              {item}
+            </span>
+            <div className="w-2 h-2 rounded-full bg-[#00D4FF]/20" />
+          </div>
         ))}
       </div>
       <style>{`
-        .ticker-track { animation: ticker 36s linear infinite; width: max-content; }
+        .ticker-track { animation: ticker 40s linear infinite; width: max-content; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
       `}</style>

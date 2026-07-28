@@ -4,9 +4,9 @@ export const SITE = {
   nameSpaced: 'Retention Firm',
   domain: 'retentionfirm.com',
   url: 'https://retentionfirm.com',
-  tagline: 'Turn One-Time Buyers Into Lifelong Revenue',
+  tagline: 'THE RETENTION ENGINE',
   description:
-    'RetentionFirm is a retention marketing agency helping ecommerce and consumer brands increase customer lifetime value, repeat purchases, and predictable revenue — without raising ad spend.',
+    'RetentionFirm is an award-winning retention marketing studio for high-growth e-commerce brands. We build systems that turn one-time buyers into lifelong revenue assets.',
   email: 'Gerby@retentionfirm.com',
   social: {
     linkedin: 'https://www.linkedin.com/company/retentionfirm',

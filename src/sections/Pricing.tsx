@@ -59,49 +59,45 @@ const plans = [
   },
 ];
 
+import { ThreeDCard, ThreeDCardItem } from '../components/ui/three-d-card';
+
 function PricingCard({ plan, large = false, onSelect }: { plan: typeof plans[0]; large?: boolean; onSelect: () => void }) {
-  const isDark = plan.featured;
+  const isFeatured = plan.featured;
   return (
-    <div
-      className="relative rounded-2xl transition-all duration-400 h-full"
-      style={{
-        background: isDark ? 'rgba(26,32,53,0.8)' : 'rgba(26,32,53,0.4)',
-        border: isDark ? `2px solid ${plan.accent}40` : '1px solid rgba(255,255,255,0.06)',
-        boxShadow: isDark ? `0 20px 60px rgba(0,212,255,0.06)` : 'none',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = plan.accent + '50';
-        e.currentTarget.style.transform = 'translateY(-4px)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = isDark ? plan.accent + '40' : 'rgba(255,255,255,0.06)';
-        e.currentTarget.style.transform = 'translateY(0)';
-      }}
-    >
-      <div className={`${large ? 'p-6 sm:p-9 md:p-11' : 'p-6 sm:p-7 md:p-8'} h-full flex flex-col`}>
-        <span className="font-inter text-xs font-medium px-3 py-1.5 rounded-full inline-block self-start mb-4 sm:mb-5" style={{ background: plan.accent + '12', color: plan.accent, fontSize: '11px' }}>
+    <ThreeDCard className="h-full">
+      <ThreeDCardItem translateZ={30} className={`relative rounded-[2.5rem] overflow-hidden h-full flex flex-col p-8 lg:p-12 ${isFeatured ? 'bg-gradient-to-br from-[#00D4FF]/20 to-black border-2 border-[#00D4FF]/30 shadow-[0_0_50px_rgba(0,212,255,0.1)]' : 'bg-white/5 border border-white/10 hover:border-white/20'} transition-all duration-500`}>
+        {isFeatured && (
+          <div className="absolute top-0 right-0 px-6 py-2 bg-[#00D4FF] text-black text-xs font-black uppercase tracking-widest rounded-bl-2xl">
+            Most Popular
+          </div>
+        )}
+        
+        <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 text-white/50 text-[10px] font-bold uppercase tracking-widest mb-8 self-start border border-white/5">
           {plan.bestFor}
         </span>
-        <h3 className="font-outfit font-bold mb-2" style={{ fontSize: large ? 'clamp(22px, 3.5vw, 28px)' : 'clamp(20px, 3vw, 22px)', color: '#FFFFFF' }}>
+        
+        <h3 className="text-2xl lg:text-3xl font-bold text-white mb-2 tracking-tight">
           {plan.name}
         </h3>
-        <div className="flex items-baseline gap-1 mb-2">
-          <span className="font-outfit font-bold" style={{ fontSize: large ? 'clamp(30px, 5vw, 40px)' : 'clamp(26px, 4vw, 32px)', color: plan.accent }}>{plan.price}</span>
-          <span className="font-inter" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>{plan.period}</span>
+        
+        <div className="flex items-baseline gap-2 mb-4">
+          <span className="text-4xl lg:text-5xl font-black text-white tracking-tighter">{plan.price}</span>
+          <span className="text-white/40 font-medium">{plan.period}</span>
         </div>
-        <p className="font-inter text-sm mb-5 sm:mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
+        
+        <p className="text-white/50 mb-10 leading-relaxed">
           {plan.description}
         </p>
 
-        <div className="h-px mb-5 sm:mb-6" style={{ background: 'rgba(255,255,255,0.06)' }} />
+        <div className="h-px bg-white/10 mb-10" />
 
-        <div className="flex flex-col gap-3 mb-6 sm:mb-8 flex-1">
+        <div className="space-y-4 mb-12 flex-1">
           {plan.features.map((feature) => (
-            <div key={feature} className="flex items-start gap-2.5">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5">
-                <path d="M3 8l4 4 6-6" stroke={plan.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="font-inter text-sm" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
+            <div key={feature} className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#00D4FF]/10 flex items-center justify-center text-[#00D4FF]">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span className="text-white/70 text-sm font-medium leading-snug">
                 {feature}
               </span>
             </div>
@@ -110,26 +106,12 @@ function PricingCard({ plan, large = false, onSelect }: { plan: typeof plans[0];
 
         <button
           onClick={onSelect}
-          className="w-full font-inter font-bold text-sm py-3.5 rounded-full transition-all duration-300"
-          style={{
-            background: isDark ? `linear-gradient(135deg, ${plan.accent}, #0099cc)` : 'transparent',
-            color: isDark ? '#000000' : '#FFFFFF',
-            border: isDark ? 'none' : '1px solid rgba(255,255,255,0.15)',
-          }}
-          onMouseEnter={(e) => {
-            if (isDark) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 8px 25px ${plan.accent}40`; }
-            else { e.currentTarget.style.background = 'rgba(0,212,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(0,212,255,0.3)'; }
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = 'none';
-            if (!isDark) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }
-          }}
+          className={`w-full py-5 rounded-2xl font-bold text-sm transition-all duration-500 ${isFeatured ? 'bg-[#00D4FF] text-black hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]' : 'bg-white/10 text-white hover:bg-white hover:text-black'} transform hover:-translate-y-1`}
         >
-          Get Started
+          Get Started Now
         </button>
-      </div>
-    </div>
+      </ThreeDCardItem>
+    </ThreeDCard>
   );
 }
 
