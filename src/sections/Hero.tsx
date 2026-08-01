@@ -52,7 +52,7 @@ export default function Hero() {
     <section
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ minHeight: '100svh', background: '#000000', touchAction: 'pan-y' }}
+      style={{ minHeight: '100svh', background: '#0a0f1a', touchAction: 'pan-y' }}
     >
       <HeroBackground />
 
@@ -71,33 +71,24 @@ export default function Hero() {
         <h1
           className="font-black"
           style={{
-            fontSize: 'clamp(40px, 9vw, 120px)',
+            fontSize: 'clamp(36px, 8.5vw, 120px)',
             lineHeight: 0.9,
             color: '#FFFFFF',
             letterSpacing: '-0.05em',
           }}
         >
-          <span ref={leftRef} className="block opacity-0">{c.title_left}</span>
+          <span ref={leftRef} className="block opacity-0">Build a Brand</span>
           <span ref={rightRef} className="block opacity-0">
-            <span className="text-gradient-cyan">{c.title_right}</span>{c.title_right_suffix}
+            <span className="text-gradient-cyan">Customers Keep</span> Coming Back To.
           </span>
         </h1>
 
         <p
           ref={subRef}
-          className="mt-10 lg:mt-12 text-xl lg:text-3xl text-white/60 max-w-3xl leading-tight tracking-tight"
+          className="mt-10 lg:mt-12 text-lg lg:text-2xl text-white/60 max-w-3xl leading-snug tracking-tight"
           style={{ opacity: 0 }}
         >
-          {c.subtitle_prefix}{' '}
-          {rotateStarted ? (
-            <WordRotate
-              words={(c.rotating_words || []).map((w) => w.word).filter(Boolean)}
-              className="font-black text-[#00D4FF]"
-            />
-          ) : (
-            <span className="font-black text-[#00D4FF]">{c.rotating_words?.[0]?.word || ''}</span>
-          )}
-          {' '}{c.subtitle_suffix}
+          We design and manage customer retention systems that turn first-time buyers into loyal customers—helping brands increase repeat purchases, customer lifetime value, referrals, and long-term profitability.
         </p>
 
         <div
@@ -109,7 +100,7 @@ export default function Hero() {
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
             className="group relative px-10 py-5 rounded-full bg-[#00D4FF] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(0,212,255,0.3)] w-full sm:w-auto"
           >
-            {c.primary_cta_label}
+            Book an Intro Call
           </button>
           <LiquidButton
             onClick={() => {

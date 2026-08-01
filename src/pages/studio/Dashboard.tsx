@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import StudioLayout from '@/components/studio/StudioLayout';
@@ -22,21 +23,23 @@ export default function StudioDashboard() {
 
   useEffect(() => {
     (async () => {
-      const [all, pub, drafts, sched, topRes] = await Promise.all([
-        supabase.from('posts').select('id', { count: 'exact', head: true }),
-        supabase.from('posts').select('id', { count: 'exact', head: true }).eq('status', 'published'),
-        supabase.from('posts').select('id', { count: 'exact', head: true }).eq('status', 'draft'),
-        supabase.from('posts').select('id', { count: 'exact', head: true }).eq('status', 'scheduled'),
-        supabase.from('posts').select('id, title, slug, view_count, status').order('view_count', { ascending: false }).limit(5),
-      ]);
-      setStats({
-        total: all.count || 0,
-        published: pub.count || 0,
-        drafts: drafts.count || 0,
-        scheduled: sched.count || 0,
-      });
-      setTop((topRes.data as TopPost[]) || []);
-      setLoading(false);
+      try {
+        const { data: posts } = await supabase.from('posts').select('id, title, slug, view_count, status');
+        if (posts) {
+          const s = {
+            total: posts.length,
+            published: posts.filter(p => p.status === 'published').length,
+            drafts: posts.filter(p => p.status === 'draft').length,
+            scheduled: posts.filter(p => p.status === 'scheduled').length,
+          };
+          setStats(s);
+          setTop(posts.sort((a, b) => (b.view_count || 0) - (a.view_count || 0)).slice(0, 5));
+        }
+      } catch (e) {
+        console.error('Error fetching dashboard data:', e);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
 
@@ -61,33 +64,32 @@ export default function StudioDashboard() {
         </div>
         {loading ? (
           <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
-            <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#00D4FF] animate-spin" />
             Synchronizing...
           </div>
-        ) : top.length === 0 ? (
-          <p className="text-white/40 font-medium">No assets deployed yet. <Link to="/studio/posts/new" className="text-[#00D4FF] underline underline-offset-4">Deploy your first system →</Link></p>
         ) : (
           <div className="space-y-4">
-            {top.map((p) => (
+            {top.length > 0 ? top.map((p) => (
               <Link 
                 key={p.id} 
-                to={`/studio/posts/${p.id}`} 
+                to={`/studio/posts/${p.id}`}
                 className="flex items-center justify-between p-6 rounded-2xl bg-white/5 border border-transparent hover:border-white/10 hover:bg-white/[0.08] transition-all duration-500 group"
               >
                 <div className="flex items-center gap-6">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-[10px] font-black text-white/20 group-hover:text-[#00D4FF] transition-colors duration-500">
-                    {p.status === 'published' ? '●' : '○'}
-                  </div>
-                  <span className="text-lg font-black text-white group-hover:translate-x-2 transition-transform duration-500">{p.title || '(untitled)'}</span>
+                  <div className={`w-2 h-2 rounded-full ${p.status === 'published' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                  <span className="text-lg font-black text-white group-hover:translate-x-2 transition-transform duration-500">{p.title}</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-xs font-black tabular-nums text-white/20 tracking-widest">{p.view_count} IMPRESSIONS</span>
-                  <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                <div className="flex items-center gap-8">
+                  <div className="text-right">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/20 mb-1">{p.view_count || 0} Impressions</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-[#00D4FF] group-hover:text-black transition-all duration-500">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </div>
                 </div>
               </Link>
-            ))}
+            )) : (
+              <p className="text-white/20 font-medium">No assets found yet.</p>
+            )}
           </div>
         )}
       </div>

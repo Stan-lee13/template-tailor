@@ -28,11 +28,11 @@ export default function Results() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="results" className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+    <section ref={sectionRef} id="results" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
       {/* Background image with subtle parallax */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <img src={resultsVisual} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1a] via-[#0a0f1a]/80 to-[#0a0f1a]" />
       </div>
 
       <div className="relative max-w-[1300px] mx-auto">
@@ -41,7 +41,7 @@ export default function Results() {
             {c.eyebrow}
           </span>
           <h2 className="text-4xl lg:text-7xl font-bold text-white mb-6 tracking-tighter">
-            {c.headline}
+            We Help Brands <span className="text-gradient-cyan">Grow Sustainably</span>
           </h2>
         </div>
 

@@ -35,7 +35,7 @@ export default function DifferentiationSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+    <section ref={sectionRef} id="differentiation" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00D4FF]/5 rounded-full blur-[150px] pointer-events-none" />
       
       <div className="relative max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr,1fr] gap-16 lg:gap-24 items-center">
@@ -43,11 +43,11 @@ export default function DifferentiationSection() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
             {c.eyebrow}
           </span>
-          <h2 className="text-4xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight">
-            {c.headline}
+          <h2 className="text-3xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight">
+            Why Brands <span className="text-gradient-cyan">Choose RetentionFirm</span>
           </h2>
           <p className="text-lg lg:text-xl text-white/60 mb-12 leading-relaxed max-w-xl">
-            {c.body}
+            Not because we send emails. Because we think beyond them. We see customer retention as a business strategy—not a marketing channel.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
@@ -80,8 +80,8 @@ export default function DifferentiationSection() {
 
           <div className="flex items-center gap-4">
             <div className="h-px flex-grow bg-white/10" />
-            <p className="text-[#00D4FF] font-bold text-lg lg:text-xl whitespace-nowrap tracking-tight">
-              {c.closer}
+            <p className="text-[#00D4FF] font-bold text-lg lg:text-xl tracking-tight">
+              Creating customers who stay. Not just customers who click.
             </p>
             <div className="h-px flex-grow bg-white/10" />
           </div>

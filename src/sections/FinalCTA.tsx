@@ -29,9 +29,9 @@ export default function FinalCTA() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="cta" className="relative overflow-hidden bg-black py-32 lg:py-48 px-6 lg:px-20">
+    <section ref={sectionRef} id="cta" className="relative overflow-hidden bg-[#0a0f1a] py-32 lg:py-48 px-6 lg:px-20">
       {/* Immersive background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-[#00D4FF]/5 to-black" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1a] via-[#00D4FF]/5 to-[#0a0f1a]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[#00D4FF]/10 rounded-full blur-[180px] pointer-events-none" />
 
       {showSparkles && (
@@ -46,12 +46,12 @@ export default function FinalCTA() {
         </div>
         
         <h2 className="cta-animate text-5xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-none" style={{ opacity: 0 }}>
-          {c.headline_1} <br />
-          <span className="text-gradient-cyan">{c.headline_2}</span>
+          Build a Brand <br />
+          <span className="text-gradient-cyan">Customers Come Back To.</span>
         </h2>
         
         <p className="cta-animate text-xl lg:text-2xl text-white/60 mb-12 leading-relaxed max-w-2xl mx-auto" style={{ opacity: 0 }}>
-          {c.body}
+          If you're ready to build a more profitable business through stronger customer relationships, we'd love to talk.
         </p>
 
         <div className="cta-animate" style={{ opacity: 0 }}>
@@ -60,7 +60,7 @@ export default function FinalCTA() {
             className="group relative inline-flex items-center justify-center px-12 py-6 rounded-full bg-[#00D4FF] text-black font-black text-lg overflow-hidden transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(0,212,255,0.4)]"
           >
             <span className="relative z-10 flex items-center gap-3">
-              {c.cta_label}
+              Book Your Intro Call
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-2 transition-transform duration-500"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </button>

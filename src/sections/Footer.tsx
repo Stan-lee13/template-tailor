@@ -72,7 +72,7 @@ export default function Footer() {
   const brandName = settings?.brand?.name || SITE.name;
 
   return (
-    <footer className="bg-black py-24 lg:py-32 px-6 lg:px-20 border-t border-white/5">
+    <footer className="bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20 border-t border-white/5">
       <div className="max-w-[1300px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-24 mb-24">
           <div className="lg:col-span-4">

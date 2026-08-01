@@ -1,51 +1,53 @@
+
 import { ReactNode, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { LayoutDashboard, FileText, PlusCircle, UserCheck, LogOut, Menu, X, Settings, Menu as MenuIcon, FileCode, Image as ImageIcon, Activity, Layout, Bookmark, Sparkles } from 'lucide-react';
+import * as Lucide from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import AIAssistant from './AIAssistant';
-
-
 
 const nav = [
-  { to: '/studio', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/studio/visual', label: 'Visual Editor', icon: Sparkles },
-  { to: '/studio/site', label: 'Site editor', icon: Layout },
-  { to: '/studio/pages', label: 'Pages', icon: FileCode },
-  { to: '/studio/templates', label: 'Templates', icon: Bookmark },
-  { to: '/studio/media', label: 'Media', icon: ImageIcon },
-  { to: '/studio/posts', label: 'Posts', icon: FileText },
-  { to: '/studio/posts/new', label: 'New post', icon: PlusCircle },
+  { to: '/studio', label: 'Dashboard', iconName: 'Layout', end: true },
+  { to: '/studio/visual', label: 'Visual Editor', iconName: 'Sparkles' },
+  { to: '/studio/site', label: 'Site editor', iconName: 'Layout' },
+  { to: '/studio/pages', label: 'Pages', iconName: 'FileCode' },
+  { to: '/studio/templates', label: 'Templates', iconName: 'Bookmark' },
+  { to: '/studio/media', label: 'Media', iconName: 'Image' },
+  { to: '/studio/posts', label: 'Posts', iconName: 'FileText' },
+  { to: '/studio/posts/new', label: 'New post', iconName: 'PlusCircle' },
 ];
 
 const adminNav = [
-  { to: '/studio/navigation', label: 'Navigation', icon: MenuIcon },
-  { to: '/studio/settings', label: 'Site settings', icon: Settings },
-  { to: '/studio/approvals', label: 'Team', icon: UserCheck },
-  { to: '/studio/activity', label: 'Activity', icon: Activity },
+  { to: '/studio/navigation', label: 'Navigation', iconName: 'Menu' },
+  { to: '/studio/settings', label: 'Settings', iconName: 'Settings' },
+  { to: '/studio/approvals', label: 'Team', iconName: 'UserCheck' },
+  { to: '/studio/activity', label: 'Activity', iconName: 'Activity' },
 ];
 
 export default function StudioLayout({ children }: { children: ReactNode }) {
-  const { isAdmin, signOut, user } = useAuth();
+  const auth = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
+  const isAdmin = auth?.isAdmin || false;
+  const user = auth?.user;
+  const signOut = auth?.signOut;
+
   const items = isAdmin ? [...nav, ...adminNav] : nav;
 
-  return (
-    <div className="min-h-screen flex bg-black selection:bg-[#00D4FF] selection:text-black">
-      <Helmet>
-        <meta name="robots" content="noindex, nofollow" />
-        <title>Studio — RetentionFirm</title>
-      </Helmet>
+  const renderIcon = (name: string, isActive: boolean) => {
+    const IconComponent = (Lucide as any)[name];
+    if (!IconComponent) return <div className="w-[18px] h-[18px] bg-white/10 rounded-sm" />;
+    return <IconComponent size={18} strokeWidth={isActive ? 3 : 2} />;
+  };
 
+  return (
+    <div className="min-h-screen flex bg-black selection:bg-[#00D4FF] selection:text-black text-white">
       {/* Mobile top bar */}
       <header className="lg:hidden fixed top-0 inset-x-0 z-40 flex items-center justify-between px-6 h-16 border-b border-white/5 bg-black/80 backdrop-blur-xl">
         <Link to="/studio" className="text-lg font-black tracking-tighter text-white">
           RF<span className="text-[#00D4FF]">.</span>STUDIO
         </Link>
         <button onClick={() => setOpen(true)} aria-label="Menu" className="p-2 rounded-full bg-white/5">
-          <Menu size={20} className="text-white" />
+          {renderIcon('Menu', false)}
         </button>
       </header>
 
@@ -57,7 +59,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
               RETENTION<span className="text-[#00D4FF]">.</span>STUDIO
             </Link>
             <button className="lg:hidden p-2 rounded-full bg-white/5" onClick={() => setOpen(false)} aria-label="Close">
-              <X size={18} className="text-white" />
+              {renderIcon('X', false)}
             </button>
           </div>
           
@@ -69,29 +71,33 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
               <NavLink
                 key={i.to}
                 to={i.to}
-                end={(i as any).end}
+                end={i.end}
                 onClick={() => setOpen(false)}
                 className={({ isActive }) => `flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-black tracking-tight transition-all duration-300 ${isActive ? 'bg-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.2)]' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
               >
-                <i.icon size={18} strokeWidth={isActive ? 3 : 2} />
-                {i.label}
+                {({ isActive }) => (
+                  <>
+                    {renderIcon(i.iconName, isActive)}
+                    {i.label}
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
 
           <div className="p-6 border-t border-white/5 bg-white/[0.02]">
             <div className="px-2 mb-6">
-              <p className="text-xs font-black text-white/60 truncate">{user?.email}</p>
+              <p className="text-xs font-black text-white/60 truncate">{user?.email || 'Not signed in'}</p>
               <div className="flex items-center gap-2 mt-2">
                 <div className={`w-1.5 h-1.5 rounded-full ${isAdmin ? 'bg-[#00D4FF]' : 'bg-emerald-500'}`} />
                 <span className="text-[10px] font-black uppercase tracking-widest text-white/30">{isAdmin ? 'Admin Access' : 'Editor Access'}</span>
               </div>
             </div>
             <button
-              onClick={async () => { await signOut(); navigate('/studio/login'); }}
+              onClick={async () => { if (signOut) { await signOut(); navigate('/studio/login'); } }}
               className="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-black tracking-tight text-white/40 hover:text-white hover:bg-white/5 transition-all duration-300 w-full"
             >
-              <LogOut size={18} /> Sign out
+              {renderIcon('LogOut', false)} Sign out
             </button>
           </div>
         </div>
@@ -103,8 +109,6 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
           {children}
         </div>
       </main>
-      <AIAssistant />
     </div>
   );
 }
-

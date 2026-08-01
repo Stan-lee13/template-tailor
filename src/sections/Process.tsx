@@ -13,6 +13,15 @@ export default function Process() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
+  const defaultSteps = [
+    { number: '01', title: 'Discovery & Retention Audit', description: 'We learn how your business currently acquires, serves and retains customers. Then we identify where customers are dropping off—and where the biggest loyalty opportunities exist.', deliverables: 'Revenue leak analysis, Customer journey mapping, Competitor benchmarking, 30-day action plan', accent: '#00D4FF' },
+    { number: '02', title: 'Retention Strategy', description: 'We develop a tailored retention roadmap specific to your business. No cookie-cutter playbooks. Every recommendation is built around your customers, products and buying behaviour.', deliverables: 'Strategic roadmap, Performance benchmarks, Channel strategy, Segmentation plan', accent: '#2C91E1' },
+    { number: '03', title: 'System Implementation', description: 'This is where strategy becomes execution. We build out email/SMS flows, automation, and loyalty systems that work together as one engine.', deliverables: 'Email & SMS flows, Customer journey automation, Loyalty programs, Referral systems', accent: '#10B981' },
+    { number: '04', title: 'Continuous Growth', description: 'Customer behaviour changes. Markets change. We continuously analyse performance and optimise campaigns to improve customer loyalty over time.', deliverables: 'A/B testing, Performance reporting, Strategy refinement, Revenue scaling', accent: '#F59E0B' },
+  ];
+
+  const steps = c.steps?.length > 0 ? c.steps : defaultSteps;
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Headline animation
@@ -49,17 +58,17 @@ export default function Process() {
       });
     }, sectionRef);
     return () => ctx.revert();
-  }, [c.steps?.length]);
+  }, [steps.length]);
 
   return (
-    <section ref={sectionRef} id="process" className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+    <section ref={sectionRef} id="process" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
       <div className="max-w-[1100px] mx-auto">
         <div className="process-head mb-20 lg:mb-32 text-center" style={{ opacity: 0 }}>
           <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
             {c.eyebrow}
           </span>
-          <h2 className="text-4xl lg:text-7xl font-bold text-white tracking-tighter">
-            {c.headline}
+          <h2 className="text-3xl lg:text-7xl font-bold text-white mb-6 tracking-tighter">
+            Building Loyalty Isn't One Campaign. <span className="text-gradient-cyan">It's A System.</span>
           </h2>
         </div>
 
@@ -72,7 +81,7 @@ export default function Process() {
           />
 
           <div className="space-y-24 lg:space-y-32">
-            {(c.steps || []).map((step, i) => (
+            {steps.map((step, i) => (
               <div 
                 key={step.number} 
                 className={`process-step flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-24 relative`}
@@ -85,7 +94,7 @@ export default function Process() {
                   <span className="text-6xl lg:text-8xl font-black text-white/5 font-outfit block mb-4">
                     {step.number}
                   </span>
-                  <h3 className="text-2xl lg:text-4xl font-bold text-white mb-4 tracking-tight">
+                  <h3 className="text-2xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
                     {step.title}
                   </h3>
                   <p className={`text-lg text-white/50 leading-relaxed max-w-md ${i % 2 === 0 ? 'lg:ml-auto' : ''}`}>

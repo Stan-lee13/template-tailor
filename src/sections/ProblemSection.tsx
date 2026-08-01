@@ -35,7 +35,7 @@ export default function ProblemSection() {
   }, [c.pain_points?.length]);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+    <section ref={sectionRef} id="problem" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
       {/* Dynamic background glow */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00D4FF]/5 rounded-full blur-[120px] pointer-events-none" />
       
@@ -45,11 +45,10 @@ export default function ProblemSection() {
             {c.eyebrow}
           </span>
           <h2 className="text-4xl lg:text-7xl font-bold text-white mb-6 tracking-tighter">
-            {c.headline_1} <br />
-            <span className="text-gradient-cyan">{c.headline_2}</span>
+            Why <span className="text-gradient-cyan">RetentionFirm Exists</span>
           </h2>
           <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed">
-            {c.intro}
+            Every brand spends thousands acquiring new customers. Very few invest in keeping them.
           </p>
         </div>
 
@@ -62,14 +61,19 @@ export default function ProblemSection() {
           </div>
 
           <div className="problem-grid grid gap-6">
-            {(c.pain_points || []).map((p, i) => (
+            {[
+              "Run ads",
+              "Get few customers",
+              "Make sales",
+              "The end. Repeat."
+            ].map((text, i) => (
               <ThreeDCard key={i} className="w-full">
                 <ThreeDCardItem translateZ={20} className="problem-item group flex items-center gap-6 p-6 lg:p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#00D4FF]/30 transition-colors duration-500" style={{ opacity: 0 }}>
                   <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all duration-500">
-                    <span className="text-xl font-bold">✕</span>
+                    <span className="text-xl font-bold">{i + 1}</span>
                   </div>
                   <p className="text-lg lg:text-xl text-white/80 group-hover:text-white transition-colors">
-                    {p.text}
+                    {text}
                   </p>
                 </ThreeDCardItem>
               </ThreeDCard>
@@ -77,7 +81,7 @@ export default function ProblemSection() {
             
             <div className="mt-8">
               <p className="text-[#00D4FF] font-bold text-lg lg:text-xl tracking-tight">
-                {c.closer}
+                RetentionFirm exists to help brands build businesses customers return to naturally. Not through guesswork. Through proven retention systems designed around how people actually buy.
               </p>
             </div>
           </div>
