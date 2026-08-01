@@ -6,6 +6,7 @@ import Lenis from 'lenis';
 import Navigation from '../sections/Navigation';
 import Hero from '../sections/Hero';
 import ProblemSection from '../sections/ProblemSection';
+import WhoWeWorkWith from '../sections/WhoWeWorkWith';
 import SocialProofTicker from '../components/SocialProofTicker';
 import SectionDivider from '../components/SectionDivider';
 import ScrollProgress from '../components/ScrollProgress';
@@ -80,17 +81,18 @@ const Index = () => {
       <ScrollProgress />
       <StickyCTA />
       <Navigation />
-      <main className="bg-black">
+      <main className="bg-[#0a0f1a]">
         <Hero />
         <SocialProofTicker />
         <ProblemSection />
-        <Suspense fallback={<div className="min-h-[50vh] bg-black" />}>
+        <WhoWeWorkWith />
+        <Suspense fallback={<div className="min-h-[50vh] bg-[#0a0f1a]" />}>
           <SolutionSection />
-          <Services />
           <Results />
-          <ProjectsRail />
           <DifferentiationSection />
           <Process />
+          <Services />
+          <ProjectsRail />
           <FAQ />
           <FinalCTA />
         </Suspense>

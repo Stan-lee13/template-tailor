@@ -35,7 +35,7 @@ export default function SolutionSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-black py-24 lg:py-32 px-6 lg:px-20">
+    <section ref={sectionRef} id="solution" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
       {/* Background radial gradient for depth */}
       <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#00D4FF]/10 rounded-full blur-[150px] pointer-events-none" />
       
@@ -52,27 +52,31 @@ export default function SolutionSection() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
             {c.eyebrow}
           </span>
-          <h2 className="text-4xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight">
-            {c.headline}
+          <h2 className="text-3xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight">
+            Customer <span className="text-gradient-cyan">Loyalty Is Our Business</span>
           </h2>
           <p className="text-lg lg:text-xl text-white/60 mb-12 leading-relaxed max-w-xl">
-            {c.body}
+            Everything we do is built around one goal: Creating customers who buy more often, stay longer and recommend your brand to others.
           </p>
 
           <div className="solution-grid grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-            {(c.benefits || []).map((b, i) => (
+            {[
+              "Retention Systems, Not Random Marketing",
+              "Built Around Your Customers Journey",
+              "Focused On Business Metrics"
+            ].map((text, i) => (
               <div key={i} className="solution-card flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-500" style={{ opacity: 0 }}>
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#00D4FF]/10 flex items-center justify-center text-[#00D4FF]">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
-                <span className="text-white/90 font-medium">{b.text}</span>
+                <span className="text-white/90 font-medium">{text}</span>
               </div>
             ))}
           </div>
 
           <div className="p-8 rounded-3xl bg-gradient-to-br from-white/10 to-transparent border border-white/10">
             <p className="text-xl lg:text-2xl font-bold text-white tracking-tight">
-              {c.closer_prefix} <span className="text-gradient-cyan">{c.closer_highlight}</span>
+              We care about the numbers that actually grow businesses: <span className="text-gradient-cyan">Repeat Purchase Rate, LTV, and Churn Reduction.</span>
             </p>
           </div>
         </div>

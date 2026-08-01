@@ -11,9 +11,9 @@ export default function SocialProofTicker() {
   const doubled = [...items, ...items];
 
   return (
-    <div className="relative overflow-hidden bg-black py-8 border-y border-white/5">
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
+    <div className="relative overflow-hidden bg-[#080c14] py-8 border-y border-white/5">
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#080c14] to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#080c14] to-transparent z-10" />
       
       <div className="ticker-track flex items-center gap-20 whitespace-nowrap">
         {doubled.map((item, i) => (

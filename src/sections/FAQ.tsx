@@ -38,14 +38,14 @@ export default function FAQ() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="faq" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
+    <section ref={sectionRef} id="faq" style={{ background: '#0a0f1a', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
       {/* Subtle separator */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent)' }} />
 
       <div className="max-w-[720px] mx-auto">
         <div className="faq-head text-center mb-10 sm:mb-14" style={{ opacity: 0 }}>
           <span className="block font-inter font-medium uppercase mb-5 sm:mb-6" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>{c.eyebrow}</span>
-          <h2 className="font-outfit font-bold mb-0" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>{c.headline}</h2>
+          <h2 className="font-outfit font-bold mb-0" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>Common Questions</h2>
         </div>
         <div>
           {(c.faqs || []).map((faq, i) => (

@@ -139,7 +139,7 @@ export default function Pricing() {
   const select = (planName: string) => { track('cta_click', { location: 'pricing', label: planName }); open(`pricing_${planName}`); };
 
   return (
-    <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#000000', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
+    <section ref={sectionRef} id="pricing" className="relative" style={{ background: '#0a0f1a', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
       {/* Subtle separator */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent)' }} />
 

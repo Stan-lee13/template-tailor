@@ -80,10 +80,10 @@ export default function Services() {
   }, { scope: sectionRef, dependencies: [services.length] });
 
   return (
-    <section ref={sectionRef} id="services" className="relative overflow-hidden bg-black min-h-screen">
+    <section ref={sectionRef} id="services" className="relative overflow-hidden bg-[#0a0f1a] min-h-screen">
       {/* Immersive background effects */}
       <div className="svc-ambient hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] bg-[conic-gradient(from_0deg,#00D4FF05,#0082FF05,#00D4FF05)] blur-[100px] pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1a] via-transparent to-[#0a0f1a] pointer-events-none" />
 
       {/* DESKTOP: pinned circular stage */}
       <div className="hidden lg:block relative py-20 px-12 lg:px-24">
@@ -92,11 +92,11 @@ export default function Services() {
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-8">
               {c.eyebrow}
             </span>
-            <h2 className="text-5xl lg:text-7xl font-black text-white mb-8 tracking-tighter leading-none">
-              {c.headline}
+            <h2 className="text-4xl lg:text-7xl font-black text-white mb-8 tracking-tighter leading-none">
+              Everything You Need to <span className="text-gradient-cyan">Turn Customers Into Revenue</span>
             </h2>
             <p className="text-xl text-white/40 mb-12 leading-relaxed max-w-md">
-              {c.intro}
+              Strategic growth through customer loyalty, retention, and lifecycle marketing.
             </p>
             
             <div className="flex items-center gap-3 mb-12">
@@ -116,7 +116,7 @@ export default function Services() {
             <div className="absolute inset-0 flex items-center justify-center">
               {services.map((s, i) => (
                 <article key={i} className="svc-card absolute w-[400px] lg:w-[480px] will-change-transform" aria-current={i === activeIdx}>
-                  <div className={`p-10 lg:p-14 rounded-[3rem] transition-all duration-700 ${i === activeIdx ? 'bg-gradient-to-br from-white/10 to-black border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.8)]' : 'bg-white/5 border-white/5'}`}>
+	                  <div className={`p-10 lg:p-14 rounded-[3rem] transition-all duration-700 ${i === activeIdx ? 'bg-gradient-to-br from-white/10 to-[#080c14] border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.8)]' : 'bg-white/5 border-white/5'}`}>
                     <span className="text-sm font-black text-[#00D4FF] uppercase tracking-widest mb-4 block">
                       {s.number}
                     </span>
@@ -144,12 +144,12 @@ export default function Services() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
             {c.eyebrow}
           </span>
-          <h2 className="text-4xl font-black text-white mb-6 tracking-tighter">
-            {c.headline}
-          </h2>
-          <p className="text-lg text-white/40 mb-12 leading-relaxed">
-            {c.intro}
-          </p>
+		          <h2 className="text-4xl font-black text-white mb-6 tracking-tighter">
+		            Everything You Need to <span className="text-gradient-cyan">Turn Customers Into Revenue</span>
+		          </h2>
+	          <p className="text-lg text-white/40 mb-12 leading-relaxed">
+	            Strategic growth through customer loyalty, retention, and lifecycle marketing.
+	          </p>
 
           <div className="space-y-6">
             {services.map((s, i) => (

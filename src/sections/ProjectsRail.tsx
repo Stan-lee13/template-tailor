@@ -41,6 +41,16 @@ export default function ProjectsRail() {
         }),
       });
     });
+
+    // Mobile specific animations for better engagement
+    mm.add('(max-width: 767px)', () => {
+      gsap.utils.toArray('.proj-card').forEach((card: any) => {
+        gsap.fromTo(card, { opacity: 0, y: 30 }, {
+          opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 90%' }
+        });
+      });
+    });
     mm.add('(prefers-reduced-motion: reduce)', () => {
       gsap.set('.proj-card', { opacity: 1 });
     });
@@ -50,7 +60,7 @@ export default function ProjectsRail() {
   if (projects.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative bg-black py-24 lg:py-32 px-6 lg:px-20 overflow-hidden">
+    <section ref={ref} className="relative bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20 overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#00D4FF]/5 rounded-full blur-[120px] pointer-events-none" />
       
@@ -58,10 +68,10 @@ export default function ProjectsRail() {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
           <div className="max-w-2xl">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
-              The Vault
+              Proof of Concept
             </span>
             <h2 className="text-4xl lg:text-7xl font-black text-white tracking-tighter leading-none">
-              Case Studies & <span className="text-gradient-cyan">Growth Insights</span>
+              Brands Built On <span className="text-gradient-cyan">Loyalty</span>
             </h2>
           </div>
           <Link to="/blog" className="group flex items-center gap-4 text-white font-black text-sm uppercase tracking-widest">
@@ -80,7 +90,7 @@ export default function ProjectsRail() {
               <Link
                 key={p.id}
                 to={`/blog/${p.slug}`}
-                className={`proj-card group relative overflow-hidden rounded-[2.5rem] ${span} border border-white/10 hover:border-[#00D4FF]/40 transition-all duration-700`}
+                className={`proj-card group relative overflow-hidden rounded-[2.5rem] ${span} border border-white/10 hover:border-[#00D4FF]/40 transition-all duration-700 lg:hover:translate-y-[-10px] mobile-animate-float lg:animate-none`}
                 style={{ opacity: 0 }}
               >
                 {p.featured_image_url && (

@@ -95,7 +95,7 @@ function AppShell() {
         {/* Hidden Team Portal */}
         <Route path="/studio/login" element={<StudioLogin />} />
         <Route path="/studio/pending" element={<StudioPending />} />
-        <Route path="/studio" element={<RequireStaff><StudioAIProvider><StudioDashboard /></StudioAIProvider></RequireStaff>} />
+        <Route path="/studio" element={<RequireStaff><StudioDashboard /></RequireStaff>} />
         <Route path="/studio/posts" element={<RequireStaff><StudioAIProvider><PostsList /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/posts/new" element={<RequireStaff><StudioAIProvider><PostEditor /></StudioAIProvider></RequireStaff>} />
         <Route path="/studio/posts/:id" element={<RequireStaff><StudioAIProvider><PostEditor /></StudioAIProvider></RequireStaff>} />

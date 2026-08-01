@@ -60,7 +60,7 @@ export default function Navigation() {
         ref={navRef}
         className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           scrolled
-            ? 'top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1100px] rounded-full bg-black/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-4 px-8'
+            ? 'top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1100px] rounded-full bg-[#080c14]/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-4 px-8'
             : 'top-0 left-0 right-0 w-full bg-transparent py-8 px-12'
         }`}
       >
