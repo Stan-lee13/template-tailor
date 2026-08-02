@@ -17,7 +17,7 @@ const nav: NavItem[] = [
   { to: '/studio/posts/new', label: 'New post', iconName: 'PlusCircle' },
 ];
 
-const adminNav = [
+const adminNav: NavItem[] = [
   { to: '/studio/navigation', label: 'Navigation', iconName: 'Menu' },
   { to: '/studio/settings', label: 'Settings', iconName: 'Settings' },
   { to: '/studio/approvals', label: 'Team', iconName: 'UserCheck' },

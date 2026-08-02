@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
   Monitor, Tablet, Smartphone, Undo2, Redo2, Save, Upload, RefreshCw,
-  ArrowLeft, LogOut, Loader2, Check,
+  ArrowLeft, LogOut, Loader2, Check, Sparkles,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { getSection, withDefaults } from '@/studio/sections/registry';
