@@ -1,116 +1,51 @@
-## Goal
+# Make the site feel alive: creative sections, alternating rhythm, 3D motion
 
-Add a brand-new `/studio/visual` page — a modern three-pane visual editor — as an **additional** module. The existing Studio (`/studio/site`, Pages, Posts, Media, Navigation, Settings, Approvals, Activity, Templates) stays 100% intact and untouched in behavior.
+The site currently reads as a stack of similar dark boxes: nearly every section is centered or image-left/text-right, every reveal is the same fade-up, and the section imagery is generic abstract art that doesn't say "retention" or "ecommerce revenue". This pass fixes rhythm, imagery, and motion character — without touching the CMS wiring or the horizontal/orbit Services scroll the owner already likes.
 
-## What already exists (reused, not duplicated)
+## 1. Alternating layout rhythm
 
-- `site_pages`, `site_sections`, `section_templates`, `site_settings`, `nav_items`, `media_assets`, `site_revisions` tables + RLS
-- `src/studio/sections/registry.ts` — schemas + defaults for hero, problem, solution, services, results, differentiation, process, faq, final_cta, rich_html
-- `src/hooks/useSectionContent.ts` — read path used by the live site
-- `src/components/studio/SectionInspector.tsx` — schema-driven form (text / textarea / richtext / image / color / list)
-- `src/components/studio/MediaPickerDialog.tsx`
-- `src/hooks/useAuth.tsx` — `RequireStaff`, `isAdmin`, `canEdit`
-- `src/lib/activity.ts` — `logActivity`, `saveRevision`
-
-The Visual Editor is a **new UI shell over these same modules and tables**. No new backend logic.
-
-## New route & nav
-
-- Add `/studio/visual` in `src/App.tsx` (guarded by `RequireStaff` + `StudioAIProvider`)
-- Add "✨ Visual Editor" entry in `src/components/studio/StudioLayout.tsx` nav (top of list, above "Site editor"). Existing "Site editor" stays.
-
-## Layout (`src/pages/studio/VisualEditor.tsx`)
+Rebuild the two-column sections so they zig-zag down the page instead of repeating one arrangement:
 
 ```text
-┌───────────┬──────────────────────────────┬───────────┐
-│ Left      │  Center: live iframe preview │ Right:    │
-│ tabs:     │  device frame (D/T/M)        │ Inspector │
-│  Pages    │  overlay: click-to-select    │ (schema   │
-│  Sections │  hover outlines              │  driven)  │
-│  Compo-   │  floating toolbar per        │           │
-│  nents    │  section: ↑ ↓ dup hide del   │ Undo/Redo │
-│  Media    │  "+ Add section" between     │ Save/Pub  │
-└───────────┴──────────────────────────────┴───────────┘
+Solution         [ IMAGE ]   [ text ]
+Results          full-bleed editorial band (asymmetric bento, offset headline)
+Differentiation  [ text  ]   [ IMAGE ]
+Process          pinned vertical timeline, image rail on the left
+Projects         horizontal scroll (kept as-is)
+Services         orbit scroll (kept as-is)
 ```
 
-- Top bar: page selector, device toggle (Desktop/Tablet/Mobile), Undo/Redo, Autosave indicator, Save Draft, Publish.
-- Left sidebar tabs (single component, tab state):
-  - **Pages** — list `site_pages`, click to load; "+ New page" (reuses same insert as `PagesEditor`).
-  - **Sections** — sections on the current page, drag-to-reorder (`@dnd-kit`, already installed).
-  - **Components** — registry-backed palette (hero/about/services/cta/pricing/faq/testimonials/team/contact/gallery/newsletter/stats) + `section_templates`. Drag or click to insert.
-  - **Media** — thumbnail grid from `media_assets` (reuses `MediaPickerDialog` internals) with upload.
+Also break the "everything is a centered eyebrow + centered h2" habit: headlines get off-axis placement, oversized index numerals, and hairline rules that run into the section edge. Section padding varies (some tight, some very generous) so the page breathes unevenly on purpose.
 
-## Center preview — click-to-edit bridge
+## 2. New section imagery
 
-- Iframe renders the actual site route for the selected page (`/`, `/about`, etc.) with a `?studio=1` query flag.
-- A tiny shim in `src/hooks/useSectionContent.ts` (opt-in, additive): when `window.__STUDIO_MODE__` is true, wrap returned sections with `data-section-id` on their root DOM node via a new `<SectionFrame>` helper (small addition — does not alter existing render output visually).
-- `postMessage` protocol between iframe and parent:
-  - `section:select { id }` on click
-  - `section:hover { id }` on hover
-  - `content:patch { id, content }` from parent → iframe re-fetches via React Query invalidation
-- Overlay in parent draws outlines/toolbar over the iframe using coordinates reported by the shim (`getBoundingClientRect`).
+Replace the four generic visuals (`solution`, `results`, `differentiation`, plus a new one for Process) with a cohesive art-directed set in the site's navy/cyan palette — real-feeling scenes rather than abstract gradients: a lifecycle dashboard on a studio desk, a repeat-purchase cohort wall, a warm ecommerce packing/fulfilment moment, and a strategy session frame. Same grain, same color grade, same lens feel across all four so they read as one shoot. Each stays overridable from Studio (the `image` field is untouched).
 
-If the iframe bridge proves flaky for a section, fall back gracefully to the existing form-only inspector (never blocks editing).
+Images get treated, not just placed: masked corners, a thin duotone edge, subtle scroll-linked scale/parallax inside their frame.
 
-## Right panel — Inspector
+## 3. 3D and signature motion
 
-- Reuses `SectionInspector` verbatim for the selected section.
-- Inline text edits from the iframe (contentEditable on `data-editable="field"` spans) patch the same `content` JSON, so the two edit paths converge on one source of truth.
+Add real depth instead of more fades:
 
-## Section tools
+- **Perspective card tilt** — pointer-reactive 3D tilt (rotateX/rotateY on a `perspective` wrapper) on Results cards, Differentiation panels, and Projects tiles. Springy, GPU-only transforms.
+- **3D image reveal** — section images enter with a `rotateY` swing plus clip-path wipe rather than a fade.
+- **Scroll-linked depth** — headline, image, and cards inside each section move at different scrub speeds so sections feel layered, not flat.
+- **Character-level headline reveal** — headlines split into words/characters with a masked upward stagger (one shared helper, used sparingly on section h2s only).
+- **Numeric count-up** on results/metric values as they enter.
+- **Marquee/rule transitions between sections** — a moving hairline + label strip replaces the current static divider, so one section hands off to the next.
+- **Magnetic buttons** on the primary CTAs.
 
-Floating toolbar per selected section: Edit (focus inspector), Duplicate, Hide (toggle `enabled`), Delete, Move Up, Move Down, Save as Template — all call the same mutations the existing `SiteEditor` uses (extracted into `src/studio/lib/sectionMutations.ts` so both editors share them; existing `SiteEditor` continues to work).
+Motion is deliberately *unequal*: some sections get one strong move, others get three, so the page doesn't feel metronomic.
 
-## Save / history
+## 4. Guardrails
 
-- **Autosave**: debounced 800ms `update site_sections.content`, writes a `site_revisions` row + `activity_log` entry (reuse `saveRevision`, `logActivity`).
-- **Undo/Redo**: in-memory stack of `{sectionId, prevContent, nextContent}` scoped to the session; capped at 50 entries. Optimistic UI via React Query `setQueryData`.
-- **Save Draft** vs **Publish**: add a boolean `draft_content jsonb` column to `site_sections` (migration). Autosave writes to `draft_content`; Publish copies `draft_content → content`. Live site (`useSectionContent`) keeps reading `content` — zero risk to production render. When `draft_content` is null, behavior is identical to today.
+- Hero, Services orbit scroll, and the Projects horizontal rail keep their current behavior.
+- All motion respects `prefers-reduced-motion` and drops the tilt/scrub work on touch devices (mobile keeps a clean staggered reveal) so the mobile scroll pipeline stays native and smooth.
+- No changes to Studio, the section registry schemas, or any database content — only presentation layers in `src/sections/*` plus new shared motion helpers.
 
-## Permissions
+## Technical notes
 
-- Route guarded by `RequireStaff`.
-- `canEdit` roles (admin/owner/editor/content_manager) → full editing.
-- Viewer role → read-only preview (toolbar hidden, inspector disabled).
-- Only admin/owner sees "Publish"; editors see "Save Draft" + "Request publish" (writes activity log entry — no new approval table needed for v1).
-
-## Technical section
-
-Files added:
-- `src/pages/studio/VisualEditor.tsx`
-- `src/components/studio/visual/LeftPanel.tsx` (Pages/Sections/Components/Media tabs)
-- `src/components/studio/visual/PreviewFrame.tsx` (iframe + overlay + postMessage host)
-- `src/components/studio/visual/SectionToolbar.tsx`
-- `src/components/studio/visual/HistoryStack.ts` (undo/redo hook)
-- `src/studio/lib/sectionMutations.ts` (shared with existing SiteEditor via light refactor — no behavior change)
-- `src/studio/preview/bridge.ts` (iframe-side shim; imported only when `?studio=1`)
-
-Files touched (additive only):
-- `src/App.tsx` — one new route
-- `src/components/studio/StudioLayout.tsx` — one new nav entry
-- `src/hooks/useSectionContent.ts` — optional `data-section-id` wrapping when studio mode is on
-- Existing section components (`Hero.tsx`, `Services.tsx`, etc.) — wrap outer element with `<SectionFrame sectionKey=…>` that is a no-op transparent div outside studio mode
-
-Migration:
-```sql
-ALTER TABLE public.site_sections ADD COLUMN draft_content jsonb;
-```
-(No new tables → no new GRANT/RLS work.)
-
-Dependencies: none new. `@dnd-kit`, `@tanstack/react-query`, `@gsap/react` already installed.
-
-## Out of scope (v1)
-
-- Full free-form drag-anywhere canvas (Framer-style absolute positioning). We keep the section-stack model — matches existing schema and ships fast.
-- Multi-user real-time cursors.
-- A/B testing.
-
-## Phased delivery (single PR, staged commits)
-
-1. Migration + `sectionMutations.ts` extraction + `SectionFrame` no-op wrapper on existing sections.
-2. `VisualEditor` shell, route, nav entry, left Pages/Sections tabs, right inspector (form-only). Fully usable already.
-3. Iframe preview + postMessage bridge + click-to-select overlay + section toolbar.
-4. Components palette + Media tab + inline contentEditable text.
-5. Undo/redo + Draft vs Publish flow + viewer/editor permission gating.
-
-Existing Studio remains the source of truth for anything not yet wired into Visual Editor — nothing is removed.
+- New `src/lib/motion/` helpers: `useTilt3d`, `useSplitReveal`, `useParallaxLayer`, `useCountUp`, `useMagnetic` — all built on `useGSAP` with `gsap.matchMedia` for device/reduced-motion gating, scoped to each section ref so cleanup is automatic.
+- Reveals switch from `opacity/y` fades to `clip-path` + `rotateY` on `will-change: transform` wrappers; no layout-affecting properties animate.
+- Existing `useSectionContent` data flow, props, and field names stay identical — this is a presentation-only rewrite of the affected section components.
+- New images generated into `src/assets/`, replacing `solution-visual.png`, `results-visual.png`, `differentiation-visual.png` and adding a process visual; served as WebP.
