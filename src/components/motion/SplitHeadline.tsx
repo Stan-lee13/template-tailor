@@ -1,9 +1,5 @@
-import { ReactNode, useRef, ElementType } from 'react';
+import { ReactNode, useEffect, useRef, ElementType } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Props = {
   /** Plain text; each word is masked and staggered upward */
@@ -15,25 +11,48 @@ type Props = {
   children?: ReactNode;
 };
 
+/**
+ * Masked word-by-word headline reveal.
+ * Uses IntersectionObserver (not ScrollTrigger) so it stays reliable inside
+ * lazy-loaded sections and smooth-scroll containers.
+ */
 export default function SplitHeadline({ text, highlightFrom, className = '', as: Tag = 'h2' }: Props) {
   const root = useRef<HTMLDivElement>(null);
   const words = text.split(' ');
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.fromTo(
-        '.sh-word',
-        { yPercent: 115, rotate: 4 },
-        {
-          yPercent: 0, rotate: 0, duration: 1.1, ease: 'expo.out', stagger: 0.045,
-          scrollTrigger: { trigger: root.current, start: 'top 85%' },
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const targets = el.querySelectorAll<HTMLElement>('.sh-word');
+    if (!targets.length) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      gsap.set(targets, { yPercent: 0, rotate: 0, clearProps: 'transform' });
+      return;
+    }
+
+    gsap.set(targets, { yPercent: 115, rotate: 4 });
+
+    const play = () => {
+      gsap.to(targets, {
+        yPercent: 0, rotate: 0, duration: 1.1, ease: 'expo.out', stagger: 0.045, overwrite: 'auto',
+      });
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          play();
+          io.disconnect();
         }
-      );
-    });
-    mm.add('(prefers-reduced-motion: reduce)', () => { gsap.set('.sh-word', { yPercent: 0 }); });
-    return () => mm.revert();
-  }, { scope: root });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.15 }
+    );
+    io.observe(el);
+
+    return () => io.disconnect();
+  }, [text]);
 
   return (
     <div ref={root}>
