@@ -2,6 +2,15 @@
 
 The site currently reads as a stack of similar dark boxes: nearly every section is centered or image-left/text-right, every reveal is the same fade-up, and the section imagery is generic abstract art that doesn't say "retention" or "ecommerce revenue". This pass fixes rhythm, imagery, and motion character — without touching the CMS wiring or the horizontal/orbit Services scroll the owner already likes.
 
+## 0. Fix the merged build first
+
+The merge from Manus left the project not compiling. Six type errors must be cleared before any visual work:
+
+- `StudioLayout.tsx` — nav item type is missing the optional `end` flag.
+- `SiteEditor.tsx` — missing `Layout` and `X` icon imports.
+- `VisualEditor.tsx` — missing `Sparkles` icon import.
+- `ProblemSection.tsx` — a 3D wrapper component is being passed `style` but doesn't accept it; the wrapper needs to forward `style`.
+
 ## 1. Alternating layout rhythm
 
 Rebuild the two-column sections so they zig-zag down the page instead of repeating one arrangement:
