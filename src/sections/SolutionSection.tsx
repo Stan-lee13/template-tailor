@@ -1,10 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { useSectionContent } from '../hooks/useSectionContent';
-import solutionVisual from '../assets/solution-visual.png';
+import RevealImage from '../components/motion/RevealImage';
+import SplitHeadline from '../components/motion/SplitHeadline';
+import solutionVisual from '../assets/sections/solution-visual.jpg';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Benefit = { text: string; color: string };
 type SolutionContent = {
@@ -12,71 +15,91 @@ type SolutionContent = {
   benefits: Benefit[]; closer_prefix: string; closer_highlight: string;
 };
 
+/** Layout rhythm: IMAGE LEFT — TEXT RIGHT */
 export default function SolutionSection() {
   const c = useSectionContent<SolutionContent>('/', 'solution', 'solution');
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.solution-head', { opacity: 0, x: 50 }, { 
-        opacity: 1, x: 0, duration: 1.2, ease: 'power4.out', 
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } 
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo('.sol-fade', { opacity: 0, y: 40 }, {
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.08,
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 72%' },
       });
-      gsap.fromTo('.solution-media', { opacity: 0, scale: 1.1, x: -50 }, { 
-        opacity: 1, scale: 1, x: 0, duration: 1.5, ease: 'expo.out', 
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' } 
+      gsap.fromTo('.sol-card', { opacity: 0, y: 44, rotateX: -14 }, {
+        opacity: 1, y: 0, rotateX: 0, duration: 0.9, stagger: 0.09, ease: 'expo.out',
+        scrollTrigger: { trigger: '.solution-grid', start: 'top 85%' },
       });
-      gsap.fromTo('.solution-card', { opacity: 0, y: 30 }, { 
-        opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out', 
-        scrollTrigger: { trigger: '.solution-grid', start: 'top 80%' } 
+      gsap.to('.sol-copy', {
+        yPercent: -6, ease: 'none',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: 1 },
       });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+    });
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set('.sol-fade, .sol-card', { opacity: 1, y: 0, rotateX: 0 });
+    });
+    return () => mm.revert();
+  }, { scope: sectionRef });
+
+  const benefits = (c.benefits?.length ? c.benefits.map((b) => b.text) : [
+    'Retention systems, not random marketing',
+    'Built around your customer journey',
+    'Focused on business metrics',
+  ]);
 
   return (
-    <section ref={sectionRef} id="solution" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
-      {/* Background radial gradient for depth */}
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#00D4FF]/10 rounded-full blur-[150px] pointer-events-none" />
-      
-      <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr,1fr] gap-16 lg:gap-24 items-center">
-        <div className="solution-media relative group" style={{ opacity: 0 }}>
-          <div className="absolute -inset-1 bg-gradient-to-r from-[#00D4FF] to-[#0082FF] rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
-          <div className="relative rounded-[2rem] overflow-hidden border border-white/10 aspect-square lg:aspect-[4/5]">
-            <img src={solutionVisual} alt="The Engine" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          </div>
-        </div>
+    <section ref={sectionRef} id="solution" className="relative overflow-hidden bg-[#0a0f1a] pt-20 pb-28 lg:pt-28 lg:pb-40 px-6 lg:px-20">
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-[600px] w-[600px] rounded-full bg-[#00D4FF]/10 blur-[150px]" />
 
-        <div className="solution-head" style={{ opacity: 0 }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
+      <div className="relative mx-auto grid max-w-[1300px] grid-cols-1 items-center gap-16 lg:grid-cols-[1.05fr,1fr] lg:gap-28">
+        <RevealImage
+          src={solutionVisual}
+          alt="Customer lifecycle retention dashboard"
+          from="left"
+          ratio="aspect-square lg:aspect-[4/5]"
+          caption="Lifecycle intelligence"
+          index="01"
+        />
+
+        <div className="sol-copy lg:pt-10">
+          <span className="sol-fade mb-7 inline-flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.32em] text-[#00D4FF]" style={{ opacity: 0 }}>
+            <span className="h-px w-10 bg-[#00D4FF]/50" />
             {c.eyebrow}
           </span>
-          <h2 className="text-3xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight">
-            Customer <span className="text-gradient-cyan">Loyalty Is Our Business</span>
-          </h2>
-          <p className="text-lg lg:text-xl text-white/60 mb-12 leading-relaxed max-w-xl">
-            Everything we do is built around one goal: Creating customers who buy more often, stay longer and recommend your brand to others.
+
+          <SplitHeadline
+            text="Customer Loyalty Is Our Business"
+            highlightFrom={2}
+            className="mb-8 text-4xl font-bold leading-[0.95] tracking-tighter text-white lg:text-7xl"
+          />
+
+          <p className="sol-fade mb-12 max-w-xl text-lg leading-relaxed text-white/55 lg:text-xl" style={{ opacity: 0 }}>
+            Everything we do is built around one goal: creating customers who buy more often, stay longer and recommend your brand to others.
           </p>
 
-          <div className="solution-grid grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-            {[
-              "Retention Systems, Not Random Marketing",
-              "Built Around Your Customers Journey",
-              "Focused On Business Metrics"
-            ].map((text, i) => (
-              <div key={i} className="solution-card flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-500" style={{ opacity: 0 }}>
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#00D4FF]/10 flex items-center justify-center text-[#00D4FF]">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div className="solution-grid mb-12 grid grid-cols-1 gap-4 sm:grid-cols-2" style={{ perspective: 1000 }}>
+            {benefits.map((text, i) => (
+              <div
+                key={i}
+                className={`sol-card flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition-colors duration-500 hover:border-[#00D4FF]/40 hover:bg-white/[0.07] ${i === 2 ? 'sm:col-span-2' : ''}`}
+                style={{ opacity: 0 }}
+              >
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#00D4FF]/10 text-[#00D4FF]">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                 </div>
-                <span className="text-white/90 font-medium">{text}</span>
+                <span className="font-medium text-white/90">{text}</span>
               </div>
             ))}
           </div>
 
-          <div className="p-8 rounded-3xl bg-gradient-to-br from-white/10 to-transparent border border-white/10">
-            <p className="text-xl lg:text-2xl font-bold text-white tracking-tight">
-              We care about the numbers that actually grow businesses: <span className="text-gradient-cyan">Repeat Purchase Rate, LTV, and Churn Reduction.</span>
+          <div className="sol-fade relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.09] to-transparent p-8" style={{ opacity: 0 }}>
+            <span className="absolute -top-4 left-8 rounded-full border border-[#00D4FF]/30 bg-[#0a0f1a] px-4 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-[#00D4FF]">
+              What we measure
+            </span>
+            <p className="text-xl font-bold tracking-tight text-white lg:text-2xl">
+              We care about the numbers that actually grow businesses:{' '}
+              <span className="text-gradient-cyan">repeat purchase rate, LTV, and churn reduction.</span>
             </p>
           </div>
         </div>
