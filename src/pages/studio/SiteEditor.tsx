@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Plus, Trash2, Copy, Eye, EyeOff, GripVertical, Save, History, BookmarkPlus, Monitor, Tablet, Smartphone, RefreshCw } from 'lucide-react';
+import { Plus, Trash2, Copy, Eye, EyeOff, GripVertical, Save, History, BookmarkPlus, Monitor, Tablet, Smartphone, RefreshCw, Layout, X } from 'lucide-react';
 import { SECTION_LIST, getSection, withDefaults } from '@/studio/sections/registry';
 import SectionInspector from '@/components/studio/SectionInspector';
 import { logActivity, saveRevision } from '@/lib/activity';
