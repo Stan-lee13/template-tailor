@@ -8,7 +8,7 @@ import Hero from '../sections/Hero';
 import ProblemSection from '../sections/ProblemSection';
 import WhoWeWorkWith from '../sections/WhoWeWorkWith';
 import SocialProofTicker from '../components/SocialProofTicker';
-import SectionDivider from '../components/SectionDivider';
+import MarqueeRule from '../components/motion/MarqueeRule';
 import ScrollProgress from '../components/ScrollProgress';
 import StickyCTA from '../components/StickyCTA';
 import SEO from '../components/SEO';
@@ -88,8 +88,10 @@ const Index = () => {
         <WhoWeWorkWith />
         <Suspense fallback={<div className="min-h-[50vh] bg-[#0a0f1a]" />}>
           <SolutionSection />
+          <MarqueeRule label="Repeat purchase rate · LTV · Churn reduction" />
           <Results />
           <DifferentiationSection />
+          <MarqueeRule label="Strategy · Systems · Compounding revenue" reverse />
           <Process />
           <Services />
           <ProjectsRail />
