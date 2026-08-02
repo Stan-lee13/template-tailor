@@ -28,16 +28,15 @@ export default function SplitHeadline({ text, highlightFrom, className = '', as:
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
-      gsap.set(targets, { yPercent: 0, rotate: 0, clearProps: 'transform' });
+      gsap.set(targets, { y: 0, yPercent: 0, rotate: 0, clearProps: 'transform' });
       return;
     }
 
-    gsap.set(targets, { yPercent: 115, rotate: 4 });
+    gsap.set(targets, { y: 0, yPercent: 115, rotate: 4 });
 
     const play = () => {
-      console.log('SH play', text);
       gsap.to(targets, {
-        yPercent: 0, rotate: 0, duration: 1.1, ease: 'expo.out', stagger: 0.045, overwrite: 'auto',
+        y: 0, yPercent: 0, rotate: 0, duration: 1.1, ease: 'expo.out', stagger: 0.045, overwrite: 'auto',
       });
     };
 
@@ -51,7 +50,6 @@ export default function SplitHeadline({ text, highlightFrom, className = '', as:
       { rootMargin: '0px 0px -12% 0px', threshold: 0.15 }
     );
     io.observe(el);
-    console.log('SH observe', text, el.getBoundingClientRect().height);
 
     return () => io.disconnect();
   }, [text]);
