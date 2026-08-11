@@ -52,7 +52,7 @@ export default function Hero() {
     <section
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ minHeight: '100svh', background: '#0a0f1a', touchAction: 'pan-y' }}
+      style={{ minHeight: '100svh', background: '#0B1A2A', touchAction: 'pan-y' }}
     >
       <HeroBackground />
 
@@ -98,7 +98,7 @@ export default function Hero() {
         >
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
-            className="group relative px-10 py-5 rounded-full bg-[#00D4FF] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(0,212,255,0.3)] w-full sm:w-auto"
+            className="group relative px-10 py-5 rounded-full bg-[#C9A227] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(201, 162, 39,0.3)] w-full sm:w-auto"
           >
             Book an Intro Call
           </button>

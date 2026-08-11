@@ -10,17 +10,17 @@ interface Props {
 
 export default function LegalLayout({ title, updated, children }: Props) {
   return (
-    <div className="bg-black min-h-screen selection:bg-[#00D4FF] selection:text-black">
+    <div className="bg-black min-h-screen selection:bg-[#C9A227] selection:text-black">
       <Navigation />
       <main className="relative pt-40 pb-32 px-6 overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden opacity-50">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/10 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/5 blur-[120px] rounded-full" />
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#C9A227]/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#C9A227]/5 blur-[120px] rounded-full" />
         </div>
 
         <article className="relative z-10 mx-auto max-w-3xl">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-6">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C9A227] mb-6">
             Legal Protocol
           </p>
           <h1 className="text-5xl lg:text-7xl font-black text-white tracking-tighter mb-4 leading-[0.9]">
@@ -40,8 +40,8 @@ export default function LegalLayout({ title, updated, children }: Props) {
         .rf-prose p { margin-bottom: 24px; }
         .rf-prose ul { padding-left: 24px; margin-bottom: 24px; list-style: none; }
         .rf-prose li { margin-bottom: 12px; position: relative; }
-        .rf-prose li::before { content: ''; position: absolute; left: -24px; top: 10px; width: 8px; height: 2px; background: #00D4FF; }
-        .rf-prose a { color: #00D4FF; text-decoration: none; border-bottom: 1px solid rgba(0,212,255,0.3); transition: all 0.3s ease; }
+        .rf-prose li::before { content: ''; position: absolute; left: -24px; top: 10px; width: 8px; height: 2px; background: #C9A227; }
+        .rf-prose a { color: #C9A227; text-decoration: none; border-bottom: 1px solid rgba(201, 162, 39,0.3); transition: all 0.3s ease; }
         .rf-prose a:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
         .rf-prose strong { color: #FFFFFF; font-weight: 700; }
       `}</style>

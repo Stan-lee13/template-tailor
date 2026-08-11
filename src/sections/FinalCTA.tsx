@@ -1,86 +1,85 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { useBooking } from '../hooks/useBooking';
 import { track } from '../lib/analytics';
-import { SparklesCore } from '../components/ui/sparkles';
-import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 import { useSectionContent } from '../hooks/useSectionContent';
+import StackCard from '../components/layout/StackCard';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type FinalCTAContent = { headline_1: string; headline_2: string; body: string; kicker: string; cta_label: string };
 
 export default function FinalCTA() {
   const c = useSectionContent<FinalCTAContent>('/', 'final_cta', 'final_cta');
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
   const { open } = useBooking();
-  const { lowPower, reducedMotion } = useDeviceCapabilities();
-  const showSparkles = !lowPower && !reducedMotion;
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.cta-animate', { opacity: 0, scale: 0.9, y: 30 }, {
-        opacity: 1, scale: 1, y: 0, duration: 1.2, stagger: 0.1, ease: 'expo.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo('.cta-el', { opacity: 0, y: 28 }, {
+        opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: 0.08,
+        scrollTrigger: { trigger: ref.current, start: 'top 82%' },
       });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+      gsap.to('.cta-sweep', {
+        xPercent: 40, ease: 'none',
+        scrollTrigger: { trigger: ref.current, start: 'top bottom', end: 'bottom top', scrub: 1 },
+      });
+    });
+    mm.add('(hover: hover) and (prefers-reduced-motion: no-preference)', () => {
+      const btn = btnRef.current;
+      if (!btn) return;
+      const xTo = gsap.quickTo(btn, 'x', { duration: 0.5, ease: 'power3' });
+      const yTo = gsap.quickTo(btn, 'y', { duration: 0.5, ease: 'power3' });
+      const move = (e: MouseEvent) => {
+        const r = btn.getBoundingClientRect();
+        xTo((e.clientX - (r.left + r.width / 2)) * 0.28);
+        yTo((e.clientY - (r.top + r.height / 2)) * 0.35);
+      };
+      const reset = () => { xTo(0); yTo(0); };
+      btn.addEventListener('mousemove', move);
+      btn.addEventListener('mouseleave', reset);
+      return () => { btn.removeEventListener('mousemove', move); btn.removeEventListener('mouseleave', reset); };
+    });
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set('.cta-el', { opacity: 1, y: 0 });
+    });
+    return () => mm.revert();
+  }, { scope: ref });
 
   return (
-    <section ref={sectionRef} id="cta" className="relative overflow-hidden bg-[#0a0f1a] py-32 lg:py-48 px-6 lg:px-20">
-      {/* Immersive background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1a] via-[#00D4FF]/5 to-[#0a0f1a]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[#00D4FF]/10 rounded-full blur-[180px] pointer-events-none" />
+    <div ref={ref}>
+      <StackCard id="cta" index="08" label="Start here" tone="raised" width="full" className="lg:py-32">
+        <div
+          className="cta-sweep pointer-events-none absolute -inset-x-1/3 top-0 h-full opacity-60"
+          style={{ background: 'radial-gradient(60% 60% at 40% 40%, hsl(var(--brass)/0.18), transparent 70%)' }}
+        />
+        <div className="relative mx-auto max-w-[820px] text-center">
+          <span className="cta-el eyebrow mb-8" style={{ opacity: 0 }}>{c.kicker || 'Ready to scale?'}</span>
 
-      {showSparkles && (
-        <div className="absolute inset-0 pointer-events-none" style={{ maskImage: 'radial-gradient(ellipse at center, black 20%, transparent 80%)' }}>
-          <SparklesCore background="transparent" minSize={0.4} maxSize={1.2} particleDensity={40} particleColor="#00D4FF" speed={0.8} className="w-full h-full" />
-        </div>
-      )}
+          <h2 className="cta-el text-4xl leading-[1.02] text-foreground lg:text-7xl" style={{ opacity: 0 }}>
+            {c.headline_1 || 'Build a brand'}{' '}
+            <span className="text-brass">{c.headline_2 || 'customers come back to.'}</span>
+          </h2>
 
-      <div className="relative max-w-[900px] mx-auto text-center">
-        <div className="cta-animate inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-10" style={{ opacity: 0 }}>
-          Ready to scale?
-        </div>
-        
-        <h2 className="cta-animate text-5xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-none" style={{ opacity: 0 }}>
-          Build a Brand <br />
-          <span className="text-gradient-cyan">Customers Come Back To.</span>
-        </h2>
-        
-        <p className="cta-animate text-xl lg:text-2xl text-white/60 mb-12 leading-relaxed max-w-2xl mx-auto" style={{ opacity: 0 }}>
-          If you're ready to build a more profitable business through stronger customer relationships, we'd love to talk.
-        </p>
+          <p className="cta-el mx-auto mt-8 max-w-xl text-lg leading-relaxed text-foreground/60 lg:text-xl" style={{ opacity: 0 }}>
+            {c.body}
+          </p>
 
-        <div className="cta-animate" style={{ opacity: 0 }}>
-          <button
-            onClick={() => { track('cta_click', { location: 'final_cta', label: c.cta_label }); open('final_cta'); }}
-            className="group relative inline-flex items-center justify-center px-12 py-6 rounded-full bg-[#00D4FF] text-black font-black text-lg overflow-hidden transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(0,212,255,0.4)]"
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              Book Your Intro Call
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-2 transition-transform duration-500"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </button>
-        </div>
-
-        <div className="cta-animate mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 lg:gap-12" style={{ opacity: 0 }}>
-          <div className="flex items-center gap-3 text-white/40 text-sm font-bold uppercase tracking-widest">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#00D4FF]" />
-            No Long-Term Contracts
-          </div>
-          <div className="flex items-center gap-3 text-white/40 text-sm font-bold uppercase tracking-widest">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#00D4FF]" />
-            Results in 48 Hours
-          </div>
-          <div className="flex items-center gap-3 text-white/40 text-sm font-bold uppercase tracking-widest">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#00D4FF]" />
-            100% Satisfaction
+          <div className="cta-el mt-12" style={{ opacity: 0 }}>
+            <button
+              ref={btnRef}
+              onClick={() => { track('cta_click', { location: 'final_cta', label: c.cta_label }); open('final_cta'); }}
+              className="btn-brass text-base"
+            >
+              {c.cta_label || 'Book your intro call'}
+            </button>
           </div>
         </div>
-      </div>
-    </section>
+      </StackCard>
+    </div>
   );
 }

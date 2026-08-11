@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { logActivity, saveRevision } from '@/lib/activity';
 import { Save } from 'lucide-react';
 
-const inputCls = 'w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300 placeholder:text-white/10';
+const inputCls = 'w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300 placeholder:text-white/10';
 
 function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
   return (
@@ -75,7 +75,7 @@ export default function SiteSettingsPage() {
   const set = <K extends Exclude<keyof SiteSettings, 'id'>>(k: K, v: Partial<SiteSettings[K]>) =>
     setSettings((s) => ({ ...s, [k]: { ...(s[k] as object), ...v } as SiteSettings[K] }));
 
-  if (loading) return <StudioLayout><div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest"><div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#00D4FF] animate-spin" /> Calibrating...</div></StudioLayout>;
+  if (loading) return <StudioLayout><div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest"><div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#C9A227] animate-spin" /> Calibrating...</div></StudioLayout>;
 
   return (
     <StudioLayout>
@@ -87,7 +87,7 @@ export default function SiteSettingsPage() {
         <button 
           onClick={save} 
           disabled={saving} 
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)] disabled:opacity-50"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(201, 162, 39,0.2)] disabled:opacity-50"
         >
           <Save size={18} strokeWidth={3} /> {saving ? 'SYNCING...' : 'SAVE PARAMETERS'}
         </button>
@@ -140,7 +140,7 @@ export default function SiteSettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Field label="Broadcast Status">
               <label className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 cursor-pointer group transition-all hover:bg-white/10">
-                <input type="checkbox" checked={!!settings.announcement.enabled} onChange={(e) => set('announcement', { enabled: e.target.checked })} className="w-5 h-5 rounded-lg border-white/20 bg-black text-[#00D4FF] focus:ring-[#00D4FF]" />
+                <input type="checkbox" checked={!!settings.announcement.enabled} onChange={(e) => set('announcement', { enabled: e.target.checked })} className="w-5 h-5 rounded-lg border-white/20 bg-black text-[#C9A227] focus:ring-[#C9A227]" />
                 <span className="text-sm font-black text-white/40 group-hover:text-white transition-colors">ACTIVATE SITE-WIDE BROADCAST</span>
               </label>
             </Field>
@@ -160,7 +160,7 @@ export default function SiteSettingsPage() {
           <button 
             onClick={save} 
             disabled={saving} 
-            className="inline-flex items-center gap-3 px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.2)] disabled:opacity-50"
+            className="inline-flex items-center gap-3 px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(201, 162, 39,0.2)] disabled:opacity-50"
           >
             <Save size={18} strokeWidth={3} /> {saving ? 'SYNCING...' : 'SAVE ALL PARAMETERS'}
           </button>

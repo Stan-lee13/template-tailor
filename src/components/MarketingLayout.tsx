@@ -16,21 +16,21 @@ interface Props {
 export default function MarketingLayout({ title, eyebrow, intro, children, path, description }: Props) {
   const { open } = useBooking();
   return (
-    <div className="bg-black min-h-screen selection:bg-[#00D4FF] selection:text-black">
+    <div className="bg-black min-h-screen selection:bg-[#C9A227] selection:text-black">
       <SEO path={path} title={title} description={description} />
       <Navigation />
       
       {/* Background elements */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00D4FF]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#0082FF]/5 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#C9A227]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#A8871F]/5 rounded-full blur-[120px]" />
       </div>
 
       <main className="relative pt-32 pb-24 px-6 lg:px-20">
         <div className="max-w-4xl mx-auto">
           <div className="mb-20">
             {eyebrow && (
-              <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-8">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-[#C9A227]/10 border border-[#C9A227]/20 text-[#C9A227] text-xs font-bold uppercase tracking-widest mb-8">
                 {eyebrow}
               </span>
             )}
@@ -48,7 +48,7 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
 
           {/* Premium CTA Card */}
           <div className="mt-32 p-10 lg:p-16 rounded-[3rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00D4FF]/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-[#00D4FF]/20 transition-colors duration-700" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C9A227]/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-[#C9A227]/20 transition-colors duration-700" />
             
             <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
               <div className="max-w-md">
@@ -61,7 +61,7 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
               </div>
               <button 
                 onClick={() => open('marketing_page')} 
-                className="px-10 py-5 rounded-full bg-[#00D4FF] text-black font-black text-sm uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.3)] whitespace-nowrap"
+                className="px-10 py-5 rounded-full bg-[#C9A227] text-black font-black text-sm uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_30px_rgba(201, 162, 39,0.3)] whitespace-nowrap"
               >
                 Book Your Audit
               </button>
@@ -79,11 +79,11 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
         .rf-prose p { margin-bottom: 24px; }
         .rf-prose ul { padding-left: 24px; margin-bottom: 24px; list-style: none; }
         .rf-prose li { margin-bottom: 12px; position: relative; padding-left: 28px; }
-        .rf-prose li::before { content: "→"; position: absolute; left: 0; color: #00D4FF; font-weight: 900; }
-        .rf-prose a { color: #00D4FF; font-weight: 700; border-bottom: 2px solid rgba(0,212,255,0.2); transition: all 0.3s; }
-        .rf-prose a:hover { border-bottom-color: #00D4FF; }
+        .rf-prose li::before { content: "→"; position: absolute; left: 0; color: #C9A227; font-weight: 900; }
+        .rf-prose a { color: #C9A227; font-weight: 700; border-bottom: 2px solid rgba(201, 162, 39,0.2); transition: all 0.3s; }
+        .rf-prose a:hover { border-bottom-color: #C9A227; }
         .rf-prose strong { color: #FFFFFF; font-weight: 900; }
-        .rf-prose blockquote { border-left: 4px solid #00D4FF; padding-left: 32px; font-style: italic; font-size: 24px; color: #FFFFFF; margin: 60px 0; }
+        .rf-prose blockquote { border-left: 4px solid #C9A227; padding-left: 32px; font-style: italic; font-size: 24px; color: #FFFFFF; margin: 60px 0; }
       `}</style>
     </div>
   );

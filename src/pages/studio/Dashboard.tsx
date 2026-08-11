@@ -9,8 +9,8 @@ type TopPost = { id: string; title: string; slug: string; view_count: number; st
 
 function Stat({ label, value, accent }: { label: string; value: number; accent?: string }) {
   return (
-    <div className="rounded-3xl p-8 bg-black border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-500 group">
-      <p className="font-black text-[10px] uppercase tracking-[0.2em] text-white/30 mb-4 group-hover:text-[#00D4FF] transition-colors duration-500">{label}</p>
+    <div className="rounded-3xl p-8 bg-black border border-white/10 hover:border-[#C9A227]/30 transition-all duration-500 group">
+      <p className="font-black text-[10px] uppercase tracking-[0.2em] text-white/30 mb-4 group-hover:text-[#C9A227] transition-colors duration-500">{label}</p>
       <p className="text-5xl font-black tracking-tighter" style={{ color: accent || '#FFFFFF' }}>{value}</p>
     </div>
   );
@@ -53,14 +53,14 @@ export default function StudioDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <Stat label="Total Systems" value={stats.total} />
         <Stat label="Live Assets" value={stats.published} accent="#10B981" />
-        <Stat label="In Development" value={stats.drafts} accent="#00D4FF" />
+        <Stat label="In Development" value={stats.drafts} accent="#C9A227" />
         <Stat label="Pipeline" value={stats.scheduled} accent="#4169E1" />
       </div>
       
       <div className="rounded-[2.5rem] p-10 bg-black border border-white/10">
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-2xl font-black text-white tracking-tight">Top Performing Assets</h2>
-          <Link to="/studio/posts" className="text-xs font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors duration-300">View All Systems →</Link>
+          <Link to="/studio/posts" className="text-xs font-black uppercase tracking-widest text-[#C9A227] hover:text-white transition-colors duration-300">View All Systems →</Link>
         </div>
         {loading ? (
           <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
@@ -82,7 +82,7 @@ export default function StudioDashboard() {
                   <div className="text-right">
                     <p className="text-[10px] font-black uppercase tracking-widest text-white/20 mb-1">{p.view_count || 0} Impressions</p>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-[#00D4FF] group-hover:text-black transition-all duration-500">
+                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-[#C9A227] group-hover:text-black transition-all duration-500">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </div>
                 </div>

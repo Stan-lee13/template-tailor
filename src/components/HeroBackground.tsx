@@ -25,7 +25,7 @@ export default function HeroBackground() {
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(180deg, rgba(0,212,255,0.08) 0%, rgba(8,12,20,0.4) 55%, rgba(8,12,20,0.8) 88%, #080c14 100%)',
+            'linear-gradient(180deg, rgba(201, 162, 39,0.08) 0%, rgba(11,26,42,0.4) 55%, rgba(11,26,42,0.8) 88%, #0B1A2A 100%)',
         }}
       />
       {/* Subtle vignette */}

@@ -25,7 +25,7 @@ function Btn({ active, onClick, title, children, disabled }: { active?: boolean;
       onClick={onClick}
       title={title}
       disabled={disabled}
-      className={`p-2 rounded-lg transition-all duration-300 disabled:opacity-10 ${active ? 'bg-[#00D4FF] text-black' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+      className={`p-2 rounded-lg transition-all duration-300 disabled:opacity-10 ${active ? 'bg-[#C9A227] text-black' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
     >
       {children}
     </button>
@@ -118,7 +118,7 @@ const TiptapEditor = forwardRef<TiptapEditorHandle, Props>(function TiptapEditor
         <Btn title="Redo" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()}><Redo size={16} strokeWidth={3} /></Btn>
         <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) addImage(f); e.target.value = ''; }} />
       </div>
-      <div className="p-10 prose prose-invert max-w-none font-medium text-white/60 prose-headings:text-white prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-strong:text-white prose-a:text-[#00D4FF] prose-img:rounded-[2rem] prose-img:border prose-img:border-white/10" style={{ minHeight: 400 }}>
+      <div className="p-10 prose prose-invert max-w-none font-medium text-white/60 prose-headings:text-white prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-strong:text-white prose-a:text-[#C9A227] prose-img:rounded-[2rem] prose-img:border prose-img:border-white/10" style={{ minHeight: 400 }}>
         <EditorContent editor={editor} />
       </div>
     </div>

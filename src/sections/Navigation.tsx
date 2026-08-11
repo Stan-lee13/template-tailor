@@ -69,7 +69,7 @@ export default function Navigation() {
             <BrandLogo variant="dark" size="sm" className="transition-transform duration-500 group-hover:scale-110" />
             {!scrolled && (
               <span className="text-white font-black text-xl tracking-tighter hidden sm:block">
-                RETENTION<span className="text-[#00D4FF]">FIRM</span>
+                RETENTION<span className="text-[#C9A227]">FIRM</span>
               </span>
             )}
           </Link>
@@ -80,18 +80,18 @@ export default function Navigation() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleSectionClick(e, link.href)}
-                className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#00D4FF] transition-all duration-300 relative group"
+                className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#C9A227] transition-all duration-300 relative group"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C9A227] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
             <Link
               to="/blog"
-              className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#00D4FF] transition-all duration-300 relative group"
+              className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#C9A227] transition-all duration-300 relative group"
             >
               Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C9A227] transition-all duration-300 group-hover:w-full" />
             </Link>
           </div>
 
@@ -100,7 +100,7 @@ export default function Navigation() {
               onClick={() => onBook('nav')}
               className={`hidden sm:flex items-center justify-center font-black text-[10px] uppercase tracking-widest transition-all duration-500 rounded-full ${
                 scrolled 
-                ? 'bg-[#00D4FF] text-black px-6 py-3 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
+                ? 'bg-[#C9A227] text-black px-6 py-3 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
                 : 'bg-white/10 text-white px-8 py-4 hover:bg-white hover:text-black'
               }`}
             >
@@ -127,15 +127,15 @@ export default function Navigation() {
           
           <div className="flex flex-col items-center gap-8">
             {sectionLinks.map((link) => (
-              <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#00D4FF] transition-all duration-500 tracking-tighter">
+              <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#C9A227] transition-all duration-500 tracking-tighter">
                 {link.label}
               </a>
             ))}
-            <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#00D4FF] transition-all duration-500 tracking-tighter">
+            <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#C9A227] transition-all duration-500 tracking-tighter">
               Blog
             </Link>
 
-            <button onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#00D4FF] text-black font-black text-lg uppercase tracking-widest hover:bg-white transition-all duration-500">
+            <button onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#C9A227] text-black font-black text-lg uppercase tracking-widest hover:bg-white transition-all duration-500">
               Book Growth Audit
             </button>
           </div>

@@ -3,8 +3,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { useSectionContent } from '../hooks/useSectionContent';
-import RevealImage from '../components/motion/RevealImage';
 import SplitHeadline from '../components/motion/SplitHeadline';
+import StackCard from '../components/layout/StackCard';
 import solutionVisual from '../assets/sections/solution-visual.jpg';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -15,95 +15,94 @@ type SolutionContent = {
   benefits: Benefit[]; closer_prefix: string; closer_highlight: string;
 };
 
-/** Layout rhythm: IMAGE LEFT — TEXT RIGHT */
+/** 03 — IMAGE LEFT / TEXT RIGHT. */
 export default function SolutionSection() {
   const c = useSectionContent<SolutionContent>('/', 'solution', 'solution');
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const mm = gsap.matchMedia();
     mm.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.fromTo('.sol-fade', { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.08,
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 72%' },
+      gsap.fromTo('.sol-el', { opacity: 0, y: 26 }, {
+        opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.07,
+        scrollTrigger: { trigger: ref.current, start: 'top 78%' },
       });
-      gsap.fromTo('.sol-card', { opacity: 0, y: 44, rotateX: -14 }, {
-        opacity: 1, y: 0, rotateX: 0, duration: 0.9, stagger: 0.09, ease: 'expo.out',
-        scrollTrigger: { trigger: '.solution-grid', start: 'top 85%' },
+      gsap.fromTo('.sol-frame', { clipPath: 'inset(100% 0% 0% 0%)' }, {
+        clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out',
+        scrollTrigger: { trigger: ref.current, start: 'top 80%' },
       });
-      gsap.to('.sol-copy', {
-        yPercent: -6, ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: 1 },
+      gsap.fromTo('.sol-img', { yPercent: -8, scale: 1.12 }, {
+        yPercent: 8, scale: 1.04, ease: 'none',
+        scrollTrigger: { trigger: ref.current, start: 'top bottom', end: 'bottom top', scrub: 1 },
       });
     });
     mm.add('(prefers-reduced-motion: reduce)', () => {
-      gsap.set('.sol-fade, .sol-card', { opacity: 1, y: 0, rotateX: 0 });
+      gsap.set('.sol-el', { opacity: 1, y: 0 });
+      gsap.set('.sol-frame', { clipPath: 'none' });
     });
     return () => mm.revert();
-  }, { scope: sectionRef });
+  }, { scope: ref });
 
-  const benefits = (c.benefits?.length ? c.benefits.map((b) => b.text) : [
-    'Retention systems, not random marketing',
-    'Built around your customer journey',
-    'Focused on business metrics',
-  ]);
+  const benefits = c.benefits?.length
+    ? c.benefits.map((b) => b.text)
+    : ['Retention systems, not random marketing', 'Built around your customer journey', 'Focused on business metrics'];
 
   return (
-    <section ref={sectionRef} id="solution" className="relative overflow-hidden bg-[#0a0f1a] pt-20 pb-28 lg:pt-28 lg:pb-40 px-6 lg:px-20">
-      <div className="pointer-events-none absolute bottom-0 right-1/4 h-[600px] w-[600px] rounded-full bg-[#00D4FF]/10 blur-[150px]" />
-
-      <div className="relative mx-auto grid max-w-[1300px] grid-cols-1 items-center gap-16 lg:grid-cols-[1.05fr,1fr] lg:gap-28">
-        <RevealImage
-          src={solutionVisual}
-          alt="Customer lifecycle retention dashboard"
-          from="left"
-          ratio="aspect-square lg:aspect-[4/5]"
-          caption="Lifecycle intelligence"
-          index="01"
-        />
-
-        <div className="sol-copy lg:pt-10">
-          <span className="sol-fade mb-7 inline-flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.32em] text-[#00D4FF]" style={{ opacity: 0 }}>
-            <span className="h-px w-10 bg-[#00D4FF]/50" />
-            {c.eyebrow}
-          </span>
-
-          <SplitHeadline
-            text="Customer Loyalty Is Our Business"
-            highlightFrom={2}
-            className="mb-8 text-4xl font-bold leading-[0.95] tracking-tighter text-white lg:text-7xl"
-          />
-
-          <p className="sol-fade mb-12 max-w-xl text-lg leading-relaxed text-white/55 lg:text-xl" style={{ opacity: 0 }}>
-            Everything we do is built around one goal: creating customers who buy more often, stay longer and recommend your brand to others.
-          </p>
-
-          <div className="solution-grid mb-12 grid grid-cols-1 gap-4 sm:grid-cols-2" style={{ perspective: 1000 }}>
-            {benefits.map((text, i) => (
-              <div
-                key={i}
-                className={`sol-card flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition-colors duration-500 hover:border-[#00D4FF]/40 hover:bg-white/[0.07] ${i === 2 ? 'sm:col-span-2' : ''}`}
-                style={{ opacity: 0 }}
-              >
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#00D4FF]/10 text-[#00D4FF]">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                </div>
-                <span className="font-medium text-white/90">{text}</span>
-              </div>
-            ))}
+    <div ref={ref}>
+      <StackCard id="solution" index="03" label="The system" tone="ink" width="full">
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr,1fr] lg:gap-20">
+          <div className="sol-frame relative overflow-hidden rounded-[22px] border border-border lg:rounded-[28px]">
+            <div className="relative aspect-[4/5]">
+              <img
+                src={solutionVisual}
+                alt="Retention strategist mapping a customer lifecycle"
+                loading="lazy"
+                width={1280}
+                height={1600}
+                className="sol-img absolute inset-0 h-full w-full object-cover will-change-transform"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[hsl(var(--ink))] via-transparent to-transparent" />
+            </div>
+            <span className="absolute bottom-6 left-6 rounded-full border border-primary/40 bg-[hsl(var(--ink))]/80 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.26em] text-primary">
+              Lifecycle intelligence
+            </span>
           </div>
 
-          <div className="sol-fade relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.09] to-transparent p-8" style={{ opacity: 0 }}>
-            <span className="absolute -top-4 left-8 rounded-full border border-[#00D4FF]/30 bg-[#0a0f1a] px-4 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-[#00D4FF]">
-              What we measure
+          <div>
+            <span className="sol-el eyebrow mb-6" style={{ opacity: 0 }}>
+              <span className="h-px w-10 bg-primary" />
+              {c.eyebrow}
             </span>
-            <p className="text-xl font-bold tracking-tight text-white lg:text-2xl">
-              We care about the numbers that actually grow businesses:{' '}
-              <span className="text-gradient-cyan">repeat purchase rate, LTV, and churn reduction.</span>
+
+            <SplitHeadline
+              text="Customer loyalty is our business."
+              className="mb-7 text-3xl leading-[1.03] text-foreground lg:text-6xl"
+            />
+
+            <p className="sol-el mb-10 max-w-xl text-lg leading-relaxed text-foreground/60" style={{ opacity: 0 }}>
+              {c.body}
+            </p>
+
+            <div className="mb-10 space-y-px overflow-hidden rounded-[20px] border border-border">
+              {benefits.map((text, i) => (
+                <div
+                  key={i}
+                  className="sol-el flex items-center gap-5 bg-[hsl(var(--ink-raised))] px-6 py-6 transition-colors duration-300 hover:bg-[hsl(var(--ink-raised))]/70"
+                  style={{ opacity: 0 }}
+                >
+                  <span className="font-display text-xs text-primary">0{i + 1}</span>
+                  <span className="text-base font-medium text-foreground/90 lg:text-lg">{text}</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="sol-el border-l-2 border-primary pl-6 text-xl leading-snug text-foreground lg:text-2xl" style={{ opacity: 0 }}>
+              {c.closer_prefix}
+              <span className="text-brass">{c.closer_highlight}</span>
             </p>
           </div>
         </div>
-      </div>
-    </section>
+      </StackCard>
+    </div>
   );
 }

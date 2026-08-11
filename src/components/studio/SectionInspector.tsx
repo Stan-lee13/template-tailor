@@ -29,7 +29,7 @@ function FieldEditor({ field, value, onChange }: { field: Field; value: unknown;
     </label>
   );
 
-  const inputClasses = "w-full px-5 py-4 rounded-2xl bg-white/[0.02] border border-white/10 text-white text-sm font-medium focus:outline-none focus:border-[#00D4FF]/50 transition-all placeholder:text-white/5";
+  const inputClasses = "w-full px-5 py-4 rounded-2xl bg-white/[0.02] border border-white/10 text-white text-sm font-medium focus:outline-none focus:border-[#C9A227]/50 transition-all placeholder:text-white/5";
 
   if (field.type === 'text' || field.type === 'url') {
     return (
@@ -64,7 +64,7 @@ function FieldEditor({ field, value, onChange }: { field: Field; value: unknown;
         <label className="flex items-center gap-3 cursor-pointer group">
           <div className="relative">
             <input type="checkbox" className="sr-only" checked={!!value} onChange={(e) => onChange(e.target.checked)} />
-            <div className={`w-10 h-6 rounded-full transition-colors duration-300 ${value ? 'bg-[#00D4FF]' : 'bg-white/10'}`} />
+            <div className={`w-10 h-6 rounded-full transition-colors duration-300 ${value ? 'bg-[#C9A227]' : 'bg-white/10'}`} />
             <div className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${value ? 'translate-x-4' : 'translate-x-0'}`} />
           </div>
           <span className="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">{field.label}</span>
@@ -100,7 +100,7 @@ function FieldEditor({ field, value, onChange }: { field: Field; value: unknown;
             </div>
           )}
           <div className="flex flex-col gap-2">
-            <button type="button" onClick={() => setPickerOpen(true)} className="px-6 py-3 rounded-xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500">Inject</button>
+            <button type="button" onClick={() => setPickerOpen(true)} className="px-6 py-3 rounded-xl bg-[#C9A227] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500">Inject</button>
             {value && <button type="button" onClick={() => onChange(null)} className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:text-rose-500 transition-all">Purge</button>}
           </div>
         </div>
