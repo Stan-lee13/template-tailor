@@ -34,7 +34,7 @@ export default function ActivityLog() {
       <div className="rounded-[2.5rem] overflow-hidden bg-black border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         {loading ? (
           <div className="p-12 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
-            <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#00D4FF] animate-spin" />
+            <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#C9A227] animate-spin" />
             Syncing logs...
           </div>
         ) : logs.length === 0 ? (
@@ -45,7 +45,7 @@ export default function ActivityLog() {
           <ul className="divide-y divide-white/5">
             {logs.map((l) => (
               <li key={l.id} className="px-8 py-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 hover:bg-white/[0.02] transition-colors group">
-                <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg bg-white/5 text-[#00D4FF] border border-white/5 group-hover:border-[#00D4FF]/30 transition-all">{l.action}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg bg-white/5 text-[#C9A227] border border-white/5 group-hover:border-[#C9A227]/30 transition-all">{l.action}</span>
                 <span className="text-sm font-black text-white/60 flex-1 truncate tracking-tight">
                   {l.entity_type} <span className="text-white/20 mx-2">/</span> {l.entity_id ? l.entity_id.slice(0, 12) : 'SYSTEM_NODE'}
                 </span>

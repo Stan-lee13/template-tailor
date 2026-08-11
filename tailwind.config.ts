@@ -13,7 +13,17 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Syne", "sans-serif"],
+        body: ["Plus Jakarta Sans", "sans-serif"],
+        outfit: ["Syne", "sans-serif"],
+        inter: ["Plus Jakarta Sans", "sans-serif"],
+      },
       colors: {
+        ink: "hsl(var(--ink))",
+        "ink-raised": "hsl(var(--ink-raised))",
+        paper: "hsl(var(--paper))",
+        brass: "hsl(var(--brass))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -59,6 +69,8 @@ export default {
         },
       },
       borderRadius: {
+        "3xl": "1.75rem",
+        "4xl": "2.25rem",
         xl: "calc(var(--radius) + 4px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

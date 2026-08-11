@@ -21,7 +21,7 @@ export default function SocialProofTicker() {
             <span className="text-xs font-black uppercase tracking-[0.3em] text-white/20">
               {item}
             </span>
-            <div className="w-2 h-2 rounded-full bg-[#00D4FF]/20" />
+            <div className="w-2 h-2 rounded-full bg-[#C9A227]/20" />
           </div>
         ))}
       </div>

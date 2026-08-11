@@ -28,20 +28,20 @@ function Row({ item, onChange, onDelete }: { item: NavItem; onChange: (patch: Pa
         value={item.label} 
         onChange={(e) => onChange({ label: e.target.value })} 
         placeholder="Label" 
-        className="flex-1 min-w-[80px] px-4 py-2 rounded-xl bg-black/40 border border-white/5 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#00D4FF]/50 transition-all" 
+        className="flex-1 min-w-[80px] px-4 py-2 rounded-xl bg-black/40 border border-white/5 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#C9A227]/50 transition-all" 
       />
       <input 
         value={item.href} 
         onChange={(e) => onChange({ href: e.target.value })} 
         placeholder="/path or https://" 
-        className="flex-1 min-w-[120px] px-4 py-2 rounded-xl bg-black/40 border border-white/5 text-white font-black text-[10px] tracking-widest focus:outline-none focus:border-[#00D4FF]/50 transition-all" 
+        className="flex-1 min-w-[120px] px-4 py-2 rounded-xl bg-black/40 border border-white/5 text-white font-black text-[10px] tracking-widest focus:outline-none focus:border-[#C9A227]/50 transition-all" 
       />
       <label className="flex items-center gap-2 cursor-pointer">
         <input 
           type="checkbox" 
           checked={item.enabled} 
           onChange={(e) => onChange({ enabled: e.target.checked })} 
-          className="w-4 h-4 rounded border-white/20 bg-black text-[#00D4FF] focus:ring-[#00D4FF]"
+          className="w-4 h-4 rounded border-white/20 bg-black text-[#C9A227] focus:ring-[#C9A227]"
         />
         <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Live</span>
       </label>
@@ -95,7 +95,7 @@ function Group({ location, title, items, reload }: { location: string; title: st
         <h3 className="text-xl font-black text-white tracking-tight">{title}</h3>
         <div className="flex gap-3">
           <button onClick={addRow} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-white/5 text-white hover:bg-white/10 transition-all"><Plus size={14} strokeWidth={3} /> Inject</button>
-          <button onClick={saveAll} disabled={saving} className="px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.1)] disabled:opacity-50">{saving ? '...' : 'Sync Order'}</button>
+          <button onClick={saveAll} disabled={saving} className="px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(201, 162, 39,0.1)] disabled:opacity-50">{saving ? '...' : 'Sync Order'}</button>
         </div>
       </div>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
@@ -132,7 +132,7 @@ export default function NavigationEditor() {
       </div>
       {loading ? (
         <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
-          <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#00D4FF] animate-spin" />
+          <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#C9A227] animate-spin" />
           Synchronizing Map...
         </div>
       ) : (

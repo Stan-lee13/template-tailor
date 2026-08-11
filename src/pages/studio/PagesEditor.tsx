@@ -72,7 +72,7 @@ export default function PagesEditor() {
         </div>
         <button 
           onClick={createPage} 
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(201, 162, 39,0.2)]"
         >
           <Plus size={18} strokeWidth={3} /> Inject Route
         </button>
@@ -82,7 +82,7 @@ export default function PagesEditor() {
         <aside className="rounded-[2.5rem] overflow-hidden max-h-[70vh] overflow-y-auto bg-black border border-white/10 scrollbar-hide">
           {loading ? (
             <div className="p-12 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
-              <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#00D4FF] animate-spin" />
+              <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#C9A227] animate-spin" />
               Syncing...
             </div>
           ) : (
@@ -91,7 +91,7 @@ export default function PagesEditor() {
                 <button 
                   key={p.id} 
                   onClick={() => setSelected(p)} 
-                  className={`w-full text-left px-8 py-6 transition-all duration-500 ${selected?.id === p.id ? 'bg-white/5 border-l-4 border-l-[#00D4FF]' : 'hover:bg-white/[0.02]'}`}
+                  className={`w-full text-left px-8 py-6 transition-all duration-500 ${selected?.id === p.id ? 'bg-white/5 border-l-4 border-l-[#C9A227]' : 'hover:bg-white/[0.02]'}`}
                 >
                   <div className={`font-black text-sm tracking-tight mb-1 ${selected?.id === p.id ? 'text-white' : 'text-white/40'}`}>
                     {p.title || p.path}
@@ -105,11 +105,11 @@ export default function PagesEditor() {
 
         {selected ? (
           <div className="rounded-[2.5rem] p-10 lg:p-12 bg-black border border-white/10 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00D4FF]/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C9A227]/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
             
             <div className="flex items-center justify-between gap-6 mb-12 relative z-10">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00D4FF] mb-2">{selected.path}</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A227] mb-2">{selected.path}</p>
                 <h2 className="text-3xl font-black text-white tracking-tighter">{selected.title || 'Untitled Node'}</h2>
               </div>
               <div className="flex gap-3">
@@ -123,7 +123,7 @@ export default function PagesEditor() {
                 <button 
                   onClick={save} 
                   disabled={saving} 
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-white text-black hover:bg-[#00D4FF] transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)] disabled:opacity-50"
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-white text-black hover:bg-[#C9A227] transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)] disabled:opacity-50"
                 >
                   <Save size={18} strokeWidth={3} /> {saving ? 'SYNCING...' : 'SAVE DATA'}
                 </button>
@@ -134,7 +134,7 @@ export default function PagesEditor() {
               <div className="space-y-3">
                 <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">System Title</label>
                 <input 
-                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300" 
+                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300" 
                   value={selected.title || ''} 
                   onChange={(e) => setSelected({ ...selected, title: e.target.value })} 
                 />
@@ -142,7 +142,7 @@ export default function PagesEditor() {
               <div className="space-y-3">
                 <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">Deployment Status</label>
                 <select 
-                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#00D4FF]/50 transition-all cursor-pointer" 
+                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#C9A227]/50 transition-all cursor-pointer" 
                   value={selected.status} 
                   onChange={(e) => setSelected({ ...selected, status: e.target.value as Page['status'] })}
                 >
@@ -155,7 +155,7 @@ export default function PagesEditor() {
                 <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">SEO Meta Title</label>
                 <div className="relative">
                   <input 
-                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300" 
+                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300" 
                     value={selected.meta_title || ''} 
                     onChange={(e) => setSelected({ ...selected, meta_title: e.target.value })} 
                   />
@@ -169,7 +169,7 @@ export default function PagesEditor() {
                 <div className="relative">
                   <textarea 
                     rows={3} 
-                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300 resize-none" 
+                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300 resize-none" 
                     value={selected.meta_description || ''} 
                     onChange={(e) => setSelected({ ...selected, meta_description: e.target.value })} 
                   />
@@ -181,7 +181,7 @@ export default function PagesEditor() {
               <div className="md:col-span-2 space-y-3">
                 <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">OG Intelligence Asset URL</label>
                 <input 
-                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300" 
+                  className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300" 
                   value={selected.og_image_url || ''} 
                   onChange={(e) => setSelected({ ...selected, og_image_url: e.target.value })} 
                 />
@@ -191,7 +191,7 @@ export default function PagesEditor() {
         ) : (
           <div className="rounded-[2.5rem] p-20 text-center bg-black border border-white/10">
             <div className="w-16 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-8 animate-pulse">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#00D4FF]"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#C9A227]"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
             </div>
             <p className="text-white/40 font-medium">Select a route node to configure intelligence parameters.</p>
           </div>

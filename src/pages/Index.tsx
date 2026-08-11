@@ -8,8 +8,7 @@ import Hero from '../sections/Hero';
 import ProblemSection from '../sections/ProblemSection';
 import WhoWeWorkWith from '../sections/WhoWeWorkWith';
 import SocialProofTicker from '../components/SocialProofTicker';
-import MarqueeRule from '../components/motion/MarqueeRule';
-import ScrollProgress from '../components/ScrollProgress';
+import LedgerSpine from '../components/layout/LedgerSpine';
 import StickyCTA from '../components/StickyCTA';
 import SEO from '../components/SEO';
 import Footer from '../sections/Footer';
@@ -35,7 +34,6 @@ const Index = () => {
     const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     let lenis: Lenis | null = null;
 
-    // Lenis only on desktop/pointer devices — mobile uses native scrolling
     if (!reduced && !isTouch) {
       lenis = new Lenis({
         duration: 1.4,
@@ -48,7 +46,6 @@ const Index = () => {
       gsap.ticker.lagSmoothing(0);
     }
 
-    // Scroll depth tracking — idle-callback throttled
     const fired = new Set<number>();
     let scheduled = false;
     const onScroll = () => {
@@ -76,28 +73,30 @@ const Index = () => {
   ];
 
   return (
-    <div className="relative">
+    <div className="relative bg-background">
       <SEO path="/" jsonLd={homeJsonLd} />
-      <ScrollProgress />
+      <LedgerSpine />
       <StickyCTA />
       <Navigation />
-      <main className="bg-[#0a0f1a]">
+      <main>
         <Hero />
         <SocialProofTicker />
-        <ProblemSection />
-        <WhoWeWorkWith />
-        <Suspense fallback={<div className="min-h-[50vh] bg-[#0a0f1a]" />}>
-          <SolutionSection />
-          <MarqueeRule label="Repeat purchase rate · LTV · Churn reduction" />
-          <Results />
-          <DifferentiationSection />
-          <MarqueeRule label="Strategy · Systems · Compounding revenue" reverse />
-          <Process />
-          <Services />
-          <ProjectsRail />
-          <FAQ />
-          <FinalCTA />
-        </Suspense>
+
+        {/* The Ledger: a stack of docked cards */}
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-6 px-4 pb-24 pt-6 sm:px-6 lg:gap-10 lg:pb-32 lg:pl-[92px] lg:pr-8">
+          <ProblemSection />
+          <WhoWeWorkWith />
+          <Suspense fallback={<div className="min-h-[40vh]" />}>
+            <SolutionSection />
+            <Results />
+            <DifferentiationSection />
+            <Process />
+            <Services />
+            <ProjectsRail />
+            <FAQ />
+            <FinalCTA />
+          </Suspense>
+        </div>
       </main>
       <Footer />
     </div>

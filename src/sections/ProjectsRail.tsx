@@ -60,14 +60,14 @@ export default function ProjectsRail() {
   if (projects.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20 overflow-hidden">
+    <section ref={ref} className="ledger-grain relative overflow-hidden rounded-[22px] border border-border bg-[hsl(var(--ink))] px-6 py-16 lg:rounded-[28px] lg:px-14 lg:py-24" style={{ boxShadow: 'var(--shadow-card)' }}>
       {/* Background glow */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#00D4FF]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#C9A227]/5 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-[1300px] mx-auto">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
           <div className="max-w-2xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#C9A227]/10 border border-[#C9A227]/20 text-[#C9A227] text-xs font-bold uppercase tracking-widest mb-6">
               Proof of Concept
             </span>
             <h2 className="text-4xl lg:text-7xl font-black text-white tracking-tighter leading-none">
@@ -90,7 +90,7 @@ export default function ProjectsRail() {
               <Link
                 key={p.id}
                 to={`/blog/${p.slug}`}
-                className={`proj-card group relative overflow-hidden rounded-[2.5rem] ${span} border border-white/10 hover:border-[#00D4FF]/40 transition-all duration-700 lg:hover:translate-y-[-10px] mobile-animate-float lg:animate-none`}
+                className={`proj-card group relative overflow-hidden rounded-[2.5rem] ${span} border border-white/10 hover:border-[#C9A227]/40 transition-all duration-700 lg:hover:translate-y-[-10px] mobile-animate-float lg:animate-none`}
                 style={{ opacity: 0 }}
               >
                 {p.featured_image_url && (
@@ -104,7 +104,7 @@ export default function ProjectsRail() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-700" />
                 
                 <div className="relative h-full flex flex-col justify-end p-10 lg:p-12">
-                  <h3 className="text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-tight group-hover:text-[#00D4FF] transition-colors duration-500">{p.title}</h3>
+                  <h3 className="text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-tight group-hover:text-[#C9A227] transition-colors duration-500">{p.title}</h3>
                   {p.excerpt && (
                     <p className="text-white/40 font-medium line-clamp-2 leading-relaxed">{p.excerpt}</p>
                   )}

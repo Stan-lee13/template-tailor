@@ -77,7 +77,7 @@ export default function MediaLibrary() {
           <button 
             onClick={() => inputRef.current?.click()} 
             disabled={uploading} 
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)] disabled:opacity-50"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(201, 162, 39,0.2)] disabled:opacity-50"
           >
             <Upload size={18} strokeWidth={3} /> {uploading ? 'SYNCING...' : 'UPLOAD ASSETS'}
           </button>
@@ -86,7 +86,7 @@ export default function MediaLibrary() {
 
       {loading ? (
         <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
-          <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#00D4FF] animate-spin" />
+          <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#C9A227] animate-spin" />
           Synchronizing Library...
         </div>
       ) : assets.length === 0 ? (
@@ -94,7 +94,7 @@ export default function MediaLibrary() {
             <p className="text-white/40 font-medium mb-8">Library empty. Initiate upload to populate.</p>
             <button 
               onClick={() => inputRef.current?.click()}
-              className="text-xs font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors duration-300"
+              className="text-xs font-black uppercase tracking-widest text-[#C9A227] hover:text-white transition-colors duration-300"
             >
               Inject First Asset →
             </button>
@@ -105,7 +105,7 @@ export default function MediaLibrary() {
               const url = urls[a.id];
               const isImg = a.mime?.startsWith('image/');
               return (
-                <div key={a.id} className="group relative rounded-3xl overflow-hidden bg-black border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-500">
+                <div key={a.id} className="group relative rounded-3xl overflow-hidden bg-black border border-white/10 hover:border-[#C9A227]/30 transition-all duration-500">
                   <div className="aspect-square bg-white/5 flex items-center justify-center overflow-hidden">
                     {isImg && url ? (
                       <img src={url} alt={a.filename} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -122,7 +122,7 @@ export default function MediaLibrary() {
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 backdrop-blur-sm">
                       <button 
                         onClick={() => url && copy(a.id, url)} 
-                        className="p-3 rounded-xl bg-[#00D4FF] text-black hover:bg-white transition-all"
+                        className="p-3 rounded-xl bg-[#C9A227] text-black hover:bg-white transition-all"
                         title="Copy Source URL"
                       >
                         {copiedId === a.id ? <Check size={16} strokeWidth={3} /> : <Copy size={16} strokeWidth={3} />}

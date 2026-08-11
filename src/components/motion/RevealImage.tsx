@@ -75,8 +75,8 @@ export default function RevealImage({
       >
         <img src={src} alt={alt} loading="lazy" className="ri-img absolute inset-0 h-full w-full object-cover will-change-transform" />
         {/* duotone edge + depth */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0f1a] via-transparent to-transparent" />
-        <div className="pointer-events-none absolute inset-0 mix-blend-overlay bg-gradient-to-br from-[#00D4FF]/25 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0B1A2A] via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 mix-blend-overlay bg-gradient-to-br from-[#C9A227]/25 to-transparent" />
         <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/10" />
       </div>
 
@@ -88,7 +88,7 @@ export default function RevealImage({
 
       {caption && (
         <div className="ri-chip absolute -bottom-5 left-6 right-6 lg:left-8 lg:right-auto" style={{ opacity: 0 }}>
-          <span className="inline-block rounded-full border border-white/10 bg-[#0d1626]/90 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white/60 backdrop-blur">
+          <span className="inline-block rounded-full border border-white/10 bg-[#14293F]/90 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white/60 backdrop-blur">
             {caption}
           </span>
         </div>

@@ -85,7 +85,7 @@ export default function BookingModal() {
       >
         <div className="flex items-center justify-between px-10 py-8 border-b border-white/5 bg-white/[0.02]">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-2">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C9A227] mb-2">
               Growth Audit Protocol
             </p>
             <h3 className="text-xl lg:text-2xl font-black text-white tracking-tighter">
@@ -109,7 +109,7 @@ export default function BookingModal() {
               <p className="text-white/40 font-medium mb-8">System link offline. Direct channel required.</p>
               <a 
                 href={`mailto:${SITE.email}?subject=Growth Audit Request`} 
-                className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.2)]"
+                className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(201, 162, 39,0.2)]"
               >
                 Inquire via Email
               </a>

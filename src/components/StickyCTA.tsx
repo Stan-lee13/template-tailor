@@ -29,7 +29,7 @@ export default function StickyCTA() {
         <span className="text-[10px] font-black uppercase tracking-widest text-white/40 hidden lg:inline">Ready to plug your retention leaks?</span>
         <button
           onClick={() => { track('cta_click', { location: 'sticky' }); open('sticky'); }}
-          className="px-6 py-3 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+          className="px-6 py-3 rounded-2xl bg-[#C9A227] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(201, 162, 39,0.2)]"
         >
           Secure Audit
         </button>

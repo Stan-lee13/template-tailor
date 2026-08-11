@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import StackCard from '../components/layout/StackCard';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const industries = [
   'Ecommerce Brands',
@@ -12,57 +14,52 @@ const industries = [
   'Fashion & Apparel',
   'Health & Wellness',
   'Subscription Businesses',
-  'Consumer Brands'
+  'Consumer Brands',
 ];
 
+/** Compact chip-cluster card. */
 export default function WhoWeWorkWith() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.www-head', { opacity: 0, y: 50 }, { 
-        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', 
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } 
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo('.www-el', { opacity: 0, y: 24 }, {
+        opacity: 1, y: 0, duration: 0.85, ease: 'expo.out', stagger: 0.05,
+        scrollTrigger: { trigger: ref.current, start: 'top 80%' },
       });
-      gsap.fromTo('.industry-tag', { opacity: 0, scale: 0.8 }, { 
-        opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: 'back.out(1.7)', 
-        scrollTrigger: { trigger: '.industry-grid', start: 'top 80%' } 
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+    });
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set('.www-el', { opacity: 1, y: 0 });
+    });
+    return () => mm.revert();
+  }, { scope: ref });
 
   return (
-    <section ref={sectionRef} id="who-we-work-with" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
-      <div className="max-w-[1300px] mx-auto text-center">
-        <div className="www-head mb-16 lg:mb-24" style={{ opacity: 0 }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
-            Who We Work With
-          </span>
-          <h2 className="text-3xl lg:text-7xl font-bold text-white mb-8 tracking-tighter">
-            Retention works best where customers have a <span className="text-gradient-cyan">reason to come back.</span>
+    <div ref={ref}>
+      <StackCard id="who-we-work-with" index="02" label="Who we work with" tone="raised" width="narrow" align="right">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.8fr,1.2fr] lg:items-center lg:gap-20">
+          <h2 className="www-el text-3xl leading-[1.05] text-foreground lg:text-5xl" style={{ opacity: 0 }}>
+            Retention works best where customers have a{' '}
+            <span className="text-brass">reason to come back.</span>
           </h2>
-          <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed">
-            We partner with customer-based businesses where repeat customers matter.
-          </p>
-        </div>
 
-        <div className="industry-grid flex flex-wrap justify-center gap-4 lg:gap-6">
-          {industries.map((item, i) => (
-            <div 
-              key={i} 
-              className="industry-tag px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white/80 font-bold text-lg lg:text-xl hover:bg-[#00D4FF]/10 hover:border-[#00D4FF]/30 hover:text-white transition-all duration-500 cursor-default"
-              style={{ opacity: 0 }}
-            >
-              {item}
-            </div>
-          ))}
+          <div className="flex flex-wrap gap-3">
+            {industries.map((item) => (
+              <span
+                key={item}
+                className="www-el rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground/75 transition-colors duration-300 hover:border-primary hover:text-primary lg:text-base"
+                style={{ opacity: 0 }}
+              >
+                {item}
+              </span>
+            ))}
+            <span className="www-el w-full pt-4 text-sm italic text-foreground/40" style={{ opacity: 0 }}>
+              If repeat customers matter to your business, we can help.
+            </span>
+          </div>
         </div>
-        
-        <p className="mt-16 text-white/40 font-medium italic">
-          If repeat customers matter to your business, we can help.
-        </p>
-      </div>
-    </section>
+      </StackCard>
+    </div>
   );
 }
