@@ -31,8 +31,15 @@ export default function Services() {
     // pinning inside the flex card stack broke layout for every card below it)
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const cards = gsap.utils.toArray<HTMLElement>('.svc-card');
-      const radius = () => Math.min(window.innerWidth * 0.38, 620);
       const spread = 46; // degrees between cards — wide enough that neighbours never overlap
+      // Fit the arc to the stage so the incoming card is never clipped
+      const radius = () => {
+        const stageW = stageRef.current?.clientWidth ?? 800;
+        const cardW = cards[0]?.offsetWidth ?? 440;
+        const half = Math.sin((spread / 2) * (Math.PI / 180));
+        return Math.max(240, Math.min(620, (stageW - cardW) / 2 / half));
+      };
+
 
       // Steep S-curve so each card holds centre-stage, then swaps quickly.
       const smooth = (f: number) => {
