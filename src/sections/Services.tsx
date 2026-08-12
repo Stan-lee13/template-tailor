@@ -128,7 +128,7 @@ export default function Services() {
                     <span className="text-sm font-black text-[#C9A227] uppercase tracking-widest mb-4 block">
                       {s.number}
                     </span>
-                    <h3 className="text-3xl lg:text-4xl font-black text-white mb-8 tracking-tight">
+                    <h3 className="text-2xl xl:text-3xl font-black text-white mb-6 tracking-tight">
                       {s.title}
                     </h3>
                     <div className="flex flex-wrap gap-3">
