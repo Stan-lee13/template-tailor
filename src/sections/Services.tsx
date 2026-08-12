@@ -44,14 +44,16 @@ export default function Services() {
           const x = Math.sin(rad) * R;
           const y = (1 - Math.cos(rad)) * R * 0.3;
           const dist = Math.abs(i - active);
-          // Fade neighbours out fast so no two cards' text can overlap
-          const opacity = Math.max(0, 1 - dist * 1.35);
-          const scale = 0.78 + Math.max(0, Math.cos(rad)) * 0.22;
+          // Hard falloff so no two cards' text can ever be legible at once
+          const opacity = Math.max(0, 1 - Math.pow(dist, 1.4) * 2.2);
+          const scale = 0.82 + Math.max(0, Math.cos(rad)) * 0.18;
           gsap.set(el, {
-            x, y, rotate: angle * 0.35, opacity, scale,
+            x, y, rotate: angle * 0.3, opacity, scale,
+            filter: dist > 0.35 ? `blur(${Math.min(8, dist * 8)}px)` : 'blur(0px)',
             pointerEvents: dist < 0.5 ? 'auto' : 'none',
             zIndex: Math.round(100 - dist * 10),
           });
+
         });
       };
       apply(0);
@@ -92,15 +94,15 @@ export default function Services() {
 
       {/* DESKTOP: pinned circular stage */}
       <div className="hidden lg:block relative py-20 px-12 lg:px-24">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-[40%,1fr] gap-20 items-center min-h-[85vh]">
-          <div className="relative z-10">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-[38%,1fr] gap-16 items-center min-h-[80vh]">
+          <div className="relative z-10 min-w-0">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#C9A227]/10 border border-[#C9A227]/20 text-[#C9A227] text-xs font-bold uppercase tracking-widest mb-8">
               {c.eyebrow}
             </span>
-            <h2 className="text-4xl lg:text-7xl font-black text-white mb-8 tracking-tighter leading-none">
+            <h2 className="text-4xl xl:text-5xl font-black text-white mb-8 tracking-tight leading-[1.05] text-balance">
               Everything You Need to <span className="text-gradient-cyan">Turn Customers Into Revenue</span>
             </h2>
-            <p className="text-xl text-white/40 mb-12 leading-relaxed max-w-md">
+            <p className="text-lg text-white/40 mb-12 leading-relaxed max-w-md">
               Strategic growth through customer loyalty, retention, and lifecycle marketing.
             </p>
             
@@ -117,11 +119,12 @@ export default function Services() {
             </div>
           </div>
 
-          <div ref={stageRef} className="relative h-[80vh]">
+          <div ref={stageRef} className="relative h-[74vh] overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               {services.map((s, i) => (
-                <article key={i} className="svc-card absolute w-[400px] lg:w-[480px] will-change-transform" aria-current={i === activeIdx}>
-	                  <div className={`p-10 lg:p-14 rounded-[3rem] transition-all duration-700 ${i === activeIdx ? 'bg-gradient-to-br from-white/10 to-[#080c14] border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.8)]' : 'bg-white/5 border-white/5'}`}>
+                <article key={i} className="svc-card absolute w-[380px] xl:w-[440px] will-change-transform" aria-current={i === activeIdx}>
+	                  <div className={`p-10 xl:p-12 rounded-[2.5rem] border transition-all duration-700 ${i === activeIdx ? 'bg-gradient-to-br from-white/10 to-[#080c14] border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.8)]' : 'bg-white/5 border-white/5'}`}>
+
                     <span className="text-sm font-black text-[#C9A227] uppercase tracking-widest mb-4 block">
                       {s.number}
                     </span>
