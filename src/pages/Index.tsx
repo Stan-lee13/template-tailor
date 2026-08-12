@@ -63,8 +63,20 @@ const Index = () => {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    return () => { lenis?.destroy(); window.removeEventListener('scroll', onScroll); };
+    // Lazy sections + images land after first paint — remeasure so triggers
+    // are never created against stale page height.
+    const refreshes = [400, 1200, 2500].map((t) => window.setTimeout(() => ScrollTrigger.refresh(), t));
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener('load', onLoad);
+
+    return () => {
+      lenis?.destroy();
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('load', onLoad);
+      refreshes.forEach(window.clearTimeout);
+    };
   }, []);
+
 
   const homeJsonLd = [
     { '@context': 'https://schema.org', '@type': 'Organization', name: SITE.name, alternateName: SITE.nameSpaced, url: SITE.url, logo: `${SITE.url}/favicon-512.png`, sameAs: [SITE.social.linkedin, SITE.social.twitter] },
