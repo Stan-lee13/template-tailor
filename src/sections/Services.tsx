@@ -31,15 +31,9 @@ export default function Services() {
     // pinning inside the flex card stack broke layout for every card below it)
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const cards = gsap.utils.toArray<HTMLElement>('.svc-card');
-      const spread = 46; // degrees between cards — wide enough that neighbours never overlap
-      // Fit the arc to the stage so the incoming card is never clipped
-      const radius = () => {
-        const stageW = stageRef.current?.clientWidth ?? 800;
-        const cardW = cards[0]?.offsetWidth ?? 440;
-        const half = Math.sin((spread / 2) * (Math.PI / 180));
-        return Math.max(240, Math.min(620, (stageW - cardW) / 2 / half));
-      };
-
+      // Sequential deck: the outgoing card fully clears before the next reads in,
+      // so two cards' text can never be legible on top of each other.
+      const offset = () => Math.min(360, (stageRef.current?.clientWidth ?? 700) * 0.55);
 
       // Steep S-curve so each card holds centre-stage, then swaps quickly.
       const smooth = (f: number) => {
@@ -49,27 +43,28 @@ export default function Services() {
 
       const apply = (progress: number) => {
         const raw = gsap.utils.clamp(0, 1, progress) * (cards.length - 1);
-        const base = Math.min(Math.floor(raw), cards.length - 2 < 0 ? 0 : cards.length - 2);
+        const base = Math.max(0, Math.min(Math.floor(raw), cards.length - 2));
         const active = cards.length > 1 ? base + smooth(raw - base) : 0;
         setActiveIdx(Math.round(active));
+        const D = offset();
         cards.forEach((el, i) => {
-          const angle = (i - active) * spread;
-          const rad = (angle * Math.PI) / 180;
-          const R = radius();
-          const x = Math.sin(rad) * R;
-          const y = (1 - Math.cos(rad)) * R * 0.3;
-          const dist = Math.abs(i - active);
-          // Hard falloff so no two cards' text can ever be legible at once
-          const opacity = Math.max(0, 1 - dist * 1.15);
-          const scale = 0.82 + Math.max(0, Math.cos(rad)) * 0.18;
+          const d = i - active;
+          const dist = Math.abs(d);
+          const opacity = Math.max(0, 1 - dist * 2.4);
           gsap.set(el, {
-            x, y, rotate: angle * 0.3, opacity, scale,
-            filter: dist > 0.2 ? `blur(${Math.min(5, dist * 5)}px)` : 'blur(0px)',
+            x: d * D,
+            y: dist * 26,
+            rotateY: gsap.utils.clamp(-24, 24, d * -22),
+            rotate: d * 2.5,
+            opacity,
+            scale: Math.max(0.8, 1 - dist * 0.14),
+            filter: dist > 0.15 ? `blur(${Math.min(6, dist * 8)}px)` : 'blur(0px)',
             pointerEvents: dist < 0.5 ? 'auto' : 'none',
             zIndex: Math.round(100 - dist * 10),
           });
         });
       };
+
 
       apply(0);
 
