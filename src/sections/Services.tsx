@@ -27,11 +27,12 @@ export default function Services() {
     if (!stageRef.current || services.length === 0) return;
     const mm = gsap.matchMedia();
 
-    // Desktop: circular orbit scroll
+    // Desktop: arc scroll driven by the section's own progress (no pinning —
+    // pinning inside the flex card stack broke layout for every card below it)
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const cards = gsap.utils.toArray<HTMLElement>('.svc-card');
-      const radius = () => Math.min(window.innerWidth * 0.45, 700);
-      const spread = 28; // degrees between cards
+      const radius = () => Math.min(window.innerWidth * 0.38, 620);
+      const spread = 34; // degrees between cards
 
       const apply = (progress: number) => {
         const active = progress * (cards.length - 1);
@@ -42,11 +43,14 @@ export default function Services() {
           const R = radius();
           const x = Math.sin(rad) * R;
           const y = (1 - Math.cos(rad)) * R * 0.3;
-          const opacity = Math.max(0, Math.cos(rad) * 0.95 + 0.05);
-          const scale = 0.7 + Math.cos(rad) * 0.3;
+          const dist = Math.abs(i - active);
+          // Fade neighbours out fast so no two cards' text can overlap
+          const opacity = Math.max(0, 1 - dist * 1.35);
+          const scale = 0.78 + Math.max(0, Math.cos(rad)) * 0.22;
           gsap.set(el, {
-            x, y, rotate: angle * 0.5, opacity, scale,
-            zIndex: Math.round(100 - Math.abs(angle)),
+            x, y, rotate: angle * 0.35, opacity, scale,
+            pointerEvents: dist < 0.5 ? 'auto' : 'none',
+            zIndex: Math.round(100 - dist * 10),
           });
         });
       };
@@ -54,12 +58,12 @@ export default function Services() {
 
       const st = ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: 'top top',
-        end: `+=${cards.length * 100}%`,
-        pin: true,
+        start: 'top 65%',
+        end: 'bottom 90%',
         scrub: 1,
-        anticipatePin: 1,
+        invalidateOnRefresh: true,
         onUpdate: (self) => apply(self.progress),
+        onRefresh: (self) => apply(self.progress),
       });
 
       // Ambient rotating gradient
@@ -67,6 +71,7 @@ export default function Services() {
 
       return () => { st.kill(); };
     });
+
 
     // Mobile / reduced-motion: simple staggered fade
     mm.add('(max-width: 1023px), (prefers-reduced-motion: reduce)', () => {
