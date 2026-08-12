@@ -32,7 +32,7 @@ export default function Services() {
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const cards = gsap.utils.toArray<HTMLElement>('.svc-card');
       const radius = () => Math.min(window.innerWidth * 0.38, 620);
-      const spread = 34; // degrees between cards
+      const spread = 46; // degrees between cards — wide enough that neighbours never overlap
 
       // Steep S-curve so each card holds centre-stage, then swaps quickly.
       const smooth = (f: number) => {
@@ -53,11 +53,11 @@ export default function Services() {
           const y = (1 - Math.cos(rad)) * R * 0.3;
           const dist = Math.abs(i - active);
           // Hard falloff so no two cards' text can ever be legible at once
-          const opacity = Math.max(0, 1 - dist * 1.6);
+          const opacity = Math.max(0, 1 - dist * 1.15);
           const scale = 0.82 + Math.max(0, Math.cos(rad)) * 0.18;
           gsap.set(el, {
             x, y, rotate: angle * 0.3, opacity, scale,
-            filter: dist > 0.25 ? `blur(${Math.min(8, dist * 9)}px)` : 'blur(0px)',
+            filter: dist > 0.2 ? `blur(${Math.min(5, dist * 5)}px)` : 'blur(0px)',
             pointerEvents: dist < 0.5 ? 'auto' : 'none',
             zIndex: Math.round(100 - dist * 10),
           });
