@@ -62,7 +62,7 @@ export default function Hero() {
       >
         <span
           ref={eyebrowRef}
-          className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-[0.3em] mb-10"
+          className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-[0.3em] mb-7"
           style={{ opacity: 0 }}
         >
           {c.eyebrow}
@@ -71,10 +71,10 @@ export default function Hero() {
         <h1
           className="font-black"
           style={{
-            fontSize: 'clamp(36px, 8.5vw, 120px)',
-            lineHeight: 0.9,
+            fontSize: 'clamp(26px, 5.4vw, 68px)',
+            lineHeight: 0.95,
             color: '#FFFFFF',
-            letterSpacing: '-0.05em',
+            letterSpacing: '-0.04em',
           }}
         >
           <span ref={leftRef} className="block opacity-0">Build a Brand</span>
@@ -85,7 +85,7 @@ export default function Hero() {
 
         <p
           ref={subRef}
-          className="mt-10 lg:mt-12 text-lg lg:text-2xl text-white/60 max-w-3xl leading-snug tracking-tight"
+          className="mt-5 lg:mt-8 text-sm lg:text-lg text-white/60 max-w-2xl leading-relaxed tracking-tight"
           style={{ opacity: 0 }}
         >
           We design and manage customer retention systems that turn first-time buyers into loyal customers—helping brands increase repeat purchases, customer lifetime value, referrals, and long-term profitability.
@@ -93,12 +93,13 @@ export default function Hero() {
 
         <div
           ref={ctaRef}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-14 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 w-full sm:w-auto"
           style={{ opacity: 0 }}
         >
+
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
-            className="group relative px-10 py-5 rounded-full bg-[#C9A227] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(201, 162, 39,0.3)] w-full sm:w-auto"
+            className="group relative px-9 py-4 rounded-full bg-[#C9A227] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(201, 162, 39,0.3)] w-full sm:w-auto"
           >
             Book an Intro Call
           </button>
@@ -107,7 +108,7 @@ export default function Hero() {
               const t = c.secondary_cta_target || '#process';
               if (t.startsWith('#')) scrollTo(t); else window.location.assign(t);
             }}
-            className="px-10 py-5 rounded-full border border-white/10 text-white font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:text-black w-full sm:w-auto"
+            className="px-9 py-4 rounded-full border border-white/10 text-white font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:text-black w-full sm:w-auto"
           >
             {c.secondary_cta_label}
           </LiquidButton>

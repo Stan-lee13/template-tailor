@@ -27,39 +27,55 @@ export default function Services() {
     if (!stageRef.current || services.length === 0) return;
     const mm = gsap.matchMedia();
 
-    // Desktop: circular orbit scroll
+    // Desktop: arc scroll driven by the section's own progress (no pinning —
+    // pinning inside the flex card stack broke layout for every card below it)
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const cards = gsap.utils.toArray<HTMLElement>('.svc-card');
-      const radius = () => Math.min(window.innerWidth * 0.45, 700);
-      const spread = 28; // degrees between cards
+      // Sequential deck: the outgoing card fully clears before the next reads in,
+      // so two cards' text can never be legible on top of each other.
+      const offset = () => Math.min(360, (stageRef.current?.clientWidth ?? 700) * 0.55);
+
+      // Steep S-curve so each card holds centre-stage, then swaps quickly.
+      const smooth = (f: number) => {
+        const a = f * f * (3 - 2 * f);
+        return a * a * (3 - 2 * a);
+      };
 
       const apply = (progress: number) => {
-        const active = progress * (cards.length - 1);
+        const raw = gsap.utils.clamp(0, 1, progress) * (cards.length - 1);
+        const base = Math.max(0, Math.min(Math.floor(raw), cards.length - 2));
+        const active = cards.length > 1 ? base + smooth(raw - base) : 0;
         setActiveIdx(Math.round(active));
+        const D = offset();
         cards.forEach((el, i) => {
-          const angle = (i - active) * spread;
-          const rad = (angle * Math.PI) / 180;
-          const R = radius();
-          const x = Math.sin(rad) * R;
-          const y = (1 - Math.cos(rad)) * R * 0.3;
-          const opacity = Math.max(0, Math.cos(rad) * 0.95 + 0.05);
-          const scale = 0.7 + Math.cos(rad) * 0.3;
+          const d = i - active;
+          const dist = Math.abs(d);
+          const opacity = Math.max(0, 1 - dist * 1.9);
           gsap.set(el, {
-            x, y, rotate: angle * 0.5, opacity, scale,
-            zIndex: Math.round(100 - Math.abs(angle)),
+            x: d * D,
+            y: dist * 26,
+            rotateY: gsap.utils.clamp(-24, 24, d * -22),
+            rotate: d * 2.5,
+            opacity,
+            scale: Math.max(0.8, 1 - dist * 0.14),
+            filter: dist > 0.15 ? `blur(${Math.min(6, dist * 8)}px)` : 'blur(0px)',
+            pointerEvents: dist < 0.5 ? 'auto' : 'none',
+            zIndex: Math.round(100 - dist * 10),
           });
         });
       };
+
+
       apply(0);
 
       const st = ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: 'top top',
-        end: `+=${cards.length * 100}%`,
-        pin: true,
+        start: 'top 80%',
+        end: 'bottom 55%',
         scrub: 1,
-        anticipatePin: 1,
+        invalidateOnRefresh: true,
         onUpdate: (self) => apply(self.progress),
+        onRefresh: (self) => apply(self.progress),
       });
 
       // Ambient rotating gradient
@@ -67,6 +83,7 @@ export default function Services() {
 
       return () => { st.kill(); };
     });
+
 
     // Mobile / reduced-motion: simple staggered fade
     mm.add('(max-width: 1023px), (prefers-reduced-motion: reduce)', () => {
@@ -87,15 +104,15 @@ export default function Services() {
 
       {/* DESKTOP: pinned circular stage */}
       <div className="hidden lg:block relative py-20 px-12 lg:px-24">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-[40%,1fr] gap-20 items-center min-h-[85vh]">
-          <div className="relative z-10">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-[38%,1fr] gap-16 items-center min-h-[80vh]">
+          <div className="relative z-10 min-w-0">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#C9A227]/10 border border-[#C9A227]/20 text-[#C9A227] text-xs font-bold uppercase tracking-widest mb-8">
               {c.eyebrow}
             </span>
-            <h2 className="text-4xl lg:text-7xl font-black text-white mb-8 tracking-tighter leading-none">
+            <h2 className="text-4xl xl:text-5xl font-black text-white mb-8 tracking-tight leading-[1.05] text-balance">
               Everything You Need to <span className="text-gradient-cyan">Turn Customers Into Revenue</span>
             </h2>
-            <p className="text-xl text-white/40 mb-12 leading-relaxed max-w-md">
+            <p className="text-lg text-white/40 mb-12 leading-relaxed max-w-md">
               Strategic growth through customer loyalty, retention, and lifecycle marketing.
             </p>
             
@@ -112,15 +129,16 @@ export default function Services() {
             </div>
           </div>
 
-          <div ref={stageRef} className="relative h-[80vh]">
+          <div ref={stageRef} className="relative h-[74vh] overflow-hidden" style={{ perspective: "1400px" }}>
             <div className="absolute inset-0 flex items-center justify-center">
               {services.map((s, i) => (
-                <article key={i} className="svc-card absolute w-[400px] lg:w-[480px] will-change-transform" aria-current={i === activeIdx}>
-	                  <div className={`p-10 lg:p-14 rounded-[3rem] transition-all duration-700 ${i === activeIdx ? 'bg-gradient-to-br from-white/10 to-[#080c14] border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.8)]' : 'bg-white/5 border-white/5'}`}>
+                <article key={i} className="svc-card absolute w-[380px] xl:w-[440px] will-change-transform" aria-current={i === activeIdx}>
+	                  <div className={`p-10 xl:p-12 rounded-[2.5rem] border transition-all duration-700 ${i === activeIdx ? 'bg-gradient-to-br from-white/10 to-[#080c14] border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.8)]' : 'bg-white/5 border-white/5'}`}>
+
                     <span className="text-sm font-black text-[#C9A227] uppercase tracking-widest mb-4 block">
                       {s.number}
                     </span>
-                    <h3 className="text-3xl lg:text-4xl font-black text-white mb-8 tracking-tight">
+                    <h3 className="text-2xl xl:text-3xl font-black text-white mb-6 tracking-tight">
                       {s.title}
                     </h3>
                     <div className="flex flex-wrap gap-3">
