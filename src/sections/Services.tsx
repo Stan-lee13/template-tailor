@@ -129,7 +129,7 @@ export default function Services() {
             </div>
           </div>
 
-          <div ref={stageRef} className="relative h-[74vh] overflow-hidden">
+          <div ref={stageRef} className="relative h-[74vh] overflow-hidden" style={{ perspective: "1400px" }}>
             <div className="absolute inset-0 flex items-center justify-center">
               {services.map((s, i) => (
                 <article key={i} className="svc-card absolute w-[380px] xl:w-[440px] will-change-transform" aria-current={i === activeIdx}>
