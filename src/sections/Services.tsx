@@ -50,7 +50,7 @@ export default function Services() {
         cards.forEach((el, i) => {
           const d = i - active;
           const dist = Math.abs(d);
-          const opacity = Math.max(0, 1 - dist * 2.4);
+          const opacity = Math.max(0, 1 - dist * 1.9);
           gsap.set(el, {
             x: d * D,
             y: dist * 26,
@@ -70,8 +70,8 @@ export default function Services() {
 
       const st = ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: 'top 65%',
-        end: 'bottom 90%',
+        start: 'top 80%',
+        end: 'bottom 55%',
         scrub: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => apply(self.progress),
