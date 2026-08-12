@@ -34,8 +34,16 @@ export default function Services() {
       const radius = () => Math.min(window.innerWidth * 0.38, 620);
       const spread = 34; // degrees between cards
 
+      // Steep S-curve so each card holds centre-stage, then swaps quickly.
+      const smooth = (f: number) => {
+        const a = f * f * (3 - 2 * f);
+        return a * a * (3 - 2 * a);
+      };
+
       const apply = (progress: number) => {
-        const active = progress * (cards.length - 1);
+        const raw = gsap.utils.clamp(0, 1, progress) * (cards.length - 1);
+        const base = Math.min(Math.floor(raw), cards.length - 2 < 0 ? 0 : cards.length - 2);
+        const active = cards.length > 1 ? base + smooth(raw - base) : 0;
         setActiveIdx(Math.round(active));
         cards.forEach((el, i) => {
           const angle = (i - active) * spread;
@@ -45,17 +53,17 @@ export default function Services() {
           const y = (1 - Math.cos(rad)) * R * 0.3;
           const dist = Math.abs(i - active);
           // Hard falloff so no two cards' text can ever be legible at once
-          const opacity = Math.max(0, 1 - Math.pow(dist, 1.4) * 2.2);
+          const opacity = Math.max(0, 1 - dist * 1.6);
           const scale = 0.82 + Math.max(0, Math.cos(rad)) * 0.18;
           gsap.set(el, {
             x, y, rotate: angle * 0.3, opacity, scale,
-            filter: dist > 0.35 ? `blur(${Math.min(8, dist * 8)}px)` : 'blur(0px)',
+            filter: dist > 0.25 ? `blur(${Math.min(8, dist * 9)}px)` : 'blur(0px)',
             pointerEvents: dist < 0.5 ? 'auto' : 'none',
             zIndex: Math.round(100 - dist * 10),
           });
-
         });
       };
+
       apply(0);
 
       const st = ScrollTrigger.create({
