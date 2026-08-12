@@ -62,7 +62,7 @@ export default function Hero() {
       >
         <span
           ref={eyebrowRef}
-          className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-[0.3em] mb-10"
+          className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-[0.3em] mb-7"
           style={{ opacity: 0 }}
         >
           {c.eyebrow}
@@ -99,7 +99,7 @@ export default function Hero() {
 
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
-            className="group relative px-10 py-5 rounded-full bg-[#C9A227] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(201, 162, 39,0.3)] w-full sm:w-auto"
+            className="group relative px-9 py-4 rounded-full bg-[#C9A227] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(201, 162, 39,0.3)] w-full sm:w-auto"
           >
             Book an Intro Call
           </button>
@@ -108,7 +108,7 @@ export default function Hero() {
               const t = c.secondary_cta_target || '#process';
               if (t.startsWith('#')) scrollTo(t); else window.location.assign(t);
             }}
-            className="px-10 py-5 rounded-full border border-white/10 text-white font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:text-black w-full sm:w-auto"
+            className="px-9 py-4 rounded-full border border-white/10 text-white font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:text-black w-full sm:w-auto"
           >
             {c.secondary_cta_label}
           </LiquidButton>
