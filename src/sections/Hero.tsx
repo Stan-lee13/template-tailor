@@ -71,7 +71,7 @@ export default function Hero() {
         <h1
           className="font-black"
           style={{
-            fontSize: 'clamp(30px, 6vw, 76px)',
+            fontSize: 'clamp(26px, 5.4vw, 68px)',
             lineHeight: 0.95,
             color: '#FFFFFF',
             letterSpacing: '-0.04em',
@@ -85,7 +85,7 @@ export default function Hero() {
 
         <p
           ref={subRef}
-          className="mt-6 lg:mt-8 text-base lg:text-lg text-white/60 max-w-2xl leading-relaxed tracking-tight"
+          className="mt-5 lg:mt-8 text-sm lg:text-lg text-white/60 max-w-2xl leading-relaxed tracking-tight"
           style={{ opacity: 0 }}
         >
           We design and manage customer retention systems that turn first-time buyers into loyal customers—helping brands increase repeat purchases, customer lifetime value, referrals, and long-term profitability.
