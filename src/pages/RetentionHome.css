@@ -596,3 +596,51 @@ img { display: block; max-width: 100%; }
 .motion-off .question-chapter .editorial-image,
 .motion-off .question-chapter .question-copy,
 .motion-off .question-chapter .principle-list > div { opacity: 1; transform: none; animation: none; transition: none; }
+
+
+/* Return Index text entrance: introduce the operating object before asking the eye to read it */
+.index-chapter .chapter-topline,
+.index-chapter .index-heading > div,
+.index-chapter .index-heading > p,
+.index-chapter .stage-note,
+.index-chapter .stage-footer { opacity: 0; transition: opacity 680ms var(--ease), transform 760ms var(--ease); }
+.index-chapter .chapter-topline { transform: translateY(14px); }
+.index-chapter .index-heading > div { transform: translateY(34px); transition-delay: 130ms; }
+.index-chapter .index-heading > p { transform: translateY(26px); transition-delay: 280ms; }
+.index-chapter .stage-note { transform: translateY(18px); }
+.index-chapter .note-one { transition-delay: 430ms; }
+.index-chapter .note-two { transition-delay: 560ms; }
+.index-chapter .note-three { transition-delay: 690ms; }
+.index-chapter .stage-footer { transform: translateY(12px); transition-delay: 820ms; }
+.index-chapter.is-visible .chapter-topline,
+.index-chapter.is-visible .index-heading > div,
+.index-chapter.is-visible .index-heading > p,
+.index-chapter.is-visible .stage-note,
+.index-chapter.is-visible .stage-footer { opacity: 1; transform: none; }
+.index-chapter.is-visible .index-heading h2 { animation: indexHeadingLift 900ms var(--ease) 250ms both; }
+@keyframes indexHeadingLift { from { opacity: .4; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 720px) {
+  .index-chapter .index-heading > div { transition-delay: 100ms; }
+  .index-chapter .index-heading > p { transition-delay: 220ms; }
+  .index-chapter .note-one { transition-delay: 340ms; }
+  .index-chapter .note-two { transition-delay: 450ms; }
+  .index-chapter .note-three { transition-delay: 560ms; }
+  .index-chapter .stage-footer { transition-delay: 690ms; }
+  .index-chapter .stage-note { transform: scale(.8) translateY(14px); }
+  .index-chapter.is-visible .stage-note { transform: scale(.8) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-chapter .chapter-topline,
+  .index-chapter .index-heading > div,
+  .index-chapter .index-heading > p,
+  .index-chapter .stage-note,
+  .index-chapter .stage-footer,
+  .index-chapter.is-visible .stage-note { opacity: 1; transform: none; animation: none; transition: none; }
+}
+.motion-off .index-chapter .chapter-topline,
+.motion-off .index-chapter .index-heading > div,
+.motion-off .index-chapter .index-heading > p,
+.motion-off .index-chapter .stage-note,
+.motion-off .index-chapter .stage-footer { opacity: 1; transform: none; animation: none; transition: none; }
