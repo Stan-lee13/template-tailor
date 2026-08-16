@@ -53,6 +53,7 @@ function ReturnArtifact({ compact = false }: { compact?: boolean }) {
       <div className="artifact-loop" />
       <div className="artifact-bead" />
       <div className="artifact-caption"><ScanLine size={12} /> live behavior map</div>
+      <div className="artifact-constellation" aria-hidden="true"><span className="constellation-node node-order"><i />first order</span><span className="constellation-node node-signal"><i />signal</span><span className="constellation-node node-action"><i />action</span><span className="constellation-node node-return"><i />return</span><div className="constellation-path path-one" /><div className="constellation-path path-two" /><div className="constellation-path path-three" /></div>
     </div>
   );
 }
@@ -101,6 +102,18 @@ function Index() {
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
   }, [motionOn]);
+
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-field-card]"));
+    const onPointerMove = (event: PointerEvent) => {
+      const card = event.currentTarget as HTMLElement;
+      const bounds = card.getBoundingClientRect();
+      card.style.setProperty("--field-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+      card.style.setProperty("--field-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+    };
+    cards.forEach((card) => card.addEventListener("pointermove", onPointerMove));
+    return () => cards.forEach((card) => card.removeEventListener("pointermove", onPointerMove));
+  }, []);
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-chapter]"));
@@ -153,12 +166,13 @@ function Index() {
           <div className="hero-rail"><span>RETURN INDEX / 01</span><span>SCROLL TO ENTER</span></div>
           <div className="hero-copy" data-reveal="copy">
             <p className="eyebrow"><span className="eyebrow-dot" /> Customer behavior studio</p>
-            <h1>The second purchase is where the business <em>tells the truth.</em></h1>
+            <h1><span className="type-ledger">The second purchase is where the business <em>tells the truth.</em></span></h1>
             <p className="hero-deck">RetentionFirm finds the interval between a first order and a customer’s return—then makes that interval work harder.</p>
             <div className="hero-actions"><button className="ink-button" onClick={() => scrollTo("contact")}>Receive your Return Index <ArrowUpRight size={17} /></button><button className="text-button" onClick={() => scrollTo("interval")}><span className="mini-play"><ArrowDownRight size={14} /></span> Walk the interval</button></div>
             <div className="hero-proof"><span>Built for brands customers choose again.</span><span>Fashion · beauty · food · subscriptions</span></div>
           </div>
           <div className="hero-image-frame" data-reveal="visual"><img src="/images/return-index-reference.jpg" alt="Editorial still life of the Return Index artifact" /><div className="image-stamp">FIELD NOTE<br /><strong>01 / 08</strong></div><div className="image-caption">A physical map of the space between “thank you” and “see you again.”</div></div>
+          <div className="return-beam" aria-hidden="true"><span /><i /><b /></div>
           <div className="hero-scroll"><span>SCROLL TO ENTER</span><i /></div>
         </section>
 
@@ -167,6 +181,8 @@ function Index() {
           <div className="split-statement"><div><p className="chapter-kicker">The part no dashboard shows you</p><h2>Where does the <em>return</em> go quiet?</h2></div><div className="statement-note"><p>Most brands know how to win attention. Fewer know what makes a customer choose the same product again.</p><ArrowDownRight size={23} /></div></div>
           <div className="question-grid"><figure className="editorial-image"><img src="/images/return-index-detail.jpg" alt="Paper, acetate, and signal bead arranged as a retention artifact" /><figcaption><span>FIG. 01</span> A customer interval, made visible.</figcaption></figure><div className="question-copy"><p>Retention is not a campaign problem. It is a sequence problem. The work lives in the quiet days after delivery: when the customer is deciding whether the product belongs in their life.</p><div className="principle-list"><div><span>01</span><strong>Acquire attention.</strong><small>Turn it into a first order.</small></div><div><span>02</span><strong>Earn the return.</strong><small>Turn a buyer into a customer.</small></div><div><span>03</span><strong>Compound value.</strong><small>Turn retention into an advantage.</small></div></div></div></div>
         </section>
+
+        <section className="signal-marquee" aria-label="Retention system sequence"><div className="marquee-track"><span>FIRST ORDER</span><i>→</i><span>SIGNAL</span><i>→</i><span>INTERVENTION</span><i>→</i><span>RETURN</span><i>→</i><span>FIRST ORDER</span><i>→</i><span>SIGNAL</span><i>→</i><span>INTERVENTION</span><i>→</i><span>RETURN</span><i>→</i></div></section>
 
         <section className="interval-chapter" id="interval" data-reveal="section" data-chapter="interval">
           <div className="chapter-topline light"><span>02 / THE CUSTOMER INTERVAL</span><span>THE SPACE BETWEEN TWO ORDERS</span></div>
@@ -184,10 +200,10 @@ function Index() {
           <div className="chapter-topline"><span>04 / SIGNAL ROOM</span><span>VISUAL WORLDS FOR THE RETURN</span></div>
           <div className="gallery-heading"><div><p className="chapter-kicker">Browse the working library</p><h2>Every return starts with a different <em>signal.</em></h2></div><p>Explore the artifacts, moments, and systems we use to make customer behavior visible—then make it useful.</p></div>
           <div className="signal-gallery">
-            <article className="gallery-card gallery-card-wide"><div className="gallery-media"><img src="/images/return-index-proof.jpg" alt="Retention proof artifact on a dark surface" /><span className="gallery-chip">NEW / PROTOCOL</span></div><div className="gallery-card-meta"><span>01</span><strong>The proof protocol</strong><ArrowUpRight size={16} /></div><p>Baseline, deployment, time window, outcome. A case that shows its working.</p></article>
-            <article className="gallery-card"><div className="gallery-media"><img src="/images/return-index-detail.jpg" alt="Layered paper and acetate retention artifact" /><span className="gallery-chip">ARTIFACT</span></div><div className="gallery-card-meta"><span>02</span><strong>The quiet week</strong><ArrowUpRight size={16} /></div><p>The moment after delivery when relevance is still up for grabs.</p></article>
-            <article className="gallery-card gallery-card-dark"><div className="gallery-media"><img src="/images/case-novalabs.jpg" alt="Retention analytics dashboard with cohort signals" /><span className="gallery-chip">DATA / FIELD NOTE</span></div><div className="gallery-card-meta"><span>03</span><strong>The signal room</strong><ArrowUpRight size={16} /></div><p>Cohorts, churn pressure, and the pattern hiding behind the average.</p></article>
-            <article className="gallery-card gallery-card-operator"><div className="gallery-media"><img src="/images/return-index-operator.jpg" alt="Retention operator studying customer behavior artifacts" /><span className="gallery-chip">PEOPLE / METHOD</span></div><div className="gallery-card-meta"><span>04</span><strong>Look closer</strong><ArrowUpRight size={16} /></div><p>Operator attention is a system input. The work starts before the send.</p></article>
+            <article className="gallery-card gallery-card-wide" data-field-card><div className="gallery-media"><img src="/images/return-index-proof.jpg" alt="Retention proof artifact on a dark surface" /><span className="gallery-chip">NEW / PROTOCOL</span></div><div className="gallery-card-meta"><span>01</span><strong>The proof protocol</strong><ArrowUpRight size={16} /></div><p>Baseline, deployment, time window, outcome. A case that shows its working.</p></article>
+            <article className="gallery-card" data-field-card><div className="gallery-media"><img src="/images/return-index-detail.jpg" alt="Layered paper and acetate retention artifact" /><span className="gallery-chip">ARTIFACT</span></div><div className="gallery-card-meta"><span>02</span><strong>The quiet week</strong><ArrowUpRight size={16} /></div><p>The moment after delivery when relevance is still up for grabs.</p></article>
+            <article className="gallery-card gallery-card-dark" data-field-card><div className="gallery-media"><img src="/images/case-novalabs.jpg" alt="Retention analytics dashboard with cohort signals" /><span className="gallery-chip">DATA / FIELD NOTE</span></div><div className="gallery-card-meta"><span>03</span><strong>The signal room</strong><ArrowUpRight size={16} /></div><p>Cohorts, churn pressure, and the pattern hiding behind the average.</p></article>
+            <article className="gallery-card gallery-card-operator" data-field-card><div className="gallery-media"><img src="/images/return-index-operator.jpg" alt="Retention operator studying customer behavior artifacts" /><span className="gallery-chip">PEOPLE / METHOD</span></div><div className="gallery-card-meta"><span>04</span><strong>Look closer</strong><ArrowUpRight size={16} /></div><p>Operator attention is a system input. The work starts before the send.</p></article>
           </div>
           <button className="text-button gallery-cta" onClick={() => scrollTo("contact")}>Build a working library for us <ArrowRight size={16} /></button>
         </section>
@@ -195,7 +211,7 @@ function Index() {
         <section className="proof-chapter" id="proof" data-reveal="section" data-chapter="proof">
           <div className="chapter-topline light"><span>05 / PROOF IN CONTEXT</span><span>BASELINE → DEPLOYMENT → OUTCOME</span></div>
           <div className="proof-heading"><p className="chapter-kicker">A case should show its working</p><h2>Evidence you can <em>trace.</em></h2><p>Real retention work is measured against a baseline, a deployment, a time window, and the outcome that actually matters.</p></div>
-          <div className="proof-layout"><figure className="proof-image"><img src="/images/case-meridian.jpg" alt="Meridian Apparel email campaign analytics dashboard" /><figcaption><span>CASE PROTOCOL 001</span> DTC apparel / anonymized with permission</figcaption></figure><div className="proof-data"><div className="data-line"><span>BASELINE</span><strong>&lt;18%</strong><small>second-purchase rate</small></div><div className="data-line is-accent"><span>DEPLOYMENT</span><strong>12 flows</strong><small>RFM + lifecycle architecture</small></div><div className="data-line"><span>WITHIN 90 DAYS</span><strong>30%</strong><small>retention contribution</small></div><p className="proof-footnote">Growth-stage apparel brand scaling ~$180K/mo. Impact depends on baseline, product, and execution context.</p><button className="light-button" onClick={() => scrollTo("contact")}>Read the full protocol <ArrowUpRight size={16} /></button></div></div>
+          <div className="proof-layout"><figure className="proof-image"><img src="/images/case-meridian.jpg" alt="Meridian Apparel email campaign analytics dashboard" /><figcaption><span>CASE PROTOCOL 001</span> DTC apparel / anonymized with permission</figcaption></figure><div className="proof-data"><div className="data-line"><span>BASELINE</span><strong>&lt;18%</strong><small>second-purchase rate</small></div><div className="data-line is-accent"><span>DEPLOYMENT</span><strong>12 flows</strong><small>RFM + lifecycle architecture</small></div><div className="data-line"><span>WITHIN 90 DAYS</span><strong>30%</strong><small>retention contribution</small></div><p className="proof-footnote">Growth-stage apparel brand scaling ~$180K/mo. Impact depends on baseline, product, and execution context.</p><button className="light-button" onClick={() => scrollTo("contact")}>Read the full protocol <ArrowUpRight size={16} /></button></div></div><div className="protocol-grid"><div><span>01 / BASELINE</span><strong>Find the quiet.</strong><small>Where does behavior soften after the first order?</small></div><div className="protocol-grid-line" aria-hidden="true" /><div><span>02 / DEPLOYMENT</span><strong>Move the signal.</strong><small>Build the smallest useful intervention around it.</small></div><div className="protocol-grid-line" aria-hidden="true" /><div><span>03 / OUTCOME</span><strong>See the return.</strong><small>Measure what changed and what compounds next.</small></div></div>
         </section>
 
         <section className="people-chapter" id="people" data-reveal="section">
