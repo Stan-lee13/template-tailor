@@ -23,18 +23,27 @@ const intervalData = [
     title: "The quiet week",
     body: "The package arrives. The excitement is real. But the brand goes silent while the customer decides what the product means in their life.",
     note: "Signal: education gap",
+    image: "/images/interval-quiet-week-1600.webp",
+    srcSet: "/images/interval-quiet-week-640.webp 640w, /images/interval-quiet-week-1024.webp 1024w, /images/interval-quiet-week-1600.webp 1600w",
+    alt: "Open first-order delivery parcel beside a quiet customer interval map",
   },
   {
     label: "02 / THE DECISION MOMENT",
     title: "The useful nudge",
     body: "A timely answer, a replenishment cue, or a reason to use the product again turns a one-time transaction into a lived routine.",
     note: "Intervention: relevance",
+    image: "/images/interval-decision-moment-1600.webp",
+    srcSet: "/images/interval-decision-moment-640.webp 640w, /images/interval-decision-moment-1024.webp 1024w, /images/interval-decision-moment-1600.webp 1600w",
+    alt: "Customer decision moment shown through a product, signal points, and a timely intervention path",
   },
   {
     label: "03 / THE RETURN",
     title: "The habit forms",
     body: "The second purchase is not a lucky conversion. It is the visible result of small, well-timed signals working together.",
     note: "Outcome: repeat behavior",
+    image: "/images/interval-return-1600.webp",
+    srcSet: "/images/interval-return-640.webp 640w, /images/interval-return-1024.webp 1024w, /images/interval-return-1600.webp 1600w",
+    alt: "Return path connecting a first order to a second order and replenishment cue",
   },
 ];
 
@@ -187,7 +196,7 @@ function Index() {
         <section className="interval-chapter" id="interval" data-reveal="section" data-chapter="interval">
           <div className="chapter-topline light"><span>02 / THE CUSTOMER INTERVAL</span><span>THE SPACE BETWEEN TWO ORDERS</span></div>
           <div className="interval-intro"><p className="chapter-kicker">A sequence, not a funnel</p><h2>The week after the order is where loyalty is <em>won.</em></h2></div>
-          <div className="interval-layout"><div className="interval-tabs" role="tablist" aria-label="Customer interval moments">{intervalData.map((item, index) => <button key={item.label} className={activeInterval === index ? "is-active" : ""} onClick={() => setActiveInterval(index)} role="tab" aria-selected={activeInterval === index}><span>{item.label}</span><strong>{item.title}</strong><ArrowRight size={15} /></button>)}</div><div className="interval-card" key={activeInterval}><div className="interval-card-image"><img src={activeInterval === 1 ? "/images/return-index-proof.jpg" : "/images/return-index-detail.jpg"} alt="Retention interval artifact" /><span>{intervalData[activeInterval].note}</span></div><div className="interval-card-copy"><span className="live-label"><i /> moment {String(activeInterval + 1).padStart(2, "0")}</span><h3>{intervalData[activeInterval].title}</h3><p>{intervalData[activeInterval].body}</p><div className="interval-arrow"><ArrowDownRight size={25} /><span>Move the signal forward</span></div></div></div></div>
+          <div className="interval-layout"><div className="interval-tabs" role="tablist" aria-label="Customer interval moments">{intervalData.map((item, index) => <button key={item.label} className={activeInterval === index ? "is-active" : ""} onClick={() => setActiveInterval(index)} role="tab" aria-selected={activeInterval === index}><span>{item.label}</span><strong>{item.title}</strong><ArrowRight size={15} /></button>)}</div><div className="interval-card" key={activeInterval}><div className="interval-card-image"><img src={intervalData[activeInterval].image} srcSet={intervalData[activeInterval].srcSet} sizes="(max-width: 720px) 100vw, 45vw" alt={intervalData[activeInterval].alt} loading="lazy" decoding="async" /><span>{intervalData[activeInterval].note}</span></div><div className="interval-card-copy"><span className="live-label"><i /> moment {String(activeInterval + 1).padStart(2, "0")}</span><h3>{intervalData[activeInterval].title}</h3><p>{intervalData[activeInterval].body}</p><div className="interval-arrow"><ArrowDownRight size={25} /><span>Move the signal forward</span></div></div></div></div>
         </section>
 
         <section className="index-chapter" id="index" data-reveal="section" data-chapter="index">
