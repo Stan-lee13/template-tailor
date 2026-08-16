@@ -376,3 +376,47 @@ img { display: block; max-width: 100%; }
 }
 .motion-off .type-ledger { color: var(--bone); background-size: 100% 100%; }
 .motion-off .type-ledger::after, .motion-off .artifact-constellation, .motion-off .constellation-node i { animation: none !important; transition: none !important; opacity: 1; }
+
+
+/* Focused hero upgrade: office signal / seamless header */
+.return-nav-hero { background: linear-gradient(180deg, rgba(8,11,10,.72), rgba(8,11,10,.22) 78%, transparent); border-bottom-color: rgba(238,232,218,.08); backdrop-filter: blur(10px); transition: background 500ms ease, border-color 500ms ease; }
+.return-nav-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; opacity: .35; background: linear-gradient(90deg, rgba(8,11,10,.9), transparent 42%, rgba(8,11,10,.32)); pointer-events: none; }
+.return-nav-hero .wordmark-symbol { border-color: rgba(238,232,218,.7); box-shadow: 0 0 0 5px rgba(238,232,218,.03); }
+.return-nav-hero .nav-motion, .return-nav-hero .menu-trigger { color: rgba(238,232,218,.86); }
+.ri-hero { isolation: isolate; background: #080b0a; }
+.ri-hero::before { content: ''; position: absolute; z-index: 0; inset: 0; background: radial-gradient(circle at 70% 42%, rgba(80,119,90,.13), transparent 28%), linear-gradient(108deg, rgba(8,11,10,.72) 0%, rgba(8,11,10,.26) 45%, rgba(8,11,10,.04) 100%); pointer-events: none; }
+.hero-office-frame { min-height: 660px; border-radius: 2px; box-shadow: 0 30px 80px rgba(0,0,0,.3); }
+.hero-office-frame::before { border-color: rgba(238,232,218,.22); box-shadow: inset 0 0 0 1px rgba(199,240,73,.04); }
+.hero-office-frame::after { content: ''; position: absolute; z-index: 2; inset: 0; background: linear-gradient(180deg, rgba(8,11,10,.06), transparent 48%, rgba(8,11,10,.48)); pointer-events: none; }
+.hero-office-frame img { min-height: 660px; filter: saturate(.78) contrast(1.08) brightness(.86); transform: scale(1.035); }
+.hero-office-frame:hover img { transform: scale(1.06); filter: saturate(.92) contrast(1.08) brightness(.92); }
+.hero-office-overlay { position: absolute; z-index: 2; inset: 0; background: linear-gradient(90deg, rgba(8,11,10,.18), transparent 46%); pointer-events: none; }
+.office-caption { position: absolute; z-index: 4; right: 18px; bottom: 18px; display: flex; flex-direction: column; gap: 5px; color: rgba(238,232,218,.76); font-family: var(--mono); font-size: 8px; letter-spacing: .1em; text-align: right; }
+.office-caption strong { color: var(--lime); font-size: 9px; font-weight: 500; }
+.hero-signal-line { display: flex; align-items: center; gap: 12px; margin: -8px 0 28px; color: rgba(238,232,218,.58); font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.hero-signal-line span { display: inline-flex; align-items: center; gap: 6px; color: var(--lime); }
+.hero-signal-line span i { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 14px rgba(199,240,73,.75); }
+.hero-signal-line strong { color: var(--bone); font-size: 14px; letter-spacing: -.02em; }
+.hero-signal-line small { color: rgba(238,232,218,.4); font-size: 8px; letter-spacing: .04em; text-transform: none; }
+.motion-on .hero-signal-line span i { animation: signalBlink 1.8s ease-in-out infinite; }
+@keyframes signalBlink { 0%,100% { opacity: .45; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.25); } }
+.intro-screen { background: radial-gradient(circle at 50% 46%, rgba(39,64,52,.28), transparent 38%), var(--carbon); }
+.intro-screen p { max-width: 920px; }
+.intro-screen button { padding: 8px 0; border-bottom: 1px solid rgba(199,240,73,.42); }
+.intro-screen button svg { transition: transform 250ms var(--ease); }
+
+@media (max-width: 980px) {
+  .hero-office-frame, .hero-office-frame img { min-height: 540px; }
+}
+@media (max-width: 720px) {
+  .return-nav-hero { background: linear-gradient(180deg, rgba(8,11,10,.88), rgba(8,11,10,.26) 86%, transparent); }
+  .hero-signal-line { flex-wrap: wrap; gap: 9px; margin-top: -2px; }
+  .hero-signal-line small { flex-basis: 100%; }
+  .hero-office-frame, .hero-office-frame img { min-height: 460px; }
+  .office-caption { right: 14px; bottom: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .return-nav-hero, .hero-office-frame img, .intro-screen button svg { transition: none; }
+  .motion-on .hero-signal-line span i { animation: none; }
+}
+.motion-off .hero-signal-line span i { animation: none !important; }

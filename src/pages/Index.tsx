@@ -135,12 +135,12 @@ function Index() {
         <div className="intro-screen" role="status" aria-label="Loading RetentionFirm">
           <div className="intro-mark"><span>R</span><i /></div>
           <div className="intro-meta"><span>RETENTIONFIRM</span><span>RETURN INDEX / 01</span></div>
-          <p>The first order is not the result.<br />It is the beginning of the question.</p>
+          <p>Before the next order,<br />there is a moment worth designing.</p>
           <button onClick={() => { setIntroVisible(false); window.sessionStorage.setItem("retentionfirm-intro-seen", "true"); }}>Skip intro <ArrowRight size={14} /></button>
         </div>
       )}
 
-      <header className="return-nav">
+      <header className="return-nav return-nav-hero">
         <button className="wordmark" onClick={() => scrollTo("top")} aria-label="RetentionFirm home"><span className="wordmark-symbol">R</span><span>RetentionFirm<sup>®</sup></span></button>
         <div className="nav-index"><span>INDEX</span><strong>0{Object.keys({ question: 1, interval: 2, index: 3, gallery: 4, proof: 5 }).indexOf(activeChapter) + 1}</strong><span>/ 09</span></div>
         <div className="nav-actions">
@@ -167,11 +167,11 @@ function Index() {
           <div className="hero-copy" data-reveal="copy">
             <p className="eyebrow"><span className="eyebrow-dot" /> Customer behavior studio</p>
             <h1><span className="type-ledger">The second purchase is where the business <em>tells the truth.</em></span></h1>
-            <p className="hero-deck">RetentionFirm finds the interval between a first order and a customer’s return—then makes that interval work harder.</p>
+            <p className="hero-deck">RetentionFirm finds the interval between a first order and a customer’s return—then makes that interval work harder.</p><div className="hero-signal-line"><span><i /> LIVE SIGNAL</span><strong>+38.4%</strong><small>return behavior under observation</small></div>
             <div className="hero-actions"><button className="ink-button" onClick={() => scrollTo("contact")}>Receive your Return Index <ArrowUpRight size={17} /></button><button className="text-button" onClick={() => scrollTo("interval")}><span className="mini-play"><ArrowDownRight size={14} /></span> Walk the interval</button></div>
             <div className="hero-proof"><span>Built for brands customers choose again.</span><span>Fashion · beauty · food · subscriptions</span></div>
           </div>
-          <div className="hero-image-frame" data-reveal="visual"><img src="/images/return-index-reference.jpg" alt="Editorial still life of the Return Index artifact" /><div className="image-stamp">FIELD NOTE<br /><strong>01 / 08</strong></div><div className="image-caption">A physical map of the space between “thank you” and “see you again.”</div></div>
+          <div className="hero-image-frame hero-office-frame" data-reveal="visual"><img src="/images/hero-office-analytics.jpg" alt="Dark office with an open laptop showing upward-moving sales analytics" /><div className="hero-office-overlay" aria-hidden="true" /><div className="image-stamp">FIELD NOTE<br /><strong>01 / 08</strong></div><div className="image-caption">The quiet system behind the next order.</div><div className="office-caption"><span>RETENTIONFIRM / LIVE VIEW</span><strong>SALES SIGNALS MOVING UP</strong></div></div>
           <div className="return-beam" aria-hidden="true"><span /><i /><b /></div>
           <div className="hero-scroll"><span>SCROLL TO ENTER</span><i /></div>
         </section>
