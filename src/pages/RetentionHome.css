@@ -423,7 +423,7 @@ img { display: block; max-width: 100%; }
 
 
 /* Correction: full-bleed office hero background + visible 4.5s entrance */
-.ri-hero { display: block; min-height: 100svh; padding: 0; background: #080b0a url('/images/hero-office-analytics.jpg') center center / cover no-repeat; }
+.ri-hero { display: block; min-height: 100svh; padding: 0; background: #080b0a; }
 .ri-hero::before { content: ''; position: absolute; z-index: 0; inset: 0; background: linear-gradient(90deg, rgba(8,11,10,.96) 0%, rgba(8,11,10,.78) 37%, rgba(8,11,10,.3) 67%, rgba(8,11,10,.12) 100%), linear-gradient(180deg, rgba(8,11,10,.42) 0%, rgba(8,11,10,.03) 38%, rgba(8,11,10,.7) 100%); pointer-events: none; }
 .ri-hero::after { content: ''; z-index: 1; opacity: .18; background: linear-gradient(120deg, transparent 40%, rgba(199,240,73,.14)); }
 .ri-hero > .hero-copy { position: relative; z-index: 5; display: flex; flex-direction: column; justify-content: center; width: min(780px, 58vw); min-height: 100svh; max-width: none; padding: 150px 7vw 100px; }
@@ -455,3 +455,8 @@ img { display: block; max-width: 100%; }
   .ri-hero > .hero-image-frame .image-caption { right: 18px; bottom: 82px; }
   .ri-hero > .hero-image-frame .office-caption { right: 18px; bottom: 48px; }
 }
+
+
+/* Performance: let the responsive hero image element own the background visual */
+.ri-hero { background-image: none; background-color: #080b0a; }
+.ri-hero > .hero-image-frame img { opacity: 1; }
