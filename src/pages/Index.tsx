@@ -123,6 +123,54 @@ function Index() {
   }, []);
 
   useEffect(() => {
+    const stage = document.querySelector<HTMLElement>(".index-stage");
+    const artifact = stage?.querySelector<HTMLElement>(".return-artifact");
+    const pointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!stage || !artifact || !motionOn || !pointerQuery.matches || reducedMotion) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let frame = 0;
+    let leaveTimer = 0;
+
+    const render = () => {
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+      stage.style.setProperty("--pointer-x", `${currentX.toFixed(3)}`);
+      stage.style.setProperty("--pointer-y", `${currentY.toFixed(3)}`);
+      frame = window.requestAnimationFrame(render);
+    };
+    const onPointerMove = (event: PointerEvent) => {
+      const bounds = stage.getBoundingClientRect();
+      targetX = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - 0.5) * 2));
+      targetY = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - 0.5) * 2));
+      window.clearTimeout(leaveTimer);
+      stage.classList.add("is-pointer-active");
+    };
+    const onPointerLeave = () => {
+      targetX = 0;
+      targetY = 0;
+      leaveTimer = window.setTimeout(() => stage.classList.remove("is-pointer-active"), 480);
+    };
+
+    stage.addEventListener("pointermove", onPointerMove);
+    stage.addEventListener("pointerleave", onPointerLeave);
+    frame = window.requestAnimationFrame(render);
+    return () => {
+      stage.removeEventListener("pointermove", onPointerMove);
+      stage.removeEventListener("pointerleave", onPointerLeave);
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(leaveTimer);
+      stage.classList.remove("is-pointer-active");
+      stage.style.removeProperty("--pointer-x");
+      stage.style.removeProperty("--pointer-y");
+    };
+  }, [motionOn]);
+
+  useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-chapter]"));
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (entry.isIntersecting) setActiveChapter(entry.target.getAttribute("data-chapter") as ChapterKey);

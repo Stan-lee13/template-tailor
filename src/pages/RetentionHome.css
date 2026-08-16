@@ -644,3 +644,52 @@ img { display: block; max-width: 100%; }
 .motion-off .index-chapter .index-heading > p,
 .motion-off .index-chapter .stage-note,
 .motion-off .index-chapter .stage-footer { opacity: 1; transform: none; animation: none; transition: none; }
+
+
+/* Cursor-responsive Return Index: a noticeable but restrained magnetic field */
+.index-stage { --pointer-x: 0; --pointer-y: 0; }
+.index-stage::after { content: ''; position: absolute; z-index: 0; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(420px circle at calc(50% + (var(--pointer-x) * 18%)) calc(50% + (var(--pointer-y) * 18%)), rgba(199,240,73,.12), transparent 64%); transition: opacity 500ms ease; }
+.index-stage.is-pointer-active::after { opacity: 1; }
+.index-stage .return-artifact { z-index: 2; transform: perspective(900px) rotateX(calc(8deg + (var(--pointer-y) * -4deg))) rotateY(calc(-12deg + (var(--pointer-x) * 8deg))) rotateZ(calc(-5deg + (var(--pointer-x) * 1.2deg))) translate3d(calc(var(--pointer-x) * 12px), calc(var(--pointer-y) * 10px), 0); transition: transform 180ms var(--ease); }
+.index-stage:hover .return-artifact { transform: perspective(900px) rotateX(calc(3deg + (var(--pointer-y) * -4deg))) rotateY(calc(8deg + (var(--pointer-x) * 8deg))) rotateZ(calc(-2deg + (var(--pointer-x) * 1.2deg))) translate3d(calc(var(--pointer-x) * 18px), calc(var(--pointer-y) * 14px - 12px), 0); }
+.index-stage.is-pointer-active .stage-note { text-shadow: 0 0 18px rgba(199,240,73,.18); }
+.index-stage .note-one { transform: translate3d(calc(var(--pointer-x) * -10px), calc(var(--pointer-y) * -7px), 0); transition: transform 260ms var(--ease), opacity 680ms var(--ease), text-shadow 400ms ease; }
+.index-stage .note-two { transform: translate3d(calc(var(--pointer-x) * 12px), calc(var(--pointer-y) * 8px), 0); transition: transform 300ms var(--ease), opacity 680ms var(--ease), text-shadow 400ms ease; }
+.index-stage .note-three { transform: translate3d(calc(var(--pointer-x) * -7px), calc(var(--pointer-y) * 11px), 0); transition: transform 340ms var(--ease), opacity 680ms var(--ease), text-shadow 400ms ease; }
+.index-stage .stage-footer { transform: translate3d(calc(var(--pointer-x) * 4px), calc(var(--pointer-y) * 4px), 0); transition: transform 420ms var(--ease), opacity 680ms var(--ease); }
+
+@media (max-width: 720px) {
+  .index-stage .return-artifact { transform: perspective(900px) rotateX(8deg) rotateY(-12deg) rotateZ(-5deg) translateY(0); }
+  .index-stage:hover .return-artifact { transform: perspective(900px) rotateX(8deg) rotateY(-12deg) rotateZ(-5deg) translateY(0); }
+  .index-stage .note-one, .index-stage .note-two, .index-stage .note-three, .index-stage .stage-footer { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-stage::after, .index-stage.is-pointer-active::after { opacity: 0; transition: none; }
+  .index-stage .return-artifact, .index-stage:hover .return-artifact, .index-stage .note-one, .index-stage .note-two, .index-stage .note-three, .index-stage .stage-footer { transform: none; transition: none; }
+}
+.motion-off .index-stage::after, .motion-off .index-stage.is-pointer-active::after { opacity: 0; }
+.motion-off .index-stage .return-artifact, .motion-off .index-stage:hover .return-artifact, .motion-off .index-stage .note-one, .motion-off .index-stage .note-two, .motion-off .index-stage .note-three, .motion-off .index-stage .stage-footer { transform: none; transition: none; }
+
+
+/* Magnetic offsets must win after the section's entrance transform has resolved */
+.index-chapter.is-visible .index-stage .note-one { transform: translate3d(calc(var(--pointer-x) * -10px), calc(var(--pointer-y) * -7px), 0); }
+.index-chapter.is-visible .index-stage .note-two { transform: translate3d(calc(var(--pointer-x) * 12px), calc(var(--pointer-y) * 8px), 0); }
+.index-chapter.is-visible .index-stage .note-three { transform: translate3d(calc(var(--pointer-x) * -7px), calc(var(--pointer-y) * 11px), 0); }
+.index-chapter.is-visible .index-stage .stage-footer { transform: translate3d(calc(var(--pointer-x) * 4px), calc(var(--pointer-y) * 4px), 0); }
+@media (max-width: 720px) {
+  .index-chapter.is-visible .index-stage .note-one,
+  .index-chapter.is-visible .index-stage .note-two,
+  .index-chapter.is-visible .index-stage .note-three,
+  .index-chapter.is-visible .index-stage .stage-footer { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .index-chapter.is-visible .index-stage .note-one,
+  .index-chapter.is-visible .index-stage .note-two,
+  .index-chapter.is-visible .index-stage .note-three,
+  .index-chapter.is-visible .index-stage .stage-footer { transform: none; }
+}
+.motion-off .index-chapter.is-visible .index-stage .note-one,
+.motion-off .index-chapter.is-visible .index-stage .note-two,
+.motion-off .index-chapter.is-visible .index-stage .note-three,
+.motion-off .index-chapter.is-visible .index-stage .stage-footer { transform: none; }
