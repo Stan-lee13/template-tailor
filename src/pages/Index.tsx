@@ -68,9 +68,8 @@ function Index() {
 
   useEffect(() => {
     const storedMotion = window.localStorage.getItem("retentionfirm-motion");
-    const storedIntro = window.sessionStorage.getItem("retentionfirm-intro-seen");
     setMotionOn(storedMotion ? storedMotion === "on" : !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    if (storedIntro) setIntroVisible(false);
+    setIntroVisible(true);
     document.documentElement.dataset.motion = storedMotion === "off" ? "off" : "on";
   }, []);
 
@@ -82,8 +81,7 @@ function Index() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setIntroVisible(false);
-      window.sessionStorage.setItem("retentionfirm-intro-seen", "true");
-    }, motionOn ? 1900 : 120);
+    }, motionOn ? 4500 : 120);
     return () => window.clearTimeout(timer);
   }, [motionOn]);
 
@@ -136,7 +134,7 @@ function Index() {
           <div className="intro-mark"><span>R</span><i /></div>
           <div className="intro-meta"><span>RETENTIONFIRM</span><span>RETURN INDEX / 01</span></div>
           <p>Before the next order,<br />there is a moment worth designing.</p>
-          <button onClick={() => { setIntroVisible(false); window.sessionStorage.setItem("retentionfirm-intro-seen", "true"); }}>Skip intro <ArrowRight size={14} /></button>
+          <button onClick={() => setIntroVisible(false)}>Skip intro <ArrowRight size={14} /></button>
         </div>
       )}
 
