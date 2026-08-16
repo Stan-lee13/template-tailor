@@ -460,3 +460,49 @@ img { display: block; max-width: 100%; }
 /* Performance: let the responsive hero image element own the background visual */
 .ri-hero { background-image: none; background-color: #080b0a; }
 .ri-hero > .hero-image-frame img { opacity: 1; }
+
+
+/* Post-hero continuity: a physical-looking handoff from the dark hero into the paper chapter */
+.hero-to-question { position: relative; z-index: 4; display: flex; align-items: center; justify-content: space-between; min-height: clamp(82px, 9vw, 132px); margin-top: -1px; padding: 30px 7vw 18px; overflow: hidden; background: var(--bone); color: var(--ri-ink); clip-path: polygon(0 32%, 19% 0, 42% 18%, 71% 7%, 100% 24%, 100% 100%, 0 100%); opacity: 0; transform: translateY(28px); transition: opacity 700ms var(--ease), transform 900ms var(--slow); }
+.hero-to-question.is-visible { opacity: 1; transform: translateY(0); }
+.hero-to-question::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(17,19,17,.3) 22%, rgba(199,240,73,.86) 51%, rgba(17,19,17,.2) 78%, transparent); transform: scaleX(.45); transform-origin: center; transition: transform 1.2s var(--slow); }
+.hero-to-question.is-visible::before { transform: scaleX(1); }
+.transition-index { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 12px; color: var(--graphite); font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.transition-index span { color: var(--oxide); }
+.transition-index i { display: block; width: clamp(42px, 8vw, 110px); height: 1px; background: var(--oxide); transform-origin: left; transform: scaleX(0); transition: transform 900ms var(--ease) 180ms; }
+.hero-to-question.is-visible .transition-index i { transform: scaleX(1); }
+.transition-signal { position: relative; z-index: 1; display: flex; align-items: center; gap: 7px; }
+.transition-signal::before { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: rgba(24,58,73,.38); }
+.transition-signal span { position: relative; display: block; width: 7px; height: 7px; border: 1px solid var(--pool); border-radius: 50%; background: var(--bone); transform: scale(.65); transition: transform 500ms var(--ease); }
+.hero-to-question.is-visible .transition-signal span:nth-child(1) { transition-delay: 220ms; transform: scale(1); }
+.hero-to-question.is-visible .transition-signal span:nth-child(2) { transition-delay: 360ms; transform: scale(1.35); background: var(--lime); box-shadow: 0 0 0 7px rgba(199,240,73,.12); }
+.hero-to-question.is-visible .transition-signal span:nth-child(3) { transition-delay: 500ms; transform: scale(1); }
+
+/* The question image now carries the retention story, not just the palette */
+.editorial-image { position: relative; }
+.editorial-image::before { content: 'RETENTION / SIGNAL MAP'; position: absolute; z-index: 2; top: 14px; left: 14px; padding: 7px 9px; background: var(--lime); color: var(--carbon); font-family: var(--mono); font-size: 8px; letter-spacing: .08em; }
+.editorial-image img { display: block; filter: saturate(.88) contrast(1.04); transition: transform 900ms var(--slow), filter 500ms ease; }
+.editorial-image:hover img { transform: scale(1.025); filter: saturate(1) contrast(1.06); }
+
+/* The marquee owns the viewport edge rather than inheriting a content-column gutter */
+.signal-marquee { width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+.marquee-track { will-change: transform; padding-inline: 2vw; }
+
+@media (max-width: 720px) {
+  .hero-to-question { min-height: 96px; padding: 28px 18px 14px; clip-path: polygon(0 26%, 30% 0, 58% 16%, 100% 4%, 100% 100%, 0 100%); }
+  .transition-index strong { max-width: 150px; font-size: 8px; line-height: 1.35; }
+  .transition-signal { transform: scale(.82); transform-origin: right center; }
+  .editorial-image::before { top: 10px; left: 10px; font-size: 7px; }
+  .signal-marquee { width: 100vw; }
+  .marquee-track { padding-inline: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-to-question, .hero-to-question::before, .transition-index i, .transition-signal span, .editorial-image img { transition: none !important; }
+  .hero-to-question { opacity: 1; transform: none; }
+  .hero-to-question::before { transform: scaleX(1); }
+  .transition-index i, .transition-signal span { transform: none; }
+}
+.motion-off .hero-to-question { opacity: 1; transform: none; transition: none; }
+.motion-off .hero-to-question::before { transform: scaleX(1); }
+.motion-off .transition-index i, .motion-off .transition-signal span { transform: none; transition: none; }
