@@ -506,3 +506,41 @@ img { display: block; max-width: 100%; }
 .motion-off .hero-to-question { opacity: 1; transform: none; transition: none; }
 .motion-off .hero-to-question::before { transform: scaleX(1); }
 .motion-off .transition-index i, .motion-off .transition-signal span { transform: none; transition: none; }
+
+
+/* Comfort pass: a softer question chapter with more air, texture, and tactile rhythm */
+.question-chapter { position: relative; overflow: hidden; isolation: isolate; background: var(--bone); }
+.question-chapter::before { content: ''; position: absolute; z-index: -2; inset: 0; opacity: .56; background: radial-gradient(circle at 8% 22%, rgba(200,109,60,.08), transparent 28%), radial-gradient(circle at 94% 80%, rgba(24,58,73,.08), transparent 32%); pointer-events: none; }
+.question-chapter::after { content: ''; position: absolute; z-index: -1; inset: 0; opacity: .2; background-image: repeating-linear-gradient(0deg, transparent 0, transparent 32px, rgba(38,39,34,.035) 33px); pointer-events: none; }
+.question-chapter .split-statement { padding-bottom: 96px; }
+.question-chapter .statement-note { padding: 18px 0 12px 24px; border-left: 1px solid rgba(200,109,60,.45); }
+.question-grid { grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr); gap: clamp(48px, 8vw, 132px); align-items: start; }
+.editorial-image { transform: rotate(-1deg); transition: transform 700ms var(--slow); }
+.editorial-image:hover { transform: rotate(.35deg) translateY(-5px); }
+.editorial-image img { border-radius: 4px 28px 4px 28px; box-shadow: 18px 24px 48px rgba(38,39,34,.13); }
+.editorial-image figcaption { padding-inline: 5px; }
+.question-copy { padding-top: clamp(8px, 4vw, 54px); }
+.question-copy > p { max-width: 430px; color: rgba(38,39,34,.78); font-size: clamp(16px, 1.35vw, 18px); line-height: 1.78; }
+.principle-list { display: grid; gap: 9px; border-top: 0; }
+.principle-list > div { position: relative; grid-template-columns: 35px 1fr; padding: 18px 18px 17px; border: 1px solid rgba(38,39,34,.11); border-radius: 2px 17px 2px 17px; background: rgba(255,255,255,.26); transition: transform 350ms var(--ease), background 350ms ease, border-color 350ms ease; }
+.principle-list > div:hover { transform: translateX(7px); border-color: rgba(200,109,60,.32); background: rgba(255,255,255,.48); }
+.principle-list small { color: rgba(38,39,34,.58); line-height: 1.45; }
+
+/* Continuous marquee: four identical loops mean half-track travel always leaves a full loop in view */
+.marquee-track { gap: 30px; min-width: max-content; padding-inline: 2vw; animation-name: returnMarquee; animation-timing-function: linear; animation-iteration-count: infinite; }
+@keyframes returnMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@media (max-width: 720px) {
+  .question-chapter .split-statement { padding-bottom: 70px; }
+  .question-chapter .statement-note { padding: 0 0 0 16px; border-left: 0; border-top: 1px solid rgba(200,109,60,.45); }
+  .question-grid { gap: 42px; }
+  .editorial-image { transform: rotate(-.5deg); }
+  .question-copy { padding-top: 0; }
+  .principle-list > div { padding: 16px 14px; }
+  .marquee-track { gap: 18px; padding-inline: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-image, .editorial-image:hover, .principle-list > div, .principle-list > div:hover { transform: none; transition: none; }
+}
+.motion-off .editorial-image, .motion-off .editorial-image:hover, .motion-off .principle-list > div, .motion-off .principle-list > div:hover { transform: none; transition: none; }
