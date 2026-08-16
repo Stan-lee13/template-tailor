@@ -544,3 +544,55 @@ img { display: block; max-width: 100%; }
   .editorial-image, .editorial-image:hover, .principle-list > div, .principle-list > div:hover { transform: none; transition: none; }
 }
 .motion-off .editorial-image, .motion-off .editorial-image:hover, .motion-off .principle-list > div, .motion-off .principle-list > div:hover { transform: none; transition: none; }
+
+
+/* Question chapter entrance: text arrives first, then the visual and the practical takeaways */
+.question-chapter .question-topline,
+.question-chapter .question-title-block,
+.question-chapter .question-note,
+.question-chapter .editorial-image,
+.question-chapter .question-copy { opacity: 0; transform: translateY(24px); transition: opacity 720ms var(--ease), transform 820ms var(--ease); }
+.question-chapter .question-title-block { transform: translateY(38px); transition-delay: 140ms; }
+.question-chapter .question-note { transform: translateY(28px); transition-delay: 290ms; }
+.question-chapter .editorial-image { transform: rotate(-1deg) translateY(34px) scale(.985); transition-delay: 430ms; }
+.question-chapter .question-copy { transform: translateY(30px); transition-delay: 520ms; }
+.question-chapter .principle-list > div { opacity: 0; transform: translateY(18px); transition: opacity 520ms var(--ease), transform 620ms var(--ease), background 350ms ease, border-color 350ms ease; }
+.question-chapter.is-visible .question-topline,
+.question-chapter.is-visible .question-title-block,
+.question-chapter.is-visible .question-note,
+.question-chapter.is-visible .editorial-image,
+.question-chapter.is-visible .question-copy { opacity: 1; transform: translateY(0); }
+.question-chapter.is-visible .editorial-image { transform: rotate(-1deg) translateY(0) scale(1); }
+.question-chapter.is-visible .principle-list > div { opacity: 1; transform: none; }
+.question-chapter.is-visible .principle-list > div:nth-child(1) { transition-delay: 680ms; }
+.question-chapter.is-visible .principle-list > div:nth-child(2) { transition-delay: 790ms; }
+.question-chapter.is-visible .principle-list > div:nth-child(3) { transition-delay: 900ms; }
+.question-chapter.is-visible .question-title-block h2 { animation: questionWordLift 900ms var(--ease) 220ms both; }
+@keyframes questionWordLift { from { opacity: .35; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 720px) {
+  .question-chapter .question-title-block { transition-delay: 100ms; }
+  .question-chapter .question-note { transition-delay: 220ms; }
+  .question-chapter .editorial-image { transition-delay: 350ms; }
+  .question-chapter .question-copy { transition-delay: 420ms; }
+  .question-chapter.is-visible .principle-list > div:nth-child(1) { transition-delay: 560ms; }
+  .question-chapter.is-visible .principle-list > div:nth-child(2) { transition-delay: 660ms; }
+  .question-chapter.is-visible .principle-list > div:nth-child(3) { transition-delay: 760ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .question-chapter .question-topline,
+  .question-chapter .question-title-block,
+  .question-chapter .question-note,
+  .question-chapter .editorial-image,
+  .question-chapter .question-copy,
+  .question-chapter .principle-list > div,
+  .question-chapter.is-visible .editorial-image,
+  .question-chapter.is-visible .principle-list > div { opacity: 1; transform: none; animation: none; transition: none; }
+}
+.motion-off .question-chapter .question-topline,
+.motion-off .question-chapter .question-title-block,
+.motion-off .question-chapter .question-note,
+.motion-off .question-chapter .editorial-image,
+.motion-off .question-chapter .question-copy,
+.motion-off .question-chapter .principle-list > div { opacity: 1; transform: none; animation: none; transition: none; }
