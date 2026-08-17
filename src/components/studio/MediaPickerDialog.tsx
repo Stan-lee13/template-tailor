@@ -55,7 +55,7 @@ export default function MediaPickerDialog({ open, onClose, onPick }: { open: boo
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mt-1">Select protocol for injection</p>
           </div>
           <div className="flex items-center gap-4">
-            <label className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#C9A227] text-black text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all hover:bg-white shadow-[0_0_20px_rgba(201, 162, 39,0.2)]">
+            <label className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all hover:bg-white shadow-[0_0_20px_rgba(0,212,255,0.2)]">
               <Upload size={16} strokeWidth={3} /> {uploading ? 'Syncing...' : 'Upload Asset'}
               <input type="file" accept="image/*,video/*" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
             </label>
@@ -69,7 +69,7 @@ export default function MediaPickerDialog({ open, onClose, onPick }: { open: boo
         </div>
         <div className="flex-1 overflow-y-auto p-10 scrollbar-hide">
           {loading ? (
-            <div className="flex items-center justify-center py-24 text-[10px] font-black uppercase tracking-widest text-[#C9A227] animate-pulse">Syncing Signal...</div>
+            <div className="flex items-center justify-center py-24 text-[10px] font-black uppercase tracking-widest text-[#00D4FF] animate-pulse">Syncing Signal...</div>
           ) : assets.length === 0 ? (
             <div className="text-center py-24">
               <p className="text-[10px] font-black uppercase tracking-widest text-white/10">Zero assets detected in cluster.</p>
@@ -80,7 +80,7 @@ export default function MediaPickerDialog({ open, onClose, onPick }: { open: boo
                 <button 
                   key={a.id} 
                   onClick={() => a.url && (onPick(a.url), onClose())} 
-                  className="group relative aspect-square rounded-[2rem] overflow-hidden border border-white/5 bg-white/[0.02] hover:border-[#C9A227]/30 transition-all duration-500"
+                  className="group relative aspect-square rounded-[2rem] overflow-hidden border border-white/5 bg-white/[0.02] hover:border-[#00D4FF]/30 transition-all duration-500"
                 >
                   {a.url && a.mime?.startsWith('image/') ? (
                     <img src={a.url} alt={a.alt || a.filename} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
@@ -90,7 +90,7 @@ export default function MediaPickerDialog({ open, onClose, onPick }: { open: boo
                     </div>
                   )}
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[#C9A227]">Inject Asset</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#00D4FF]">Inject Asset</span>
                   </div>
                 </button>
               ))}

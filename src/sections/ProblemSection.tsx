@@ -1,92 +1,92 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { useSectionContent } from '../hooks/useSectionContent';
-import SplitHeadline from '../components/motion/SplitHeadline';
-import StackCard from '../components/layout/StackCard';
+import { ThreeDCard, ThreeDCardItem } from '../components/ui/three-d-card';
+import problemVisual from '../assets/problem-visual.png';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 type ProblemContent = {
   eyebrow: string; headline_1: string; headline_2: string; intro: string;
   pain_points: { text: string }[]; closer: string;
 };
 
-/** 03 — The leak. Light paper card: each row's bar drains as it enters view. */
 export default function ProblemSection() {
   const c = useSectionContent<ProblemContent>('/', 'problem', 'problem');
-  const ref = useRef<HTMLDivElement>(null);
-  const points = c.pain_points?.length ? c.pain_points.map((p) => p.text) : [];
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.fromTo('.leak-row', { opacity: 0, y: 26 }, {
-        opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.09,
-        scrollTrigger: { trigger: ref.current, start: 'top 76%' },
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.problem-headline', { opacity: 0, y: 60 }, {
+        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
       });
-      gsap.fromTo('.leak-bar', { scaleX: 1 }, {
-        scaleX: (i: number) => 0.72 - i * 0.16,
-        duration: 1.4, ease: 'expo.out', stagger: 0.09,
-        scrollTrigger: { trigger: ref.current, start: 'top 72%' },
+      gsap.fromTo('.problem-visual', { opacity: 0, scale: 0.9, y: 40 }, {
+        opacity: 1, scale: 1, y: 0, duration: 1.4, ease: 'expo.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' },
       });
-      gsap.fromTo('.leak-copy', { opacity: 0, y: 22 }, {
-        opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: 0.08,
-        scrollTrigger: { trigger: ref.current, start: 'top 82%' },
+      gsap.fromTo('.problem-item', { opacity: 0, x: -30 }, {
+        opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: { trigger: '.problem-grid', start: 'top 70%' },
       });
-    });
-    mm.add('(prefers-reduced-motion: reduce)', () => {
-      gsap.set('.leak-row, .leak-copy', { opacity: 1, y: 0 });
-    });
-    return () => mm.revert();
-  }, { scope: ref, dependencies: [points.length] });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [c.pain_points?.length]);
 
   return (
-    <div ref={ref}>
-      <StackCard id="problem" index="01" label="The leak" tone="paper" width="full">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr,1.1fr] lg:gap-24">
-          <div>
-            <span className="leak-copy mb-6 inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.34em] text-[hsl(var(--ink))]/50" style={{ opacity: 0 }}>
-              <span className="h-px w-10 bg-[hsl(var(--brass))]" />
-              {c.eyebrow}
-            </span>
-            <SplitHeadline
-              text="Every brand pays to win customers. Almost none pay to keep them."
-              className="mb-8 max-w-[16ch] text-3xl leading-[1.02] text-[hsl(var(--ink))] lg:text-6xl"
-            />
-            <p className="leak-copy max-w-md text-lg leading-relaxed text-[hsl(var(--ink))]/65" style={{ opacity: 0 }}>
-              {c.intro}
-            </p>
+    <section ref={sectionRef} id="problem" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
+      {/* Dynamic background glow */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00D4FF]/5 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-[1300px] mx-auto">
+        <div className="problem-headline text-center mb-16 lg:mb-24" style={{ opacity: 0 }}>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
+            {c.eyebrow}
+          </span>
+          <h2 className="text-4xl lg:text-7xl font-bold text-white mb-6 tracking-tighter">
+            Why <span className="text-gradient-cyan">RetentionFirm Exists</span>
+          </h2>
+          <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed">
+            Every brand spends thousands acquiring new customers. Very few invest in keeping them.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="problem-visual relative group" style={{ opacity: 0 }}>
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#00D4FF]/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm">
+              <img src={problemVisual} alt="Revenue Leakage" className="w-full h-auto object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" />
+            </div>
           </div>
 
-          <div>
-            <p className="leak-copy mb-8 text-[10px] font-bold uppercase tracking-[0.32em] text-[hsl(var(--ink))]/40" style={{ opacity: 0 }}>
-              The usual growth loop
-            </p>
-            <div className="space-y-7">
-              {points.map((text, i) => (
-                <div key={i} className="leak-row" style={{ opacity: 0 }}>
-                  <div className="mb-3 flex items-baseline justify-between gap-6">
-                    <span className="font-display text-xl text-[hsl(var(--ink))] lg:text-2xl">{text}</span>
-                    <span className="font-display text-sm text-[hsl(var(--ink))]/35">0{i + 1}</span>
+          <div className="problem-grid grid gap-6">
+            {[
+              "Run ads",
+              "Get few customers",
+              "Make sales",
+              "The end. Repeat."
+            ].map((text, i) => (
+              <ThreeDCard key={i} className="w-full">
+                <ThreeDCardItem translateZ={20} className="problem-item group flex items-center gap-6 p-6 lg:p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#00D4FF]/30 transition-colors duration-500" style={{ opacity: 0 }}>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all duration-500">
+                    <span className="text-xl font-bold">{i + 1}</span>
                   </div>
-                  <div className="h-[6px] w-full overflow-hidden rounded-full bg-[hsl(var(--ink))]/8">
-                    <div
-                      className="leak-bar h-full origin-left rounded-full"
-                      style={{ background: 'linear-gradient(90deg, hsl(var(--brass)), hsl(var(--brass)/0.35))' }}
-                    />
-                  </div>
-                </div>
-              ))}
+                  <p className="text-lg lg:text-xl text-white/80 group-hover:text-white transition-colors">
+                    {text}
+                  </p>
+                </ThreeDCardItem>
+              </ThreeDCard>
+            ))}
+            
+            <div className="mt-8">
+              <p className="text-[#00D4FF] font-bold text-lg lg:text-xl tracking-tight">
+                RetentionFirm exists to help brands build businesses customers return to naturally. Not through guesswork. Through proven retention systems designed around how people actually buy.
+              </p>
             </div>
-
-            <p className="leak-copy mt-12 border-t border-[hsl(var(--ink))]/12 pt-8 text-xl leading-snug text-[hsl(var(--ink))] lg:text-2xl" style={{ opacity: 0 }}>
-              {c.closer}
-            </p>
           </div>
         </div>
-      </StackCard>
-    </div>
+      </div>
+    </section>
   );
 }

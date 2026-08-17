@@ -77,7 +77,7 @@ export default function AIAssistant() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-8 right-8 z-40 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] font-black text-xs uppercase tracking-widest transition-all hover:scale-105 bg-[#C9A227] text-black border border-[#C9A227]/20"
+        className="fixed bottom-8 right-8 z-40 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] font-black text-xs uppercase tracking-widest transition-all hover:scale-105 bg-[#00D4FF] text-black border border-[#00D4FF]/20"
         aria-label="Open AI assistant"
       >
         <Sparkles size={16} strokeWidth={3} />
@@ -92,7 +92,7 @@ export default function AIAssistant() {
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-6 border-b border-white/10 bg-white/[0.02]">
           <div className="flex items-center gap-3">
-            <Sparkles size={18} className="text-[#C9A227]" strokeWidth={3} />
+            <Sparkles size={18} className="text-[#00D4FF]" strokeWidth={3} />
             <h3 className="text-sm font-black text-white uppercase tracking-widest">System Assistant</h3>
           </div>
           <button 
@@ -109,14 +109,14 @@ export default function AIAssistant() {
           <div className="px-8 py-4 border-b border-white/5 flex items-center justify-between text-[10px] font-black uppercase tracking-widest bg-white/[0.01]">
             <span className="truncate text-white/20">
               Active Node: <span className="text-white">{context.title || 'UNNAMED_ENTITY'}</span>
-              {context.focusKeyword && <span className="text-[#C9A227]"> · {context.focusKeyword}</span>}
+              {context.focusKeyword && <span className="text-[#00D4FF]"> · {context.focusKeyword}</span>}
             </span>
             <label className="flex items-center gap-2 shrink-0 ml-4 cursor-pointer group" title="Allow assistant to modify node data">
               <input 
                 type="checkbox" 
                 checked={allowInsert} 
                 onChange={(e) => setAllowInsert(e.target.checked)}
-                className="w-3 h-3 rounded bg-white/5 border-white/10 text-[#C9A227] focus:ring-0"
+                className="w-3 h-3 rounded bg-white/5 border-white/10 text-[#00D4FF] focus:ring-0"
               />
               <span className="text-white/20 group-hover:text-white transition-colors">Direct Injection</span>
             </label>
@@ -135,7 +135,7 @@ export default function AIAssistant() {
                   <button 
                     key={a.label} 
                     onClick={() => send(a.prompt)} 
-                    className="px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-white/5 border border-white/10 text-white/40 hover:text-[#C9A227] hover:border-[#C9A227]/30 hover:bg-[#C9A227]/5 transition-all text-left"
+                    className="px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-white/5 border border-white/10 text-white/40 hover:text-[#00D4FF] hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all text-left"
                   >
                     {a.label}
                   </button>
@@ -147,13 +147,13 @@ export default function AIAssistant() {
             <div key={i} className="animate-in fade-in slide-in-from-bottom-2 duration-500">
               {m.role === 'user' ? (
                 <div className="flex justify-end">
-                  <div className="max-w-[85%] px-6 py-4 rounded-[2rem] rounded-br-lg bg-[#C9A227] text-black text-sm font-black tracking-tight shadow-[0_0_30px_rgba(201, 162, 39,0.1)]">
+                  <div className="max-w-[85%] px-6 py-4 rounded-[2rem] rounded-br-lg bg-[#00D4FF] text-black text-sm font-black tracking-tight shadow-[0_0_30px_rgba(0,212,255,0.1)]">
                     {m.content}
                   </div>
                 </div>
               ) : (
                 <div className="space-y-6">
-                  <div className="prose prose-invert prose-sm max-w-none prose-p:text-white/60 prose-p:leading-relaxed prose-headings:text-white prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-strong:text-white prose-code:text-[#C9A227] prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded">
+                  <div className="prose prose-invert prose-sm max-w-none prose-p:text-white/60 prose-p:leading-relaxed prose-headings:text-white prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-strong:text-white prose-code:text-[#00D4FF] prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded">
                     <ReactMarkdown>{m.content}</ReactMarkdown>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -167,7 +167,7 @@ export default function AIAssistant() {
                       <>
                         <button 
                           onClick={() => insert(m.content)} 
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#C9A227]/10 border border-[#C9A227]/20 text-[10px] font-black uppercase tracking-widest text-[#C9A227] hover:bg-[#C9A227] hover:text-black transition-all"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[10px] font-black uppercase tracking-widest text-[#00D4FF] hover:bg-[#00D4FF] hover:text-black transition-all"
                         >
                           <Plus size={12} strokeWidth={3} /> Inject to Post
                         </button>
@@ -199,7 +199,7 @@ export default function AIAssistant() {
             </div>
           ))}
           {loading && (
-            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-[#C9A227] animate-pulse">
+            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-[#00D4FF] animate-pulse">
               <Loader2 size={14} className="animate-spin" strokeWidth={3} /> Decrypting Signal...
             </div>
           )}
@@ -215,12 +215,12 @@ export default function AIAssistant() {
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input); } }}
                 placeholder="Enter transmission..."
                 rows={3}
-                className="w-full resize-none px-6 py-4 rounded-[1.5rem] bg-black border border-white/10 text-white text-sm font-medium placeholder:text-white/10 focus:outline-none focus:border-[#C9A227]/50 transition-all"
+                className="w-full resize-none px-6 py-4 rounded-[1.5rem] bg-black border border-white/10 text-white text-sm font-medium placeholder:text-white/10 focus:outline-none focus:border-[#00D4FF]/50 transition-all"
               />
               <button 
                 type="submit" 
                 disabled={loading || !input.trim()} 
-                className="absolute bottom-4 right-4 p-3 rounded-xl bg-[#C9A227] text-black disabled:opacity-20 disabled:grayscale transition-all hover:bg-white"
+                className="absolute bottom-4 right-4 p-3 rounded-xl bg-[#00D4FF] text-black disabled:opacity-20 disabled:grayscale transition-all hover:bg-white"
                 aria-label="Send"
               >
                 <Send size={18} strokeWidth={3} />

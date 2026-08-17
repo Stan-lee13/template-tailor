@@ -30,7 +30,7 @@ export default function CookieConsent() {
         <div className="sm:hidden flex items-center justify-between gap-4 rounded-3xl px-6 py-4 bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Intelligence Access</span>
           <div className="flex items-center gap-2">
-            <button onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#C9A227] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">Accept</button>
+            <button onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">Accept</button>
             <button onClick={() => setExpanded(true)} aria-label="Manage" className="text-white/20 hover:text-white transition-colors">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -54,10 +54,10 @@ export default function CookieConsent() {
   function renderFull() {
     return (
       <div className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
-        <h4 className="text-xl font-black text-white tracking-tighter mb-4">Intelligence <span className="text-[#C9A227]">Access</span></h4>
+        <h4 className="text-xl font-black text-white tracking-tighter mb-4">Intelligence <span className="text-[#00D4FF]">Access</span></h4>
         <p className="text-sm font-medium leading-relaxed text-white/40 mb-8">
           We use minimal cookies to optimize your retention intelligence experience. Review our{' '}
-          <Link to="/cookies" className="text-[#C9A227] hover:text-white transition-colors">protocol policy</Link>.
+          <Link to="/cookies" className="text-[#00D4FF] hover:text-white transition-colors">protocol policy</Link>.
         </p>
         {showPrefs && (
           <div className="mb-8 space-y-6 pt-8 border-t border-white/5">
@@ -68,7 +68,7 @@ export default function CookieConsent() {
         )}
         <div className="flex flex-col gap-3">
           <div className="flex gap-3">
-            <button onClick={acceptAll} className="flex-1 px-8 py-4 rounded-2xl bg-[#C9A227] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(201, 162, 39,0.2)]">Accept All</button>
+            <button onClick={acceptAll} className="flex-1 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">Accept All</button>
             <button onClick={() => setShowPrefs(!showPrefs)} className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white transition-all">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -76,7 +76,7 @@ export default function CookieConsent() {
           <div className="flex items-center justify-between px-2">
             <button onClick={rejectAll} className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-rose-500 transition-colors">Reject Non-Essential</button>
             {showPrefs && (
-              <button onClick={savePrefs} className="text-[10px] font-black uppercase tracking-widest text-[#C9A227] hover:text-white transition-colors">Save Selection</button>
+              <button onClick={savePrefs} className="text-[10px] font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors">Save Selection</button>
             )}
           </div>
         </div>
@@ -90,7 +90,7 @@ function Toggle({ label, description, checked, disabled, onChange }: { label: st
     <label className="flex items-start gap-3 cursor-pointer" style={{ opacity: disabled ? 0.7 : 1 }}>
       <span className="relative inline-block flex-shrink-0 mt-0.5" style={{ width: 32, height: 18 }}>
         <input type="checkbox" checked={checked} disabled={disabled} onChange={(e) => onChange?.(e.target.checked)} className="sr-only" />
-        <span style={{ position: 'absolute', inset: 0, background: checked ? '#C9A227' : 'rgba(255,255,255,0.1)', borderRadius: 9999, transition: 'background 160ms' }} />
+        <span style={{ position: 'absolute', inset: 0, background: checked ? '#00D4FF' : 'rgba(255,255,255,0.1)', borderRadius: 9999, transition: 'background 160ms' }} />
         <span style={{ position: 'absolute', top: 2, left: checked ? 16 : 2, width: 14, height: 14, borderRadius: 9999, background: '#fff', transition: 'left 160ms' }} />
       </span>
       <span>

@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 type Row = { id: string; title: string; slug: string; status: string; updated_at: string; published_at: string | null; view_count: number };
 
 const statusColors: Record<string, string> = {
-  draft: '#C9A227',
+  draft: '#00D4FF',
   scheduled: '#4169E1',
   published: '#10B981',
 };
@@ -48,7 +48,7 @@ export default function PostsList() {
           <p className="text-white/40 font-medium">{rows.length} systems deployed in the engine.</p>
         </div>
         <Link to="/studio/posts/new"
-          className="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(201, 162, 39,0.2)]"
+          className="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
         >
           <Plus size={18} strokeWidth={3} /> New Asset
         </Link>
@@ -60,16 +60,16 @@ export default function PostsList() {
             value={q} 
             onChange={(e) => setQ(e.target.value)} 
             placeholder="Search assets by title or slug..."
-            className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300"
+            className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300"
           />
-          <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C9A227] transition-colors">
+          <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#00D4FF] transition-colors">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
         </div>
         <select 
           value={filter} 
           onChange={(e) => setFilter(e.target.value as any)}
-          className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#C9A227]/50 transition-all cursor-pointer"
+          className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#00D4FF]/50 transition-all cursor-pointer"
         >
           <option value="all" className="bg-black">All Assets</option>
           <option value="draft" className="bg-black">Drafts</option>
@@ -81,13 +81,13 @@ export default function PostsList() {
       <div className="rounded-[2.5rem] overflow-hidden bg-black border border-white/10">
         {loading ? (
           <div className="p-20 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
-            <div className="w-8 h-8 rounded-full border-4 border-white/5 border-t-[#C9A227] animate-spin" />
+            <div className="w-8 h-8 rounded-full border-4 border-white/5 border-t-[#00D4FF] animate-spin" />
             Syncing Assets...
           </div>
         ) : filtered.length === 0 ? (
           <div className="p-20 text-center">
             <p className="text-white/40 font-medium mb-6">No assets matching your query.</p>
-            <Link to="/studio/posts/new" className="text-xs font-black uppercase tracking-widest text-[#C9A227] hover:text-white transition-colors duration-300">Deploy New Asset →</Link>
+            <Link to="/studio/posts/new" className="text-xs font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors duration-300">Deploy New Asset →</Link>
           </div>
         ) : (
           <div className="divide-y divide-white/5">

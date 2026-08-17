@@ -51,7 +51,7 @@ export default function Approvals() {
       <div className="rounded-[2.5rem] overflow-hidden bg-black border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         {loading ? (
           <div className="p-12 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
-            <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#C9A227] animate-spin" />
+            <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#00D4FF] animate-spin" />
             Syncing profiles...
           </div>
         ) : profiles.length === 0 ? (
@@ -67,12 +67,12 @@ export default function Approvals() {
               return (
                 <li key={u.id} className="flex flex-col sm:flex-row sm:items-center gap-6 px-8 py-6 hover:bg-white/[0.02] transition-colors group">
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-black text-white uppercase tracking-widest mb-1 group-hover:text-[#C9A227] transition-colors">{u.display_name || 'IDENT_UNKNOWN'}</p>
+                    <p className="text-sm font-black text-white uppercase tracking-widest mb-1 group-hover:text-[#00D4FF] transition-colors">{u.display_name || 'IDENT_UNKNOWN'}</p>
                     <p className="text-[10px] font-black uppercase tracking-widest text-white/20">{u.email}</p>
                   </div>
                   <div className="flex flex-wrap items-center gap-3">
                     {isAdmin && (
-                      <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl bg-[#C9A227]/10 text-[#C9A227] border border-[#C9A227]/20">
+                      <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl bg-[#00D4FF]/10 text-[#00D4FF] border border-[#00D4FF]/20">
                         Admin Protocol
                         <button onClick={() => revoke(u.id, 'admin')} title="Revoke Admin" className="hover:text-rose-500 transition-colors"><X size={12} strokeWidth={3} /></button>
                       </span>
@@ -101,7 +101,7 @@ export default function Approvals() {
                       {!isAdmin && (
                         <button 
                           onClick={() => grant(u.id, 'admin')} 
-                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:bg-[#C9A227] hover:text-black hover:border-[#C9A227] transition-all duration-300"
+                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:bg-[#00D4FF] hover:text-black hover:border-[#00D4FF] transition-all duration-300"
                         >
                           Elevate to Admin
                         </button>

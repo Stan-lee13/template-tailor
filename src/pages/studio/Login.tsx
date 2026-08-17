@@ -41,7 +41,7 @@ export default function StudioLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-black selection:bg-[#C9A227] selection:text-black">
+    <div className="min-h-screen flex items-center justify-center px-6 bg-black selection:bg-[#00D4FF] selection:text-black">
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
         <title>Studio Login — RetentionFirm</title>
@@ -49,13 +49,13 @@ export default function StudioLogin() {
       
       {/* Immersive Background */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A227]/10 rounded-full blur-[160px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00D4FF]/10 rounded-full blur-[160px]" />
       </div>
 
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-12">
           <Link to="/" className="text-3xl font-black tracking-tighter text-white inline-block mb-4">
-            RETENTION<span className="text-[#C9A227]">.</span>STUDIO
+            RETENTION<span className="text-[#00D4FF]">.</span>STUDIO
           </Link>
           <h1 className="text-4xl font-black text-white tracking-tighter leading-none mb-4">
             {mode === 'signin' ? 'Welcome Back' : 'Join the Engine'}
@@ -74,7 +74,7 @@ export default function StudioLogin() {
                 required 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300"
                 placeholder="operator@retentionfirm.com"
               />
             </div>
@@ -86,7 +86,7 @@ export default function StudioLogin() {
                 minLength={8} 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C9A227]/50 transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300"
                 placeholder="••••••••"
               />
             </div>
@@ -94,7 +94,7 @@ export default function StudioLogin() {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full py-5 rounded-2xl bg-[#C9A227] text-black font-black text-sm uppercase tracking-widest hover:bg-white hover:scale-[1.02] transition-all duration-500 shadow-[0_0_30px_rgba(201, 162, 39,0.2)] disabled:opacity-50"
+              className="w-full py-5 rounded-2xl bg-[#00D4FF] text-black font-black text-sm uppercase tracking-widest hover:bg-white hover:scale-[1.02] transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.2)] disabled:opacity-50"
             >
               {loading ? 'SYNCHRONIZING...' : mode === 'signin' ? 'ENTER STUDIO' : 'APPLY FOR ACCESS'}
             </button>
@@ -102,7 +102,7 @@ export default function StudioLogin() {
           
           <button 
             onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
-            className="mt-8 text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-[#C9A227] transition-colors duration-300 w-full text-center"
+            className="mt-8 text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-[#00D4FF] transition-colors duration-300 w-full text-center"
           >
             {mode === 'signin' ? 'Need operator credentials? Apply' : 'Existing operator? Sign in'}
           </button>

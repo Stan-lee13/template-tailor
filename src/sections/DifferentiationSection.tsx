@@ -1,13 +1,10 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { useSectionContent } from '../hooks/useSectionContent';
-import SplitHeadline from '../components/motion/SplitHeadline';
-import StackCard from '../components/layout/StackCard';
-import diffVisual from '../assets/sections/differentiation-visual.jpg';
+import diffVisual from '../assets/differentiation-visual.png';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 type Item = { text: string };
 type DiffContent = {
@@ -15,100 +12,88 @@ type DiffContent = {
   dont_focus: Item[]; do_focus: Item[]; closer: string;
 };
 
-/** 05 — TEXT LEFT / IMAGE RIGHT, mirror of Solution. */
 export default function DifferentiationSection() {
   const c = useSectionContent<DiffContent>('/', 'differentiation', 'differentiation');
-  const ref = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.fromTo('.diff-el', { opacity: 0, y: 26 }, {
-        opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06,
-        scrollTrigger: { trigger: ref.current, start: 'top 78%' },
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.diff-content', { opacity: 0, y: 60 }, { 
+        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', 
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } 
       });
-      gsap.fromTo('.diff-frame', { clipPath: 'inset(100% 0% 0% 0%)' }, {
-        clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out',
-        scrollTrigger: { trigger: ref.current, start: 'top 80%' },
+      gsap.fromTo('.diff-media', { opacity: 0, scale: 0.9, rotate: -2 }, { 
+        opacity: 1, scale: 1, rotate: 0, duration: 1.5, ease: 'expo.out', 
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' } 
       });
-      gsap.fromTo('.diff-img', { yPercent: -8, scale: 1.12 }, {
-        yPercent: 8, scale: 1.04, ease: 'none',
-        scrollTrigger: { trigger: ref.current, start: 'top bottom', end: 'bottom top', scrub: 1 },
+      gsap.fromTo('.diff-card', { opacity: 0, x: 40 }, { 
+        opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', 
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' } 
       });
-    });
-    mm.add('(prefers-reduced-motion: reduce)', () => {
-      gsap.set('.diff-el', { opacity: 1, y: 0 });
-      gsap.set('.diff-frame', { clipPath: 'none' });
-    });
-    return () => mm.revert();
-  }, { scope: ref });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div ref={ref}>
-      <StackCard id="differentiation" index="05" label="The difference" tone="raised" width="wide" align="right">
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr,0.9fr] lg:gap-20">
-          <div className="order-2 lg:order-1">
-            <span className="diff-el eyebrow mb-6" style={{ opacity: 0 }}>
-              <span className="h-px w-10 bg-primary" />
-              {c.eyebrow}
-            </span>
+    <section ref={sectionRef} id="differentiation" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00D4FF]/5 rounded-full blur-[150px] pointer-events-none" />
+      
+      <div className="relative max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr,1fr] gap-16 lg:gap-24 items-center">
+        <div className="diff-content" style={{ opacity: 0 }}>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
+            {c.eyebrow}
+          </span>
+          <h2 className="text-3xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight">
+            Why Brands <span className="text-gradient-cyan">Choose RetentionFirm</span>
+          </h2>
+          <p className="text-lg lg:text-xl text-white/60 mb-12 leading-relaxed max-w-xl">
+            Not because we send emails. Because we think beyond them. We see customer retention as a business strategy—not a marketing channel.
+          </p>
 
-            <SplitHeadline
-              text="Why brands choose RetentionFirm."
-              className="mb-7 text-3xl leading-[1.03] text-foreground lg:text-6xl"
-            />
-
-            <p className="diff-el mb-10 max-w-xl text-lg leading-relaxed text-foreground/60" style={{ opacity: 0 }}>
-              {c.body}
-            </p>
-
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <div className="diff-el rounded-[20px] border border-border p-7" style={{ opacity: 0 }}>
-                <h4 className="mb-6 text-[10px] font-bold uppercase tracking-[0.28em] text-foreground/35">We don't focus on</h4>
-                <ul className="space-y-3">
-                  {(c.dont_focus || []).map((item, i) => (
-                    <li key={i} className="text-foreground/35 line-through decoration-foreground/20">{item.text}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="diff-el rounded-[20px] border border-primary/40 bg-primary/[0.07] p-7" style={{ opacity: 0 }}>
-                <h4 className="mb-6 text-[10px] font-bold uppercase tracking-[0.28em] text-primary">We focus on</h4>
-                <ul className="space-y-3">
-                  {(c.do_focus || []).map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-foreground/90">
-                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                      {item.text}
-                    </li>
-                  ))}
-                </ul>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+            <div className="diff-card group p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:border-red-500/30 transition-all duration-500" style={{ opacity: 0 }}>
+              <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-8">We Don't Focus On</h4>
+              <div className="space-y-4">
+                {(c.dont_focus || []).map((item, i) => (
+                  <div key={i} className="flex items-center gap-4 group-hover:translate-x-1 transition-transform duration-500">
+                    <span className="text-red-500/40 font-bold">✕</span>
+                    <span className="text-white/40 line-through decoration-red-500/20">{item.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {c.closer && (
-              <p className="diff-el mt-10 border-l-2 border-primary pl-6 text-xl leading-snug text-foreground lg:text-2xl" style={{ opacity: 0 }}>
-                {c.closer}
-              </p>
-            )}
+            <div className="diff-card group p-8 rounded-[2rem] bg-[#00D4FF]/5 border border-[#00D4FF]/20 hover:border-[#00D4FF]/50 transition-all duration-500" style={{ opacity: 0 }}>
+              <h4 className="text-xs font-bold text-[#00D4FF] uppercase tracking-widest mb-8">We Focus On</h4>
+              <div className="space-y-4">
+                {(c.do_focus || []).map((item, i) => (
+                  <div key={i} className="flex items-center gap-4 group-hover:translate-x-2 transition-transform duration-500">
+                    <div className="w-5 h-5 rounded-full bg-[#00D4FF] flex items-center justify-center text-black">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <span className="text-white font-bold">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <div className="diff-frame relative order-1 overflow-hidden rounded-[22px] border border-border lg:order-2 lg:rounded-[28px]">
-            <div className="relative aspect-[4/5]">
-              <img
-                src={diffVisual}
-                alt="A handwritten thank-you card being packed with an order"
-                loading="lazy"
-                width={1280}
-                height={1600}
-                className="diff-img absolute inset-0 h-full w-full object-cover will-change-transform"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[hsl(var(--ink-raised))] via-transparent to-transparent" />
-            </div>
-            <span className="absolute bottom-6 left-6 rounded-full border border-primary/40 bg-[hsl(var(--ink))]/80 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.26em] text-primary">
-              The second purchase
-            </span>
+          <div className="flex items-center gap-4">
+            <div className="h-px flex-grow bg-white/10" />
+            <p className="text-[#00D4FF] font-bold text-lg lg:text-xl tracking-tight">
+              Creating customers who stay. Not just customers who click.
+            </p>
+            <div className="h-px flex-grow bg-white/10" />
           </div>
         </div>
-      </StackCard>
-    </div>
+
+        <div className="diff-media relative group" style={{ opacity: 0 }}>
+          <div className="absolute -inset-4 bg-[#00D4FF]/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
+            <img src={diffVisual} alt="Precision Marketing" className="w-full h-auto object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

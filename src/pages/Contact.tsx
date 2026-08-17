@@ -14,7 +14,7 @@ export default function Contact() {
     >
       <div className="mt-20 space-y-24">
         <section className="p-10 lg:p-20 rounded-[3rem] bg-white/[0.03] border border-white/10 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#C9A227]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-[#C9A227]/10 transition-colors duration-700" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D4FF]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-[#00D4FF]/10 transition-colors duration-700" />
           
           <div className="relative z-10 max-w-2xl">
             <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tighter mb-8 leading-none uppercase">Priority <span className="text-gradient-cyan">Access</span></h2>
@@ -24,7 +24,7 @@ export default function Contact() {
             <div className="flex flex-col sm:flex-row gap-6">
               <button 
                 onClick={() => open('contact_page')} 
-                className="px-10 py-5 rounded-2xl bg-[#C9A227] text-black text-xs font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(201, 162, 39,0.2)]"
+                className="px-10 py-5 rounded-2xl bg-[#00D4FF] text-black text-xs font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.2)]"
               >
                 Book Growth Audit
               </button>
@@ -43,10 +43,10 @@ export default function Contact() {
             <h3 className="text-xs font-black uppercase tracking-widest text-white">Direct Channels</h3>
             <div className="space-y-4">
               <p className="text-lg font-medium text-white/40">
-                Email: <a href={`mailto:${SITE.email}`} className="text-white hover:text-[#C9A227] transition-colors">{SITE.email}</a>
+                Email: <a href={`mailto:${SITE.email}`} className="text-white hover:text-[#00D4FF] transition-colors">{SITE.email}</a>
               </p>
               <p className="text-lg font-medium text-white/40">
-                LinkedIn: <a href={SITE.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#C9A227] transition-colors">RetentionFirm Protocol</a>
+                LinkedIn: <a href={SITE.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#00D4FF] transition-colors">RetentionFirm Protocol</a>
               </p>
             </div>
           </div>

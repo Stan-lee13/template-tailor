@@ -18,27 +18,27 @@ export default function ArticleLayout({ category, title, publishedAt, readingTim
   const date = new Date(publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <div className="bg-black min-h-screen selection:bg-[#C9A227] selection:text-black">
+    <div className="bg-black min-h-screen selection:bg-[#00D4FF] selection:text-black">
       <Navigation />
       <main className="relative pt-40 pb-32 px-6 overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden opacity-50">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#C9A227]/10 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#C9A227]/5 blur-[120px] rounded-full" />
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#00D4FF]/5 blur-[120px] rounded-full" />
         </div>
 
         <article className="relative z-10 mx-auto max-w-3xl">
           <Link to="/insights" className="inline-flex items-center gap-3 mb-12 text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors group">
             <span className="group-hover:-translate-x-1 transition-transform">←</span> Return to Intel
           </Link>
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C9A227] mb-6">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-6">
             {category}
           </p>
           <h1 className="text-5xl lg:text-7xl font-black text-white tracking-tighter mb-10 leading-[0.9]">
             {title}
           </h1>
           <div className="flex items-center gap-6 mb-20 pb-12 border-b border-white/5">
-            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xs font-black text-[#C9A227]">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xs font-black text-[#00D4FF]">
               RF
             </div>
             <div>
@@ -50,8 +50,8 @@ export default function ArticleLayout({ category, title, publishedAt, readingTim
           <div className="rf-prose">{children}</div>
 
           <div className="mt-24 p-10 lg:p-16 rounded-[2.5rem] bg-white/[0.03] border border-white/10 backdrop-blur-xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C9A227]/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C9A227] mb-6">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00D4FF]/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-6">
               Deployment Protocol
             </p>
             <h3 className="text-3xl lg:text-4xl font-black text-white tracking-tighter mb-6 leading-none">
@@ -62,7 +62,7 @@ export default function ArticleLayout({ category, title, publishedAt, readingTim
             </p>
             <button 
               onClick={() => open('article_cta')} 
-              className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C9A227] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(201, 162, 39,0.2)]"
+              className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.2)]"
             >
               Secure Growth Audit
             </button>
@@ -77,10 +77,10 @@ export default function ArticleLayout({ category, title, publishedAt, readingTim
         .rf-prose p { margin-bottom: 32px; }
         .rf-prose ul { padding-left: 24px; margin-bottom: 32px; list-style: none; }
         .rf-prose li { margin-bottom: 16px; position: relative; }
-        .rf-prose li::before { content: ''; position: absolute; left: -24px; top: 12px; width: 8px; height: 2px; background: #C9A227; }
-        .rf-prose blockquote { border-left: 4px solid #C9A227; padding: 12px 0 12px 32px; margin: 64px 0; font-family: 'Outfit', sans-serif; font-size: 28px; color: #FFFFFF; line-height: 1.4; font-style: normal; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; }
+        .rf-prose li::before { content: ''; position: absolute; left: -24px; top: 12px; width: 8px; height: 2px; background: #00D4FF; }
+        .rf-prose blockquote { border-left: 4px solid #00D4FF; padding: 12px 0 12px 32px; margin: 64px 0; font-family: 'Outfit', sans-serif; font-size: 28px; color: #FFFFFF; line-height: 1.4; font-style: normal; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; }
         .rf-prose strong { color: #FFFFFF; font-weight: 700; }
-        .rf-prose a { color: #C9A227; text-decoration: none; border-bottom: 1px solid rgba(201, 162, 39,0.3); transition: all 0.3s ease; }
+        .rf-prose a { color: #00D4FF; text-decoration: none; border-bottom: 1px solid rgba(0,212,255,0.3); transition: all 0.3s ease; }
         .rf-prose a:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
       `}</style>
     </div>

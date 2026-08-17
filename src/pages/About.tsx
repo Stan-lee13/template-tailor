@@ -11,7 +11,7 @@ export default function About() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mt-20">
         <section className="space-y-8">
-          <div className="inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A227]">Core Thesis</div>
+          <div className="inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-[#00D4FF]">Core Thesis</div>
           <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tighter leading-none uppercase">Unit Economic <span className="text-gradient-cyan">Survival</span></h2>
           <p className="text-lg font-medium leading-relaxed text-white/40">
             E-commerce profitability is a function of the second, third, and fourth purchase. Acquisition is the entry point; retention is the mechanism that ensures unit economics survive Meta volatility, platform shifts, and market cycles.
@@ -19,7 +19,7 @@ export default function About() {
         </section>
 
         <section className="space-y-8">
-          <div className="inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A227]">Operational Model</div>
+          <div className="inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-[#00D4FF]">Operational Model</div>
           <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tighter leading-none uppercase">Senior <span className="text-gradient-cyan">Execution</span></h2>
           <p className="text-lg font-medium leading-relaxed text-white/40">
             Elite team. Senior operators. Direct accountability. We have eliminated the junior account manager layer. The strategist who diagnoses your retention friction is the engineer who builds the deployment.
@@ -27,9 +27,9 @@ export default function About() {
         </section>
 
         <section className="space-y-8 lg:col-span-2 p-12 lg:p-20 rounded-[3rem] bg-white/[0.02] border border-white/10 mt-12 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#C9A227]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D4FF]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="relative z-10">
-            <div className="inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A227] mb-8">Ideal Partner Profile</div>
+            <div className="inline-block px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-[#00D4FF] mb-8">Ideal Partner Profile</div>
             <h2 className="text-3xl lg:text-6xl font-black text-white tracking-tighter leading-none uppercase mb-8">Built for <span className="text-gradient-cyan">Scale</span></h2>
             <p className="text-xl lg:text-2xl font-medium leading-relaxed text-white/40 max-w-4xl">
               We partner with growth-stage ecommerce entities that have established product-market fit and a strategic mandate to stop renting their growth from advertising platforms.

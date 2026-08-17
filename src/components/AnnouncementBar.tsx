@@ -7,7 +7,7 @@ export default function AnnouncementBar() {
   const [dismissed, setDismissed] = useState(false);
   const a = data?.announcement;
   if (!a?.enabled || !a.text || dismissed) return null;
-  const bg = a.variant === 'promo' ? '#C9A227' : a.variant === 'warning' ? '#F43F5E' : '#000000';
+  const bg = a.variant === 'promo' ? '#00D4FF' : a.variant === 'warning' ? '#F43F5E' : '#000000';
   const textColor = a.variant === 'promo' ? '#000000' : '#FFFFFF';
   const Wrapper = ({ children }: any) =>
     a.href ? <a href={a.href} className="block transition-all hover:opacity-80">{children}</a> : <div>{children}</div>;
