@@ -56,8 +56,8 @@ export default function ProblemSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="problem-visual relative group" style={{ opacity: 0 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div className="problem-visual relative group lg:mt-12" style={{ opacity: 0 }}>
             <div className="absolute -inset-4 bg-gradient-to-r from-[#00D4FF]/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm">
               <img src={problemVisual} alt="Revenue Leakage" className="w-full h-auto object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" />
