@@ -57,7 +57,7 @@ export default function Hero() {
       <HeroBackground />
 
       <div
-        className="relative z-10 flex flex-col items-center justify-center px-6 lg:px-20 text-center"
+        className="relative z-10 flex flex-col items-start justify-center px-6 lg:px-20 text-left"
         style={{ maxWidth: '1200px', margin: '0 auto', minHeight: '100svh' }}
       >
         <span
@@ -93,7 +93,7 @@ export default function Hero() {
 
         <div
           ref={ctaRef}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-14 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row items-start justify-start gap-6 mt-14 w-full sm:w-auto"
           style={{ opacity: 0 }}
         >
           <button
