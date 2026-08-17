@@ -62,10 +62,10 @@ export default function Hero() {
       >
         <span
           ref={eyebrowRef}
-          className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-[0.3em] mb-10"
+          className="inline-block max-w-[310px] sm:max-w-none px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] leading-relaxed mb-8 lg:mb-10"
           style={{ opacity: 0 }}
         >
-          {c.eyebrow}
+          We Live and Breathe Loyalty and Retention.
         </span>
 
         <h1
