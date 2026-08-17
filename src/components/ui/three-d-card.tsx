@@ -67,16 +67,19 @@ export const ThreeDCardItem = ({
   children,
   className,
   translateZ = 0,
+  style,
 }: {
   children: React.ReactNode;
   className?: string;
   translateZ?: number;
+  style?: React.CSSProperties;
 }) => {
   return (
     <div
       className={cn("transition-all duration-200 ease-out", className)}
       style={{
         transform: `translateZ(${translateZ}px)`,
+        ...style,
       }}
     >
       {children}
