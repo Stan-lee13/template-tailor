@@ -85,20 +85,20 @@ export default function Hero() {
 
         <p
           ref={subRef}
-          className="mt-10 lg:mt-12 text-lg lg:text-2xl text-white/60 max-w-3xl leading-snug tracking-tight"
+          className="mt-8 lg:mt-10 text-lg lg:text-2xl text-white/60 max-w-2xl leading-snug tracking-tight"
           style={{ opacity: 0 }}
         >
-          We design and manage customer retention systems that turn first-time buyers into loyal customers—helping brands increase repeat purchases, customer lifetime value, referrals, and long-term profitability.
+          We help customer-based brands build retention systems that increase repeat purchases, customer lifetime value, and long-term profit.
         </p>
 
         <div
           ref={ctaRef}
-          className="flex flex-col sm:flex-row items-start justify-start gap-6 mt-14 w-full sm:w-auto"
+          className="flex flex-row items-stretch justify-start gap-3 sm:gap-4 mt-10 lg:mt-12 w-full sm:w-auto max-w-full"
           style={{ opacity: 0 }}
         >
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
-            className="group relative px-10 py-5 rounded-full bg-[#00D4FF] text-black font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(0,212,255,0.3)] w-full sm:w-auto"
+            className="group relative flex-1 sm:flex-none sm:w-52 px-3 sm:px-6 py-4 rounded-full bg-[#00D4FF] text-black font-black text-[10px] sm:text-xs uppercase tracking-[0.12em] leading-none whitespace-nowrap transition-all duration-500 hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(0,212,255,0.3)]"
           >
             Book an Intro Call
           </button>
@@ -107,7 +107,7 @@ export default function Hero() {
               const t = c.secondary_cta_target || '#process';
               if (t.startsWith('#')) scrollTo(t); else window.location.assign(t);
             }}
-            className="px-10 py-5 rounded-full border border-white/10 text-white font-black text-sm uppercase tracking-widest transition-all duration-500 hover:bg-white hover:text-black w-full sm:w-auto"
+            className="flex-1 sm:flex-none sm:w-52 px-3 sm:px-6 py-4 rounded-full border border-white/10 text-white font-black text-[10px] sm:text-xs uppercase tracking-[0.12em] leading-none whitespace-nowrap transition-all duration-500 hover:bg-white hover:text-black"
           >
             {c.secondary_cta_label}
           </LiquidButton>
