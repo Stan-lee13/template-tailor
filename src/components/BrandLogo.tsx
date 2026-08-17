@@ -13,16 +13,16 @@ interface BrandLogoProps {
  *   Trailing "." black
  *
  * On DARK backgrounds (variant='dark'):
- *   "Retention" cream, dot on "i" dark/near-black
- *   "Firm" orange-ish accent for contrast, dot on "i" cream
- *   Trailing "." cream
+ *   "Retention" white, dot on "i" dark/near-black
+ *   "Firm" blue accent, dot on "i" white
+ *   Trailing "." white
  */
 export default function BrandLogo({ variant = 'dark', size = 'md', className = '' }: BrandLogoProps) {
   const isDark = variant === 'dark';
 
   const retentionColor = isDark ? '#FFFFFF' : '#000000';
   const retentionDot = isDark ? '#000000' : '#FFFFFF';
-  const firmColor = isDark ? '#FFFFFF' : '#FFFFFF';
+  const firmColor = isDark ? '#00D4FF' : '#FFFFFF';
   const firmDot = isDark ? '#FFFFFF' : '#000000';
   const periodColor = isDark ? '#FFFFFF' : '#000000';
 

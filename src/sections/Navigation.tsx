@@ -67,11 +67,6 @@ export default function Navigation() {
         <div className="flex items-center justify-between">
           <Link to="/" className="group flex items-center gap-3" aria-label="RetentionFirm home">
             <BrandLogo variant="dark" size="sm" className="transition-transform duration-500 group-hover:scale-110" />
-            {!scrolled && (
-              <span className="text-white font-black text-xl tracking-tighter hidden sm:block">
-                RETENTION<span className="text-[#00D4FF]">FIRM</span>
-              </span>
-            )}
           </Link>
 
           <div className="hidden lg:flex items-center gap-10">
