@@ -26,6 +26,10 @@ export default function ProblemSection() {
         opacity: 1, scale: 1, y: 0, duration: 1.4, ease: 'expo.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 60%' },
       });
+      gsap.fromTo('.problem-cycle-lead', { opacity: 0, y: 24 }, {
+        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: '.problem-grid', start: 'top 70%' },
+      });
       gsap.fromTo('.problem-item', { opacity: 0, x: -30 }, {
         opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
         scrollTrigger: { trigger: '.problem-grid', start: 'top 70%' },
@@ -61,6 +65,10 @@ export default function ProblemSection() {
           </div>
 
           <div className="problem-grid grid gap-6">
+            <div className="problem-cycle-lead flex items-center gap-3 mb-1" style={{ opacity: 0 }}>
+              <span className="h-px w-10 shrink-0 bg-[#00D4FF]" aria-hidden="true" />
+              <p className="max-w-md text-base lg:text-xl font-semibold tracking-tight text-white/90">Most businesses are stuck on an expensive cycle:</p>
+            </div>
             {[
               "Run ads",
               "Get few customers",
