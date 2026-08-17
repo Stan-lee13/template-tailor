@@ -4,7 +4,9 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import * as Lucide from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
-const nav = [
+type NavItem = { to: string; label: string; iconName: string; end?: boolean };
+
+const nav: NavItem[] = [
   { to: '/studio', label: 'Dashboard', iconName: 'Layout', end: true },
   { to: '/studio/visual', label: 'Visual Editor', iconName: 'Sparkles' },
   { to: '/studio/site', label: 'Site editor', iconName: 'Layout' },
@@ -15,7 +17,7 @@ const nav = [
   { to: '/studio/posts/new', label: 'New post', iconName: 'PlusCircle' },
 ];
 
-const adminNav = [
+const adminNav: NavItem[] = [
   { to: '/studio/navigation', label: 'Navigation', iconName: 'Menu' },
   { to: '/studio/settings', label: 'Settings', iconName: 'Settings' },
   { to: '/studio/approvals', label: 'Team', iconName: 'UserCheck' },
