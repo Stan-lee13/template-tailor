@@ -40,24 +40,24 @@ export default function ProblemSection() {
   }, [c.pain_points?.length]);
 
   return (
-    <section ref={sectionRef} id="problem" className="relative overflow-hidden bg-white py-24 lg:py-32 px-6 lg:px-20">
+    <section ref={sectionRef} id="problem" className="relative overflow-hidden bg-white pt-12 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-20">
       {/* Dynamic background glow */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#C56A4A]/8 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-[1300px] mx-auto">
-        <div className="problem-headline text-center mb-16 lg:mb-24" style={{ opacity: 0 }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#C56A4A]/12 border border-[#C56A4A]/30 text-[#9E4933] text-[10px] font-semibold uppercase tracking-[0.2em] mb-5">
-            {c.eyebrow}
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-semibold leading-[1.05] text-[#0a0f1a] mb-4 tracking-[-0.04em]">
-            Why RetentionFirm Exists
-          </h2>
-          <p className="text-base lg:text-lg font-normal text-[#23384d]/75 max-w-xl mx-auto leading-[1.65]">
-            Every brand spends thousands acquiring new customers. Very few invest in keeping them.
-          </p>
-        </div>
+        <div className="problem-frame rounded-[2rem] bg-[#050505] p-4 sm:p-6 lg:p-10 shadow-[0_28px_90px_rgba(0,0,0,0.24)]" style={{ opacity: 1 }}>
+          <div className="problem-headline text-center mb-12 lg:mb-16" style={{ opacity: 0 }}>
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#C56A4A]/12 border border-[#C56A4A]/30 text-[#D9896C] text-[10px] font-semibold uppercase tracking-[0.2em] mb-5">
+              {c.eyebrow}
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-semibold leading-[1.05] text-white mb-4 tracking-[-0.04em]">
+              Why RetentionFirm Exists
+            </h2>
+            <p className="text-base lg:text-lg font-normal text-white/65 max-w-xl mx-auto leading-[1.65]">
+              Every brand spends thousands acquiring new customers. Very few invest in keeping them.
+            </p>
+          </div>
 
-        <div className="rounded-[2rem] bg-[#050505] p-4 sm:p-6 lg:p-10 shadow-[0_28px_90px_rgba(0,0,0,0.24)]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           <div className="problem-visual relative group lg:mt-12 lg:min-h-[780px]" style={{ opacity: 0 }}>
             <div className="absolute -inset-4 bg-gradient-to-r from-[#C56A4A]/25 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
