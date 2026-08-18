@@ -1378,3 +1378,29 @@ img {
   .rf-footer__base { align-items: flex-start; flex-direction: column; }
   .rf-footer__base-divider { display: none; }
 }
+
+/* Problem section mobile composition: preserve the narrative, remove the excess height */
+@media (max-width: 640px) {
+  #problem { padding-top: 2.75rem !important; padding-bottom: 2.75rem !important; }
+  #problem .problem-frame { padding: 0.85rem !important; border-radius: 1.35rem; }
+  #problem .problem-headline { margin-bottom: 1.15rem !important; }
+  #problem .problem-headline > span { margin-bottom: 0.9rem !important; padding: 0.4rem 0.6rem; font-size: 0.52rem; }
+  #problem .problem-headline h2 { margin-bottom: 0.7rem; font-size: clamp(2.1rem, 10vw, 3rem); line-height: 0.92; }
+  #problem .problem-headline p { max-width: 18rem; font-size: 0.84rem; line-height: 1.4; }
+  #problem .problem-frame > .grid { gap: 0.75rem; }
+  #problem .problem-visual { min-height: 0 !important; margin-top: 0 !important; }
+  #problem .problem-visual > div.relative { border-radius: 1rem; }
+  #problem .problem-visual img { height: 15.5rem !important; object-fit: cover; object-position: center 54%; transform: scale(1) !important; }
+  #problem .problem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; }
+  #problem .problem-cycle-lead, #problem .problem-grid > div:last-child { grid-column: 1 / -1; }
+  #problem .problem-cycle-lead { align-items: flex-start; gap: 0.45rem; margin: 0.35rem 0 0 !important; }
+  #problem .problem-cycle-lead > span { width: 1.3rem; margin-top: 0.45rem; }
+  #problem .problem-cycle-lead p { font-size: 0.78rem; line-height: 1.25; }
+  #problem .problem-grid > div:not(.problem-cycle-lead):not(:last-child) { min-width: 0; }
+  #problem .problem-item { min-height: 5.25rem !important; gap: 0.45rem; padding: 0.65rem !important; border-radius: 0.8rem; }
+  #problem .problem-item > div { width: 1.75rem; height: 1.75rem; flex: 0 0 1.75rem; border-radius: 0.5rem; }
+  #problem .problem-item > div span { font-size: 0.75rem; }
+  #problem .problem-item p { font-size: 0.68rem; line-height: 1.1; }
+  #problem .problem-grid > div:last-child { margin-top: 0.2rem !important; }
+  #problem .problem-grid > div:last-child p { max-width: none; font-size: 0.8rem; line-height: 1.4; }
+}
