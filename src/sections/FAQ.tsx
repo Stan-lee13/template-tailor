@@ -8,17 +8,17 @@ gsap.registerPlugin(ScrollTrigger);
 type FaqItem = { q: string; a: string };
 type FaqContent = { eyebrow: string; headline: string; faqs: FaqItem[] };
 
-function AccordionItem({ question, answer, isOpen, onClick }: { question: string; answer: string; isOpen: boolean; onClick: () => void }) {
+function AccordionItem({ question, answer, isOpen, onClick, index }: { question: string; answer: string; isOpen: boolean; onClick: () => void; index: number }) {
+  const answerId = `faq-answer-${index}`;
   return (
-    <div className={`rounded-[2rem] mb-4 transition-all duration-500 overflow-hidden ${isOpen ? 'bg-white/5 border-white/20' : 'bg-transparent border-white/10'} border`}>
-      <button onClick={onClick} className="w-full flex items-center justify-between p-8 text-left transition-all duration-300 group">
-        <span className={`text-lg lg:text-xl font-bold tracking-tight pr-8 transition-colors duration-300 ${isOpen ? 'text-[#00D4FF]' : 'text-white/80 group-hover:text-white'}`}>{question}</span>
-        <div className={`flex-shrink-0 w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-[#00D4FF] border-[#00D4FF] rotate-45' : 'group-hover:border-white/30'}`}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={isOpen ? 'black' : 'white'} strokeWidth="3" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
+    <div className={`faq-item ${isOpen ? 'is-open' : ''}`}>
+      <button type="button" onClick={onClick} className="faq-question" aria-expanded={isOpen} aria-controls={answerId}>
+        <span className="faq-question__index">{String(index + 1).padStart(2, '0')}</span>
+        <span className="faq-question__text">{question}</span>
+        <span className="faq-question__icon" aria-hidden="true">+</span>
       </button>
-      <div className={`transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-        <p className="px-8 pb-8 text-lg text-white/50 leading-relaxed">{answer}</p>
+      <div id={answerId} role="region" aria-hidden={!isOpen} className={`faq-answer ${isOpen ? 'is-open' : ''}`}>
+        <p>{answer}</p>
       </div>
     </div>
   );
@@ -38,21 +38,17 @@ export default function FAQ() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="faq" style={{ background: '#0a0f1a', padding: '14vh clamp(20px, 5vw, 80px) 12vh' }}>
-      {/* Subtle separator */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent)' }} />
-
-      <div className="max-w-[720px] mx-auto">
-        <div className="faq-head text-center mb-10 sm:mb-14" style={{ opacity: 0 }}>
-          <span className="block font-inter font-medium uppercase mb-5 sm:mb-6" style={{ fontSize: '13px', color: '#00D4FF', letterSpacing: '0.15em' }}>{c.eyebrow}</span>
-          <h2 className="font-outfit font-bold mb-0" style={{ fontSize: 'clamp(28px, 5vw, 60px)', lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.03em' }}>Common Questions</h2>
+    <section ref={sectionRef} id="faq" className="relative overflow-hidden bg-[#F3EBDD] px-6 py-20 lg:px-20 lg:py-28">
+      <div className="max-w-[1300px] mx-auto">
+        <div className="faq-head faq-object__head" style={{ opacity: 0 }}>
+          <div><span className="rf-object-eyebrow">{c.eyebrow}</span><h2 className="faq-title">Common Questions</h2></div>
+          <div className="faq-object__stamp"><span>Answer index</span><strong>01 — {String((c.faqs || []).length).padStart(2, '0')}</strong></div>
         </div>
-        <div>
-          {(c.faqs || []).map((faq, i) => (
-            <div key={i} className="faq-item" style={{ opacity: 0 }}>
-              <AccordionItem question={faq.q} answer={faq.a} isOpen={openIndex === i} onClick={() => setOpenIndex(openIndex === i ? null : i)} />
-            </div>
-          ))}
+        <div className="faq-object">
+          <div className="faq-object__bar"><span>RETENTION FIRM / CLARITY</span><span>OPEN ONE TO GO DEEPER</span></div>
+          <div className="faq-list">
+            {(c.faqs || []).map((faq, i) => <AccordionItem key={i} index={i} question={faq.q} answer={faq.a} isOpen={openIndex === i} onClick={() => setOpenIndex(openIndex === i ? null : i)} />)}
+          </div>
         </div>
       </div>
     </section>
