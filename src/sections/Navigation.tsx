@@ -75,7 +75,7 @@ export default function Navigation() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleSectionClick(e, link.href)}
-                className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#00D4FF] transition-all duration-300 relative group"
+                className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#F3EBDD] transition-all duration-300 relative group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
@@ -83,7 +83,7 @@ export default function Navigation() {
             ))}
             <Link
               to="/blog"
-              className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#00D4FF] transition-all duration-300 relative group"
+              className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#F3EBDD] transition-all duration-300 relative group"
             >
               Blog
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
@@ -95,8 +95,8 @@ export default function Navigation() {
               onClick={() => onBook('nav')}
               className={`hidden sm:flex items-center justify-center font-black text-[10px] uppercase tracking-widest transition-all duration-500 rounded-full ${
                 scrolled 
-                ? 'bg-[#00D4FF] text-black px-6 py-3 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
-                : 'bg-white/10 text-white px-8 py-4 hover:bg-white hover:text-black'
+                ? 'bg-[#F3EBDD] text-black px-6 py-3 hover:bg-[#E8DCC6] hover:shadow-[0_0_20px_rgba(243,235,221,0.28)]'
+                : 'bg-[#F3EBDD]/15 text-[#F3EBDD] px-8 py-4 hover:bg-[#F3EBDD] hover:text-black'
               }`}
             >
               Book Audit
@@ -130,7 +130,7 @@ export default function Navigation() {
               Blog
             </Link>
 
-            <button onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#00D4FF] text-black font-black text-lg uppercase tracking-widest hover:bg-white transition-all duration-500">
+            <button onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#F3EBDD] text-black font-black text-lg uppercase tracking-widest hover:bg-[#E8DCC6] transition-all duration-500">
               Book Growth Audit
             </button>
           </div>

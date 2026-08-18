@@ -14,7 +14,7 @@ interface BrandLogoProps {
  *
  * On DARK backgrounds (variant='dark'):
  *   "Retention" white, dot on "i" dark/near-black
- *   "Firm" blue accent, dot on "i" white
+ *   "Firm" black on a soft milk backing, dot on "i" black
  *   Trailing "." white
  */
 export default function BrandLogo({ variant = 'dark', size = 'md', className = '' }: BrandLogoProps) {
@@ -22,7 +22,8 @@ export default function BrandLogo({ variant = 'dark', size = 'md', className = '
 
   const retentionColor = isDark ? '#FFFFFF' : '#000000';
   const retentionDot = isDark ? '#000000' : '#FFFFFF';
-  const firmColor = isDark ? '#00D4FF' : '#FFFFFF';
+  const firmColor = '#050505';
+  const firmBackground = isDark ? '#F3EBDD' : 'transparent';
   const firmDot = isDark ? '#FFFFFF' : '#000000';
   const periodColor = isDark ? '#FFFFFF' : '#000000';
 
@@ -55,7 +56,11 @@ export default function BrandLogo({ variant = 'dark', size = 'md', className = '
         />
       </span>
       <span style={{ color: retentionColor }}>on</span>
-      <span style={{ color: firmColor, textShadow: firmShadow }}>F</span>
+      <span
+        className="inline-flex items-baseline rounded-[0.18em] px-[0.08em]"
+        style={{ color: firmColor, background: firmBackground, textShadow: firmShadow }}
+      >
+        <span>F</span>
       <span className="relative inline-block" style={{ color: firmColor, textShadow: firmShadow }}>
         <span>i</span>
         <span
@@ -70,6 +75,7 @@ export default function BrandLogo({ variant = 'dark', size = 'md', className = '
         />
       </span>
       <span style={{ color: firmColor, textShadow: firmShadow }}>rm</span>
+      </span>
       <span style={{ color: periodColor }}>.</span>
     </span>
   );
