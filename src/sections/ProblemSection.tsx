@@ -3,8 +3,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
 import { ThreeDCard, ThreeDCardItem } from '../components/ui/three-d-card';
-const problemVisual = '/images/problem-retention-loop-1440.webp';
-const problemVisualSrcSet = '/images/problem-retention-loop-640.webp 640w, /images/problem-retention-loop-1024.webp 1024w, /images/problem-retention-loop-1440.webp 1440w';
+const problemVisual = '/images/problem-retention-journey-1440.webp';
+const problemVisualSrcSet = '/images/problem-retention-journey-640.webp 640w, /images/problem-retention-journey-1024.webp 1024w, /images/problem-retention-journey-1440.webp 1440w';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,7 +61,7 @@ export default function ProblemSection() {
           <div className="problem-visual relative group lg:mt-12 lg:min-h-[780px]" style={{ opacity: 0 }}>
             <div className="absolute -inset-4 bg-gradient-to-r from-[#00D4FF]/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm">
-              <img src={problemVisual} srcSet={problemVisualSrcSet} sizes="(min-width: 1024px) 42vw, 100vw" alt="A customer retention loop connecting a first purchase to a returning order" className="w-full h-[520px] sm:h-[640px] lg:h-[780px] object-cover object-center scale-105 group-hover:scale-100 transition-transform duration-1000" />
+              <img src={problemVisual} srcSet={problemVisualSrcSet} sizes="(min-width: 1024px) 42vw, 100vw" alt="A retention journey showing a first purchase, post-purchase message, loyalty follow-up, and returning order" className="w-full h-[520px] sm:h-[640px] lg:h-[780px] object-cover object-center scale-105 group-hover:scale-100 transition-transform duration-1000" />
             </div>
           </div>
 
