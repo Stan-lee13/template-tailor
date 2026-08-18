@@ -42,25 +42,25 @@ export default function ProblemSection() {
   return (
     <section ref={sectionRef} id="problem" className="relative overflow-hidden bg-white py-24 lg:py-32 px-6 lg:px-20">
       {/* Dynamic background glow */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00D4FF]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#C56A4A]/8 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-[1300px] mx-auto">
         <div className="problem-headline text-center mb-16 lg:mb-24" style={{ opacity: 0 }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#008bb0]/25 text-[#087a9d] text-[10px] font-semibold uppercase tracking-[0.2em] mb-5">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#C56A4A]/12 border border-[#C56A4A]/30 text-[#9E4933] text-[10px] font-semibold uppercase tracking-[0.2em] mb-5">
             {c.eyebrow}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-6xl font-semibold leading-[1.05] text-[#0a0f1a] mb-4 tracking-[-0.04em]">
-            Why Retention<span className="text-[#00A8D6]">Firm</span> Exists
+            Why RetentionFirm Exists
           </h2>
           <p className="text-base lg:text-lg font-normal text-[#23384d]/75 max-w-xl mx-auto leading-[1.65]">
             Every brand spends thousands acquiring new customers. Very few invest in keeping them.
           </p>
         </div>
 
-        <div className="rounded-[2rem] bg-[#0b111a] p-4 sm:p-6 lg:p-10 shadow-[0_28px_90px_rgba(10,24,40,0.2)]">
+        <div className="rounded-[2rem] bg-[#050505] p-4 sm:p-6 lg:p-10 shadow-[0_28px_90px_rgba(0,0,0,0.24)]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           <div className="problem-visual relative group lg:mt-12 lg:min-h-[780px]" style={{ opacity: 0 }}>
-            <div className="absolute -inset-4 bg-gradient-to-r from-[#00D4FF]/25 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#C56A4A]/25 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-[0_24px_70px_rgba(0,0,0,0.24)] backdrop-blur-sm">
               <img src={problemVisual} srcSet={problemVisualSrcSet} sizes="(min-width: 1024px) 42vw, 100vw" alt="A retention journey showing a first purchase, post-purchase message, loyalty follow-up, and returning order" className="w-full h-[520px] sm:h-[640px] lg:h-[780px] object-cover object-center scale-105 group-hover:scale-100 transition-transform duration-1000" />
             </div>
@@ -68,7 +68,7 @@ export default function ProblemSection() {
 
           <div className="problem-grid grid gap-6">
             <div className="problem-cycle-lead flex items-center gap-3 mb-1" style={{ opacity: 0 }}>
-              <span className="h-px w-10 shrink-0 bg-[#00D4FF]" aria-hidden="true" />
+              <span className="h-px w-10 shrink-0 bg-[#C56A4A]" aria-hidden="true" />
               <p className="max-w-md text-sm lg:text-lg font-medium leading-relaxed tracking-tight text-white/85">Most businesses are stuck on an expensive cycle:</p>
             </div>
             {[
@@ -78,8 +78,8 @@ export default function ProblemSection() {
               "The end. Repeat."
             ].map((text, i) => (
               <ThreeDCard key={i} className="w-full">
-                <ThreeDCardItem translateZ={20} className="problem-item group flex items-center gap-5 p-5 lg:p-6 rounded-2xl bg-white border border-white/80 shadow-[0_14px_32px_rgba(0,0,0,0.16)] hover:border-[#00A8D6]/55 transition-colors duration-500" style={{ opacity: 0 }}>
-                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-red-500/10 flex items-center justify-center text-red-600 group-hover:bg-red-500 group-hover:text-white transition-all duration-500">
+                <ThreeDCardItem translateZ={20} className="problem-item group flex min-h-[112px] sm:min-h-[120px] lg:min-h-[112px] items-center gap-5 p-6 sm:p-7 lg:p-6 rounded-[1.25rem] bg-white border border-white/80 shadow-[0_14px_32px_rgba(0,0,0,0.16)] hover:border-[#C56A4A]/55 transition-colors duration-500" style={{ opacity: 0 }}>
+                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#D8A63D]/20 flex items-center justify-center text-[#9A6B08] group-hover:bg-[#D8A63D] group-hover:text-[#050505] transition-all duration-500">
                     <span className="text-lg font-semibold">{i + 1}</span>
                   </div>
                   <p className="text-base lg:text-lg font-medium leading-relaxed text-[#1d2f43]/90 group-hover:text-[#0a0f1a] transition-colors">
@@ -90,7 +90,7 @@ export default function ProblemSection() {
             ))}
             
             <div className="mt-8">
-              <p className="max-w-xl text-[#73D8F1] font-semibold text-base lg:text-lg leading-[1.65] tracking-tight">
+              <p className="max-w-xl text-[#D9896C] font-semibold text-base lg:text-lg leading-[1.65] tracking-tight">
                 RetentionFirm exists to help brands build businesses customers return to naturally. Not through guesswork. Through proven retention systems designed around how people actually buy.
               </p>
             </div>
