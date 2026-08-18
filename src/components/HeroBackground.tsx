@@ -20,12 +20,12 @@ export default function HeroBackground() {
           style={{ objectFit: 'cover', objectPosition: 'center' }}
         />
       </picture>
-      {/* Cinematic darken + navy tint overlay for text contrast and bottom blend */}
+      {/* Cinematic darken + warm retention palette overlay for text contrast and bottom blend */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(180deg, rgba(0,212,255,0.08) 0%, rgba(8,12,20,0.4) 55%, rgba(8,12,20,0.8) 88%, #080c14 100%)',
+            'linear-gradient(180deg, rgba(197,106,74,0.12) 0%, rgba(17,19,24,0.4) 55%, rgba(5,5,5,0.84) 88%, #050505 100%)',
         }}
       />
       {/* Subtle vignette */}

@@ -78,7 +78,7 @@ export default function Navigation() {
                 className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#F3EBDD] transition-all duration-300 relative group"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
             <Link
@@ -86,7 +86,7 @@ export default function Navigation() {
               className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#F3EBDD] transition-all duration-300 relative group"
             >
               Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00D4FF] transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
             </Link>
           </div>
 
@@ -122,11 +122,11 @@ export default function Navigation() {
           
           <div className="flex flex-col items-center gap-8">
             {sectionLinks.map((link) => (
-              <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#00D4FF] transition-all duration-500 tracking-tighter">
+              <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#D8A63D] transition-all duration-500 tracking-tighter">
                 {link.label}
               </a>
             ))}
-            <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#00D4FF] transition-all duration-500 tracking-tighter">
+            <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#D8A63D] transition-all duration-500 tracking-tighter">
               Blog
             </Link>
 

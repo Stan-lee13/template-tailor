@@ -51,13 +51,13 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full overflow-hidden"
+      className="hero-section relative w-full overflow-hidden"
       style={{ minHeight: '100svh', background: '#0a0f1a', touchAction: 'pan-y' }}
     >
       <HeroBackground />
 
       <div
-        className="relative z-10 flex flex-col items-start justify-center px-6 lg:px-20 text-left"
+        className="hero-content relative z-10 flex flex-col items-start justify-center px-6 lg:px-20 text-left"
         style={{ maxWidth: '1200px', margin: '0 auto', minHeight: '100svh' }}
       >
         <span
@@ -79,7 +79,7 @@ export default function Hero() {
         >
           <span ref={leftRef} className="block opacity-0">Build a Brand</span>
           <span ref={rightRef} className="block opacity-0">
-            <span className="text-gradient-cyan">Customers Keep</span> Coming Back To.
+            <span className="hero-warm-accent">Customers Keep</span> Coming Back To.
           </span>
         </h1>
 
