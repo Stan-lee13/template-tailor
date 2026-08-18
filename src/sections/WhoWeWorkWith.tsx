@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -12,56 +12,73 @@ const industries = [
   'Fashion & Apparel',
   'Health & Wellness',
   'Subscription Businesses',
-  'Consumer Brands'
+  'Consumer Brands',
 ];
 
 export default function WhoWeWorkWith() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [activeIndustry, setActiveIndustry] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.www-head', { opacity: 0, y: 50 }, { 
-        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', 
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' } 
+      gsap.fromTo('.www-head', { opacity: 0, y: 50 }, {
+        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       });
-      gsap.fromTo('.industry-tag', { opacity: 0, scale: 0.8 }, { 
-        opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: 'back.out(1.7)', 
-        scrollTrigger: { trigger: '.industry-grid', start: 'top 80%' } 
+      gsap.fromTo('.industry-tag', { opacity: 0, y: 24 }, {
+        opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+        scrollTrigger: { trigger: '.industry-grid', start: 'top 80%' },
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} id="who-we-work-with" className="relative overflow-hidden bg-[#0a0f1a] py-24 lg:py-32 px-6 lg:px-20">
-      <div className="max-w-[1300px] mx-auto text-center">
-        <div className="www-head mb-16 lg:mb-24" style={{ opacity: 0 }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#00D4FF]/10 border border-[#00D4FF]/20 text-[#00D4FF] text-xs font-bold uppercase tracking-widest mb-6">
-            Who We Work With
-          </span>
-          <h2 className="text-3xl lg:text-7xl font-bold text-white mb-8 tracking-tighter">
-            Retention works best where customers have a <span className="text-gradient-cyan">reason to come back.</span>
-          </h2>
-          <p className="text-lg lg:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed">
-            We partner with customer-based businesses where repeat customers matter.
-          </p>
-        </div>
-
-        <div className="industry-grid flex flex-wrap justify-center gap-4 lg:gap-6">
-          {industries.map((item, i) => (
-            <div 
-              key={i} 
-              className="industry-tag px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white/80 font-bold text-lg lg:text-xl hover:bg-[#00D4FF]/10 hover:border-[#00D4FF]/30 hover:text-white transition-all duration-500 cursor-default"
-              style={{ opacity: 0 }}
-            >
-              {item}
+    <section ref={sectionRef} id="who-we-work-with" className="relative overflow-hidden bg-[#F3EBDD] px-6 py-20 lg:px-20 lg:py-28">
+      <div className="max-w-[1300px] mx-auto">
+        <div className="www-layout">
+          <div className="www-head www-copy" style={{ opacity: 0 }}>
+            <span className="www-eyebrow">Who We Work With</span>
+            <h2 className="www-title">
+              Retention works best where customers have a <span>reason to come back.</span>
+            </h2>
+            <p className="www-description">
+              We partner with customer-based businesses where repeat customers matter.
+            </p>
+            <div className="www-active-readout" aria-live="polite">
+              <span className="www-active-index">0{activeIndustry + 1}</span>
+              <span>{industries[activeIndustry]}</span>
             </div>
-          ))}
+          </div>
+
+          <div className="industry-object">
+            <div className="industry-object__top">
+              <span>Customer fit map</span>
+              <span>01 — 08</span>
+            </div>
+
+            <div className="industry-grid">
+              {industries.map((item, i) => (
+                <button
+                  key={item}
+                  type="button"
+                  className={`industry-tag ${activeIndustry === i ? 'is-active' : ''}`}
+                  onClick={() => setActiveIndustry(i)}
+                  aria-pressed={activeIndustry === i}
+                >
+                  <span className="industry-tag__number">0{i + 1}</span>
+                  <span className="industry-tag__label">{item}</span>
+                  <span className="industry-tag__arrow" aria-hidden="true">↗</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="industry-object__footer">
+              <p>If repeat customers matter to your business, we can help.</p>
+              <span aria-hidden="true">↘</span>
+            </div>
+          </div>
         </div>
-        
-        <p className="mt-16 text-white/40 font-medium italic">
-          If repeat customers matter to your business, we can help.
-        </p>
       </div>
     </section>
   );
