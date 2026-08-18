@@ -1258,10 +1258,59 @@ img {
   .process-step__deliverables { padding: 0.75rem; }
   .process-step__deliverables-list { gap: 0.35rem; margin-top: 0.65rem; }
   .process-step__deliverables-list span { padding: 0.42rem; font-size: 0.62rem; }
-  .service-object__body { grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr); }
+  .service-object__body { grid-template-columns: 1fr; }
   .service-panel { min-height: 18rem; padding: 1.2rem; }
   .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .project-card, .project-card--lead { grid-column: auto; min-height: 14rem; }
   .project-card--lead { grid-column: span 2; grid-row: span 2; min-height: 20rem; }
   .faq-question { min-height: 4rem; }
+}
+
+/* Horizontal Services system */
+.service-scroll-viewport { overflow: hidden; }
+.service-scroll-track { display: flex; width: max-content; gap: 0.75rem; will-change: transform; }
+.service-scroll-card { display: flex; flex: 0 0 clamp(20rem, 31vw, 27rem); min-height: 27rem; flex-direction: column; justify-content: space-between; gap: 1.25rem; padding: clamp(1.1rem, 2.4vw, 2rem); color: var(--rf-milk); background: #151619; border: 1px solid rgba(243, 235, 221, 0.1); border-radius: 1.25rem; transition: background 220ms var(--rf-ease-out), color 220ms var(--rf-ease-out), border-color 220ms var(--rf-ease-out), transform 220ms var(--rf-ease-out); }
+.service-scroll-card:nth-child(2n) { background: #1e1a16; }
+.service-scroll-card:nth-child(3n) { background: #171b1b; }
+.service-scroll-card.is-active { color: var(--rf-vanta); background: var(--rf-milk); border-color: var(--rf-ochre); transform: translateY(-4px); }
+.service-scroll-card__top, .service-scroll-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.service-scroll-card__number { color: var(--rf-ochre); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.14em; }
+.service-scroll-card__icon { width: 2.25rem; height: 2.25rem; padding: 0.45rem; color: var(--rf-terracotta); background: rgba(197, 106, 74, 0.13); border-radius: 0.7rem; }
+.service-scroll-card.is-active .service-scroll-card__icon { color: var(--rf-vanta); background: var(--rf-ochre); }
+.service-scroll-card__copy { margin-top: auto; }
+.service-scroll-card__subtitle { color: var(--rf-terracotta); font-size: 0.62rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+.service-scroll-card__copy h3 { max-width: 19rem; margin-top: 0.65rem; color: inherit; font-size: clamp(1.65rem, 2.8vw, 2.8rem); font-weight: 600; letter-spacing: -0.06em; line-height: 0.96; }
+.service-scroll-card__copy p { max-width: 20rem; margin-top: 0.8rem; color: currentColor; opacity: 0.62; font-size: 0.85rem; line-height: 1.5; }
+.service-scroll-card__items { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.service-scroll-card__items span { padding: 0.45rem 0.55rem; color: currentColor; background: rgba(243, 235, 221, 0.09); border-radius: 0.5rem; font-size: 0.64rem; font-weight: 700; line-height: 1.15; }
+.service-scroll-card.is-active .service-scroll-card__items span { background: rgba(5, 5, 5, 0.07); }
+.service-scroll-card__footer { padding-top: 0.85rem; border-top: 1px solid currentColor; color: currentColor; opacity: 0.55; font-size: 0.58rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; }
+.service-scroll-controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 0.2rem 0.1rem; }
+.service-scroll-progress { display: flex; align-items: center; gap: 0.15rem; }
+.service-scroll-progress button { position: relative; display: block; flex: 0 0 44px; width: 44px; min-width: 44px; height: 44px; min-height: 44px; padding: 0; background: transparent; border: 0; }
+.service-scroll-progress button::after { position: absolute; top: 50%; left: 50%; width: 2rem; height: 0.22rem; content: ''; background: rgba(243, 235, 221, 0.18); border-radius: 999px; transform: translate(-50%, -50%); transition: background 200ms var(--rf-ease-out), width 200ms var(--rf-ease-out); }
+.service-scroll-progress button.is-active::after { width: 2.6rem; background: var(--rf-ochre); }
+.service-scroll-progress button:focus-visible, .service-scroll-buttons button:focus-visible { outline: 2px solid var(--rf-ochre); outline-offset: 2px; }
+.service-scroll-buttons { display: flex; gap: 0.4rem; }
+.service-scroll-buttons button { display: inline-flex; flex: 0 0 44px; width: 44px; min-width: 44px; height: 44px; min-height: 44px; align-items: center; justify-content: center; color: var(--rf-milk); background: transparent; border: 1px solid rgba(243, 235, 221, 0.18); border-radius: 0.7rem; transition: color 180ms var(--rf-ease-out), background 180ms var(--rf-ease-out), transform 180ms var(--rf-ease-out); }
+.service-scroll-buttons button:hover:not(:disabled) { color: var(--rf-vanta); background: var(--rf-ochre); transform: translateY(-2px); }
+.service-scroll-buttons button:disabled { cursor: not-allowed; opacity: 0.3; }
+
+@media (max-width: 1023px) {
+  .service-scroll-viewport { overflow-x: auto; overflow-y: hidden; padding: 0 0.1rem 0.65rem; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--rf-ochre) rgba(5, 5, 5, 0.12); }
+  .service-scroll-track { gap: 0.65rem; transform: none !important; }
+  .service-scroll-card { flex-basis: min(78vw, 24rem); min-height: 24rem; scroll-snap-align: start; }
+}
+
+@media (max-width: 640px) {
+  .service-scroll-card { flex-basis: calc(100vw - 4.5rem); min-height: 23rem; padding: 1rem; border-radius: 1rem; }
+  .service-scroll-card__copy h3 { font-size: 2rem; }
+  .service-scroll-card__copy p { font-size: 0.78rem; }
+  .service-scroll-card__items span { font-size: 0.58rem; }
+  .service-scroll-controls { padding-top: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-scroll-track { transform: none !important; }
+  .service-scroll-card { transition: none; }
 }
