@@ -1135,7 +1135,7 @@ img {
 
 @media (max-width: 640px) {
   .hero-section { min-height: 760px !important; background: var(--rf-vanta) !important; }
-  .hero-content { min-height: 760px !important; justify-content: flex-end !important; padding: 7.5rem 1.5rem 4.5rem !important; }
+  .hero-content { min-height: 760px !important; justify-content: flex-end !important; padding: 7.5rem 1.5rem 7rem !important; }
   .hero-content h1 { max-width: 20rem; font-size: clamp(2.8rem, 13vw, 4.2rem) !important; line-height: 0.89 !important; }
   .hero-content > span { margin-bottom: 1.25rem !important; padding: 0.45rem 0.65rem !important; color: var(--rf-milk) !important; background: rgba(5, 5, 5, 0.56) !important; border-color: rgba(243, 235, 221, 0.28) !important; }
   .hero-content p { max-width: 20rem !important; margin-top: 1.35rem !important; color: rgba(243, 235, 221, 0.72) !important; font-size: 0.95rem !important; line-height: 1.45 !important; }
