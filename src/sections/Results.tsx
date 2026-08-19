@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
-import resultsVisual from '../assets/results-visual.png';
+import resultsVisual from '../assets/results-editorial.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 

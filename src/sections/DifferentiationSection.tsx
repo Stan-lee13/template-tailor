@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
-import diffVisual from '../assets/differentiation-visual.png';
+import diffVisual from '../assets/differentiation-editorial.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -71,7 +71,7 @@ export default function DifferentiationSection() {
           <div className="diff-media" style={{ opacity: 0 }}>
             <div className="diff-media__frame">
               <div className="diff-media__top"><span>Precision Marketing</span><span>02 / 03</span></div>
-              <img src={diffVisual} alt="Precision Marketing" className="w-full aspect-[4/5] object-cover" />
+              <img src={diffVisual} alt="Editorial contrast between reactive campaign materials and an organized retention system" className="w-full aspect-[4/5] object-cover" />
               <div className="diff-media__bottom"><span>Strategy over channel</span><span aria-hidden="true">↗</span></div>
             </div>
           </div>

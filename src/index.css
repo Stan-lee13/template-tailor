@@ -1315,6 +1315,12 @@ img {
   .service-scroll-card { transition: none; }
 }
 
+/* Editorial replacement assets retain their portrait story on narrow screens */
+@media (max-width: 640px) {
+  .solution-media__frame img,
+  .diff-media__frame img { aspect-ratio: 4 / 5; height: auto; object-fit: cover; }
+}
+
 /* Selective rhythm: not every section is a framed object */
 #differentiation { background: var(--rf-paper) !important; }
 #differentiation .diff-layout { align-items: start; }
