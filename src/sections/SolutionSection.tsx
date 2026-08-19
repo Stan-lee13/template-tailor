@@ -48,11 +48,9 @@ export default function SolutionSection() {
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.02fr,0.98fr] gap-10 lg:gap-16 items-center">
             <div className="solution-media relative group" style={{ opacity: 0 }}>
-              <div className="solution-media__frame">
-                <div className="solution-media__label"><span>Live system</span><span>Return / 01</span></div>
-                <RetentionLoop3D fallbackSrc={solutionVisual} alt="A connected customer retention loop linking commerce touchpoints, post-purchase messaging, loyalty, and returning orders" />
-                <div className="solution-media__caption"><span>Retention infrastructure</span><span aria-hidden="true">↗</span></div>
-              </div>
+              <div className="solution-media__label solution-loop-meta"><span>Live system</span><span>Return / 01</span></div>
+              <RetentionLoop3D fallbackSrc={solutionVisual} alt="A connected customer retention loop linking commerce touchpoints, post-purchase messaging, loyalty, and returning orders" />
+              <div className="solution-media__caption solution-loop-caption"><span>Retention infrastructure</span><span aria-hidden="true">↗</span></div>
             </div>
 
             <div className="solution-head" style={{ opacity: 0 }}>

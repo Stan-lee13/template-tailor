@@ -1338,6 +1338,25 @@ img {
 }
 
 /* Selective hybrid 3D visual */
+.solution-media > .retention-loop-visual { margin-top: 0.85rem; }
+.solution-loop-meta { padding: 0.35rem 0.25rem 0.8rem; border-bottom: 1px solid rgba(243, 235, 221, 0.16); }
+.solution-loop-caption { padding: 0.8rem 0.25rem 0.1rem; }
+
+.process-visual-band { margin: 1.2rem 0 0.35rem; padding: 1rem; background: rgba(5, 5, 5, 0.5); border-top: 1px solid rgba(243, 235, 221, 0.12); border-bottom: 1px solid rgba(243, 235, 221, 0.12); }
+.retention-stages-visual { position: relative; min-height: 18rem; overflow: hidden; background: radial-gradient(circle at 50% 44%, rgba(197, 106, 74, 0.14), transparent 50%), #090909; border: 1px solid rgba(243, 235, 221, 0.12); border-radius: 1rem; }
+.retention-stages-visual canvas, .retention-stages-css { position: absolute; inset: 0; width: 100%; height: 100%; }
+.retention-stages-css { display: grid; place-items: center; }
+.retention-stages-css__track { display: flex; width: 78%; align-items: center; justify-content: space-between; gap: 1.25rem; }
+.retention-stages-css__node { position: relative; display: grid; width: 3.2rem; height: 3.2rem; place-items: center; flex: 0 0 auto; color: var(--rf-vanta); background: var(--stage-color); border: 2px solid rgba(243, 235, 221, 0.7); border-radius: 0.65rem; box-shadow: 0 0 1.4rem color-mix(in srgb, var(--stage-color) 32%, transparent); transform: rotate(-8deg); }
+.retention-stages-css__node::before { position: absolute; right: calc(100% + 0.65rem); width: 1.25rem; height: 1px; content: ''; background: var(--rf-ochre); opacity: 0.6; }
+.retention-stages-css__node:first-child::before { display: none; }
+.retention-stages-css__node b { font-size: 0.68rem; letter-spacing: 0.08em; transform: rotate(8deg); }
+.retention-stages-css__node i { position: absolute; right: 0.42rem; bottom: 0.42rem; width: 0.3rem; height: 0.3rem; background: var(--rf-vanta); border-radius: 50%; transform: rotate(8deg); }
+.retention-stages-legend { position: absolute; right: 1rem; bottom: 0.85rem; left: 1rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.55rem; }
+.retention-stages-legend__item { display: flex; min-width: 0; flex-direction: column; gap: 0.25rem; padding-top: 0.45rem; border-top: 1px solid rgba(243, 235, 221, 0.22); }
+.retention-stages-legend__item span { font-size: 0.58rem; font-weight: 900; letter-spacing: 0.12em; }
+.retention-stages-legend__item strong { overflow: hidden; color: rgba(243, 235, 221, 0.76); font-size: 0.62rem; font-weight: 650; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+
 .retention-loop-visual { position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: radial-gradient(circle at 50% 45%, rgba(197, 106, 74, 0.18), transparent 52%), #050505; border-radius: 1rem; }
 .retention-loop-poster { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity 300ms var(--rf-ease-out), filter 300ms var(--rf-ease-out); }
 .retention-loop-visual.is-live .retention-loop-poster { opacity: 0.16; filter: saturate(0.5) contrast(1.1); }
@@ -1356,6 +1375,16 @@ img {
 }
 
 @media (max-width: 640px) {
+  .solution-media > .retention-loop-visual { margin-top: 0.65rem; }
+  .solution-loop-meta { padding: 0.55rem 0 0.7rem; }
+  .solution-loop-caption { padding: 0.65rem 0 0.1rem; }
+  .process-visual-band { margin-top: 0.9rem; padding: 0.55rem 0; }
+  .retention-stages-visual { min-height: 16rem; border-radius: 0.85rem; }
+  .retention-stages-css__track { width: 90%; gap: 0.55rem; }
+  .retention-stages-css__node { width: 2.45rem; height: 2.45rem; border-radius: 0.5rem; }
+  .retention-stages-css__node::before { right: calc(100% + 0.25rem); width: 0.45rem; }
+  .retention-stages-legend { right: 0.7rem; bottom: 0.7rem; left: 0.7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem; }
+  .retention-stages-legend__item strong { font-size: 0.58rem; }
   .retention-loop-visual { border-radius: 0.9rem; }
   .retention-loop-visual canvas { pointer-events: none; }
 }

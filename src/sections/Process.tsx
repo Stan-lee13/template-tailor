@@ -2,6 +2,7 @@ import { useEffect, useRef, type CSSProperties } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
+import RetentionStages3D from '../components/RetentionStages3D';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,6 +57,9 @@ export default function Process() {
 
         <div className="process-object">
           <div className="process-object__bar"><span>RETENTION FIRM / METHOD</span><span>FROM SIGNAL → SYSTEM → SCALE</span></div>
+          <div className="process-visual-band">
+            <RetentionStages3D stages={steps.map(({ number, title }) => ({ number, title }))} />
+          </div>
           <div className="process-steps-container relative">
             <div className="process-spine" aria-hidden="true" />
             <div ref={lineRef} className="process-spine process-spine--active" aria-hidden="true" />
