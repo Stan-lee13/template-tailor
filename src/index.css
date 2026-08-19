@@ -1337,6 +1337,34 @@ img {
   #solution .solution-metric p { font-size: 0.8rem; line-height: 1.4; }
 }
 
+/* Selective hybrid 3D visual */
+.retention-loop-visual { position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: radial-gradient(circle at 50% 45%, rgba(197, 106, 74, 0.18), transparent 52%), #050505; border-radius: 1rem; }
+.retention-loop-poster { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity 300ms var(--rf-ease-out), filter 300ms var(--rf-ease-out); }
+.retention-loop-visual.is-live .retention-loop-poster { opacity: 0.16; filter: saturate(0.5) contrast(1.1); }
+.retention-loop-visual.is-static .retention-loop-poster { opacity: 1; }
+.retention-loop-visual canvas { position: absolute !important; inset: 0; display: block; width: 100% !important; height: 100% !important; }
+.retention-loop-css { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 50%, rgba(243, 235, 221, 0.06), transparent 48%); }
+.retention-loop-css__orbit { position: relative; width: 62%; aspect-ratio: 1; border: 1px solid rgba(243, 235, 221, 0.26); border-radius: 50%; transform: rotateX(62deg) rotateZ(-10deg); animation: retention-loop-orbit 18s linear infinite; }
+.retention-loop-css__orbit::after { position: absolute; inset: 17%; content: ''; border: 1px solid rgba(197, 106, 74, 0.3); border-radius: 50%; }
+.retention-loop-css__core { position: absolute; top: 50%; left: 50%; width: 23%; aspect-ratio: 1; background: var(--rf-milk); border-radius: 50%; box-shadow: 0 0 2.5rem rgba(197, 106, 74, 0.32); transform: translate(-50%, -50%) rotateZ(10deg); }
+.retention-loop-css__node { position: absolute; top: 50%; left: 50%; width: 9%; aspect-ratio: 1; margin: -4.5%; background: var(--node-color); border: 2px solid rgba(5, 5, 5, 0.75); border-radius: 50%; box-shadow: 0 0 1.2rem color-mix(in srgb, var(--node-color) 45%, transparent); transform: rotate(var(--node-angle)) translateY(-310%) rotate(calc(var(--node-angle) * -1)); animation: retention-loop-node 2.8s var(--rf-ease-out) var(--node-delay) infinite alternate; }
+@keyframes retention-loop-orbit { to { transform: rotateX(62deg) rotateZ(350deg); } }
+@keyframes retention-loop-node { to { filter: brightness(1.28); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .retention-loop-css__orbit, .retention-loop-css__node { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .retention-loop-visual { border-radius: 0.9rem; }
+  .retention-loop-visual canvas { pointer-events: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retention-loop-visual canvas { display: none !important; }
+  .retention-loop-visual.is-live .retention-loop-poster { opacity: 1; filter: none; }
+}
+
 /* Selective rhythm: not every section is a framed object */
 #differentiation { background: var(--rf-paper) !important; }
 #differentiation .diff-layout { align-items: start; }

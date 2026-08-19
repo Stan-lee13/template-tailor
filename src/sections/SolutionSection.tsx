@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
 import solutionVisual from '../assets/solution-editorial.webp';
+import RetentionLoop3D from '../components/RetentionLoop3D';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +50,7 @@ export default function SolutionSection() {
             <div className="solution-media relative group" style={{ opacity: 0 }}>
               <div className="solution-media__frame">
                 <div className="solution-media__label"><span>Live system</span><span>Return / 01</span></div>
-                <img src={solutionVisual} alt="Editorial still life showing connected commerce touchpoints, post-purchase messaging, and returning orders" className="w-full aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105" />
+                <RetentionLoop3D fallbackSrc={solutionVisual} alt="A connected customer retention loop linking commerce touchpoints, post-purchase messaging, loyalty, and returning orders" />
                 <div className="solution-media__caption"><span>Retention infrastructure</span><span aria-hidden="true">↗</span></div>
               </div>
             </div>
