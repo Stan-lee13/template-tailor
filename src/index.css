@@ -1319,6 +1319,22 @@ img {
 @media (max-width: 640px) {
   .solution-media__frame img,
   .diff-media__frame img { aspect-ratio: 4 / 5; height: auto; object-fit: cover; }
+
+  /* Solution becomes an open editorial sequence on mobile, not a card inside a card */
+  #solution .solution-object { padding: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+  #solution .solution-object__bar { padding: 0 0 0.8rem; border-bottom: 1px solid rgba(243, 235, 221, 0.18); }
+  #solution .solution-media__frame { padding: 0; background: transparent; border: 0; border-radius: 0; }
+  #solution .solution-media__label { padding: 0.65rem 0 0.75rem; border-top: 1px solid rgba(243, 235, 221, 0.14); }
+  #solution .solution-media__frame img { border: 1px solid rgba(243, 235, 221, 0.16); border-radius: 0.9rem; }
+  #solution .solution-media__caption { padding: 0.7rem 0 0.55rem; border-bottom: 1px solid rgba(243, 235, 221, 0.18); }
+  #solution .solution-head { padding-top: 1.15rem; }
+  #solution .solution-grid { grid-template-columns: 1fr; gap: 0; margin-top: 1.2rem; border-top: 1px solid rgba(243, 235, 221, 0.18); }
+  #solution .solution-card,
+  #solution .solution-card:last-child { min-height: 4.5rem; grid-column: auto; gap: 0.7rem; padding: 0.85rem 0; color: var(--rf-milk); background: transparent; border: 0; border-bottom: 1px solid rgba(243, 235, 221, 0.16); border-radius: 0; font-size: 0.74rem; }
+  #solution .solution-card:hover { background: transparent; transform: none; }
+  #solution .solution-card__arrow { color: var(--rf-ochre); }
+  #solution .solution-metric { margin-top: 1rem; padding: 0.9rem 0; color: var(--rf-milk); background: transparent; border-top: 1px solid rgba(243, 235, 221, 0.18); border-bottom: 1px solid rgba(243, 235, 221, 0.18); border-radius: 0; }
+  #solution .solution-metric p { font-size: 0.8rem; line-height: 1.4; }
 }
 
 /* Selective rhythm: not every section is a framed object */
