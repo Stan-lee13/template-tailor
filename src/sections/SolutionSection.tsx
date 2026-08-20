@@ -23,7 +23,7 @@ export default function SolutionSection() {
         opacity: 1, x: 0, duration: 1.2, ease: 'power4.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       });
-      gsap.fromTo('.solution-media', { opacity: 0, scale: 1.05, x: -40 }, {
+      gsap.fromTo('.solution-loop-slot', { opacity: 0, scale: 1.05, x: -40 }, {
         opacity: 1, scale: 1, x: 0, duration: 1.3, ease: 'expo.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       });
@@ -47,10 +47,10 @@ export default function SolutionSection() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.02fr,0.98fr] gap-10 lg:gap-16 items-center">
-            <div className="solution-media relative group" style={{ opacity: 0 }}>
-              <div className="solution-media__label solution-loop-meta"><span>Live system</span><span>Return / 01</span></div>
+            <div className="solution-loop-slot" style={{ opacity: 0 }}>
+              <div className="solution-loop-meta"><span>Live system</span><span>Return / 01</span></div>
               <RetentionLoop3D fallbackSrc={solutionVisual} alt="A connected customer retention loop linking commerce touchpoints, post-purchase messaging, loyalty, and returning orders" />
-              <div className="solution-media__caption solution-loop-caption"><span>Retention infrastructure</span><span aria-hidden="true">↗</span></div>
+              <div className="solution-loop-caption"><span>Retention infrastructure</span><span aria-hidden="true">↗</span></div>
             </div>
 
             <div className="solution-head" style={{ opacity: 0 }}>

@@ -8,6 +8,14 @@ type RetentionLoop3DProps = {
   alt: string;
 };
 
+const retentionStages = [
+  { number: '01', label: 'Signal', detail: 'Understand behavior' },
+  { number: '02', label: 'Message', detail: 'Reach the right moment' },
+  { number: '03', label: 'Loyalty', detail: 'Give customers a reason' },
+  { number: '04', label: 'Return', detail: 'Grow the next order' },
+  { number: '05', label: 'Advocacy', detail: 'Keep the loop moving' },
+];
+
 const nodeColors = ['#c56a4a', '#d8a63d', '#f3ebdd', '#c56a4a', '#d8a63d', '#f3ebdd', '#c56a4a', '#d8a63d'];
 
 function LoopScene() {
@@ -82,7 +90,7 @@ export default function RetentionLoop3D({ fallbackSrc, alt }: RetentionLoop3DPro
   const cssLive = !supportsWebGL && !isReduced;
 
   return (
-    <div className={`retention-loop-visual ${live ? 'is-live' : 'is-static'}`} role="img" aria-label={alt}>
+    <div className={`retention-loop-visual ${live ? 'is-live' : 'is-static'}`} role="group" aria-label={alt}>
       <img className="retention-loop-poster" src={fallbackSrc} alt="" aria-hidden="true" />
       {cssLive && (
         <div className="retention-loop-css" aria-hidden="true">
@@ -98,6 +106,15 @@ export default function RetentionLoop3D({ fallbackSrc, alt }: RetentionLoop3DPro
           </div>
         </div>
       )}
+      <div className="retention-loop-legend" aria-label="Retention loop stages">
+        {retentionStages.map((stage) => (
+          <div key={stage.number} className="retention-loop-legend__item">
+            <span>{stage.number}</span>
+            <strong>{stage.label}</strong>
+            <small>{stage.detail}</small>
+          </div>
+        ))}
+      </div>
       {live && (
         <Canvas
           aria-hidden="true"
