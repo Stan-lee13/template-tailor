@@ -3,27 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../hooks/useBooking';
 import { CALENDLY_URL, SITE } from '../config/site';
 import { track } from '../lib/analytics';
-
-let scriptLoaded = false;
-function loadCalendlyScript(): Promise<void> {
-  return new Promise((resolve) => {
-    if (scriptLoaded || (window as any).Calendly) {
-      scriptLoaded = true;
-      resolve();
-      return;
-    }
-    const s = document.createElement('script');
-    s.src = 'https://assets.calendly.com/assets/external/widget.js';
-    s.async = true;
-    s.onload = () => { scriptLoaded = true; resolve(); };
-    document.head.appendChild(s);
-
-    const css = document.createElement('link');
-    css.rel = 'stylesheet';
-    css.href = 'https://assets.calendly.com/assets/external/widget.css';
-    document.head.appendChild(css);
-  });
-}
+import { loadCalendlyScript } from '../lib/calendly';
 
 export default function BookingModal() {
   const { isOpen, close } = useBooking();
@@ -38,7 +18,7 @@ export default function BookingModal() {
       loadCalendlyScript().then(() => {
         if (!containerRef.current) return;
         containerRef.current.innerHTML = '';
-        (window as any).Calendly?.initInlineWidget({
+        window.Calendly?.initInlineWidget({
           url: CALENDLY_URL,
           parentElement: containerRef.current,
           prefill: {},
@@ -85,7 +65,7 @@ export default function BookingModal() {
       >
         <div className="flex items-center justify-between px-10 py-8 border-b border-white/5 bg-white/[0.02]">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-2">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#d8a63d] mb-2">
               Growth Audit Protocol
             </p>
             <h3 className="text-xl lg:text-2xl font-black text-white tracking-tighter">
@@ -109,7 +89,7 @@ export default function BookingModal() {
               <p className="text-white/40 font-medium mb-8">System link offline. Direct channel required.</p>
               <a 
                 href={`mailto:${SITE.email}?subject=Growth Audit Request`} 
-                className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(0,212,255,0.2)]"
+                className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#d8a63d] text-black hover:bg-[#f3ebdd] transition-all duration-500 shadow-[0_0_30px_rgba(216,166,61,0.2)]"
               >
                 Inquire via Email
               </a>

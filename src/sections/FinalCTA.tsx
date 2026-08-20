@@ -6,6 +6,7 @@ import { track } from '../lib/analytics';
 import { SparklesCore } from '../components/ui/sparkles';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
 import { useSectionContent } from '../hooks/useSectionContent';
+import CalendlyInline from '../components/CalendlyInline';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,6 +55,10 @@ export default function FinalCTA() {
             <span><i />No Long-Term Contracts</span>
             <span><i />Results in 48 Hours</span>
             <span><i />100% Satisfaction</span>
+          </div>
+          <div className="cta-calendly-shell cta-animate" style={{ opacity: 0 }}>
+            <div className="cta-calendly-shell__bar"><span>RETENTION FIRM / INTRO CALL</span><span>OPEN CALENDAR</span></div>
+            <CalendlyInline location="final_cta_inline" />
           </div>
         </div>
       </div>

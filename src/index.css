@@ -1589,3 +1589,47 @@ img {
 }
 
 
+/* Bold clarity object */
+.faq-object { padding: 0.8rem; background: transparent; border-radius: 0; box-shadow: none; }
+.faq-object__bar { margin-bottom: 0.8rem; padding: 0.35rem 0.4rem 0.95rem; border-bottom: 1px solid rgba(5, 5, 5, 0.18); color: rgba(5, 5, 5, 0.48); }
+.faq-list { display: grid; gap: 0.7rem; }
+.faq-item { border: 1px solid rgba(5, 5, 5, 0.16); border-radius: 1.35rem; background: var(--rf-vanta); transition: background 220ms var(--rf-ease-out), border-color 220ms var(--rf-ease-out), transform 220ms var(--rf-ease-out); }
+.faq-item:hover { transform: translateY(-2px); border-color: rgba(197, 106, 74, 0.78); }
+.faq-item.is-open { border-color: var(--rf-terracotta); background: var(--rf-milk); }
+.faq-question { grid-template-columns: 3.6rem minmax(0, 1fr) 3.2rem; min-height: 6.2rem; gap: 1rem; padding: 1rem 1.2rem; color: var(--rf-milk); }
+.faq-item.is-open .faq-question { color: var(--rf-vanta); }
+.faq-question__index { color: var(--rf-ochre); font-size: clamp(0.82rem, 1.4vw, 1.05rem); letter-spacing: 0.06em; }
+.faq-question__text { font-size: clamp(1.05rem, 2.25vw, 1.75rem); font-weight: 720; letter-spacing: -0.035em; line-height: 1.08; }
+.faq-question__icon { width: 3.2rem; height: 3.2rem; border: 1px solid rgba(5, 5, 5, 0.12); border-radius: 999px; font-size: 1.65rem; }
+.faq-item.is-open .faq-question__icon { color: var(--rf-milk); background: var(--rf-terracotta); }
+.faq-answer p { max-width: 58rem; padding: 0 1.2rem 0 5.8rem; color: rgba(5, 5, 5, 0.68); font-size: clamp(1rem, 1.5vw, 1.18rem); line-height: 1.58; }
+.faq-answer.is-open p { padding-bottom: 1.65rem; }
+
+/* Inline scheduling surface: open by default near the closing CTA */
+.cta-calendly-shell { margin-top: 1.5rem; overflow: hidden; background: var(--rf-milk); border: 1px solid rgba(243, 235, 221, 0.18); border-radius: 1.25rem; color: var(--rf-vanta); }
+.cta-calendly-shell__bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.95rem 1.15rem; color: rgba(5, 5, 5, 0.52); border-bottom: 1px solid rgba(5, 5, 5, 0.14); font-size: 0.58rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; }
+.cta-calendly-shell__bar span:last-child { color: var(--rf-terracotta); }
+.calendly-inline__widget { min-height: 650px; height: 650px; width: 100%; background: var(--rf-milk); }
+.calendly-inline__widget iframe { max-width: 100%; }
+.calendly-inline__fallback { display: grid; min-height: 650px; place-items: center; gap: 1.2rem; padding: 2rem; color: rgba(5, 5, 5, 0.64); text-align: center; }
+.calendly-inline__fallback p { max-width: 20rem; font-size: 1rem; line-height: 1.5; }
+.calendly-inline__fallback a { display: inline-flex; min-height: 44px; align-items: center; gap: 0.7rem; padding: 0.9rem 1.2rem; color: var(--rf-vanta); background: var(--rf-ochre); border-radius: 999px; font-size: 0.68rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; transition: background 180ms var(--rf-ease-out), transform 180ms var(--rf-ease-out); }
+.calendly-inline__fallback a:hover, .calendly-inline__fallback a:focus-visible { background: var(--rf-terracotta); outline: none; transform: translateY(-2px); }
+
+@media (max-width: 640px) {
+  .faq-object { padding: 0.25rem; }
+  .faq-object__bar { padding-right: 0.2rem; padding-left: 0.2rem; }
+  .faq-question { grid-template-columns: 2.45rem minmax(0, 1fr) 2.7rem; min-height: 5.25rem; gap: 0.65rem; padding: 0.85rem 0.8rem; }
+  .faq-question__text { font-size: clamp(1rem, 5vw, 1.35rem); }
+  .faq-question__icon { width: 2.7rem; height: 2.7rem; font-size: 1.35rem; }
+  .faq-answer p { padding: 0 0.85rem 0 3.9rem; font-size: 0.94rem; }
+  .faq-answer.is-open p { padding-bottom: 1.2rem; }
+  .cta-calendly-shell { margin-top: 1rem; border-radius: 0.95rem; }
+  .cta-calendly-shell__bar { align-items: flex-start; flex-direction: column; gap: 0.35rem; padding: 0.8rem 0.85rem; }
+  .calendly-inline__widget { min-height: 700px; height: 700px; }
+  .calendly-inline__fallback { min-height: 700px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item, .calendly-inline__fallback a { transition: none; }
+}
