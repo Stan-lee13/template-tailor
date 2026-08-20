@@ -1,21 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useBooking } from '../hooks/useBooking';
-import { track } from '../lib/analytics';
 import { SparklesCore } from '../components/ui/sparkles';
 import { useDeviceCapabilities } from '../hooks/useDeviceCapabilities';
-import { useSectionContent } from '../hooks/useSectionContent';
 import CalendlyInline from '../components/CalendlyInline';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type FinalCTAContent = { headline_1: string; headline_2: string; body: string; kicker: string; cta_label: string };
-
 export default function FinalCTA() {
-  const c = useSectionContent<FinalCTAContent>('/', 'final_cta', 'final_cta');
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { open } = useBooking();
   const { lowPower, reducedMotion } = useDeviceCapabilities();
   const showSparkles = !lowPower && !reducedMotion;
 
@@ -37,18 +30,11 @@ export default function FinalCTA() {
       <div className="relative max-w-[1300px] mx-auto">
         <div className="cta-object">
           <div className="cta-object__bar"><span>RETENTION FIRM / NEXT MOVE</span><span>READY TO SCALE?</span></div>
-          <div className="cta-object__body">
-            <div className="cta-copy">
-              <span className="cta-kicker cta-animate" style={{ opacity: 0 }}>Ready to scale?</span>
+          <div className="cta-object__body cta-object__body--solo">
+            <div className="cta-copy cta-animate" style={{ opacity: 0 }}>
+              <span className="cta-kicker">Ready to scale?</span>
               <h2 className="cta-title cta-animate" style={{ opacity: 0 }}>Build a Brand <span>Customers Come Back To.</span></h2>
               <p className="cta-description cta-animate" style={{ opacity: 0 }}>If you&apos;re ready to build a more profitable business through stronger customer relationships, we&apos;d love to talk.</p>
-            </div>
-            <div className="cta-action cta-animate" style={{ opacity: 0 }}>
-              <div className="cta-action__mark" aria-hidden="true">↗</div>
-              <p>Book a focused conversation about your retention system.</p>
-              <button onClick={() => { track('cta_click', { location: 'final_cta', label: c.cta_label }); open('final_cta'); }} className="cta-button">
-                <span>Book Your Intro Call</span><span aria-hidden="true">↗</span>
-              </button>
             </div>
           </div>
           <div className="cta-proof cta-animate" style={{ opacity: 0 }}>

@@ -1633,3 +1633,8 @@ img {
 @media (prefers-reduced-motion: reduce) {
   .faq-item, .calendly-inline__fallback a { transition: none; }
 }
+
+
+/* CTA refinement: the inline calendar is the sole booking surface */
+.cta-object__body--solo { grid-template-columns: 1fr; }
+.cta-object__body--solo .cta-copy { min-height: 0; }
