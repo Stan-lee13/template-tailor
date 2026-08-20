@@ -1363,13 +1363,18 @@ img {
 
 .retention-loop-visual { position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: radial-gradient(circle at 50% 45%, rgba(197, 106, 74, 0.18), transparent 52%), #050505; border-radius: 1rem; }
 .retention-loop-poster { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity 300ms var(--rf-ease-out), filter 300ms var(--rf-ease-out); }
-.retention-loop-legend { position: absolute; right: 0.9rem; bottom: 0.9rem; left: 0.9rem; z-index: 2; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.45rem; padding: 0.65rem; background: rgba(5, 5, 5, 0.78); border: 1px solid rgba(243, 235, 221, 0.16); border-radius: 0.75rem; backdrop-filter: blur(10px); }
-.retention-loop-legend__item { display: grid; min-width: 0; gap: 0.12rem; padding-top: 0.35rem; border-top: 1px solid rgba(243, 235, 221, 0.24); }
-.retention-loop-legend__item span { color: var(--rf-ochre); font-size: 0.52rem; font-weight: 900; letter-spacing: 0.12em; }
-.retention-loop-legend__item strong { color: var(--rf-milk); font-size: 0.62rem; font-weight: 850; letter-spacing: 0.03em; }
-.retention-loop-legend__item small { overflow: hidden; color: rgba(243, 235, 221, 0.56); font-size: 0.48rem; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
-.retention-loop-visual.is-live .retention-loop-poster { opacity: 0.16; filter: saturate(0.5) contrast(1.1); }
-.retention-loop-visual.is-static .retention-loop-poster { opacity: 1; }
+.retention-loop-visual::before, .retention-loop-visual::after { position: absolute; top: 50%; left: 50%; z-index: 1; display: block; aspect-ratio: 1; content: ''; border: 1px solid rgba(243, 235, 221, 0.22); border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.retention-loop-visual::before { width: 54%; }
+.retention-loop-visual::after { width: 68%; border-color: rgba(197, 106, 74, 0.26); }
+.retention-loop-visual.is-live .retention-loop-poster, .retention-loop-visual.is-css-live .retention-loop-poster { opacity: 0.08; filter: saturate(0.3) brightness(0.55); }
+.retention-loop-visual.is-static .retention-loop-poster { opacity: 0.08; filter: saturate(0.2) brightness(0.5); }
+.retention-loop-diagram-labels { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.retention-loop-center-label { position: absolute; top: 50%; left: 50%; display: grid; width: 28%; aspect-ratio: 1; place-content: center; gap: 0.06rem; color: var(--rf-vanta); background: var(--rf-milk); border-radius: 50%; box-shadow: 0 0 2.5rem rgba(197, 106, 74, 0.2); text-align: center; transform: translate(-50%, -50%); }
+.retention-loop-center-label strong { font-size: clamp(0.46rem, 1vw, 0.78rem); font-weight: 900; letter-spacing: 0.08em; line-height: 1; }
+.retention-loop-stage-label { position: absolute; top: 50%; left: 50%; display: grid; width: min(8rem, 18vw); gap: 0.12rem; color: var(--rf-milk); text-align: center; transform: translate(-50%, -50%) rotate(var(--stage-angle)) translateY(calc(min(33vw, 15rem) * -1)) rotate(calc(var(--stage-angle) * -1)); }
+.retention-loop-stage-label__dot { width: 0.42rem; height: 0.42rem; margin: 0 auto 0.05rem; background: var(--stage-color); border: 1px solid rgba(243, 235, 221, 0.8); border-radius: 50%; box-shadow: 0 0 0.8rem var(--stage-color); }
+.retention-loop-stage-label strong { color: var(--stage-color); font-size: clamp(0.48rem, 0.8vw, 0.68rem); font-weight: 900; letter-spacing: 0.09em; line-height: 1.05; text-transform: uppercase; }
+.retention-loop-stage-label small { color: rgba(243, 235, 221, 0.58); font-size: clamp(0.42rem, 0.65vw, 0.55rem); line-height: 1.15; }
 .retention-loop-visual canvas { position: absolute !important; inset: 0; display: block; width: 100% !important; height: 100% !important; }
 .retention-loop-css { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 50%, rgba(243, 235, 221, 0.06), transparent 48%); }
 .retention-loop-css__orbit { position: relative; width: 62%; aspect-ratio: 1; border: 1px solid rgba(243, 235, 221, 0.26); border-radius: 50%; transform: rotateX(62deg) rotateZ(-10deg); animation: retention-loop-orbit 18s linear infinite; }
@@ -1398,8 +1403,9 @@ img {
   .retention-stages-legend { right: 0.7rem; bottom: 0.7rem; left: 0.7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem; }
   .retention-stages-legend__item strong { font-size: 0.58rem; }
   .retention-loop-visual { border-radius: 0.9rem; }
-  .retention-loop-legend { right: 0.55rem; bottom: 0.55rem; left: 0.55rem; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; padding: 0.55rem; }
-  .retention-loop-legend__item small { font-size: 0.46rem; }
+  .retention-loop-center-label { width: 31%; }
+  .retention-loop-stage-label { width: 4.9rem; }
+  .retention-loop-stage-label small { font-size: 0.42rem; }
   .retention-loop-visual canvas { pointer-events: none; }
 }
 
