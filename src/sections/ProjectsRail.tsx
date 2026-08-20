@@ -1,21 +1,33 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
+import SignedImage from '../components/SignedImage';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
 type Project = {
-  id: string; slug: string; title: string; excerpt: string | null;
-  featured_image_url: string | null; published_at: string | null;
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  featured_image_url: string | null;
+  published_at: string | null;
 };
+
+function fmt(d: string | null) {
+  return d ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Selected work';
+}
 
 export default function ProjectsRail() {
   const ref = useRef<HTMLDivElement>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [loadingTimedOut, setLoadingTimedOut] = useState(false);
 
-  const { data: projects = [] } = useQuery({
+  const { data: projects = [], isLoading } = useQuery({
     queryKey: ['projects_rail'],
     queryFn: async () => {
       const { data } = await supabase
@@ -30,20 +42,51 @@ export default function ProjectsRail() {
   });
 
   useEffect(() => {
+    setSelectedIndex((current) => Math.min(current, Math.max(projects.length - 1, 0)));
+  }, [projects.length]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingTimedOut(false);
+      return;
+    }
+    const timeout = window.setTimeout(() => setLoadingTimedOut(true), 6500);
+    return () => window.clearTimeout(timeout);
+  }, [isLoading]);
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.projects-head', { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 1.1, ease: 'power4.out',
+      gsap.fromTo('.projects-head', { opacity: 0, y: 32 }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power4.out',
         scrollTrigger: { trigger: ref.current, start: 'top 75%' },
       });
-      gsap.fromTo('.project-card', { opacity: 0, y: 28 }, {
-        opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out',
-        scrollTrigger: { trigger: '.project-grid', start: 'top 78%' },
+      gsap.fromTo('.project-rail', { opacity: 0, y: 24 }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.85,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.project-rail', start: 'top 78%' },
+      });
+      gsap.fromTo('.project-thumb', { opacity: 0, y: 18 }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        stagger: 0.06,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.project-thumbnails', start: 'top 85%' },
       });
     }, ref);
     return () => ctx.revert();
   }, [projects.length]);
 
-  if (projects.length === 0) return null;
+  const selected = projects[selectedIndex];
+  const moveSelection = (direction: number) => {
+    if (!projects.length) return;
+    setSelectedIndex((current) => (current + direction + projects.length) % projects.length);
+  };
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-[#050505] px-6 py-20 lg:px-20 lg:py-28">
@@ -56,20 +99,60 @@ export default function ProjectsRail() {
           <Link to="/blog" className="projects-all-link">Explore All Work <span aria-hidden="true">↗</span></Link>
         </div>
 
-        <div className="projects-object">
-          <div className="projects-object__bar"><span>RETENTION FIRM / SELECTED WORK</span><span>PROOF / {String(projects.length).padStart(2, '0')}</span></div>
-          <div className="project-grid">
-            {projects.map((project, i) => (
-              <Link key={project.id} to={`/blog/${project.slug}`} className={`project-card ${i === 0 ? 'project-card--lead' : ''}`} style={{ opacity: 0 }} aria-label={project.title}>
-                {project.featured_image_url && <img src={project.featured_image_url} alt={project.title} loading="lazy" />}
-                <div className="project-card__shade" />
-                <div className="project-card__content">
-                  <div className="project-card__top"><span>{String(i + 1).padStart(2, '0')}</span><span aria-hidden="true">↗</span></div>
-                  <div><h3>{project.title}</h3>{project.excerpt && <p>{project.excerpt}</p>}</div>
+        <div className="project-rail" style={{ opacity: 0 }}>
+          <div className="project-rail__bar"><span>RETENTION FIRM / SELECTED WORK</span><span>PROOF / {String(projects.length).padStart(2, '0')}</span></div>
+          {isLoading && !loadingTimedOut ? (
+            <div className="project-rail__empty" role="status">Loading selected work…</div>
+          ) : selected ? (
+            <>
+              <div className="project-lead">
+                <Link to={`/blog/${selected.slug}`} className="project-lead__media" aria-label={`Read ${selected.title}`}>
+                  {selected.featured_image_url ? (
+                    <SignedImage path={selected.featured_image_url} alt="" className="project-lead__image" />
+                  ) : (
+                    <div className="project-lead__placeholder" aria-hidden="true"><span>RF / {String(selectedIndex + 1).padStart(2, '0')}</span></div>
+                  )}
+                  <span className="project-lead__media-index">{String(selectedIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
+                </Link>
+                <div className="project-lead__copy">
+                  <div className="project-lead__meta"><span>{fmt(selected.published_at)}</span><span>Selected work</span></div>
+                  <Link to={`/blog/${selected.slug}`} className="project-lead__title-link"><h3>{selected.title}</h3><span aria-hidden="true">↗</span></Link>
+                  {selected.excerpt && <p>{selected.excerpt}</p>}
+                  <div className="project-lead__footer"><span>Read the case study</span><span aria-hidden="true">Scroll to explore</span></div>
                 </div>
-              </Link>
-            ))}
-          </div>
+              </div>
+
+              <div className="project-thumbnails-wrap">
+                <div className="project-thumbnails__controls">
+                  <span>Browse the field</span>
+                  <div>
+                    <button type="button" onClick={() => moveSelection(-1)} aria-label="Previous selected work">←</button>
+                    <button type="button" onClick={() => moveSelection(1)} aria-label="Next selected work">→</button>
+                  </div>
+                </div>
+                <div className="project-thumbnails" role="tablist" aria-label="Selected work">
+                  {projects.map((project, index) => (
+                    <button
+                      key={project.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={selectedIndex === index}
+                      aria-label={`Show ${project.title}`}
+                      className={`project-thumb ${selectedIndex === index ? 'is-active' : ''}`}
+                      onClick={() => setSelectedIndex(index)}
+                    >
+                      <span className="project-thumb__image">
+                        {project.featured_image_url ? <SignedImage path={project.featured_image_url} alt="" loading="lazy" /> : <span aria-hidden="true">RF</span>}
+                      </span>
+                      <span className="project-thumb__text"><strong>{String(index + 1).padStart(2, '0')}</strong><span>{project.title}</span></span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="project-rail__empty">No selected work available yet.</div>
+          )}
         </div>
       </div>
     </section>
