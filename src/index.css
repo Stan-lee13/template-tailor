@@ -1638,3 +1638,67 @@ img {
 /* CTA refinement: the inline calendar is the sole booking surface */
 .cta-object__body--solo { grid-template-columns: 1fr; }
 .cta-object__body--solo .cta-copy { min-height: 0; }
+
+
+/* Mobile Services correction: cards live on the section, not inside a nested object */
+@media (max-width: 640px) {
+  #services .service-object {
+    overflow: visible;
+    padding: 0;
+    color: var(--rf-vanta);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  #services .service-object__bar {
+    margin-top: 1.25rem;
+    padding: 0.9rem 0 1rem;
+    color: rgba(5, 5, 5, 0.52);
+    border-top: 1px solid rgba(5, 5, 5, 0.16);
+    border-bottom: 1px solid rgba(5, 5, 5, 0.16);
+  }
+  #services .service-object__bar span:last-child { color: var(--rf-terracotta); }
+  #services .service-scroll-viewport {
+    margin: 0;
+    padding: 1rem 0 1.1rem;
+    border-top: 0;
+    border-bottom: 1px solid rgba(5, 5, 5, 0.16);
+    scrollbar-color: var(--rf-terracotta) rgba(5, 5, 5, 0.1);
+  }
+  #services .service-scroll-track { gap: 0.7rem; }
+  #services .service-scroll-card {
+    flex-basis: calc(100vw - 5rem);
+    min-height: 23rem;
+    padding: 1.1rem;
+    color: var(--rf-milk);
+    background: #151619 !important;
+    border: 1px solid rgba(5, 5, 5, 0.16);
+    border-radius: 1.15rem;
+  }
+  #services .service-scroll-card:nth-child(2n) { background: #1e1a16 !important; }
+  #services .service-scroll-card:nth-child(3n) { background: #171b1b !important; }
+  #services .service-scroll-card.is-active {
+    color: var(--rf-milk);
+    background: #211715 !important;
+    border-color: var(--rf-ochre);
+  }
+  #services .service-scroll-card__icon,
+  #services .service-scroll-card.is-active .service-scroll-card__icon {
+    color: var(--rf-ochre);
+    background: transparent;
+    border-color: var(--rf-ochre);
+  }
+  #services .service-scroll-card__items span,
+  #services .service-scroll-card.is-active .service-scroll-card__items span {
+    background: transparent;
+    border-color: rgba(243, 235, 221, 0.22);
+  }
+  #services .service-scroll-card__footer { border-color: rgba(243, 235, 221, 0.3); }
+  #services .service-scroll-controls { padding: 0.7rem 0 0; }
+  #services .service-scroll-progress button::after { background: rgba(5, 5, 5, 0.2); }
+  #services .service-scroll-progress button.is-active::after { background: var(--rf-terracotta); }
+  #services .service-scroll-buttons button { color: var(--rf-vanta); border-color: rgba(5, 5, 5, 0.22); }
+  #services .service-scroll-buttons button:hover:not(:disabled),
+  #services .service-scroll-buttons button:focus-visible { color: var(--rf-milk); background: var(--rf-vanta); }
+}
