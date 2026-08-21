@@ -57,12 +57,14 @@ export default function BlogIndex() {
           </header>
 
           {loading ? (
-            <div className="flex items-center gap-3 text-white/20 font-black text-xs uppercase tracking-widest">
-              <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#C56A4A] animate-spin" />
+            <div role="status" aria-live="polite" className="flex items-center gap-4 rounded-[2rem] border border-[#C56A4A]/20 bg-[#111318]/[0.03] px-6 py-5 text-[#111318]/70 font-black text-xs uppercase tracking-widest">
+              <div className="w-4 h-4 rounded-full border-2 border-[#111318]/10 border-t-[#C56A4A] animate-spin" aria-hidden="true" />
               Decrypting Insights...
             </div>
           ) : posts.length === 0 ? (
-            <p className="text-white/20 font-black text-xs uppercase tracking-widest">System offline. No intelligence assets deployed.</p>
+            <div role="status" aria-live="polite" className="rounded-[2rem] border border-[#111318]/10 bg-[#111318]/[0.03] px-6 py-5 text-[#111318]/70 font-black text-xs uppercase tracking-widest">
+              System offline. No intelligence assets deployed.
+            </div>
           ) : (
             <div className="space-y-8">
               {featured && (

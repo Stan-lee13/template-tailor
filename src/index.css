@@ -6,23 +6,23 @@
   :root {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
-    --card: 222 35% 10%;
+    --card: 0 0% 4%;
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 4%;
-    --primary: 194 100% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 15 49% 53%;
+    --primary-foreground: 0 0% 4%;
     --secondary: 42 20% 92%;
     --secondary-foreground: 0 0% 4%;
     --muted: 42 10% 88%;
     --muted-foreground: 0 0% 33%;
-    --accent: 224 76% 48%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 42 66% 54%;
+    --accent-foreground: 0 0% 4%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 194 50% 30%;
-    --input: 222 35% 15%;
-    --ring: 194 100% 50%;
+    --border: 24 15% 22%;
+    --input: 24 15% 18%;
+    --ring: 42 66% 54%;
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
@@ -64,25 +64,25 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 0 0% 4.9%;
+    --foreground: 42 20% 92%;
+    --card: 0 0% 4.9%;
+    --card-foreground: 42 20% 92%;
+    --popover: 0 0% 4.9%;
+    --popover-foreground: 42 20% 92%;
+    --primary: 42 20% 92%;
+    --primary-foreground: 0 0% 4.9%;
+    --secondary: 20 10% 17.5%;
+    --secondary-foreground: 42 20% 92%;
+    --muted: 20 10% 17.5%;
+    --muted-foreground: 42 10% 65.1%;
+    --accent: 20 10% 17.5%;
+    --accent-foreground: 42 20% 92%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --destructive-foreground: 42 20% 92%;
+    --border: 20 10% 17.5%;
+    --input: 20 10% 17.5%;
+    --ring: 42 66% 54%;
   }
 
   html, body {
@@ -95,6 +95,10 @@
   }
   #root {
     touch-action: pan-y;
+  }
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 2px solid var(--rf-ochre);
+    outline-offset: 3px;
   }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -482,6 +486,12 @@ img {
 
 @media (prefers-reduced-motion: reduce) {
   .rf-proof-rail__track { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Customer fit map — a dense object instead of a loose tag cloud */
@@ -1241,7 +1251,7 @@ img {
 }
 
 /* Horizontal Services system */
-.service-scroll-viewport { overflow: hidden; }
+.service-scroll-viewport { overflow: hidden; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
 .service-scroll-track { display: flex; width: max-content; gap: 0.75rem; will-change: transform; }
 .service-scroll-card { display: flex; flex: 0 0 clamp(20rem, 31vw, 27rem); min-height: 27rem; flex-direction: column; justify-content: space-between; gap: 1.25rem; padding: clamp(1.1rem, 2.4vw, 2rem); color: var(--rf-milk); background: #151619; border: 1px solid rgba(243, 235, 221, 0.1); border-radius: 1.25rem; transition: background 220ms var(--rf-ease-out), color 220ms var(--rf-ease-out), border-color 220ms var(--rf-ease-out), transform 220ms var(--rf-ease-out); }
 .service-scroll-card:nth-child(2n) { background: #1e1a16; }

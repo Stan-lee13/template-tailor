@@ -82,7 +82,7 @@ export default function ProblemSection() {
                   <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#D8A63D]/20 flex items-center justify-center text-[#9A6B08] group-hover:bg-[#D8A63D] group-hover:text-[#050505] transition-all duration-500">
                     <span className="text-lg font-semibold">{i + 1}</span>
                   </div>
-                  <p className="text-base lg:text-lg font-medium leading-relaxed text-[#1d2f43]/90 group-hover:text-[#050505] transition-colors">
+                  <p className="text-base lg:text-lg font-medium leading-relaxed text-[#111318]/90 group-hover:text-[#050505] transition-colors">
                     {text}
                   </p>
                 </ThreeDCardItem>

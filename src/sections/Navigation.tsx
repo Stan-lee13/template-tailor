@@ -17,6 +17,8 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeMenuRef = useRef<HTMLButtonElement>(null);
   const { open } = useBooking();
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,6 +33,23 @@ export default function Navigation() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = 'hidden';
+    closeMenuRef.current?.focus();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+      (previouslyFocused || menuButtonRef.current)?.focus();
+    };
+  }, [mobileOpen]);
 
   const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setMobileOpen(false);
@@ -93,7 +112,15 @@ export default function Navigation() {
               Book Audit
             </button>
 
-            <button className="lg:hidden flex flex-col gap-1.5 p-2 group" onClick={() => setMobileOpen(true)} aria-label="Open menu">
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className="lg:hidden flex flex-col gap-1.5 p-2 group"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              aria-controls="rf-mobile-menu"
+              aria-expanded={mobileOpen}
+            >
               <span className={`block w-6 h-0.5 transition-all duration-300 group-hover:w-4 ${isHome ? 'bg-white' : 'bg-[#111318]'}`} />
               <span className={`block w-4 h-0.5 transition-all duration-300 group-hover:w-6 ${isHome ? 'bg-white' : 'bg-[#111318]'}`} />
             </button>
@@ -103,9 +130,13 @@ export default function Navigation() {
 
       {mobileOpen && (
         <div
+          id="rf-mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation"
           className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-black/95 backdrop-blur-3xl"
         >
-          <button className="absolute top-10 right-10 p-4 group" onClick={() => setMobileOpen(false)} aria-label="Close menu">
+          <button ref={closeMenuRef} type="button" className="absolute top-10 right-10 p-4 group" onClick={() => setMobileOpen(false)} aria-label="Close menu">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" className="transition-transform duration-500 group-hover:rotate-90">
               <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -121,7 +152,7 @@ export default function Navigation() {
               Blog
             </Link>
 
-            <button onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#F3EBDD] text-black font-black text-lg uppercase tracking-widest hover:bg-[#E8DCC6] transition-all duration-500">
+            <button type="button" onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#F3EBDD] text-black font-black text-lg uppercase tracking-widest hover:bg-[#E8DCC6] transition-all duration-500">
               Book Growth Audit
             </button>
           </div>

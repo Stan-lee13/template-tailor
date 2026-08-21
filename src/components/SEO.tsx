@@ -25,7 +25,9 @@ export default function SEO({
   noindex,
 }: SEOProps) {
   const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
-  const url = `${SITE.url}${path}`;
+  const url = path.startsWith('http')
+    ? path
+    : `${SITE.url}${path.startsWith('/') ? path : `/${path}`}`;
   const fullImage = image.startsWith('http') ? image : `${SITE.url}${image}`;
 
   const ldArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
@@ -34,6 +36,8 @@ export default function SEO({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
+      <meta name="theme-color" content="#050505" />
+      <meta property="og:locale" content="en_US" />
       {noindex && <meta name="robots" content="noindex, nofollow" />}
       <link rel="canonical" href={url} />
 

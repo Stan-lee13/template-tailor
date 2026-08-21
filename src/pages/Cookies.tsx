@@ -1,4 +1,5 @@
 import LegalLayout from '../components/LegalLayout';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { SITE } from '../config/site';
 
@@ -9,7 +10,7 @@ export default function Cookies() {
       <LegalLayout title="Cookie Policy" updated="December 2025">
         <p>
           This Cookie Policy explains how {SITE.name} uses cookies and similar technologies on {SITE.domain}, what
-          they do, and the choices you have. Read alongside our <a href="/privacy">Privacy Policy</a>.
+          they do, and the choices you have. Read alongside our <Link to="/privacy">Privacy Policy</Link>.
         </p>
 
         <h2>1. What cookies are</h2>

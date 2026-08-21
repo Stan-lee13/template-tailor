@@ -60,6 +60,7 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
                 </p>
               </div>
               <button
+                type="button"
                 onClick={() => open('marketing_page')}
                 className="px-10 py-5 rounded-full bg-[#C56A4A] text-black font-black text-sm uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_30px_rgba(197,106,74,0.3)] whitespace-nowrap"
               >

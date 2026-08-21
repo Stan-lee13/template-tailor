@@ -1,4 +1,5 @@
 import LegalLayout from '../components/LegalLayout';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { SITE } from '../config/site';
 
@@ -16,7 +17,7 @@ export default function Privacy() {
         <p>We collect three categories of information:</p>
         <ul>
           <li><strong>Information you provide</strong> — when you book a call, email us, or fill out a form, we collect the details you submit (name, business email, company, message).</li>
-          <li><strong>Information collected automatically</strong> — when you visit the site, we collect basic technical information (IP address, device type, browser, referring page) and engagement signals (pages viewed, time on page) using cookies and similar technologies. See our <a href="/cookies">Cookie Policy</a>.</li>
+          <li><strong>Information collected automatically</strong> — when you visit the site, we collect basic technical information (IP address, device type, browser, referring page) and engagement signals (pages viewed, time on page) using cookies and similar technologies. See our <Link to="/cookies">Cookie Policy</Link>.</li>
           <li><strong>Information from third parties</strong> — if you book through Calendly or interact with our social channels, those providers share limited information with us in line with their own policies.</li>
         </ul>
 

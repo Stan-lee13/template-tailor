@@ -1,8 +1,11 @@
 import LegalLayout from '../../components/LegalLayout';
+import SEO from '../../components/SEO';
 
 export default function CcpaOptOut() {
   return (
-    <LegalLayout title="CCPA Opt-Out" updated="May 2026">
+    <>
+      <SEO title="CCPA Opt-Out" description="How RetentionFirm handles California privacy opt-out requests." path="/legal/ccpa-opt-out" />
+      <LegalLayout title="CCPA Opt-Out" updated="May 2026">
       <p>Under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA), California residents have the right to opt out of the sale or sharing of their personal information.</p>
       <h2>Do we sell or share personal information?</h2>
       <p>RetentionFirm does not sell personal information for monetary consideration. As part of running this website and our partner engagements, we may share limited identifiers (such as cookie IDs and device data) with analytics and advertising partners. Under CPRA, this can be considered "sharing for cross-context behavioral advertising."</p>
@@ -15,6 +18,7 @@ export default function CcpaOptOut() {
       </ul>
       <h2>Authorized agents</h2>
       <p>You may designate an authorized agent to submit a request on your behalf. We will require reasonable verification of the agent's authority.</p>
-    </LegalLayout>
+      </LegalLayout>
+    </>
   );
 }

@@ -11,6 +11,11 @@ export default function CookieConsent() {
 
   useEffect(() => {
     const c = loadConsent();
+    const gpcEnabled = Boolean((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl);
+    if (gpcEnabled && !c.decided) {
+      saveConsent({ analytics: false, marketing: false });
+      return;
+    }
     if (!c.decided) {
       const t = setTimeout(() => setVisible(true), 900);
       return () => clearTimeout(t);
@@ -27,11 +32,11 @@ export default function CookieConsent() {
   if (!expanded) {
     return (
       <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 600ms cubic-bezier(.2,.7,.2,1)' }}>
-        <div className="sm:hidden flex items-center justify-between gap-4 rounded-3xl px-6 py-4 bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div role="dialog" aria-label="Cookie preferences" aria-live="polite" className="sm:hidden flex items-center justify-between gap-4 rounded-3xl px-6 py-4 bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Intelligence Access</span>
           <div className="flex items-center gap-2">
-            <button onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">Accept</button>
-            <button onClick={() => setExpanded(true)} aria-label="Manage" className="text-white/20 hover:text-white transition-colors">
+            <button type="button" onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">Accept</button>
+            <button type="button" onClick={() => setExpanded(true)} aria-label="Manage cookie preferences" aria-expanded={expanded} className="text-white/60 hover:text-white transition-colors">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
@@ -53,7 +58,7 @@ export default function CookieConsent() {
 
   function renderFull() {
     return (
-      <div className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
+      <div role="dialog" aria-label="Cookie preferences" aria-live="polite" className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
         <h4 className="text-xl font-black text-white tracking-tighter mb-4">Intelligence <span className="text-[#C56A4A]">Access</span></h4>
         <p className="text-sm font-medium leading-relaxed text-white/40 mb-8">
           We use minimal cookies to optimize your retention intelligence experience. Review our{' '}
@@ -68,15 +73,15 @@ export default function CookieConsent() {
         )}
         <div className="flex flex-col gap-3">
           <div className="flex gap-3">
-            <button onClick={acceptAll} className="flex-1 px-8 py-4 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]">Accept All</button>
-            <button onClick={() => setShowPrefs(!showPrefs)} className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white transition-all">
+            <button type="button" onClick={acceptAll} className="flex-1 px-8 py-4 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]">Accept All</button>
+            <button type="button" onClick={() => setShowPrefs(!showPrefs)} aria-label={showPrefs ? 'Hide cookie preferences' : 'Manage cookie preferences'} aria-expanded={showPrefs} className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white/60 hover:text-white transition-all">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
           <div className="flex items-center justify-between px-2">
-            <button onClick={rejectAll} className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-rose-500 transition-colors">Reject Non-Essential</button>
+            <button type="button" onClick={rejectAll} className="text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-rose-500 transition-colors">Reject Non-Essential</button>
             {showPrefs && (
-              <button onClick={savePrefs} className="text-[10px] font-black uppercase tracking-widest text-[#C56A4A] hover:text-white transition-colors">Save Selection</button>
+              <button type="button" onClick={savePrefs} className="text-[10px] font-black uppercase tracking-widest text-[#C56A4A] hover:text-white transition-colors">Save Selection</button>
             )}
           </div>
         </div>
@@ -89,7 +94,7 @@ function Toggle({ label, description, checked, disabled, onChange }: { label: st
   return (
     <label className="flex items-start gap-3 cursor-pointer" style={{ opacity: disabled ? 0.7 : 1 }}>
       <span className="relative inline-block flex-shrink-0 mt-0.5" style={{ width: 32, height: 18 }}>
-        <input type="checkbox" checked={checked} disabled={disabled} onChange={(e) => onChange?.(e.target.checked)} className="sr-only" />
+        <input type="checkbox" aria-label={`${label} cookies`} checked={checked} disabled={disabled} onChange={(e) => onChange?.(e.target.checked)} className="sr-only" />
         <span style={{ position: 'absolute', inset: 0, background: checked ? '#C56A4A' : 'rgba(255,255,255,0.1)', borderRadius: 9999, transition: 'background 160ms' }} />
         <span style={{ position: 'absolute', top: 2, left: checked ? 16 : 2, width: 14, height: 14, borderRadius: 9999, background: '#fff', transition: 'left 160ms' }} />
       </span>

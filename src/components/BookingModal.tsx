@@ -8,11 +8,16 @@ import { loadCalendlyScript } from '../lib/calendly';
 export default function BookingModal() {
   const { isOpen, close } = useBooking();
   const containerRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     document.body.style.overflow = 'hidden';
+    window.requestAnimationFrame(() => closeButtonRef.current?.focus());
 
     if (CALENDLY_URL && containerRef.current) {
       loadCalendlyScript().then(() => {
@@ -41,13 +46,32 @@ export default function BookingModal() {
       }
     };
     window.addEventListener('message', onMessage);
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        close();
+        return;
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+        .filter((el) => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener('keydown', onKey);
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener('message', onMessage);
       window.removeEventListener('keydown', onKey);
+      previouslyFocused?.focus();
     };
   }, [isOpen, close, navigate]);
 
@@ -60,6 +84,11 @@ export default function BookingModal() {
       onClick={(e) => { if (e.target === e.currentTarget) close(); }}
     >
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="booking-dialog-title"
+        tabIndex={-1}
         className="relative w-full max-w-4xl rounded-[2.5rem] overflow-hidden bg-black border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,1)]"
         style={{ maxHeight: '92vh', animation: 'rfScale 500ms cubic-bezier(.2,.7,.2,1)' }}
       >
@@ -68,13 +97,15 @@ export default function BookingModal() {
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#d8a63d] mb-2">
               Growth Audit Protocol
             </p>
-            <h3 className="text-xl lg:text-2xl font-black text-white tracking-tighter">
+            <h3 id="booking-dialog-title" className="text-xl lg:text-2xl font-black text-white tracking-tighter">
               Initiate Strategy Call
             </h3>
           </div>
           <button
+            ref={closeButtonRef}
+            type="button"
             onClick={close}
-            aria-label="Close"
+            aria-label="Close booking dialog"
             className="w-12 h-12 rounded-2xl flex items-center justify-center text-white/20 hover:text-white hover:bg-white/5 transition-all"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>

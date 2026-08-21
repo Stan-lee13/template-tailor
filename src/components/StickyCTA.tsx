@@ -28,13 +28,15 @@ export default function StickyCTA() {
       <div className="flex items-center gap-4 rounded-3xl bg-black/80 border border-white/10 backdrop-blur-xl p-2 pl-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <span className="sticky-cta-label text-[10px] font-black uppercase tracking-widest hidden lg:inline">Ready to plug your retention leaks?</span>
         <button
+          type="button"
           onClick={() => { track('cta_click', { location: 'sticky' }); open('sticky'); }}
           className="px-6 py-3 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]"
         >
           Secure Audit
         </button>
         <button
-          aria-label="Dismiss"
+          type="button"
+          aria-label="Dismiss sticky audit prompt"
           onClick={() => { sessionStorage.setItem(KEY, '1'); setShow(false); }}
           className="p-2 text-white/45 hover:text-white transition-colors"
         >

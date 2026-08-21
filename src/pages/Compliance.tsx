@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import MarketingLayout from '../components/MarketingLayout';
 
 export default function Compliance() {
@@ -14,7 +15,7 @@ export default function Compliance() {
       <h2>GDPR</h2>
       <p>Where applicable, we operate as a data processor under the partner's data controller relationship with their end customers. Data subject access and deletion requests are handled within the partner's platform, on their normal SLA.</p>
       <h2>CCPA / CPRA</h2>
-      <p>We support partners' CCPA and CPRA obligations, including the right to opt out of sale or sharing. See <a href="/legal/ccpa-opt-out">CCPA opt-out</a> and <a href="/legal/privacy-choices">your privacy choices</a>.</p>
+      <p>We support partners' CCPA and CPRA obligations, including the right to opt out of sale or sharing. See <Link to="/legal/ccpa-opt-out">CCPA opt-out</Link> and <Link to="/legal/privacy-choices">your privacy choices</Link>.</p>
       <h2>Security posture</h2>
       <ul>
         <li>SSO / 2FA on all platform access</li>

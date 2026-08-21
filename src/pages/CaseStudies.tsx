@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import MarketingLayout from '../components/MarketingLayout';
 
 export default function CaseStudies() {
@@ -39,9 +40,9 @@ export default function CaseStudies() {
           <p className="text-sm font-medium text-white/20 max-w-xl mx-auto leading-relaxed mb-12">
             We are currently processing multiple partner deployments for public release. If you are an existing partner and wish to be featured, initiate contact.
           </p>
-          <a href="/contact" className="text-xs font-black uppercase tracking-widest text-[#C56A4A] hover:text-white transition-colors duration-300">
+          <Link to="/contact" className="text-xs font-black uppercase tracking-widest text-[#C56A4A] hover:text-white transition-colors duration-300">
             Inquire for Feature →
-          </a>
+          </Link>
         </section>
       </div>
     </MarketingLayout>

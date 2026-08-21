@@ -1,8 +1,12 @@
+import { Link } from 'react-router-dom';
 import LegalLayout from '../../components/LegalLayout';
+import SEO from '../../components/SEO';
 
 export default function PrivacyChoices() {
   return (
-    <LegalLayout title="Your Privacy Choices" updated="May 2026">
+    <>
+      <SEO title="Your Privacy Choices" description="Review and manage the privacy choices available when interacting with RetentionFirm." path="/legal/privacy-choices" />
+      <LegalLayout title="Your Privacy Choices" updated="May 2026">
       <p>This page summarizes the privacy controls available to you when interacting with RetentionFirm.</p>
       <h2>Cookie preferences</h2>
       <p>You can update your cookie preferences at any time using the cookie banner that appears on your first visit. If you previously dismissed it, clear our cookies and reload the page to bring it back.</p>
@@ -17,7 +21,8 @@ export default function PrivacyChoices() {
         <li>Limit the use of sensitive personal information</li>
         <li>Withdraw consent at any time, where consent is the legal basis</li>
       </ul>
-      <p>To exercise any of these rights, email us at the address listed on our <a href="/contact">contact page</a>.</p>
-    </LegalLayout>
+      <p>To exercise any of these rights, email us at the address listed on our <Link to="/contact">contact page</Link>.</p>
+      </LegalLayout>
+    </>
   );
 }

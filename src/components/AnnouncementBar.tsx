@@ -20,7 +20,7 @@ export default function AnnouncementBar() {
             {a.text}
           </span>
         </Wrapper>
-        <button onClick={() => setDismissed(true)} aria-label="Dismiss" className="absolute right-6 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-100 transition-opacity">
+        <button type="button" onClick={() => setDismissed(true)} aria-label="Dismiss announcement" className="absolute right-6 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-100 transition-opacity">
           <X size={14} strokeWidth={3} />
         </button>
       </div>

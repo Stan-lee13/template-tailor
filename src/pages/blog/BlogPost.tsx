@@ -46,7 +46,14 @@ export default function BlogPost() {
     })();
   }, [slug]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}><p className="font-inter text-sm" style={{ color: '#666' }}>Loading…</p></div>;
+  if (loading) return (
+    <div className="rf-secondary-shell min-h-screen flex items-center justify-center" aria-busy="true">
+      <div role="status" aria-live="polite" className="flex items-center gap-4 rounded-[2rem] border border-[#111318]/10 bg-[#111318]/[0.03] px-6 py-5 text-[#111318]/70 font-black text-xs uppercase tracking-widest">
+        <span className="w-4 h-4 rounded-full border-2 border-[#111318]/10 border-t-[#C56A4A] animate-spin" aria-hidden="true" />
+        Loading…
+      </div>
+    </div>
+  );
   if (!post) return <NotFound />;
 
   const ld = post.schema_jsonld || {
@@ -67,6 +74,7 @@ export default function BlogPost() {
         type="article"
         image={ogUrl || '/og-image.jpg'}
         publishedAt={post.published_at}
+        author={SITE.name}
         jsonLd={ld}
       />
       <Navigation />
