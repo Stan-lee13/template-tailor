@@ -18,7 +18,7 @@ export default function ArticleLayout({ category, title, publishedAt, readingTim
   const date = new Date(publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <div className="bg-black min-h-screen selection:bg-[#C56A4A] selection:text-black">
+    <div className="rf-secondary-shell rf-secondary-shell--article min-h-screen selection:bg-[#C56A4A] selection:text-black">
       <Navigation />
       <main className="relative pt-40 pb-32 px-6 overflow-hidden">
         {/* Background Accents */}

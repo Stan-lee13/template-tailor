@@ -59,7 +59,7 @@ export default function BlogPost() {
   };
 
   return (
-    <div className="bg-black min-h-screen selection:bg-[#C56A4A] selection:text-black">
+    <div className="rf-secondary-shell rf-secondary-shell--article min-h-screen selection:bg-[#C56A4A] selection:text-black">
       <SEO
         title={post.meta_title || post.title}
         description={post.meta_description || post.excerpt || ''}

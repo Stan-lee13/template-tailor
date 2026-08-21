@@ -9,7 +9,7 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black selection:bg-[#C56A4A] selection:text-black relative overflow-hidden">
+    <div className="rf-secondary-shell rf-secondary-shell--not-found flex min-h-screen items-center justify-center selection:bg-[#C56A4A] selection:text-black relative overflow-hidden">
       {/* Background Accents */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute top-[20%] left-[20%] w-[60%] h-[60%] bg-[#C56A4A]/10 blur-[150px] rounded-full animate-pulse" />

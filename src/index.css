@@ -1848,3 +1848,105 @@ img {
     padding-bottom: 1rem;
   }
 }
+
+
+/* ===== Warm secondary-page system ===== */
+.rf-secondary-shell {
+  min-height: 100vh;
+  color: var(--rf-ink);
+  background: var(--rf-paper);
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(197, 106, 74, 0.08), transparent 30rem),
+    radial-gradient(circle at 90% 18%, rgba(216, 166, 61, 0.08), transparent 26rem);
+}
+
+.rf-secondary-shell main {
+  color: var(--rf-ink);
+}
+
+.rf-secondary-shell main .text-white {
+  color: var(--rf-ink) !important;
+}
+
+.rf-secondary-shell main .text-white\/20 {
+  color: rgba(17, 19, 24, 0.48) !important;
+}
+
+.rf-secondary-shell main .text-white\/30 {
+  color: rgba(17, 19, 24, 0.58) !important;
+}
+
+.rf-secondary-shell main .text-white\/40 {
+  color: rgba(17, 19, 24, 0.68) !important;
+}
+
+.rf-secondary-shell main .text-white\/50,
+.rf-secondary-shell main .text-white\/60,
+.rf-secondary-shell main .text-white\/70 {
+  color: rgba(17, 19, 24, 0.76) !important;
+}
+
+.rf-secondary-shell main .bg-white\/5,
+.rf-secondary-shell main .bg-white\/\[0\.03\],
+.rf-secondary-shell main .bg-white\/\[0\.02\] {
+  background: rgba(17, 19, 24, 0.045) !important;
+}
+
+.rf-secondary-shell main .border-white\/5,
+.rf-secondary-shell main .border-white\/10 {
+  border-color: rgba(17, 19, 24, 0.14) !important;
+}
+
+.rf-secondary-shell main .rf-prose,
+.rf-secondary-shell main .rf-prose p,
+.rf-secondary-shell main .prose p {
+  color: rgba(17, 19, 24, 0.72) !important;
+}
+
+.rf-secondary-shell main .rf-prose h2,
+.rf-secondary-shell main .rf-prose h3,
+.rf-secondary-shell main .prose h1,
+.rf-secondary-shell main .prose h2,
+.rf-secondary-shell main .prose h3,
+.rf-secondary-shell main .prose strong,
+.rf-secondary-shell main .prose blockquote {
+  color: var(--rf-ink) !important;
+}
+
+.rf-secondary-shell main .rf-prose a,
+.rf-secondary-shell main .prose a {
+  color: var(--rf-terracotta) !important;
+  border-bottom-color: rgba(197, 106, 74, 0.32);
+}
+
+.rf-secondary-shell main .rf-prose blockquote,
+.rf-secondary-shell main .prose blockquote {
+  border-left-color: var(--rf-terracotta) !important;
+}
+
+.rf-secondary-shell--article main > article > div[class*="bg-white"],
+.rf-secondary-shell--blog main a[class*="bg-white"] {
+  background: rgba(17, 19, 24, 0.045) !important;
+  border-color: rgba(17, 19, 24, 0.14) !important;
+}
+
+.rf-secondary-shell--thank-you main .bg-black {
+  color: var(--rf-milk);
+  background: var(--rf-ink) !important;
+  border-color: rgba(17, 19, 24, 0.22) !important;
+}
+
+.rf-secondary-shell--not-found h1 {
+  color: var(--rf-ink) !important;
+}
+
+.rf-secondary-shell--not-found main,
+.rf-secondary-shell--not-found > div:not([class*="absolute"]) {
+  color: var(--rf-ink);
+}
+
+@media (max-width: 640px) {
+  .rf-secondary-shell {
+    background-image: radial-gradient(circle at 50% 0%, rgba(197, 106, 74, 0.08), transparent 22rem);
+  }
+}

@@ -16,7 +16,7 @@ interface Props {
 export default function MarketingLayout({ title, eyebrow, intro, children, path, description }: Props) {
   const { open } = useBooking();
   return (
-    <div className="bg-black min-h-screen selection:bg-[#C56A4A] selection:text-black">
+    <div className="rf-secondary-shell min-h-screen selection:bg-[#C56A4A] selection:text-black">
       <SEO path={path} title={title} description={description} />
       <Navigation />
 

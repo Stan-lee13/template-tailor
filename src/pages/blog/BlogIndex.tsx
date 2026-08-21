@@ -35,7 +35,7 @@ export default function BlogIndex() {
   const [featured, ...rest] = posts;
 
   return (
-    <div className="bg-black min-h-screen selection:bg-[#C56A4A] selection:text-black">
+    <div className="rf-secondary-shell rf-secondary-shell--blog min-h-screen selection:bg-[#C56A4A] selection:text-black">
       <SEO title="Intelligence Hub" description="Strategic essays on retention, lifecycle marketing, and customer lifetime value from RetentionFirm." path="/blog" />
       <Navigation />
       <main className="relative pt-40 pb-32 px-6 overflow-hidden">

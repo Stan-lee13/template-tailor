@@ -12,7 +12,7 @@ export default function ThankYou() {
   }, []);
 
   return (
-    <div className="bg-black min-h-screen selection:bg-[#C56A4A] selection:text-black">
+    <div className="rf-secondary-shell rf-secondary-shell--thank-you min-h-screen selection:bg-[#C56A4A] selection:text-black">
       <SEO
         title="Thanks — your audit is booked"
         description="Your RetentionFirm growth audit is confirmed. Here's what happens next."
