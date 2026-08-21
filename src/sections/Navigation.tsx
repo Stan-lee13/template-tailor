@@ -6,10 +6,11 @@ import { track } from '../lib/analytics';
 import { useNavItems } from '../hooks/useSiteData';
 
 const defaultLinks = [
-  { label: 'Services', href: '#services' },
+  { label: 'Solution', href: '#solution' },
   { label: 'Process', href: '#process' },
+  { label: 'Services', href: '#services' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Results', href: '#results' },
-  { label: 'Pricing', href: '#pricing' },
   { label: 'FAQ', href: '#faq' },
 ];
 
@@ -24,9 +25,11 @@ export default function Navigation() {
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
   const { data: dbNav } = useNavItems('header');
-  const sectionLinks = (dbNav && dbNav.length > 0)
-    ? dbNav.map((n) => ({ label: n.label, href: n.href }))
-    : defaultLinks;
+  const cmsLabels = new Map((dbNav || []).map((item) => [item.href, item.label]));
+  const sectionLinks = defaultLinks.map((link) => ({
+    ...link,
+    label: cmsLabels.get(link.href) || link.label,
+  }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -79,25 +82,21 @@ export default function Navigation() {
             <BrandLogo variant={isHome ? 'dark' : 'light'} size="sm" className="transition-transform duration-500 group-hover:scale-110" />
           </Link>
 
-          <div className="hidden lg:flex items-center gap-10">
-            {sectionLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleSectionClick(e, link.href)}
-                className={`text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 relative group ${isHome ? 'text-white/50 hover:text-[#F3EBDD]' : 'text-[#111318]/70 hover:text-[#C56A4A]'}`}
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-            <Link
-              to="/blog"
-              className={`text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 relative group ${isHome ? 'text-white/50 hover:text-[#F3EBDD]' : 'text-[#111318]/70 hover:text-[#C56A4A]'}`}
-            >
-              Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
-            </Link>
+          <div className="hidden lg:flex items-center gap-5 xl:gap-7">
+            {sectionLinks.map((link) => {
+              const className = `text-[11px] font-black uppercase tracking-[0.16em] transition-all duration-300 relative group whitespace-nowrap ${isHome ? 'text-white/50 hover:text-[#F3EBDD]' : 'text-[#111318]/70 hover:text-[#C56A4A]'}`;
+              return link.href.startsWith('/') ? (
+                <Link key={link.label} to={link.href} className={className}>
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
+                </Link>
+              ) : (
+                <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className={className}>
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
+                </a>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-6">
@@ -143,14 +142,15 @@ export default function Navigation() {
           </button>
 
           <div className="flex flex-col items-center gap-8">
-            {sectionLinks.map((link) => (
+            {sectionLinks.map((link) => link.href.startsWith('/') ? (
+              <Link key={link.label} to={link.href} onClick={() => setMobileOpen(false)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#D8A63D] transition-all duration-500 tracking-tighter">
+                {link.label}
+              </Link>
+            ) : (
               <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#D8A63D] transition-all duration-500 tracking-tighter">
                 {link.label}
               </a>
             ))}
-            <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#D8A63D] transition-all duration-500 tracking-tighter">
-              Blog
-            </Link>
 
             <button type="button" onClick={() => onBook('mobile_nav')} className="mt-12 px-12 py-6 rounded-full bg-[#F3EBDD] text-black font-black text-lg uppercase tracking-widest hover:bg-[#E8DCC6] transition-all duration-500">
               Book Growth Audit
