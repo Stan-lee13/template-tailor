@@ -41,7 +41,7 @@ export default function SolutionSection() {
       <div className="absolute bottom-0 right-1/4 h-[34rem] w-[34rem] rounded-full bg-[#C56A4A]/8 blur-[140px] pointer-events-none" />
 
       <div className="max-w-[1300px] mx-auto">
-        <div className="solution-object" style={{ opacity: 1 }}>
+        <div className="solution-open-layout" style={{ opacity: 1 }}>
           <div className="solution-object__bar">
             <span>THE RETENTION ENGINE</span>
             <span>01 / 03 — SYSTEM LOGIC</span>

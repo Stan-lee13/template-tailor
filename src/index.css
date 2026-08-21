@@ -1824,3 +1824,27 @@ img {
     width: auto;
   }
 }
+
+
+/* Open Retention Engine composition: the section owns the surface, not another card. */
+.solution-open-layout {
+  position: relative;
+  padding: 0;
+  color: var(--rf-milk);
+}
+
+.solution-open-layout .solution-object__bar {
+  padding-right: 0;
+  padding-left: 0;
+  border-bottom: 1px solid rgba(243, 235, 221, 0.14);
+}
+
+.solution-open-layout .solution-description {
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .solution-open-layout .solution-object__bar {
+    padding-bottom: 1rem;
+  }
+}
