@@ -42,7 +42,6 @@ export default function FAQ() {
       <div className="max-w-[1300px] mx-auto">
         <div className="faq-head faq-object__head" style={{ opacity: 0 }}>
           <div><span className="rf-object-eyebrow">{c.eyebrow}</span><h2 className="faq-title">Common Questions</h2></div>
-          <div className="faq-object__stamp"><span>Answer index</span><strong>01 — {String((c.faqs || []).length).padStart(2, '0')}</strong></div>
         </div>
         <div className="faq-object">
           <div className="faq-object__bar"><span>RETENTION FIRM / CLARITY</span><span>OPEN ONE TO GO DEEPER</span></div>

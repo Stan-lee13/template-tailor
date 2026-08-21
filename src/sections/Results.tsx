@@ -40,7 +40,6 @@ export default function Results() {
               <span className="rf-object-eyebrow">{c.eyebrow}</span>
               <h2>We Help Brands <span>Grow Sustainably</span></h2>
             </div>
-            <div className="results-object__stamp"><span>Observed outcomes</span><strong>04 / 05</strong></div>
           </div>
 
           <div className="results-grid">

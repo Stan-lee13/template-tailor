@@ -113,7 +113,6 @@ export default function Services() {
             <h2 className="services-title">Everything You Need to <span>Turn Customers Into Revenue</span></h2>
             <p className="services-intro">Strategic growth through customer loyalty, retention, and lifecycle marketing.</p>
           </div>
-          <div className="services-object__stamp"><span>Horizontal system</span><strong>{String(activeIdx + 1).padStart(2, '0')} — {String(services.length).padStart(2, '0')}</strong></div>
         </div>
 
         <div className="service-object service-scroll-object" style={{ opacity: 0 }}>

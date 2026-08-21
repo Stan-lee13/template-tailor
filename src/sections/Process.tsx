@@ -52,7 +52,6 @@ export default function Process() {
             <span className="rf-object-eyebrow">{c.eyebrow}</span>
             <h2 className="process-title">Building Loyalty Isn&apos;t One Campaign. <span>It&apos;s A System.</span></h2>
           </div>
-          <div className="process-object__stamp"><span>Operating sequence</span><strong>01 — 04</strong></div>
         </div>
 
         <div className="process-object">
