@@ -56,29 +56,6 @@ export default function Services() {
       });
 
       const mm = gsap.matchMedia();
-      mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
-        const track = trackRef.current;
-        const viewport = viewportRef.current;
-        if (!track || !viewport) return;
-        const getDistance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-        const tween = gsap.to(track, {
-          x: () => -getDistance(),
-          ease: 'none',
-          scrollTrigger: {
-            id: 'services-horizontal',
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: () => `+=${Math.max(window.innerHeight * 1.35, getDistance() * 1.15)}`,
-            pin: true,
-            scrub: 0.8,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => setActiveIdx(Math.min(services.length - 1, Math.round(self.progress * (services.length - 1)))),
-          },
-        });
-        return () => tween.kill();
-      });
-
       mm.add('(max-width: 1023px), (prefers-reduced-motion: reduce)', () => {
         gsap.fromTo('.service-scroll-card', { opacity: 0, y: 20 }, {
           opacity: 1, y: 0, duration: 0.65, stagger: 0.07, ease: 'power3.out',
