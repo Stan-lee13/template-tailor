@@ -2033,3 +2033,101 @@ img {
 .sticky-cta-label {
   color: rgba(255, 255, 255, 0.64);
 }
+
+
+/* ===== Desktop Services: single editorial system card ===== */
+@media (min-width: 1024px) {
+  #services .service-object {
+    padding: 0.8rem 1rem 1rem;
+    background: var(--rf-vanta);
+    border-radius: 0;
+  }
+
+  #services .service-object__bar {
+    padding: 0.55rem 0.45rem 1rem;
+    color: rgba(243, 235, 221, 0.62);
+    border-bottom: 1px solid rgba(243, 235, 221, 0.18);
+  }
+
+  #services .service-scroll-viewport {
+    padding: 0.25rem 0 0;
+    border: 0;
+  }
+
+  #services .service-scroll-card {
+    box-sizing: border-box;
+    min-height: clamp(28rem, calc(100vh - 15rem), 39rem);
+    padding: clamp(2rem, 4vw, 3.8rem) clamp(1.8rem, 4vw, 3.5rem) clamp(1.8rem, 3vw, 2.8rem);
+    color: var(--rf-milk);
+    background: #211715 !important;
+    border: 1px solid rgba(216, 166, 61, 0.62);
+    border-radius: 1.2rem;
+    box-shadow: inset 0 0 0 1px rgba(197, 106, 74, 0.14);
+  }
+
+  #services .service-scroll-card.is-active {
+    color: var(--rf-milk);
+    background: #211715 !important;
+    border-color: var(--rf-ochre);
+    box-shadow: inset 0 0 0 1px rgba(197, 106, 74, 0.2);
+    transform: none;
+  }
+
+  #services .service-scroll-card__top {
+    align-items: flex-start;
+  }
+
+  #services .service-scroll-card__icon,
+  #services .service-scroll-card.is-active .service-scroll-card__icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    padding: 0.58rem;
+    color: var(--rf-ochre);
+    background: transparent;
+    border: 1px solid var(--rf-ochre);
+    border-radius: 999px;
+  }
+
+  #services .service-scroll-card__copy {
+    margin-top: 0;
+  }
+
+  #services .service-scroll-card__copy h3 {
+    max-width: 48rem;
+    font-size: clamp(3rem, 5.3vw, 5.8rem);
+    line-height: 0.92;
+  }
+
+  #services .service-scroll-card__copy p {
+    max-width: 39rem;
+    margin-top: 1rem;
+    color: rgba(243, 235, 221, 0.64);
+    opacity: 1;
+    font-size: clamp(0.95rem, 1.35vw, 1.15rem);
+  }
+
+  #services .service-scroll-card__items {
+    max-width: 48rem;
+    margin-top: 1.2rem;
+  }
+
+  #services .service-scroll-card__items span {
+    padding: 0.5rem 0.7rem;
+    color: rgba(243, 235, 221, 0.84);
+    background: transparent;
+    border: 1px solid rgba(243, 235, 221, 0.26);
+    border-radius: 999px;
+  }
+
+  #services .service-scroll-card__footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    color: rgba(243, 235, 221, 0.58);
+    border-color: rgba(243, 235, 221, 0.42);
+    opacity: 1;
+  }
+
+  #services .service-scroll-controls {
+    padding: 0.65rem 0.2rem 0;
+  }
+}
