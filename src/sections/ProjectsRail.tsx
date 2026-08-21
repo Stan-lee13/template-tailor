@@ -19,7 +19,7 @@ type Project = {
 };
 
 function fmt(d: string | null) {
-  return d ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Selected work';
+  return d ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Latest insight';
 }
 
 export default function ProjectsRail() {
@@ -93,16 +93,16 @@ export default function ProjectsRail() {
       <div className="max-w-[1300px] mx-auto">
         <div className="projects-head projects-object__head" style={{ opacity: 0 }}>
           <div>
-            <span className="rf-object-eyebrow">Proof of Concept</span>
-            <h2 className="projects-title">Brands Built On <span>Loyalty</span></h2>
+            <span className="rf-object-eyebrow">Retention Insights</span>
+            <h2 className="projects-title">Ideas That Keep Customers <span>Coming Back</span></h2>
           </div>
-          <Link to="/blog" className="projects-all-link">Explore All Work <span aria-hidden="true">↗</span></Link>
+          <Link to="/blog" className="projects-all-link">Explore the Blog <span aria-hidden="true">↗</span></Link>
         </div>
 
         <div className="project-rail" style={{ opacity: 0 }}>
-          <div className="project-rail__bar"><span>RETENTION FIRM / SELECTED WORK</span><span>PROOF / {String(projects.length).padStart(2, '0')}</span></div>
+          <div className="project-rail__bar"><span>RETENTION FIRM / LATEST INSIGHTS</span><span>ARTICLES / {String(projects.length).padStart(2, '0')}</span></div>
           {isLoading && !loadingTimedOut ? (
-            <div className="project-rail__empty" role="status">Loading selected work…</div>
+            <div className="project-rail__empty" role="status">Loading latest posts…</div>
           ) : selected ? (
             <>
               <div className="project-lead">
@@ -115,22 +115,22 @@ export default function ProjectsRail() {
                   <span className="project-lead__media-index">{String(selectedIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
                 </Link>
                 <div className="project-lead__copy">
-                  <div className="project-lead__meta"><span>{fmt(selected.published_at)}</span><span>Selected work</span></div>
+                  <div className="project-lead__meta"><span>{fmt(selected.published_at)}</span><span>Blog post</span></div>
                   <Link to={`/blog/${selected.slug}`} className="project-lead__title-link"><h3>{selected.title}</h3><span aria-hidden="true">↗</span></Link>
                   {selected.excerpt && <p>{selected.excerpt}</p>}
-                  <div className="project-lead__footer"><span>Read the case study</span><span aria-hidden="true">Scroll to explore</span></div>
+                  <div className="project-lead__footer"><span>Read the article</span><span aria-hidden="true">Scroll to explore</span></div>
                 </div>
               </div>
 
               <div className="project-thumbnails-wrap">
                 <div className="project-thumbnails__controls">
-                  <span>Browse the field</span>
+                  <span>Browse the insights</span>
                   <div>
-                    <button type="button" onClick={() => moveSelection(-1)} aria-label="Previous selected work">←</button>
-                    <button type="button" onClick={() => moveSelection(1)} aria-label="Next selected work">→</button>
+                    <button type="button" onClick={() => moveSelection(-1)} aria-label="Previous blog post">←</button>
+                    <button type="button" onClick={() => moveSelection(1)} aria-label="Next blog post">→</button>
                   </div>
                 </div>
-                <div className="project-thumbnails" role="tablist" aria-label="Selected work">
+                <div className="project-thumbnails" role="tablist" aria-label="Blog posts">
                   {projects.map((project, index) => (
                     <button
                       key={project.id}
@@ -151,7 +151,7 @@ export default function ProjectsRail() {
               </div>
             </>
           ) : (
-            <div className="project-rail__empty">No selected work available yet.</div>
+            <div className="project-rail__empty">No blog posts available yet.</div>
           )}
         </div>
       </div>
