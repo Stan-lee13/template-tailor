@@ -1959,3 +1959,48 @@ img {
   border: 1px solid rgba(17, 19, 24, 0.08);
   box-shadow: 0 0.35rem 0.8rem rgba(17, 19, 24, 0.06);
 }
+
+
+/* Desktop Services rail: one focused card per viewport, matching mobile browsing logic. */
+@media (min-width: 641px) {
+  #services .service-scroll-track {
+    width: 100%;
+    gap: 0;
+  }
+
+  #services .service-scroll-card {
+    flex-basis: 100%;
+    width: 100%;
+    min-width: 100%;
+    min-height: clamp(28rem, 54vh, 39rem);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border: 1px solid rgba(243, 235, 221, 0.16);
+    border-radius: 1.15rem;
+    background: #151619 !important;
+  }
+
+  #services .service-scroll-card:nth-child(2n),
+  #services .service-scroll-card:nth-child(3n) {
+    background: #151619 !important;
+  }
+
+  #services .service-scroll-card.is-active {
+    color: var(--rf-milk);
+    background: #211715 !important;
+    border-color: var(--rf-ochre);
+  }
+
+  #services .service-scroll-card__copy h3 {
+    max-width: 42rem;
+    font-size: clamp(2.4rem, 5vw, 5.5rem);
+  }
+
+  #services .service-scroll-card__copy p {
+    max-width: 38rem;
+    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+  }
+
+  #services .service-scroll-card__items {
+    max-width: 42rem;
+  }
+}
