@@ -2274,3 +2274,50 @@ img {
     scroll-snap-align: start;
   }
 }
+
+
+/* ===== Desktop Services: cards live directly on the section surface ===== */
+@media (min-width: 1024px) {
+  #services {
+    color: var(--rf-milk);
+    background: var(--rf-vanta) !important;
+  }
+
+  #services .services-head .rf-object-eyebrow {
+    color: var(--rf-ochre);
+    border-color: rgba(216, 166, 61, 0.72);
+  }
+
+  #services .services-title {
+    color: var(--rf-milk);
+  }
+
+  #services .services-intro {
+    color: rgba(243, 235, 221, 0.62);
+  }
+
+  #services .service-object {
+    padding: 0;
+    color: var(--rf-milk);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  #services .service-object__bar {
+    padding-right: 0;
+    padding-left: 0;
+    border-bottom-color: rgba(243, 235, 221, 0.18);
+  }
+
+  #services .service-scroll-viewport {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  #services .service-scroll-controls {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
