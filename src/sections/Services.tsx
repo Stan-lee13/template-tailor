@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Activity, ArrowUpRight, BrainCircuit, ChevronLeft, ChevronRight, Gauge, Layers3, Repeat2, type LucideIcon } from 'lucide-react';
 import { useSectionContent } from '../hooks/useSectionContent';
+import SectionCTA from '../components/SectionCTA';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -152,6 +153,7 @@ export default function Services() {
             </div>
           </div>
         </div>
+        <SectionCTA location="services" />
       </div>
     </section>
   );

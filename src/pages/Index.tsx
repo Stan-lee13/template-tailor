@@ -85,14 +85,14 @@ const Index = () => {
         <Hero />
         <SocialProofTicker />
         <ProblemSection />
-        <WhoWeWorkWith />
         <Suspense fallback={<div className="min-h-[50vh] bg-[#050505]" />}>
           <SolutionSection />
-          <Results />
-          <DifferentiationSection />
+          <WhoWeWorkWith />
           <Process />
           <Services />
+          <DifferentiationSection />
           <ProjectsRail />
+          <Results />
           <FAQ />
           <FinalCTA />
         </Suspense>

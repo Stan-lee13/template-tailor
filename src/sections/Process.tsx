@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
 import RetentionStages3D from '../components/RetentionStages3D';
+import SectionCTA from '../components/SectionCTA';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,6 +88,7 @@ export default function Process() {
             </div>
           </div>
         </div>
+        <SectionCTA location="process" />
       </div>
     </section>
   );

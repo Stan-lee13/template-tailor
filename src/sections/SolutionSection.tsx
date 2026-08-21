@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSectionContent } from '../hooks/useSectionContent';
 import solutionVisual from '../assets/solution-editorial.webp';
 import RetentionLoop3D from '../components/RetentionLoop3D';
+import SectionCTA from '../components/SectionCTA';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -80,6 +81,7 @@ export default function SolutionSection() {
             </div>
           </div>
         </div>
+        <SectionCTA location="solution" />
       </div>
     </section>
   );

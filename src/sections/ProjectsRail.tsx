@@ -89,7 +89,7 @@ export default function ProjectsRail() {
   };
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[#050505] px-6 py-20 lg:px-20 lg:py-28">
+    <section ref={ref} id="blog" className="relative overflow-hidden bg-[#050505] px-6 py-20 lg:px-20 lg:py-28">
       <div className="max-w-[1300px] mx-auto">
         <div className="projects-head projects-object__head" style={{ opacity: 0 }}>
           <div>

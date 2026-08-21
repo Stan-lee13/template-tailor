@@ -1676,3 +1676,65 @@ img {
   #services .service-scroll-buttons button:hover:not(:disabled),
   #services .service-scroll-buttons button:focus-visible { color: var(--rf-milk); background: var(--rf-vanta); }
 }
+
+
+/* ===== Structural conversion rails ===== */
+.section-cta-rail {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: clamp(1.75rem, 4vw, 3.5rem);
+  padding-top: clamp(1rem, 2vw, 1.5rem);
+  border-top: 1px solid rgba(17, 19, 24, 0.16);
+}
+
+.section-cta-rail__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--rf-terracotta);
+  border-radius: 999px;
+  color: var(--rf-terracotta);
+  background: transparent;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.section-cta-rail__button:hover {
+  color: var(--rf-milk);
+  background: var(--rf-terracotta);
+  border-color: var(--rf-terracotta);
+  transform: translateY(-2px);
+}
+
+.section-cta-rail__button:focus-visible {
+  outline: 2px solid var(--rf-ochre);
+  outline-offset: 4px;
+}
+
+#solution .section-cta-rail {
+  border-top-color: rgba(243, 235, 221, 0.16);
+}
+
+@media (max-width: 640px) {
+  .section-cta-rail {
+    justify-content: stretch;
+  }
+
+  .section-cta-rail__button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-cta-rail__button {
+    transition: none;
+  }
+}
