@@ -36,16 +36,7 @@ export default function Navigation() {
     setMobileOpen(false);
     if (href.startsWith('/')) { return; }
     e.preventDefault();
-    if (!isHome) {
-      navigate('/', { state: { scrollTo: href } });
-      setTimeout(() => {
-        const el = document.querySelector(href);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-      return;
-    }
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    navigate({ pathname: '/', hash: href });
   };
 
   const onBook = (loc: string) => {

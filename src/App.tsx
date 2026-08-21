@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes, useParams } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigationType, useParams } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -57,11 +57,51 @@ import { initAnalytics } from "./lib/analytics";
 
 const queryClient = new QueryClient();
 
+function RouteScrollRestoration() {
+  const { pathname, hash } = useLocation();
+  const navigationType = useNavigationType();
+
+  useEffect(() => {
+    if (navigationType === 'POP') return;
+
+    if (!hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      return;
+    }
+
+    const id = decodeURIComponent(hash.slice(1));
+    let frame = 0;
+    let retry = 0;
+    let timer = 0;
+
+    const scrollToAnchor = () => {
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ block: 'start', behavior: 'auto' });
+        return;
+      }
+      if (retry < 4) {
+        retry += 1;
+        timer = window.setTimeout(scrollToAnchor, 100);
+      }
+    };
+
+    frame = window.requestAnimationFrame(scrollToAnchor);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
+  }, [pathname, hash, navigationType]);
+
+  return null;
+}
+
 function AppShell() {
   useEffect(() => { initAnalytics(); }, []);
   return (
     <>
       <AnnouncementBar />
+      <RouteScrollRestoration />
       <Routes>
         <Route path="/" element={<Index />} />
         {/* Insights → Blog (permanent redirect, preserves old inbound links) */}
