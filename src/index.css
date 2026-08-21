@@ -1905,6 +1905,8 @@ img {
 
 .rf-secondary-shell main .rf-prose h2,
 .rf-secondary-shell main .rf-prose h3,
+.rf-secondary-shell main .rf-prose strong,
+.rf-secondary-shell main .rf-prose blockquote,
 .rf-secondary-shell main .prose h1,
 .rf-secondary-shell main .prose h2,
 .rf-secondary-shell main .prose h3,
@@ -2003,4 +2005,31 @@ img {
   #services .service-scroll-card__items {
     max-width: 42rem;
   }
+}
+
+
+/* ===== Visibility QA: lift small labels without flattening hierarchy ===== */
+#process .rf-object-eyebrow,
+#services .rf-object-eyebrow,
+#differentiation .rf-object-eyebrow,
+#results .rf-object-eyebrow,
+#faq .rf-object-eyebrow {
+  color: #994b34;
+}
+
+#process .process-object__bar,
+#faq .faq-object__bar,
+#cta .cta-calendly-shell__bar {
+  color: rgba(5, 5, 5, 0.66);
+}
+
+@media (min-width: 641px) {
+  #services .service-object__bar {
+    color: rgba(243, 235, 221, 0.62);
+  }
+}
+
+/* Keep the sticky utility readable while retaining its subordinate role. */
+.sticky-cta-label {
+  color: rgba(255, 255, 255, 0.64);
 }

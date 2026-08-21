@@ -30,7 +30,7 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
         <div className="max-w-4xl mx-auto">
           <div className="mb-20">
             {eyebrow && (
-              <span className="inline-block px-4 py-1.5 rounded-full bg-[#C56A4A]/10 border border-[#C56A4A]/20 text-[#C56A4A] text-xs font-bold uppercase tracking-widest mb-8">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-[#111318]/[0.06] border border-[#111318]/[0.16] text-[#111318]/[0.82] text-xs font-bold uppercase tracking-widest mb-8">
                 {eyebrow}
               </span>
             )}

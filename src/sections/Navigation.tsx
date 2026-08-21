@@ -51,13 +51,13 @@ export default function Navigation() {
         ref={navRef}
         className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           scrolled
-            ? 'top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1100px] rounded-full bg-[#111318]/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-4 px-8'
-            : 'top-0 left-0 right-0 w-full bg-transparent py-8 px-12'
+            ? `top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1100px] rounded-full backdrop-blur-2xl py-4 px-8 ${isHome ? 'bg-[#111318]/80 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]' : 'bg-[#F3EBDD]/92 border border-[#111318]/12 shadow-[0_20px_50px_rgba(17,19,24,0.12)]'}`
+            : `top-0 left-0 right-0 w-full bg-transparent py-8 px-12 ${isHome ? '' : 'border-b border-[#111318]/10'}`
         }`}
       >
         <div className="flex items-center justify-between">
           <Link to="/" className="group flex items-center gap-3" aria-label="RetentionFirm home">
-            <BrandLogo variant="dark" size="sm" className="transition-transform duration-500 group-hover:scale-110" />
+            <BrandLogo variant={isHome ? 'dark' : 'light'} size="sm" className="transition-transform duration-500 group-hover:scale-110" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-10">
@@ -66,7 +66,7 @@ export default function Navigation() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleSectionClick(e, link.href)}
-                className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#F3EBDD] transition-all duration-300 relative group"
+                className={`text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 relative group ${isHome ? 'text-white/50 hover:text-[#F3EBDD]' : 'text-[#111318]/70 hover:text-[#C56A4A]'}`}
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
@@ -74,7 +74,7 @@ export default function Navigation() {
             ))}
             <Link
               to="/blog"
-              className="text-xs font-black uppercase tracking-[0.2em] text-white/50 hover:text-[#F3EBDD] transition-all duration-300 relative group"
+              className={`text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 relative group ${isHome ? 'text-white/50 hover:text-[#F3EBDD]' : 'text-[#111318]/70 hover:text-[#C56A4A]'}`}
             >
               Blog
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#C56A4A] transition-all duration-300 group-hover:w-full" />
@@ -86,16 +86,16 @@ export default function Navigation() {
               onClick={() => onBook('nav')}
               className={`hidden sm:flex items-center justify-center font-black text-[10px] uppercase tracking-widest transition-all duration-500 rounded-full ${
                 scrolled
-                ? 'bg-[#F3EBDD] text-black px-6 py-3 hover:bg-[#E8DCC6] hover:shadow-[0_0_20px_rgba(243,235,221,0.28)]'
-                : 'bg-[#F3EBDD]/15 text-[#F3EBDD] px-8 py-4 hover:bg-[#F3EBDD] hover:text-black'
+                ? `${isHome ? 'bg-[#F3EBDD] text-black hover:bg-[#E8DCC6] hover:shadow-[0_0_20px_rgba(243,235,221,0.28)]' : 'bg-[#111318] text-[#F3EBDD] hover:bg-[#C56A4A]'} px-6 py-3`
+                : `${isHome ? 'bg-[#F3EBDD]/15 text-[#F3EBDD] hover:bg-[#F3EBDD] hover:text-black' : 'bg-[#111318] text-[#F3EBDD] hover:bg-[#C56A4A]'} px-8 py-4`
               }`}
             >
               Book Audit
             </button>
 
             <button className="lg:hidden flex flex-col gap-1.5 p-2 group" onClick={() => setMobileOpen(true)} aria-label="Open menu">
-              <span className="block w-6 h-0.5 bg-white transition-all duration-300 group-hover:w-4" />
-              <span className="block w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-6" />
+              <span className={`block w-6 h-0.5 transition-all duration-300 group-hover:w-4 ${isHome ? 'bg-white' : 'bg-[#111318]'}`} />
+              <span className={`block w-4 h-0.5 transition-all duration-300 group-hover:w-6 ${isHome ? 'bg-white' : 'bg-[#111318]'}`} />
             </button>
           </div>
         </div>
