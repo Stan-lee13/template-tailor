@@ -152,8 +152,8 @@ export default function Services() {
               <button type="button" aria-label="Next service" disabled={activeIdx === services.length - 1} onClick={() => scrollToCard(activeIdx + 1)}><ChevronRight size={17} /></button>
             </div>
           </div>
+          <SectionCTA location="services" variant="services" />
         </div>
-        <SectionCTA location="services" />
       </div>
     </section>
   );

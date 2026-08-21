@@ -88,7 +88,7 @@ export default function Process() {
             </div>
           </div>
         </div>
-        <SectionCTA location="process" />
+        <SectionCTA location="process" variant="process" />
       </div>
     </section>
   );

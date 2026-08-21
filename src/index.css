@@ -1738,3 +1738,89 @@ img {
     transition: none;
   }
 }
+
+
+/* Section-specific CTA placement: each action follows its own content ending. */
+.section-cta-rail--solution {
+  justify-content: flex-start;
+  margin-top: 1.75rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.section-cta-rail--solution .section-cta-rail__button {
+  min-height: 3rem;
+  padding: 0.9rem 1.25rem;
+  color: var(--rf-vanta);
+  background: var(--rf-terracotta);
+  border-color: var(--rf-terracotta);
+  box-shadow: 0 0.8rem 1.8rem rgba(197, 106, 74, 0.18);
+}
+
+.section-cta-rail--solution .section-cta-rail__button:hover,
+.section-cta-rail--solution .section-cta-rail__button:focus-visible {
+  color: var(--rf-vanta);
+  background: var(--rf-ochre);
+  border-color: var(--rf-ochre);
+}
+
+.section-cta-rail--process {
+  justify-content: flex-start;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.25rem;
+  border-top-color: rgba(17, 19, 24, 0.18);
+}
+
+.section-cta-rail--process .section-cta-rail__button {
+  padding-left: 0;
+  padding-right: 0;
+  border-width: 0 0 1px;
+  border-radius: 0;
+  color: var(--rf-terracotta);
+}
+
+.section-cta-rail--process .section-cta-rail__button:hover,
+.section-cta-rail--process .section-cta-rail__button:focus-visible {
+  color: var(--rf-vanta);
+  background: transparent;
+  border-color: var(--rf-ochre);
+}
+
+.section-cta-rail--services {
+  justify-content: flex-end;
+  margin-top: 0;
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
+  border-top-color: rgba(243, 235, 221, 0.18);
+}
+
+.section-cta-rail--services .section-cta-rail__button {
+  color: var(--rf-vanta);
+  background: var(--rf-milk);
+  border-color: var(--rf-milk);
+}
+
+.section-cta-rail--services .section-cta-rail__button:hover,
+.section-cta-rail--services .section-cta-rail__button:focus-visible {
+  color: var(--rf-vanta);
+  background: var(--rf-ochre);
+  border-color: var(--rf-ochre);
+}
+
+@media (max-width: 640px) {
+  .section-cta-rail--process {
+    justify-content: flex-start;
+  }
+
+  .section-cta-rail--process .section-cta-rail__button {
+    width: auto;
+  }
+
+  .section-cta-rail--services {
+    justify-content: flex-start;
+  }
+
+  .section-cta-rail--services .section-cta-rail__button {
+    width: auto;
+  }
+}

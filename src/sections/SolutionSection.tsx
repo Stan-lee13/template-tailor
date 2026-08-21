@@ -78,10 +78,10 @@ export default function SolutionSection() {
               <div className="solution-metric">
                 <p>We care about the numbers that actually grow businesses: <span>Repeat Purchase Rate, LTV, and Churn Reduction.</span></p>
               </div>
+              <SectionCTA location="solution" variant="solution" />
             </div>
           </div>
         </div>
-        <SectionCTA location="solution" />
       </div>
     </section>
   );

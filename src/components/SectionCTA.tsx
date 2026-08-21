@@ -5,9 +5,10 @@ import { track } from '../lib/analytics';
 type SectionCTAProps = {
   location: string;
   label?: string;
+  variant?: 'solution' | 'process' | 'services';
 };
 
-export default function SectionCTA({ location, label = 'Book an Intro Call' }: SectionCTAProps) {
+export default function SectionCTA({ location, label = 'Book an Intro Call', variant = 'process' }: SectionCTAProps) {
   const { open } = useBooking();
 
   const handleClick = () => {
@@ -16,7 +17,7 @@ export default function SectionCTA({ location, label = 'Book an Intro Call' }: S
   };
 
   return (
-    <div className="section-cta-rail">
+    <div className={`section-cta-rail section-cta-rail--${variant}`}>
       <button type="button" className="section-cta-rail__button" onClick={handleClick}>
         <span>{label}</span>
         <ArrowUpRight aria-hidden="true" size={18} strokeWidth={2.5} />
