@@ -45,7 +45,7 @@ export default function LeftPanel(props: {
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className={`flex flex-col items-center gap-2 py-4 text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${tab === t.id ? 'text-[#00D4FF] bg-[#00D4FF]/5' : 'text-white/20 hover:text-white/60'}`}
+            className={`flex flex-col items-center gap-2 py-4 text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${tab === t.id ? 'text-[#C56A4A] bg-[#C56A4A]/5' : 'text-white/20 hover:text-white/60'}`}
           >
             <t.icon size={14} strokeWidth={tab === t.id ? 3 : 2} />
             {t.label}
@@ -85,10 +85,10 @@ function PagesTab({ pages, pageId, setPageId }: { pages: Page[]; pageId: string 
         <li key={p.id}>
           <button
             onClick={() => setPageId(p.id)}
-            className={`w-full text-left px-5 py-4 rounded-2xl transition-all duration-300 group ${pageId === p.id ? 'bg-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.2)]' : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:bg-white/5'}`}
+            className={`w-full text-left px-5 py-4 rounded-2xl transition-all duration-300 group ${pageId === p.id ? 'bg-[#C56A4A] text-black shadow-[0_0_20px_rgba(197,106,74,0.2)]' : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:bg-white/5'}`}
           >
             <div className="text-xs font-black uppercase tracking-tight truncate">{p.title || p.path}</div>
-            <div className={`text-[9px] font-black uppercase tracking-widest mt-1 truncate ${pageId === p.id ? 'text-black/40' : 'text-white/10 group-hover:text-[#00D4FF]'}`}>{p.path}</div>
+            <div className={`text-[9px] font-black uppercase tracking-widest mt-1 truncate ${pageId === p.id ? 'text-black/40' : 'text-white/10 group-hover:text-[#C56A4A]'}`}>{p.path}</div>
           </button>
         </li>
       ))}
@@ -151,7 +151,7 @@ function SortableRow({ s, selected, canEdit, onSelect, onToggle, onDuplicate, on
   const def = getSection(s.type);
   return (
     <li ref={setNodeRef} style={style} className="group" onClick={onSelect}>
-      <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${selected ? 'bg-[#00D4FF] border-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.2)]' : 'bg-white/[0.02] border-white/5 text-white/40 hover:bg-white/5 hover:text-white'}`}>
+      <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${selected ? 'bg-[#C56A4A] border-[#C56A4A] text-black shadow-[0_0_20px_rgba(197,106,74,0.2)]' : 'bg-white/[0.02] border-white/5 text-white/40 hover:bg-white/5 hover:text-white'}`}>
         {canEdit && <button {...attributes} {...listeners} className="cursor-grab p-1 text-inherit opacity-20 hover:opacity-100" onClick={(e) => e.stopPropagation()}><GripVertical size={14} /></button>}
         <div className="flex-1 min-w-0">
           <p className={`text-xs font-black uppercase tracking-tight truncate ${!s.enabled && 'opacity-30'}`}>{def?.label || s.section_key}</p>
@@ -189,13 +189,13 @@ function ComponentsTab({ onAdd, canEdit }: { onAdd: (type: string, content?: Rec
             <button
               key={def.key}
               onClick={() => onAdd(def.type)}
-              className="group text-left p-5 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all duration-300"
+              className="group text-left p-5 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#C56A4A]/30 hover:bg-[#C56A4A]/5 transition-all duration-300"
             >
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-6 h-6 rounded-lg bg-[#00D4FF]/10 flex items-center justify-center text-[#00D4FF] group-hover:bg-[#00D4FF] group-hover:text-black transition-all">
+                <div className="w-6 h-6 rounded-lg bg-[#C56A4A]/10 flex items-center justify-center text-[#C56A4A] group-hover:bg-[#C56A4A] group-hover:text-black transition-all">
                   <Plus size={14} strokeWidth={3} />
                 </div>
-                <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#00D4FF] transition-colors">{def.label}</span>
+                <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#C56A4A] transition-colors">{def.label}</span>
               </div>
               <p className="text-[10px] font-medium leading-relaxed text-white/20 line-clamp-2">{def.description}</p>
             </button>
@@ -213,9 +213,9 @@ function ComponentsTab({ onAdd, canEdit }: { onAdd: (type: string, content?: Rec
               <button
                 key={t.id}
                 onClick={() => onAdd(t.type, t.content)}
-                className="group text-left p-5 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all duration-300"
+                className="group text-left p-5 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#C56A4A]/30 hover:bg-[#C56A4A]/5 transition-all duration-300"
               >
-                <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#00D4FF] transition-colors">{t.name}</span>
+                <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#C56A4A] transition-colors">{t.name}</span>
                 <p className="text-[9px] font-black uppercase tracking-widest text-white/10 mt-1">{getSection(t.type)?.label || t.type}</p>
               </button>
             ))}
@@ -274,11 +274,11 @@ function MediaTab() {
       <div className="px-4 mb-6">
         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Asset Cluster</span>
       </div>
-      <label className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest cursor-pointer mb-8 hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">
+      <label className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest cursor-pointer mb-8 hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]">
         <Upload size={14} strokeWidth={3} /> {uploading ? 'Uploading...' : 'Inject Asset'}
         <input type="file" accept="image/*,video/*" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
       </label>
-      
+
       {loading ? (
         <div className="flex items-center justify-center py-12 text-[10px] font-black uppercase tracking-widest text-white/10 animate-pulse">Syncing assets...</div>
       ) : assets.length === 0 ? (
@@ -289,7 +289,7 @@ function MediaTab() {
             <button
               key={a.id}
               onClick={() => a.url && copyUrl(a.url)}
-              className="aspect-square rounded-2xl border border-white/5 overflow-hidden relative group bg-white/[0.02] hover:border-[#00D4FF]/30 transition-all duration-500"
+              className="aspect-square rounded-2xl border border-white/5 overflow-hidden relative group bg-white/[0.02] hover:border-[#C56A4A]/30 transition-all duration-500"
               title={`Copy Protocol URL: ${a.filename}`}
             >
               {a.url && a.mime?.startsWith('image/') ? (
@@ -300,7 +300,7 @@ function MediaTab() {
                 </div>
               )}
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-[8px] font-black uppercase tracking-widest text-[#00D4FF]">Copy URL</span>
+                <span className="text-[8px] font-black uppercase tracking-widest text-[#C56A4A]">Copy URL</span>
               </div>
             </button>
           ))}

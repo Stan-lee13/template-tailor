@@ -42,11 +42,11 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen flex bg-black selection:bg-[#00D4FF] selection:text-black text-white">
+    <div className="min-h-screen flex bg-black selection:bg-[#C56A4A] selection:text-black text-white">
       {/* Mobile top bar */}
       <header className="lg:hidden fixed top-0 inset-x-0 z-40 flex items-center justify-between px-6 h-16 border-b border-white/5 bg-black/80 backdrop-blur-xl">
         <Link to="/studio" className="text-lg font-black tracking-tighter text-white">
-          RF<span className="text-[#00D4FF]">.</span>STUDIO
+          RF<span className="text-[#C56A4A]">.</span>STUDIO
         </Link>
         <button onClick={() => setOpen(true)} aria-label="Menu" className="p-2 rounded-full bg-white/5">
           {renderIcon('Menu', false)}
@@ -58,13 +58,13 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
         <div className={`${open ? 'flex' : 'hidden lg:flex'} flex-col h-screen w-72 sticky top-0 bg-black border-r border-white/5`}>
           <div className="flex items-center justify-between px-8 py-8">
             <Link to="/studio" className="text-xl font-black tracking-tighter text-white" onClick={() => setOpen(false)}>
-              RETENTION<span className="text-[#00D4FF]">.</span>STUDIO
+              RETENTION<span className="text-[#C56A4A]">.</span>STUDIO
             </Link>
             <button className="lg:hidden p-2 rounded-full bg-white/5" onClick={() => setOpen(false)} aria-label="Close">
               {renderIcon('X', false)}
             </button>
           </div>
-          
+
           <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
             <div className="px-4 mb-4">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Navigation</span>
@@ -75,7 +75,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                 to={i.to}
                 end={i.end}
                 onClick={() => setOpen(false)}
-                className={({ isActive }) => `flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-black tracking-tight transition-all duration-300 ${isActive ? 'bg-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.2)]' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                className={({ isActive }) => `flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-black tracking-tight transition-all duration-300 ${isActive ? 'bg-[#C56A4A] text-black shadow-[0_0_20px_rgba(197,106,74,0.2)]' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
               >
                 {({ isActive }) => (
                   <>
@@ -91,7 +91,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
             <div className="px-2 mb-6">
               <p className="text-xs font-black text-white/60 truncate">{user?.email || 'Not signed in'}</p>
               <div className="flex items-center gap-2 mt-2">
-                <div className={`w-1.5 h-1.5 rounded-full ${isAdmin ? 'bg-[#00D4FF]' : 'bg-emerald-500'}`} />
+                <div className={`w-1.5 h-1.5 rounded-full ${isAdmin ? 'bg-[#C56A4A]' : 'bg-emerald-500'}`} />
                 <span className="text-[10px] font-black uppercase tracking-widest text-white/30">{isAdmin ? 'Admin Access' : 'Editor Access'}</span>
               </div>
             </div>

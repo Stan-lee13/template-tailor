@@ -81,12 +81,12 @@ const Index = () => {
       <ScrollProgress />
       <StickyCTA />
       <Navigation />
-      <main className="bg-[#0a0f1a]">
+      <main className="bg-[#050505]">
         <Hero />
         <SocialProofTicker />
         <ProblemSection />
         <WhoWeWorkWith />
-        <Suspense fallback={<div className="min-h-[50vh] bg-[#0a0f1a]" />}>
+        <Suspense fallback={<div className="min-h-[50vh] bg-[#050505]" />}>
           <SolutionSection />
           <Results />
           <DifferentiationSection />

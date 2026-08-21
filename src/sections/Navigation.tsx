@@ -60,7 +60,7 @@ export default function Navigation() {
         ref={navRef}
         className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           scrolled
-            ? 'top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1100px] rounded-full bg-[#080c14]/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-4 px-8'
+            ? 'top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1100px] rounded-full bg-[#111318]/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-4 px-8'
             : 'top-0 left-0 right-0 w-full bg-transparent py-8 px-12'
         }`}
       >
@@ -94,14 +94,14 @@ export default function Navigation() {
             <button
               onClick={() => onBook('nav')}
               className={`hidden sm:flex items-center justify-center font-black text-[10px] uppercase tracking-widest transition-all duration-500 rounded-full ${
-                scrolled 
+                scrolled
                 ? 'bg-[#F3EBDD] text-black px-6 py-3 hover:bg-[#E8DCC6] hover:shadow-[0_0_20px_rgba(243,235,221,0.28)]'
                 : 'bg-[#F3EBDD]/15 text-[#F3EBDD] px-8 py-4 hover:bg-[#F3EBDD] hover:text-black'
               }`}
             >
               Book Audit
             </button>
-            
+
             <button className="lg:hidden flex flex-col gap-1.5 p-2 group" onClick={() => setMobileOpen(true)} aria-label="Open menu">
               <span className="block w-6 h-0.5 bg-white transition-all duration-300 group-hover:w-4" />
               <span className="block w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-6" />
@@ -119,7 +119,7 @@ export default function Navigation() {
               <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
-          
+
           <div className="flex flex-col items-center gap-8">
             {sectionLinks.map((link) => (
               <a key={link.label} href={link.href} onClick={(e) => handleSectionClick(e, link.href)} className="text-4xl sm:text-6xl font-black text-white hover:text-[#D8A63D] transition-all duration-500 tracking-tighter">

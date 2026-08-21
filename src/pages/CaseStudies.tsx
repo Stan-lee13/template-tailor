@@ -10,13 +10,13 @@ export default function CaseStudies() {
       intro="Our case study library is a repository of successful deployments. Below is a detailed anonymized protocol of our work. Full named case studies are currently clearing partner security protocols for release."
     >
       <div className="space-y-24 mt-20">
-        <section className="group relative p-10 lg:p-20 rounded-[3rem] bg-white/[0.03] border border-white/10 hover:border-[#00D4FF]/30 transition-all duration-700 overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#00D4FF]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-[#00D4FF]/10 transition-colors duration-700" />
-          
+        <section className="group relative p-10 lg:p-20 rounded-[3rem] bg-white/[0.03] border border-white/10 hover:border-[#C56A4A]/30 transition-all duration-700 overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#C56A4A]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-[#C56A4A]/10 transition-colors duration-700" />
+
           <div className="relative z-10">
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-8">Case Protocol 001</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C56A4A] mb-8">Case Protocol 001</p>
             <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tighter mb-12 leading-none">DTC Apparel Brand <span className="text-white/20">— Anonymized</span></h2>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="space-y-4">
                 <h3 className="text-xs font-black uppercase tracking-widest text-white">Situation</h3>
@@ -28,7 +28,7 @@ export default function CaseStudies() {
               </div>
               <div className="space-y-4">
                 <h3 className="text-xs font-black uppercase tracking-widest text-white">The Impact</h3>
-                <p className="text-sm font-medium leading-relaxed text-[#00D4FF]">Retention contribution reached 30% within 90 days. Meaningful lift in second-purchase velocity and reduced reliance on paid acquisition channels.</p>
+                <p className="text-sm font-medium leading-relaxed text-[#C56A4A]">Retention contribution reached 30% within 90 days. Meaningful lift in second-purchase velocity and reduced reliance on paid acquisition channels.</p>
               </div>
             </div>
           </div>
@@ -39,7 +39,7 @@ export default function CaseStudies() {
           <p className="text-sm font-medium text-white/20 max-w-xl mx-auto leading-relaxed mb-12">
             We are currently processing multiple partner deployments for public release. If you are an existing partner and wish to be featured, initiate contact.
           </p>
-          <a href="/contact" className="text-xs font-black uppercase tracking-widest text-[#00D4FF] hover:text-white transition-colors duration-300">
+          <a href="/contact" className="text-xs font-black uppercase tracking-widest text-[#C56A4A] hover:text-white transition-colors duration-300">
             Inquire for Feature →
           </a>
         </section>

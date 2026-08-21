@@ -145,24 +145,24 @@ export default function SiteEditor() {
     <StudioLayout>
       <div className="flex items-center justify-between mb-12 gap-6 flex-wrap">
         <div>
-          <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Structure <span className="text-gradient-cyan">Editor</span></h1>
+          <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Structure <span className="text-gradient-warm">Editor</span></h1>
           <p className="text-white/40 font-medium">Architect your retention flows with precision.</p>
         </div>
         <div className="flex items-center gap-4">
-          <select 
-            value={pageId || ''} 
-            onChange={(e) => setPageId(e.target.value)} 
-            className="px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#00D4FF]/50 transition-all cursor-pointer"
+          <select
+            value={pageId || ''}
+            onChange={(e) => setPageId(e.target.value)}
+            className="px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest focus:outline-none focus:border-[#C56A4A]/50 transition-all cursor-pointer"
           >
             {pages.map((p) => <option key={p.id} value={p.id} className="bg-black">{p.title || p.path}</option>)}
           </select>
           <div className="flex p-1 rounded-2xl bg-white/5 border border-white/5">
             {(['desktop', 'tablet', 'mobile'] as const).map((d) => (
-              <button 
-                key={d} 
-                onClick={() => setDevice(d)} 
+              <button
+                key={d}
+                onClick={() => setDevice(d)}
                 className="w-10 h-8 flex items-center justify-center rounded-xl transition-all duration-300"
-                style={{ background: device === d ? '#00D4FF' : 'transparent', color: device === d ? '#000000' : 'rgba(255,255,255,0.4)' }}
+                style={{ background: device === d ? '#C56A4A' : 'transparent', color: device === d ? '#000000' : 'rgba(255,255,255,0.4)' }}
               >
                 {d === 'desktop' ? <Monitor size={14} /> : d === 'tablet' ? <Tablet size={14} /> : <Smartphone size={14} />}
               </button>
@@ -177,9 +177,9 @@ export default function SiteEditor() {
         <aside className="rounded-[2.5rem] p-6 max-h-[80vh] overflow-y-auto bg-black border border-white/10 scrollbar-hide">
           <div className="flex items-center justify-between mb-8">
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Flow Architect</span>
-            <button 
-              onClick={() => setPickerOpen(true)} 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.1)]"
+            <button
+              onClick={() => setPickerOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.1)]"
             >
               <Plus size={12} strokeWidth={3} /> Inject
             </button>
@@ -211,17 +211,17 @@ export default function SiteEditor() {
             <div className="space-y-8">
               <div className="flex items-center justify-between pb-8 border-b border-white/5">
                 <div>
-                  <div className="px-2 py-0.5 rounded bg-[#00D4FF]/10 text-[#00D4FF] text-[8px] font-black uppercase tracking-[0.2em] mb-2 inline-block">
+                  <div className="px-2 py-0.5 rounded bg-[#C56A4A]/10 text-[#C56A4A] text-[8px] font-black uppercase tracking-[0.2em] mb-2 inline-block">
                     {selected.type}
                   </div>
                   <h3 className="text-xl font-black text-white tracking-tight">{getSection(selected.type)?.label || selected.section_key}</h3>
                 </div>
                 <div className="flex items-center gap-2">
                   <button onClick={() => setHistoryOpen(true)} title="Timeline" className="p-3 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-all"><History size={14} /></button>
-                  <button 
-                    onClick={commitSelected} 
-                    disabled={saving} 
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#00D4FF] text-black disabled:opacity-50 hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.1)]"
+                  <button
+                    onClick={commitSelected}
+                    disabled={saving}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#C56A4A] text-black disabled:opacity-50 hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.1)]"
                   >
                     <Save size={12} strokeWidth={3} /> {saving ? '...' : 'Deploy'}
                   </button>
@@ -237,7 +237,7 @@ export default function SiteEditor() {
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center">
               <div className="w-16 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center mb-6">
-                <Layout size={24} className="text-[#00D4FF]" />
+                <Layout size={24} className="text-[#C56A4A]" />
               </div>
               <h3 className="text-lg font-black text-white tracking-tight mb-2">Module Standby</h3>
               <p className="text-xs font-medium text-white/30 leading-relaxed">Select a module from the architect to begin structural configuration.</p>
@@ -257,7 +257,7 @@ function SortableRow({ s, selected, onSelect, onToggle, onDuplicate, onRemove, o
   const def = getSection(s.type);
   return (
     <li ref={setNodeRef} style={style} className="group" onClick={onSelect}>
-      <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${selected ? 'bg-[#00D4FF] border-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.2)]' : 'bg-white/[0.02] border-white/5 text-white/40 hover:bg-white/5 hover:text-white'}`}>
+      <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${selected ? 'bg-[#C56A4A] border-[#C56A4A] text-black shadow-[0_0_20px_rgba(197,106,74,0.2)]' : 'bg-white/[0.02] border-white/5 text-white/40 hover:bg-white/5 hover:text-white'}`}>
         <button {...attributes} {...listeners} className="cursor-grab p-1 text-inherit opacity-20 hover:opacity-100" onClick={(e) => e.stopPropagation()}><GripVertical size={14} /></button>
         <div className="flex-1 min-w-0">
           <p className={`text-xs font-black uppercase tracking-tight truncate ${!s.enabled && 'opacity-30'}`}>{def?.label || s.section_key}</p>
@@ -285,8 +285,8 @@ function SectionPicker({ onPick, onClose }: { onPick: (type: string, override?: 
             <h3 className="text-xl font-black uppercase tracking-tight text-white">Inject Module</h3>
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mt-1">Select architecture protocol</p>
           </div>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className="w-12 h-12 rounded-2xl flex items-center justify-center text-white/20 hover:text-white hover:bg-white/5 transition-all"
           >
             <X size={24} strokeWidth={3} />
@@ -302,13 +302,13 @@ function SectionPicker({ onPick, onClose }: { onPick: (type: string, override?: 
                 <button
                   key={def.key}
                   onClick={() => onPick(def.type)}
-                  className="group text-left p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all duration-300"
+                  className="group text-left p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#C56A4A]/30 hover:bg-[#C56A4A]/5 transition-all duration-300"
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-[#00D4FF]/10 flex items-center justify-center text-[#00D4FF] group-hover:bg-[#00D4FF] group-hover:text-black transition-all">
+                    <div className="w-6 h-6 rounded-lg bg-[#C56A4A]/10 flex items-center justify-center text-[#C56A4A] group-hover:bg-[#C56A4A] group-hover:text-black transition-all">
                       <Plus size={14} strokeWidth={3} />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#00D4FF] transition-colors">{def.label}</span>
+                    <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#C56A4A] transition-colors">{def.label}</span>
                   </div>
                   <p className="text-[10px] font-medium leading-relaxed text-white/20 line-clamp-2">{def.description}</p>
                 </button>
@@ -326,9 +326,9 @@ function SectionPicker({ onPick, onClose }: { onPick: (type: string, override?: 
                   <button
                     key={t.id}
                     onClick={() => onPick(t.type, t.content)}
-                    className="group text-left p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#00D4FF]/30 hover:bg-[#00D4FF]/5 transition-all duration-300"
+                    className="group text-left p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#C56A4A]/30 hover:bg-[#C56A4A]/5 transition-all duration-300"
                   >
-                    <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#00D4FF] transition-colors">{t.name}</span>
+                    <span className="text-xs font-black uppercase tracking-tight text-white group-hover:text-[#C56A4A] transition-colors">{t.name}</span>
                     <p className="text-[9px] font-black uppercase tracking-widest text-white/10 mt-1">{getSection(t.type)?.label || t.type}</p>
                   </button>
                 ))}
@@ -354,8 +354,8 @@ function RevisionPanel({ sectionId, onRestore, onClose }: { sectionId: string; o
             <h3 className="text-xl font-black uppercase tracking-tight text-white">Version Timeline</h3>
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mt-1">Select node state for restoration</p>
           </div>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className="w-12 h-12 rounded-2xl flex items-center justify-center text-white/20 hover:text-white hover:bg-white/5 transition-all"
           >
             <X size={24} strokeWidth={3} />
@@ -371,12 +371,12 @@ function RevisionPanel({ sectionId, onRestore, onClose }: { sectionId: string; o
             {items.map((r) => (
               <li key={r.id} className="p-8 flex items-center justify-between gap-6 hover:bg-white/[0.02] transition-colors group">
                 <div>
-                  <p className="text-xs font-black text-white group-hover:text-[#00D4FF] transition-colors">{new Date(r.created_at).toLocaleString()}</p>
+                  <p className="text-xs font-black text-white group-hover:text-[#C56A4A] transition-colors">{new Date(r.created_at).toLocaleString()}</p>
                   <p className="text-[9px] font-black uppercase tracking-widest text-white/10 mt-1">{r.label || 'SYSTEM_AUTO_SAVE'}</p>
                 </div>
-                <button 
-                  onClick={() => onRestore(r.snapshot)} 
-                  className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:text-black hover:bg-[#00D4FF] hover:border-[#00D4FF] transition-all duration-500"
+                <button
+                  onClick={() => onRestore(r.snapshot)}
+                  className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:text-black hover:bg-[#C56A4A] hover:border-[#C56A4A] transition-all duration-500"
                 >
                   Restore State
                 </button>

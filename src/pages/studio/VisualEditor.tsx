@@ -190,7 +190,7 @@ export default function VisualEditor() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-black selection:bg-[#00D4FF] selection:text-black">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-black selection:bg-[#C56A4A] selection:text-black">
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
         <title>Visual Engine — RetentionFirm Studio</title>
@@ -203,13 +203,13 @@ export default function VisualEditor() {
             <ArrowLeft size={16} />
           </Link>
           <div className="text-sm font-black tracking-tighter text-white">
-            VISUAL<span className="text-[#00D4FF]">.</span>ENGINE
+            VISUAL<span className="text-[#C56A4A]">.</span>ENGINE
           </div>
           <div className="h-4 w-px bg-white/10 hidden md:block" />
           <select
             value={pageId || ''}
             onChange={(e) => setPageId(e.target.value)}
-            className="hidden md:block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest bg-white/5 text-white border-none focus:ring-1 focus:ring-[#00D4FF]/50 transition-all cursor-pointer"
+            className="hidden md:block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest bg-white/5 text-white border-none focus:ring-1 focus:ring-[#C56A4A]/50 transition-all cursor-pointer"
           >
             {pages.map((p) => <option key={p.id} value={p.id} className="bg-black">{p.title || p.path}</option>)}
           </select>
@@ -223,9 +223,9 @@ export default function VisualEditor() {
                 key={d}
                 onClick={() => setDevice(d)}
                 className="w-10 h-8 flex items-center justify-center rounded-xl transition-all duration-300"
-                style={{ 
-                  background: device === d ? '#00D4FF' : 'transparent', 
-                  color: device === d ? '#000000' : 'rgba(255,255,255,0.4)' 
+                style={{
+                  background: device === d ? '#C56A4A' : 'transparent',
+                  color: device === d ? '#000000' : 'rgba(255,255,255,0.4)'
                 }}
                 title={d}
               >
@@ -248,7 +248,7 @@ export default function VisualEditor() {
 
           {/* Save state */}
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest text-white/40">
-            {saveState === 'saving' && (<><Loader2 size={12} className="animate-spin text-[#00D4FF]" /> Synchronizing</>)}
+            {saveState === 'saving' && (<><Loader2 size={12} className="animate-spin text-[#C56A4A]" /> Synchronizing</>)}
             {saveState === 'saved' && (<><Check size={12} className="text-emerald-500" /> Live</>)}
             {saveState === 'idle' && <span>Auto-Sync Active</span>}
             {saveState === 'error' && <span className="text-rose-500">Sync Error</span>}
@@ -258,7 +258,7 @@ export default function VisualEditor() {
           {canEdit && (
             <button
               onClick={publishNow}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]"
             >
               <Upload size={12} /> Deploy
             </button>
@@ -307,7 +307,7 @@ export default function VisualEditor() {
             <div className="p-8 space-y-8">
               <div className="pb-8 border-b border-white/5">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="px-2 py-0.5 rounded bg-[#00D4FF]/10 text-[#00D4FF] text-[8px] font-black uppercase tracking-[0.2em]">
+                  <div className="px-2 py-0.5 rounded bg-[#C56A4A]/10 text-[#C56A4A] text-[8px] font-black uppercase tracking-[0.2em]">
                     {selected.type}
                   </div>
                 </div>
@@ -316,7 +316,7 @@ export default function VisualEditor() {
                   Real-time engine updates active
                 </p>
               </div>
-              
+
               <div className="inspector-dark-theme">
                 {getSection(selected.type) ? (
                   <SectionInspector
@@ -336,7 +336,7 @@ export default function VisualEditor() {
           ) : (
             <div className="h-full flex flex-col items-center justify-center p-12 text-center">
               <div className="w-16 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center mb-6 animate-pulse">
-                <Sparkles size={24} className="text-[#00D4FF]" />
+                <Sparkles size={24} className="text-[#C56A4A]" />
               </div>
               <h3 className="text-lg font-black text-white tracking-tight mb-2">Engine Standby</h3>
               <p className="text-xs font-medium text-white/30 leading-relaxed">

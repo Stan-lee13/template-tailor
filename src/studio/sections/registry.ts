@@ -103,7 +103,7 @@ export const SECTIONS: Record<string, SectionDef> = {
       benefits: [
         { text: 'Retention Systems, Not Random Marketing', color: '#10B981' },
         { text: 'Built Around Your Customers Journey', color: '#F59E0B' },
-        { text: 'Focused On Business Metrics', color: '#4169E1' },
+        { text: 'Focused On Business Metrics', color: '#D8A63D' },
       ],
       closer_prefix: 'We care about the numbers that actually grow businesses: ',
       closer_highlight: 'Repeat Purchase Rate, LTV, and Churn Reduction.',
@@ -162,7 +162,7 @@ export const SECTIONS: Record<string, SectionDef> = {
       outcomes: [
         { text: 'More repeat purchases', icon: '↑', color: '#10B981' },
         { text: 'Higher customer lifetime value', icon: '◆', color: '#F59E0B' },
-        { text: 'Increased profitability', icon: '●', color: '#00D4FF' },
+        { text: 'Increased profitability', icon: '●', color: '#C56A4A' },
         { text: 'Less dependence on ads', icon: '→', color: '#2C91E1' },
         { text: 'Predictable, scalable growth', icon: '★', color: '#D4A853' },
       ],
@@ -213,7 +213,7 @@ export const SECTIONS: Record<string, SectionDef> = {
       headline: "Building Loyalty Isn't One Campaign. It's A System.",
       image: '/assets/sections/process.jpg',
       steps: [
-        { number: '01', title: 'Growth Audit', description: 'We dig into your data to find exactly where revenue is slipping through the cracks.', deliverables: 'Revenue leak analysis, Customer journey mapping, Competitor benchmarking, 30-day action plan', accent: '#00D4FF' },
+        { number: '01', title: 'Growth Audit', description: 'We dig into your data to find exactly where revenue is slipping through the cracks.', deliverables: 'Revenue leak analysis, Customer journey mapping, Competitor benchmarking, 30-day action plan', accent: '#C56A4A' },
         { number: '02', title: 'System Build', description: 'We architect and deploy your complete retention engine — flows, segments, and automations.', deliverables: 'Email & SMS buildout, Segmentation architecture, Tech stack integration, QA & launch', accent: '#2C91E1' },
         { number: '03', title: 'Optimization', description: 'We test, iterate, and scale what works — turning retention into your most profitable channel.', deliverables: 'A/B testing cadence, Performance reporting, Strategy refinement, Revenue scaling', accent: '#10B981' },
       ],

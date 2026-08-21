@@ -44,14 +44,14 @@ export default function Approvals() {
   return (
     <StudioLayout>
       <div className="mb-12">
-        <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Node <span className="text-gradient-cyan">Permissions</span></h1>
+        <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter mb-4">Node <span className="text-gradient-warm">Permissions</span></h1>
         <p className="text-white/40 font-medium">Grant or revoke cluster access protocols for team entities.</p>
       </div>
 
       <div className="rounded-[2.5rem] overflow-hidden bg-black border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         {loading ? (
           <div className="p-12 flex flex-col items-center gap-4 text-white/20 font-black text-xs uppercase tracking-widest">
-            <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#00D4FF] animate-spin" />
+            <div className="w-6 h-6 rounded-full border-2 border-white/5 border-t-[#C56A4A] animate-spin" />
             Syncing profiles...
           </div>
         ) : profiles.length === 0 ? (
@@ -67,12 +67,12 @@ export default function Approvals() {
               return (
                 <li key={u.id} className="flex flex-col sm:flex-row sm:items-center gap-6 px-8 py-6 hover:bg-white/[0.02] transition-colors group">
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-black text-white uppercase tracking-widest mb-1 group-hover:text-[#00D4FF] transition-colors">{u.display_name || 'IDENT_UNKNOWN'}</p>
+                    <p className="text-sm font-black text-white uppercase tracking-widest mb-1 group-hover:text-[#C56A4A] transition-colors">{u.display_name || 'IDENT_UNKNOWN'}</p>
                     <p className="text-[10px] font-black uppercase tracking-widest text-white/20">{u.email}</p>
                   </div>
                   <div className="flex flex-wrap items-center gap-3">
                     {isAdmin && (
-                      <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl bg-[#00D4FF]/10 text-[#00D4FF] border border-[#00D4FF]/20">
+                      <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl bg-[#C56A4A]/10 text-[#C56A4A] border border-[#C56A4A]/20">
                         Admin Protocol
                         <button onClick={() => revoke(u.id, 'admin')} title="Revoke Admin" className="hover:text-rose-500 transition-colors"><X size={12} strokeWidth={3} /></button>
                       </span>
@@ -88,20 +88,20 @@ export default function Approvals() {
                         Standby Status
                       </span>
                     )}
-                    
+
                     <div className="flex gap-2 ml-4">
                       {!isEditor && !isAdmin && (
-                        <button 
-                          onClick={() => grant(u.id, 'editor')} 
+                        <button
+                          onClick={() => grant(u.id, 'editor')}
                           className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300"
                         >
                           Elevate to Editor
                         </button>
                       )}
                       {!isAdmin && (
-                        <button 
-                          onClick={() => grant(u.id, 'admin')} 
-                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:bg-[#00D4FF] hover:text-black hover:border-[#00D4FF] transition-all duration-300"
+                        <button
+                          onClick={() => grant(u.id, 'admin')}
+                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:bg-[#C56A4A] hover:text-black hover:border-[#C56A4A] transition-all duration-300"
                         >
                           Elevate to Admin
                         </button>

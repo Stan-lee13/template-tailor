@@ -241,14 +241,14 @@ export default function PostEditor() {
           <Link to="/studio/posts" className="p-3 rounded-2xl bg-white/5 text-white/40 hover:text-white transition-all">
             <ArrowLeft size={16} />
           </Link>
-          <h1 className="text-2xl font-black text-white tracking-tight">Content <span className="text-[#00D4FF]">Architect</span></h1>
+          <h1 className="text-2xl font-black text-white tracking-tight">Content <span className="text-[#C56A4A]">Architect</span></h1>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <button 
-            onClick={() => ai.openPanel()} 
+          <button
+            onClick={() => ai.openPanel()}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all"
           >
-            <Sparkles size={12} className="text-[#00D4FF]" /> AI Assistant
+            <Sparkles size={12} className="text-[#C56A4A]" /> AI Assistant
           </button>
 
           {p.status === 'published' && p.slug && (
@@ -256,9 +256,9 @@ export default function PostEditor() {
               Live Preview <ExternalLink size={12} />
             </a>
           )}
-          <button 
-            onClick={() => save()} 
-            disabled={saving} 
+          <button
+            onClick={() => save()}
+            disabled={saving}
             className="px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all"
           >
             {saving ? '...' : 'Save Pipeline'}
@@ -266,9 +266,9 @@ export default function PostEditor() {
           {p.status === 'published' ? (
             <button onClick={handleUnpublish} className="px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-rose-500/10 text-rose-500 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all">Recall</button>
           ) : (
-            <button 
-              onClick={handlePublish} 
-              className="px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#00D4FF] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+            <button
+              onClick={handlePublish}
+              className="px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]"
             >
               Deploy Live
             </button>
@@ -280,7 +280,7 @@ export default function PostEditor() {
       <div className="flex gap-4 mb-10 p-1.5 rounded-2xl bg-white/5 border border-white/5 w-fit">
         {(['content', 'seo', 'settings'] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)}
-            className={`px-6 py-2 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-300 ${tab === t ? 'bg-[#00D4FF] text-black' : 'text-white/30 hover:text-white'}`}
+            className={`px-6 py-2 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-300 ${tab === t ? 'bg-[#C56A4A] text-black' : 'text-white/30 hover:text-white'}`}
           >
             {t}
           </button>
@@ -289,25 +289,25 @@ export default function PostEditor() {
 
       {tab === 'content' && (
         <div className="space-y-8 max-w-4xl">
-          <input 
-            value={p.title} 
-            onChange={(e) => setP({ ...p, title: e.target.value })} 
+          <input
+            value={p.title}
+            onChange={(e) => setP({ ...p, title: e.target.value })}
             placeholder="System Title"
             className="w-full font-black bg-transparent focus:outline-none text-white tracking-tighter"
-            style={{ fontSize: 'clamp(32px, 5vw, 64px)' }} 
+            style={{ fontSize: 'clamp(32px, 5vw, 64px)' }}
           />
-          <textarea 
-            value={p.excerpt} 
-            onChange={(e) => setP({ ...p, excerpt: e.target.value })} 
+          <textarea
+            value={p.excerpt}
+            onChange={(e) => setP({ ...p, excerpt: e.target.value })}
             placeholder="Core retention summary (1–2 sentences for listing optimization)"
             rows={2}
             className="w-full px-0 font-medium text-xl bg-transparent focus:outline-none resize-none text-white/40 leading-relaxed"
           />
           <div className="pt-8 border-t border-white/5">
-            <TiptapEditor 
-              ref={editorRef} 
-              initialJson={p.content_json} 
-              onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))} 
+            <TiptapEditor
+              ref={editorRef}
+              initialJson={p.content_json}
+              onChange={(json, html) => setP((s) => ({ ...s, content_json: json, content_html: html }))}
             />
           </div>
         </div>
@@ -320,7 +320,7 @@ export default function PostEditor() {
             <ul className="space-y-4">
               {checklist.map((c) => (
                 <li key={c.id} className="flex items-start gap-3">
-                  <span className="mt-0.5">{c.pass ? <Check size={16} className="text-[#00D4FF]" strokeWidth={3} /> : <X size={16} className="text-rose-500" strokeWidth={3} />}</span>
+                  <span className="mt-0.5">{c.pass ? <Check size={16} className="text-[#C56A4A]" strokeWidth={3} /> : <X size={16} className="text-rose-500" strokeWidth={3} />}</span>
                   <span className="text-xs font-black uppercase tracking-widest text-white/40">{c.label} {c.hint && <span className="text-white/10 lowercase tracking-normal font-medium">· {c.hint}</span>}</span>
                 </li>
               ))}
@@ -344,7 +344,7 @@ export default function PostEditor() {
                 </div>
               )}
               <div className="flex flex-wrap items-center gap-4">
-                <button onClick={() => ogRef.current?.click()} className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">
+                <button onClick={() => ogRef.current?.click()} className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]">
                   <Upload size={14} strokeWidth={3} /> {p.og_image_url ? 'Replace' : 'Upload'}
                 </button>
                 {p.og_image_url && (
@@ -384,7 +384,7 @@ export default function PostEditor() {
                 </div>
               )}
               <div className="flex flex-wrap items-center gap-4">
-                <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">
+                <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]">
                   <Upload size={14} strokeWidth={3} /> {p.featured_image_url ? 'Replace' : 'Upload'}
                 </button>
                 {p.featured_image_url && <button onClick={async () => { setP((s) => ({ ...s, featured_image_url: null })); if (p.id) await save({ featured_image_url: null }, true); }} className="text-[10px] font-black uppercase tracking-widest text-rose-500 hover:text-white transition-colors">Remove</button>}
@@ -400,7 +400,7 @@ export default function PostEditor() {
               onChange={(e) => setP({ ...p, scheduled_for: e.target.value ? new Date(e.target.value).toISOString() : null })}
               className={inputCls} />
             {p.scheduled_for && p.status !== 'scheduled' && (
-              <button onClick={handleSchedule} className="mt-4 px-8 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]">Schedule Pipeline</button>
+              <button onClick={handleSchedule} className="mt-4 px-8 py-4 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]">Schedule Pipeline</button>
             )}
           </Field>
         </div>
@@ -418,14 +418,14 @@ export default function PostEditor() {
               <ul className="space-y-4">
                 {checklist.map((c) => (
                   <li key={c.id} className="flex items-start gap-3">
-                    {c.pass ? <Check size={16} className="text-[#00D4FF] mt-0.5" strokeWidth={3} /> : <X size={16} className="text-rose-500 mt-0.5" strokeWidth={3} />}
+                    {c.pass ? <Check size={16} className="text-[#C56A4A] mt-0.5" strokeWidth={3} /> : <X size={16} className="text-rose-500 mt-0.5" strokeWidth={3} />}
                     <span className="text-xs font-black uppercase tracking-widest text-white/40">{c.label}{c.hint && <span className="text-white/10 lowercase tracking-normal font-medium"> · {c.hint}</span>}</span>
                   </li>
                 ))}
               </ul>
               <div className="flex gap-4 pt-4">
                 <button onClick={() => setShowChecklist(false)} className="flex-1 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-widest hover:text-white hover:bg-white/10 transition-all">Close</button>
-                <button onClick={() => { setShowChecklist(false); setTab('seo'); }} className="flex-1 px-6 py-4 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500">Fix Protocol</button>
+                <button onClick={() => { setShowChecklist(false); setTab('seo'); }} className="flex-1 px-6 py-4 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500">Fix Protocol</button>
               </div>
             </div>
           </div>
@@ -435,7 +435,7 @@ export default function PostEditor() {
   );
 }
 
-const inputCls = 'w-full px-6 py-4 rounded-2xl bg-white/[0.02] border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#00D4FF]/50 transition-all duration-300 placeholder:text-white/10';
+const inputCls = 'w-full px-6 py-4 rounded-2xl bg-white/[0.02] border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C56A4A]/50 transition-all duration-300 placeholder:text-white/10';
 
 function Field({ label, children }: { label: React.ReactNode; children: React.ReactNode }) {
   return (

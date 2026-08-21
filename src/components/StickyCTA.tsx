@@ -29,13 +29,13 @@ export default function StickyCTA() {
         <span className="text-[10px] font-black uppercase tracking-widest text-white/40 hidden lg:inline">Ready to plug your retention leaks?</span>
         <button
           onClick={() => { track('cta_click', { location: 'sticky' }); open('sticky'); }}
-          className="px-6 py-3 rounded-2xl bg-[#00D4FF] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(0,212,255,0.2)]"
+          className="px-6 py-3 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]"
         >
           Secure Audit
         </button>
-        <button 
-          aria-label="Dismiss" 
-          onClick={() => { sessionStorage.setItem(KEY, '1'); setShow(false); }} 
+        <button
+          aria-label="Dismiss"
+          onClick={() => { sessionStorage.setItem(KEY, '1'); setShow(false); }}
           className="p-2 text-white/20 hover:text-white transition-colors"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>

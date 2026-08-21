@@ -43,7 +43,7 @@ export default function ProblemSection() {
     <section ref={sectionRef} id="problem" className="relative overflow-hidden bg-white pt-12 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-20">
       {/* Dynamic background glow */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#C56A4A]/8 rounded-full blur-[120px] pointer-events-none" />
-      
+
       <div className="max-w-[1300px] mx-auto">
         <div className="problem-frame rounded-[2rem] bg-[#050505] p-4 sm:p-6 lg:p-10 shadow-[0_28px_90px_rgba(0,0,0,0.24)]" style={{ opacity: 1 }}>
           <div className="problem-headline text-center mb-12 lg:mb-16" style={{ opacity: 0 }}>
@@ -82,13 +82,13 @@ export default function ProblemSection() {
                   <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#D8A63D]/20 flex items-center justify-center text-[#9A6B08] group-hover:bg-[#D8A63D] group-hover:text-[#050505] transition-all duration-500">
                     <span className="text-lg font-semibold">{i + 1}</span>
                   </div>
-                  <p className="text-base lg:text-lg font-medium leading-relaxed text-[#1d2f43]/90 group-hover:text-[#0a0f1a] transition-colors">
+                  <p className="text-base lg:text-lg font-medium leading-relaxed text-[#1d2f43]/90 group-hover:text-[#050505] transition-colors">
                     {text}
                   </p>
                 </ThreeDCardItem>
               </ThreeDCard>
             ))}
-            
+
             <div className="mt-8">
               <p className="max-w-xl text-[#D9896C] font-semibold text-base lg:text-lg leading-[1.65] tracking-tight">
                 RetentionFirm exists to help brands build businesses customers return to naturally. Not through guesswork. Through proven retention systems designed around how people actually buy.

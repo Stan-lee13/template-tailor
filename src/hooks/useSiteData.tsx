@@ -19,7 +19,7 @@ export type SiteSettings = {
 
 export const defaultSettings: SiteSettings = {
   brand: { name: 'RetentionFirm', tagline: 'Retention growth partner for ecommerce brands', favicon_url: '/favicon.ico' },
-  theme: { primary: '#00D4FF', background: '#000000', foreground: '#FFFFFF', accent: '#1a2035', success: '#10B981', font_heading: 'Outfit', font_body: 'Inter' },
+  theme: { primary: '#C56A4A', background: '#050505', foreground: '#FFFFFF', accent: '#D8A63D', success: '#D8A63D', font_heading: 'Outfit', font_body: 'Inter' },
   seo: { default_meta_title: 'RetentionFirm — Retention Growth Partner', default_meta_description: 'We help ecommerce brands turn one-time buyers into lifetime revenue.' },
   social: { linkedin: null, twitter: null, instagram: null },
   contact: { email: 'hello@retentionfirm.com' },

@@ -52,7 +52,7 @@ export default function Hero() {
     <section
       id="hero"
       className="hero-section relative w-full overflow-hidden"
-      style={{ minHeight: '100svh', background: '#0a0f1a', touchAction: 'pan-y' }}
+      style={{ minHeight: '100svh', background: '#050505', touchAction: 'pan-y' }}
     >
       <HeroBackground />
 
