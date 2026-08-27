@@ -45,10 +45,6 @@ export default function WhoWeWorkWith() {
             <p className="www-description">
               We partner with customer-based businesses where repeat customers matter.
             </p>
-            <div className="www-active-readout" aria-live="polite">
-              <span className="www-active-index">0{activeIndustry + 1}</span>
-              <span>{industries[activeIndustry]}</span>
-            </div>
           </div>
 
           <div className="industry-object">

@@ -56,7 +56,6 @@ export default function Process() {
         </div>
 
         <div className="process-object">
-          <div className="process-object__bar"><span>RETENTION FIRM / METHOD</span><span>FROM SIGNAL → SYSTEM → SCALE</span></div>
           <div className="process-visual-band">
             <RetentionStages3D stages={steps.map(({ number, title }) => ({ number, title }))} />
           </div>

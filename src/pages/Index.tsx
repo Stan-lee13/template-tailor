@@ -7,7 +7,6 @@ import Navigation from '../sections/Navigation';
 import Hero from '../sections/Hero';
 import ProblemSection from '../sections/ProblemSection';
 import WhoWeWorkWith from '../sections/WhoWeWorkWith';
-import SocialProofTicker from '../components/SocialProofTicker';
 import SectionDivider from '../components/SectionDivider';
 import ScrollProgress from '../components/ScrollProgress';
 import StickyCTA from '../components/StickyCTA';
@@ -83,7 +82,6 @@ const Index = () => {
       <Navigation />
       <main className="bg-[#050505]">
         <Hero />
-        <SocialProofTicker />
         <ProblemSection />
         <Suspense fallback={<div className="min-h-[50vh] bg-[#050505]" />}>
           <SolutionSection />

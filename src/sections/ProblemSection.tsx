@@ -1,20 +1,13 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useSectionContent } from '../hooks/useSectionContent';
 import { ThreeDCard, ThreeDCardItem } from '../components/ui/three-d-card';
 const problemVisual = '/images/problem-retention-journey-1440.webp';
 const problemVisualSrcSet = '/images/problem-retention-journey-640.webp 640w, /images/problem-retention-journey-1024.webp 1024w, /images/problem-retention-journey-1440.webp 1440w';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ProblemContent = {
-  eyebrow: string; headline_1: string; headline_2: string; intro: string;
-  pain_points: { text: string }[]; closer: string;
-};
-
 export default function ProblemSection() {
-  const c = useSectionContent<ProblemContent>('/', 'problem', 'problem');
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,7 +30,7 @@ export default function ProblemSection() {
       });
     }, sectionRef);
     return () => ctx.revert();
-  }, [c.pain_points?.length]);
+  }, []);
 
   return (
     <section ref={sectionRef} id="problem" className="relative overflow-hidden bg-white pt-12 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-20">
@@ -47,9 +40,6 @@ export default function ProblemSection() {
       <div className="max-w-[1300px] mx-auto">
         <div className="problem-frame rounded-[2rem] bg-[#050505] p-4 sm:p-6 lg:p-10 shadow-[0_28px_90px_rgba(0,0,0,0.24)]" style={{ opacity: 1 }}>
           <div className="problem-headline text-center mb-12 lg:mb-16" style={{ opacity: 0 }}>
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#C56A4A]/12 border border-[#C56A4A]/30 text-[#D9896C] text-[10px] font-semibold uppercase tracking-[0.2em] mb-5">
-              {c.eyebrow}
-            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-6xl font-semibold leading-[1.05] text-white mb-4 tracking-[-0.04em]">
               Why RetentionFirm Exists
             </h2>

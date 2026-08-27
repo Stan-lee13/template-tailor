@@ -18,7 +18,6 @@ export default function Hero() {
   const c = useSectionContent<HeroContent>('/', 'hero', 'hero');
   const { open } = useBooking();
   const [rotateStarted, setRotateStarted] = useState(false);
-  const eyebrowRef = useRef<HTMLSpanElement>(null);
   const leftRef = useRef<HTMLSpanElement>(null);
   const rightRef = useRef<HTMLSpanElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
@@ -28,14 +27,13 @@ export default function Hero() {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reduced) {
-      gsap.set([eyebrowRef.current, leftRef.current, rightRef.current, subRef.current, ctaRef.current], { opacity: 1, x: 0, y: 0 });
+      gsap.set([leftRef.current, rightRef.current, subRef.current, ctaRef.current], { opacity: 1, x: 0, y: 0 });
       setRotateStarted(true);
       return;
     }
 
     const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.5 });
-    tl.fromTo(eyebrowRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2 })
-      .fromTo(leftRef.current, { opacity: 0, x: -100, filter: 'blur(10px)' }, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.5 }, '-=0.8')
+    tl.fromTo(leftRef.current, { opacity: 0, x: -100, filter: 'blur(10px)' }, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.5 }, '-=0.8')
       .fromTo(rightRef.current, { opacity: 0, x: 100, filter: 'blur(10px)' }, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.5 }, '<')
       .fromTo(subRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, onComplete: () => setRotateStarted(true) }, '-=1')
       .fromTo(ctaRef.current, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 1.2 }, '-=0.8');
@@ -60,14 +58,6 @@ export default function Hero() {
         className="hero-content relative z-10 flex flex-col items-start justify-center px-6 lg:px-20 text-left"
         style={{ maxWidth: '1200px', margin: '0 auto', minHeight: '100svh' }}
       >
-        <span
-          ref={eyebrowRef}
-          className="inline-block max-w-[310px] sm:max-w-none px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] leading-relaxed mb-8 lg:mb-10"
-          style={{ opacity: 0 }}
-        >
-          We Live and Breathe Loyalty and Retention.
-        </span>
-
         <h1
           className="font-black"
           style={{
