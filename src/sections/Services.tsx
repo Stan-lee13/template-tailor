@@ -94,7 +94,23 @@ export default function Services() {
         </div>
 
         <div className="service-object service-scroll-object" style={{ opacity: 0 }}>
-          <div ref={viewportRef} className="service-scroll-viewport">
+          <div
+            ref={viewportRef}
+            className="service-scroll-viewport"
+            role="region"
+            tabIndex={0}
+            aria-label={`Services carousel, showing service ${activeIdx + 1} of ${services.length}`}
+            onKeyDown={(event) => {
+              if (!viewportRef.current) return;
+              if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                event.preventDefault();
+                viewportRef.current.scrollBy({ left: event.key === 'ArrowRight' ? viewportRef.current.clientWidth * 0.8 : -viewportRef.current.clientWidth * 0.8, behavior: 'auto' });
+              } else if (event.key === 'Home' || event.key === 'End') {
+                event.preventDefault();
+                viewportRef.current.scrollTo({ left: event.key === 'End' ? viewportRef.current.scrollWidth : 0, behavior: 'auto' });
+              }
+            }}
+          >
             <div ref={trackRef} className="service-scroll-track">
               {services.map((service, i) => {
                 const detail = getDetail(service, i);
@@ -120,7 +136,7 @@ export default function Services() {
             </div>
           </div>
           <div className="service-scroll-controls">
-            <div className="service-scroll-progress" aria-label={`Service ${activeIdx + 1} of ${services.length}`}>
+            <div className="service-scroll-progress" role="group" aria-label={`Service ${activeIdx + 1} of ${services.length}`}>
               {services.map((service, i) => <button key={service.number || i} type="button" className={i === activeIdx ? 'is-active' : ''} aria-label={`Go to ${service.title}`} aria-current={i === activeIdx ? 'true' : undefined} onClick={() => scrollToCard(i)} />)}
             </div>
             <div className="service-scroll-buttons">

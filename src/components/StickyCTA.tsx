@@ -13,7 +13,13 @@ export default function StickyCTA() {
     if (sessionStorage.getItem(KEY)) return;
     const onScroll = () => {
       const pct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-      if (pct > 0.4 && pct < 0.92) setShow(true);
+      const contentIsVisible = ['faq', 'cta'].some((id) => {
+        const section = document.getElementById(id);
+        if (!section) return false;
+        const rect = section.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom > 0;
+      });
+      if (pct > 0.4 && pct < 0.92 && !contentIsVisible) setShow(true);
       else setShow(false);
     };
     window.addEventListener('scroll', onScroll, { passive: true });

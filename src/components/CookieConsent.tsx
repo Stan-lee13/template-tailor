@@ -32,7 +32,7 @@ export default function CookieConsent() {
   if (!expanded) {
     return (
       <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 600ms cubic-bezier(.2,.7,.2,1)' }}>
-        <div role="dialog" aria-label="Cookie preferences" aria-live="polite" className="sm:hidden flex items-center justify-between gap-4 rounded-3xl px-6 py-4 bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div role="region" aria-label="Cookie preferences" aria-live="polite" className="sm:hidden flex items-center justify-between gap-4 rounded-3xl px-6 py-4 bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Intelligence Access</span>
           <div className="flex items-center gap-2">
             <button type="button" onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">Accept</button>
@@ -58,7 +58,7 @@ export default function CookieConsent() {
 
   function renderFull() {
     return (
-      <div role="dialog" aria-label="Cookie preferences" aria-live="polite" className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
+      <div role="region" aria-label="Cookie preferences" aria-live="polite" className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
         <h4 className="text-xl font-black text-white tracking-tighter mb-4">Intelligence <span className="text-[#C56A4A]">Access</span></h4>
         <p className="text-sm font-medium leading-relaxed text-white/40 mb-8">
           We use minimal cookies to optimize your retention intelligence experience. Review our{' '}

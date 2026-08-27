@@ -38,7 +38,6 @@ export default function BrandLogo({ variant = 'dark', size = 'md', className = '
     <span
       className={`font-outfit inline-flex items-baseline leading-none select-none ${className}`}
       style={{ fontSize, fontWeight: 600, letterSpacing: '-0.02em' }}
-      aria-label="RetentionFirm"
     >
       <span style={{ color: retentionColor }}>Retent</span>
       {/* i with custom dot */}

@@ -14,7 +14,7 @@ export default function HeroBackground() {
         <img
           src={desktopBg}
           alt=""
-          fetchPriority="high"
+          fetchpriority="high"
           decoding="async"
           className="absolute inset-0 w-full h-full"
           style={{ objectFit: 'cover', objectPosition: 'center' }}

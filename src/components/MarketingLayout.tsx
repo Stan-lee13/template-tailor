@@ -26,7 +26,7 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#D8A63D]/5 rounded-full blur-[120px]" />
       </div>
 
-      <main className="relative pt-32 pb-24 px-6 lg:px-20">
+      <main id="main-content" tabIndex={-1} className="relative pt-32 pb-24 px-6 lg:px-20">
         <div className="max-w-4xl mx-auto">
           <div className="mb-20">
             {eyebrow && (

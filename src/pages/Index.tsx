@@ -80,7 +80,7 @@ const Index = () => {
       <ScrollProgress />
       <StickyCTA />
       <Navigation />
-      <main className="bg-[#050505]">
+      <main id="main-content" tabIndex={-1} className="bg-[#050505]">
         <Hero />
         <ProblemSection />
         <Suspense fallback={<div className="min-h-[50vh] bg-[#050505]" />}>

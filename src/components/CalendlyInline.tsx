@@ -49,5 +49,5 @@ export default function CalendlyInline({ location = 'final_cta_inline' }: Calend
     );
   }
 
-  return <div ref={containerRef} className="calendly-inline__widget" aria-label="Book a RetentionFirm intro call" />;
+  return <div ref={containerRef} className="calendly-inline__widget" role="region" aria-label="Book a RetentionFirm intro call" />;
 }

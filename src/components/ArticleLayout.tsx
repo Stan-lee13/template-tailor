@@ -20,7 +20,7 @@ export default function ArticleLayout({ category, title, publishedAt, readingTim
   return (
     <div className="rf-secondary-shell rf-secondary-shell--article min-h-screen selection:bg-[#C56A4A] selection:text-black">
       <Navigation />
-      <main className="relative pt-40 pb-32 px-6 overflow-hidden">
+      <main id="main-content" tabIndex={-1} className="relative pt-40 pb-32 px-6 overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden opacity-50">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#C56A4A]/10 blur-[120px] rounded-full" />

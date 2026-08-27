@@ -5,6 +5,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 
+type LoginLocationState = { from?: { pathname?: string } };
+
 export default function StudioLogin() {
   const { user, isStaff } = useAuth();
   const location = useLocation();
@@ -14,7 +16,7 @@ export default function StudioLogin() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (user && isStaff) return <Navigate to={(location.state as any)?.from?.pathname || '/studio'} replace />;
+  if (user && isStaff) return <Navigate to={(location.state as LoginLocationState | null)?.from?.pathname || '/studio'} replace />;
   if (user && !isStaff) return <Navigate to="/studio/pending" replace />;
 
   const handle = async (e: FormEvent) => {
@@ -33,15 +35,15 @@ export default function StudioLogin() {
         if (error) throw error;
       }
       navigate('/studio', { replace: true });
-    } catch (err: any) {
-      toast.error(err.message || 'Authentication failed');
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : 'Authentication failed');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-black selection:bg-[#C56A4A] selection:text-black">
+    <main id="main-content" className="min-h-screen flex items-center justify-center px-6 bg-black selection:bg-[#C56A4A] selection:text-black">
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
         <title>Studio Login — RetentionFirm</title>
@@ -68,25 +70,27 @@ export default function StudioLogin() {
         <div className="p-10 lg:p-12 rounded-[3rem] bg-white/5 border border-white/10 backdrop-blur-xl">
           <form onSubmit={handle} className="space-y-8">
             <div className="space-y-2">
-              <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 ml-4">Email Address</label>
+              <label htmlFor="studio-email" className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 ml-4">Email Address</label>
               <input
+                id="studio-email"
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C56A4A]/50 transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:border-[#C56A4A]/50 transition-all duration-300"
                 placeholder="operator@retentionfirm.com"
               />
             </div>
             <div className="space-y-2">
-              <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 ml-4">Password</label>
+              <label htmlFor="studio-password" className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 ml-4">Password</label>
               <input
+                id="studio-password"
                 type="password"
                 required
                 minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C56A4A]/50 transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:border-[#C56A4A]/50 transition-all duration-300"
                 placeholder="••••••••"
               />
             </div>
@@ -108,6 +112,6 @@ export default function StudioLogin() {
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

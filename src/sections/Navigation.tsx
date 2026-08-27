@@ -20,6 +20,7 @@ export default function Navigation() {
   const navRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeMenuRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { open } = useBooking();
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,16 +42,33 @@ export default function Navigation() {
     if (!mobileOpen) return;
     const previousOverflow = document.body.style.overflow;
     const previouslyFocused = document.activeElement as HTMLElement | null;
+    const menuTrigger = menuButtonRef.current;
     document.body.style.overflow = 'hidden';
     closeMenuRef.current?.focus();
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileOpen(false);
+      if (e.key === 'Escape') {
+        setMobileOpen(false);
+        return;
+      }
+      if (e.key !== 'Tab' || !mobileMenuRef.current) return;
+      const focusable = Array.from(mobileMenuRef.current.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+        .filter((element) => !element.hasAttribute('disabled') && element.getAttribute('aria-hidden') !== 'true');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKeyDown);
-      (previouslyFocused || menuButtonRef.current)?.focus();
+      (previouslyFocused || menuTrigger)?.focus();
     };
   }, [mobileOpen]);
 
@@ -69,6 +87,7 @@ export default function Navigation() {
 
   return (
     <>
+      <a href="#main-content" className="rf-skip-link">Skip to main content</a>
       <nav
         ref={navRef}
         className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
@@ -117,7 +136,7 @@ export default function Navigation() {
               className="lg:hidden flex flex-col gap-1.5 p-2 group"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
-              aria-controls="rf-mobile-menu"
+              aria-controls={mobileOpen ? 'rf-mobile-menu' : undefined}
               aria-expanded={mobileOpen}
             >
               <span className={`block w-6 h-0.5 transition-all duration-300 group-hover:w-4 ${isHome ? 'bg-white' : 'bg-[#111318]'}`} />
@@ -129,6 +148,7 @@ export default function Navigation() {
 
       {mobileOpen && (
         <div
+          ref={mobileMenuRef}
           id="rf-mobile-menu"
           role="dialog"
           aria-modal="true"

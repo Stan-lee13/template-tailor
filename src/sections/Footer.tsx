@@ -44,7 +44,7 @@ const titles: Record<string, string> = {
 function Col({ title, links }: { title: string; links: { label: string; to: string }[] }) {
   return (
     <div className="rf-footer__column">
-      <h4 className="rf-footer__column-title">{title}</h4>
+      <h2 className="rf-footer__column-title">{title}</h2>
       <div className="rf-footer__links">
         {links.map((link) => <Link key={link.label} to={link.to} className="rf-footer__link">{link.label}</Link>)}
       </div>

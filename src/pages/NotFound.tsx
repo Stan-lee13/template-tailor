@@ -17,7 +17,7 @@ const NotFound = () => {
         <div className="absolute top-[20%] left-[20%] w-[60%] h-[60%] bg-[#C56A4A]/10 blur-[150px] rounded-full animate-pulse" />
       </div>
 
-      <div className="text-center relative z-10 px-6">
+      <main id="main-content" tabIndex={-1} className="text-center relative z-10 px-6">
         <p className="text-[10px] font-black uppercase tracking-[0.5em] text-[#C56A4A] mb-8 animate-bounce">System Error</p>
         <h1 className="text-[12rem] lg:text-[20rem] font-black text-white leading-none tracking-tighter mb-8 select-none">404</h1>
         <p className="text-xl lg:text-2xl font-black uppercase tracking-widest text-white/20 mb-16">The requested node is unreachable.</p>
@@ -27,7 +27,7 @@ const NotFound = () => {
         >
           Re-establish Connection →
         </Link>
-      </div>
+      </main>
     </div>
   );
 };
