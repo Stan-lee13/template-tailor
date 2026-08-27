@@ -94,7 +94,6 @@ export default function Services() {
         </div>
 
         <div className="service-object service-scroll-object" style={{ opacity: 0 }}>
-          <div className="service-object__bar"><span>RETENTION FIRM / CAPABILITIES</span><span>SCROLL TO EXPLORE</span></div>
           <div ref={viewportRef} className="service-scroll-viewport">
             <div ref={trackRef} className="service-scroll-track">
               {services.map((service, i) => {

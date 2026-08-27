@@ -29,7 +29,6 @@ export default function FinalCTA() {
 
       <div className="relative max-w-[1300px] mx-auto">
         <div className="cta-object">
-          <div className="cta-object__bar"><span>RETENTION FIRM / NEXT MOVE</span><span>READY TO SCALE?</span></div>
           <div className="cta-object__body cta-object__body--solo">
             <div className="cta-copy cta-animate" style={{ opacity: 0 }}>
               <span className="cta-kicker">Ready to scale?</span>

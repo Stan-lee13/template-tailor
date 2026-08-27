@@ -39,7 +39,6 @@ export default function DifferentiationSection() {
       <div className="max-w-[1300px] mx-auto">
         <div className="diff-layout">
           <div className="diff-content" style={{ opacity: 0 }}>
-            <span className="rf-object-eyebrow">{c.eyebrow}</span>
             <h2 className="diff-title">Why Brands <span>Choose RetentionFirm</span></h2>
             <p className="diff-description">
               Not because we send emails. Because we think beyond them. We see customer retention as a business strategy—not a marketing channel.

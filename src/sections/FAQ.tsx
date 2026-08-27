@@ -44,7 +44,6 @@ export default function FAQ() {
           <div><span className="rf-object-eyebrow">{c.eyebrow}</span><h2 className="faq-title">Common Questions</h2></div>
         </div>
         <div className="faq-object">
-          <div className="faq-object__bar"><span>RETENTION FIRM / CLARITY</span><span>OPEN ONE TO GO DEEPER</span></div>
           <div className="faq-list">
             {(c.faqs || []).map((faq, i) => <AccordionItem key={i} index={i} question={faq.q} answer={faq.a} isOpen={openIndex === i} onClick={() => setOpenIndex(openIndex === i ? null : i)} />)}
           </div>
