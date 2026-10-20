@@ -31,11 +31,11 @@ export default function CookieConsent() {
   // Mobile collapsed pill
   if (!expanded) {
     return (
-      <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 600ms cubic-bezier(.2,.7,.2,1)' }}>
+      <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 260ms cubic-bezier(0.23,1,0.32,1)' }}>
         <div role="region" aria-label="Cookie preferences" aria-live="polite" className="sm:hidden flex items-center justify-between gap-4 rounded-3xl px-6 py-4 bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Intelligence Access</span>
           <div className="flex items-center gap-2">
-            <button type="button" onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">Accept</button>
+            <button type="button" onClick={acceptAll} className="px-4 py-2 rounded-xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white active:scale-[0.97] transition-[background-color,transform] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)]">Accept</button>
             <button type="button" onClick={() => setExpanded(true)} aria-label="Manage cookie preferences" aria-expanded={expanded} className="text-white/60 hover:text-white transition-colors">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -44,15 +44,15 @@ export default function CookieConsent() {
         <div className="hidden sm:block">
           {renderFull()}
         </div>
-        <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(32px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }`}</style>
+        <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       </div>
     );
   }
 
   return (
-    <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 600ms cubic-bezier(.2,.7,.2,1)' }}>
+    <div className="fixed bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto z-[150] sm:max-w-[420px]" style={{ animation: 'rfSlideUp 260ms cubic-bezier(0.23,1,0.32,1)' }}>
       {renderFull()}
-      <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(32px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }`}</style>
+      <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }`}</style>
     </div>
   );
 

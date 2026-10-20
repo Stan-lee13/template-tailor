@@ -80,7 +80,7 @@ export default function BookingModal() {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-8 bg-black/90 backdrop-blur-2xl"
-      style={{ animation: 'rfFade 400ms ease-out' }}
+      style={{ animation: 'rfFade 240ms cubic-bezier(0.23,1,0.32,1)' }}
       onClick={(e) => { if (e.target === e.currentTarget) close(); }}
     >
       <div
@@ -90,7 +90,7 @@ export default function BookingModal() {
         aria-labelledby="booking-dialog-title"
         tabIndex={-1}
         className="relative w-full max-w-4xl rounded-[2.5rem] overflow-hidden bg-black border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,1)]"
-        style={{ maxHeight: '92vh', animation: 'rfScale 500ms cubic-bezier(.2,.7,.2,1)' }}
+        style={{ maxHeight: '92vh', animation: 'rfScale 240ms cubic-bezier(0.23,1,0.32,1)' }}
       >
         <div className="flex items-center justify-between px-10 py-8 border-b border-white/5 bg-white/[0.02]">
           <div>
@@ -106,7 +106,7 @@ export default function BookingModal() {
             type="button"
             onClick={close}
             aria-label="Close booking dialog"
-            className="w-12 h-12 rounded-2xl flex items-center justify-center text-white/20 hover:text-white hover:bg-white/5 transition-all"
+            className="w-12 h-12 rounded-2xl flex items-center justify-center text-white/20 hover:text-white hover:bg-white/5 active:scale-[0.97] transition-[color,background-color,transform] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)]"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
@@ -120,7 +120,7 @@ export default function BookingModal() {
               <p className="text-white/40 font-medium mb-8">System link offline. Direct channel required.</p>
               <a 
                 href={`mailto:${SITE.email}?subject=Growth Audit Request`} 
-                className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#d8a63d] text-black hover:bg-[#f3ebdd] transition-all duration-500 shadow-[0_0_30px_rgba(216,166,61,0.2)]"
+                className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#d8a63d] text-black hover:bg-[#f3ebdd] active:scale-[0.97] transition-[background-color,transform,box-shadow] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_0_30px_rgba(216,166,61,0.2)]"
               >
                 Inquire via Email
               </a>
@@ -130,8 +130,8 @@ export default function BookingModal() {
       </div>
 
       <style>{`
-        @keyframes rfFade { from { opacity: 0; backdrop-filter: blur(0px); } to { opacity: 1; backdrop-filter: blur(24px); } }
-        @keyframes rfScale { from { opacity: 0; transform: translateY(40px) scale(.95); filter: blur(10px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+        @keyframes rfFade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes rfScale { from { opacity: 0; transform: translateY(24px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
       `}</style>
     </div>
   );
