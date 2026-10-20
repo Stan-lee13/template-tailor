@@ -30,13 +30,13 @@ export default function StickyCTA() {
   if (!show) return null;
 
   return (
-    <div className="fixed z-[140] right-8 bottom-8 hidden sm:block" style={{ animation: 'rfSlideUp 600ms cubic-bezier(.2,.7,.2,1)' }}>
+    <div className="fixed z-[140] right-8 bottom-8 hidden sm:block" style={{ animation: 'rfSlideUp 260ms cubic-bezier(0.23,1,0.32,1)' }}>
       <div className="flex items-center gap-4 rounded-3xl bg-black/80 border border-white/10 backdrop-blur-xl p-2 pl-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <span className="sticky-cta-label text-[10px] font-black uppercase tracking-widest hidden lg:inline">Ready to plug your retention leaks?</span>
         <button
           type="button"
           onClick={() => { track('cta_click', { location: 'sticky' }); open('sticky'); }}
-          className="px-6 py-3 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]"
+          className="px-6 py-3 rounded-2xl bg-[#C56A4A] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white active:scale-[0.97] transition-[background-color,transform,box-shadow] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_0_20px_rgba(197,106,74,0.2)]"
         >
           Secure Audit
         </button>
@@ -49,7 +49,7 @@ export default function StickyCTA() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-      <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(32px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }`}</style>
+      <style>{`@keyframes rfSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }`}</style>
     </div>
   );
 }

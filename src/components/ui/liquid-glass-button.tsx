@@ -9,8 +9,8 @@ const liquidbuttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-transparent hover:scale-[1.02] duration-300 transition text-[#FFFFFF]",
-        light: "bg-transparent hover:scale-[1.02] duration-300 transition text-[#000000]",
+        default: "bg-transparent transition-[transform,color,background-color,border-color] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] [@media(hover:hover)_and_(pointer:fine)]:hover:scale-[1.02] text-[#FFFFFF]",
+        light: "bg-transparent transition-[transform,color,background-color,border-color] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] [@media(hover:hover)_and_(pointer:fine)]:hover:scale-[1.02] text-[#000000]",
       },
       size: {
         default: "h-10 px-6 py-2",
