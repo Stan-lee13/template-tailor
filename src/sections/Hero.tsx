@@ -88,7 +88,7 @@ export default function Hero() {
         >
           <button
             onClick={() => { track('cta_click', { location: 'hero', label: c.primary_cta_label }); open('hero'); }}
-            className="group relative flex-1 sm:flex-none sm:w-52 px-3 sm:px-6 py-4 rounded-full bg-[#F3EBDD] text-black font-black text-[10px] sm:text-xs uppercase tracking-[0.12em] leading-none whitespace-nowrap transition-all duration-500 hover:bg-[#E8DCC6] hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(243,235,221,0.22)]"
+            className="group relative flex-1 sm:flex-none sm:w-52 px-3 sm:px-6 py-4 rounded-full bg-[#F3EBDD] text-black font-black text-[10px] sm:text-xs uppercase tracking-[0.12em] leading-none whitespace-nowrap transition-[background-color,transform,box-shadow] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#E8DCC6] active:scale-[0.97] [@media(hover:hover)_and_(pointer:fine)]:hover:scale-[1.02] shadow-[0_0_30px_rgba(243,235,221,0.22)]"
           >
             Book an Intro Call
           </button>
@@ -97,7 +97,7 @@ export default function Hero() {
               const t = c.secondary_cta_target || '#process';
               if (t.startsWith('#')) scrollTo(t); else window.location.assign(t);
             }}
-            className="flex-1 sm:flex-none sm:w-52 px-3 sm:px-6 py-4 rounded-full border border-[#F3EBDD]/35 text-[#F3EBDD] font-black text-[10px] sm:text-xs uppercase tracking-[0.12em] leading-none whitespace-nowrap transition-all duration-500 hover:bg-[#F3EBDD] hover:text-black"
+            className="flex-1 sm:flex-none sm:w-52 px-3 sm:px-6 py-4 rounded-full border border-[#F3EBDD]/35 text-[#F3EBDD] font-black text-[10px] sm:text-xs uppercase tracking-[0.12em] leading-none whitespace-nowrap transition-[background-color,color,border-color,transform] duration-180 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#F3EBDD] hover:text-black active:scale-[0.97]"
           >
             {c.secondary_cta_label}
           </LiquidButton>

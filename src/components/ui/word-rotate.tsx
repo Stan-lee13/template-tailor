@@ -25,10 +25,10 @@ export default function WordRotate({ words, duration = 2500, motionProps, classN
         <motion.span
           key={words[index]}
           className="inline-block"
-          initial={{ opacity: 0, y: "100%" }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: "-100%" }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
+          initial={{ opacity: 0, transform: "translateY(100%)" }}
+          animate={{ opacity: 1, transform: "translateY(0%)" }}
+          exit={{ opacity: 0, transform: "translateY(-100%)" }}
+          transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}
           {...motionProps}
         >
           {words[index]}

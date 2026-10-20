@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface ThreeDCardProps {
@@ -13,25 +13,41 @@ export const ThreeDCard = ({
   containerClassName,
 }: ThreeDCardProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
+  const latestPoint = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
+    };
+  }, []);
+
+  const applyRotation = () => {
+    frameRef.current = null;
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = `rotateX(${latestPoint.current.x}deg) rotateY(${latestPoint.current.y}deg)`;
+  };
+
+  const scheduleRotation = (rotateX: number, rotateY: number) => {
+    latestPoint.current = { x: rotateX, y: rotateY };
+    if (frameRef.current === null) {
+      frameRef.current = window.requestAnimationFrame(applyRotation);
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current || window.innerWidth < 1024) return;
     const { left, top, width, height } = containerRef.current.getBoundingClientRect();
     const x = (e.clientX - left) / width;
     const y = (e.clientY - top) / height;
-    
-    const rX = (y - 0.5) * 20; // max 10 degrees
-    const rY = (x - 0.5) * -20; // max 10 degrees
-    
-    setRotateX(rX);
-    setRotateY(rY);
+
+    scheduleRotation((y - 0.5) * 20, (x - 0.5) * -20);
   };
 
   const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
+    scheduleRotation(0, 0);
   };
 
   return (
@@ -39,23 +55,16 @@ export const ThreeDCard = ({
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={cn(
-        "perspective-1000 transition-all duration-200 ease-out",
-        containerClassName
-      )}
-      style={{
-        perspective: "1000px",
-      }}
+      className={cn("perspective-1000", containerClassName)}
+      style={{ perspective: "1000px" }}
     >
       <div
+        ref={cardRef}
         className={cn(
-          "relative transition-all duration-200 ease-out preserve-3d",
+          "relative preserve-3d transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] will-change-transform",
           className
         )}
-        style={{
-          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-          transformStyle: "preserve-3d",
-        }}
+        style={{ transformStyle: "preserve-3d" }}
       >
         {children}
       </div>
@@ -76,7 +85,7 @@ export const ThreeDCardItem = ({
 }) => {
   return (
     <div
-      className={cn("transition-all duration-200 ease-out", className)}
+      className={cn("transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]", className)}
       style={{
         transform: `translateZ(${translateZ}px)`,
         ...style,
