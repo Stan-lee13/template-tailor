@@ -33,6 +33,7 @@ const Index = () => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     let lenis: Lenis | null = null;
+    const raf = (time: number) => { lenis?.raf(time * 1000); };
 
     // Lenis only on desktop/pointer devices — mobile uses native scrolling
     if (!reduced && !isTouch) {
@@ -43,7 +44,7 @@ const Index = () => {
         wheelMultiplier: 0.9,
       } as ConstructorParameters<typeof Lenis>[0]);
       lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => { lenis!.raf(time * 1000); });
+      gsap.ticker.add(raf);
       gsap.ticker.lagSmoothing(0);
     }
 
@@ -65,7 +66,7 @@ const Index = () => {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    return () => { lenis?.destroy(); window.removeEventListener('scroll', onScroll); };
+    return () => { lenis?.destroy(); gsap.ticker.remove(raf); window.removeEventListener('scroll', onScroll); };
   }, []);
 
   const homeJsonLd = [

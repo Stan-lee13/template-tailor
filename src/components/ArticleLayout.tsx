@@ -63,7 +63,7 @@ export default function ArticleLayout({ category, title, publishedAt, readingTim
             <button
               type="button"
               onClick={() => open('article_cta')}
-              className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(197,106,74,0.2)]"
+              className="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C56A4A] text-black shadow-[0_0_30px_rgba(197,106,74,0.2)] transition-[background-color,transform] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] [@media(hover:hover)_and_(pointer:fine)]:hover:bg-white"
             >
               Secure Growth Audit
             </button>

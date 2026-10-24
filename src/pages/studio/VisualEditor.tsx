@@ -222,7 +222,7 @@ export default function VisualEditor() {
               <button
                 key={d}
                 onClick={() => setDevice(d)}
-                className="w-10 h-8 flex items-center justify-center rounded-xl transition-all duration-300"
+                className="w-10 h-8 flex items-center justify-center rounded-xl transition-[background-color,color] duration-160"
                 style={{
                   background: device === d ? '#C56A4A' : 'transparent',
                   color: device === d ? '#000000' : 'rgba(255,255,255,0.4)'
@@ -258,7 +258,7 @@ export default function VisualEditor() {
           {canEdit && (
             <button
               onClick={publishNow}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)]"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest bg-[#C56A4A] text-black transition-[background-color,transform] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] shadow-[0_0_20px_rgba(197,106,74,0.2)] [@media(hover:hover)_and_(pointer:fine)]:hover:bg-white"
             >
               <Upload size={12} /> Deploy
             </button>
@@ -275,9 +275,9 @@ export default function VisualEditor() {
       </header>
 
       {/* Main grid */}
-      <div className="flex-1 grid overflow-hidden" style={{ gridTemplateColumns: 'minmax(280px, 300px) 1fr minmax(340px, 380px)' }}>
+      <div className="flex-1 grid overflow-hidden grid-cols-1 lg:[grid-template-columns:minmax(280px,300px)_1fr_minmax(340px,380px)]">
         {/* Left */}
-        <div className="border-r border-white/5 bg-black">
+        <div className="hidden lg:block border-r border-white/5 bg-black">
           <LeftPanel
             pages={pages}
             pageId={pageId}
@@ -302,7 +302,7 @@ export default function VisualEditor() {
         </div>
 
         {/* Right inspector */}
-        <aside className="overflow-y-auto bg-black border-l border-white/5 scrollbar-hide">
+        <aside className="hidden lg:block overflow-y-auto bg-black border-l border-white/5 scrollbar-hide">
           {selected ? (
             <div className="p-8 space-y-8">
               <div className="pb-8 border-b border-white/5">

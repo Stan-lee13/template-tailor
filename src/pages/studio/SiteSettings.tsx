@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { logActivity, saveRevision } from '@/lib/activity';
 import { Save } from 'lucide-react';
 
-const inputCls = 'w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C56A4A]/50 transition-all duration-300 placeholder:text-white/10';
+const inputCls = 'w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-sm focus:outline-none focus:border-[#C56A4A]/50 transition-[border-color] duration-200 placeholder:text-white/10';
 
 function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
   return (
@@ -87,7 +87,7 @@ export default function SiteSettingsPage() {
         <button
           onClick={save}
           disabled={saving}
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(197,106,74,0.2)] disabled:opacity-50"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-[background-color,transform] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] shadow-[0_0_20px_rgba(197,106,74,0.2)] disabled:opacity-50"
         >
           <Save size={18} strokeWidth={3} /> {saving ? 'SYNCING...' : 'SAVE PARAMETERS'}
         </button>
@@ -160,7 +160,7 @@ export default function SiteSettingsPage() {
           <button
             onClick={save}
             disabled={saving}
-            className="inline-flex items-center gap-3 px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(197,106,74,0.2)] disabled:opacity-50"
+            className="inline-flex items-center gap-3 px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-widest bg-[#C56A4A] text-black hover:bg-white transition-[background-color,transform] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] shadow-[0_0_30px_rgba(197,106,74,0.2)] disabled:opacity-50"
           >
             <Save size={18} strokeWidth={3} /> {saving ? 'SYNCING...' : 'SAVE ALL PARAMETERS'}
           </button>
