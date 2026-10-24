@@ -52,7 +52,7 @@ export default function ProblemSection() {
           <div className="problem-visual relative group lg:mt-12 lg:min-h-[780px]" style={{ opacity: 0 }}>
             <div className="absolute -inset-4 bg-gradient-to-r from-[#C56A4A]/25 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
             <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-[0_24px_70px_rgba(0,0,0,0.24)] backdrop-blur-sm">
-              <img src={problemVisual} srcSet={problemVisualSrcSet} sizes="(min-width: 1024px) 42vw, 100vw" alt="A retention journey showing a first purchase, post-purchase message, loyalty follow-up, and returning order" className="w-full h-[520px] sm:h-[640px] lg:h-[780px] object-cover object-center scale-105 transition-transform duration-320 ease-[cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-100" />
+              <img src={problemVisual} srcSet={problemVisualSrcSet} sizes="(min-width: 1024px) 42vw, 100vw" alt="A retention journey showing a first purchase, post-purchase message, loyalty follow-up, and returning order" className="w-full h-[520px] sm:h-[640px] lg:h-[780px] object-cover object-center scale-105 transition-transform duration-[320ms] ease-[cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-100" />
             </div>
           </div>
 
