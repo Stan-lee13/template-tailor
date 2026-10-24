@@ -55,7 +55,12 @@ export default function ProjectsRail() {
   }, [isLoading]);
 
   useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const ctx = gsap.context(() => {
+      if (reduced) {
+        gsap.set(['.projects-head', '.project-rail', '.project-thumb'], { opacity: 1, y: 0 });
+        return;
+      }
       gsap.fromTo('.projects-head', { opacity: 0, y: 32 }, {
         opacity: 1,
         y: 0,
