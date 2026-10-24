@@ -48,7 +48,7 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
 
           {/* Premium CTA Card */}
           <div className="mt-32 p-10 lg:p-16 rounded-[3rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C56A4A]/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-[#C56A4A]/20 transition-colors duration-700" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C56A4A]/10 rounded-full blur-[80px] -mr-32 -mt-32 transition-[background-color] duration-200 group-hover:bg-[#C56A4A]/20" />
 
             <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
               <div className="max-w-md">
@@ -62,7 +62,7 @@ export default function MarketingLayout({ title, eyebrow, intro, children, path,
               <button
                 type="button"
                 onClick={() => open('marketing_page')}
-                className="px-10 py-5 rounded-full bg-[#C56A4A] text-black font-black text-sm uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_30px_rgba(197,106,74,0.3)] whitespace-nowrap"
+                className="px-10 py-5 rounded-full bg-[#C56A4A] text-black font-black text-sm uppercase tracking-widest shadow-[0_0_30px_rgba(197,106,74,0.3)] whitespace-nowrap transition-[background-color,transform] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] [@media(hover:hover)_and_(pointer:fine)]:hover:bg-white [@media(hover:hover)_and_(pointer:fine)]:hover:scale-[1.02]"
               >
                 Book Your Audit
               </button>
